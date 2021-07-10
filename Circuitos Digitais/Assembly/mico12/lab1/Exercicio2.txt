@@ -1,0 +1,32 @@
+80010001 0 addi r1, r0, 1
+80020008 1 addi r2, r0, 8
+800a0000 2 addi ra, r0, 0000 #base de a
+800b0008 3 addi rb, r0, 0008 #base de b
+800c0010 4 addi rc, r0, 0010 #base de c
+61230000 5 slt r3, r1, r2
+e300000b 6 beq r3, r0, f1
+0a140000 7 add r4, ra, r1
+a4100000 8 st 0(r4), r1
+81010001 9 addi r1, r1, 1
+c0000005 a j w1
+80010001 b addi r1, r0, 1
+61250000 c slt r5, r1, r2
+e5000012 d beq r5, r0, f2
+0b160000 e add r6, rb, r1
+a6100000 f st 0(r6), r1
+81010001 10 addi r1, r1, 1
+c000000c 11 j w1
+80010001 12 addi r1, r0, 1
+61270000 13 slt r7, r1, r2
+e700001f 14 beq r7, r0, f3
+0c180000 15 add r8, rc, r1
+0a190000 16 add r9, ra, r1
+0b1d0000 17 add rd, rb, r1
+990e0000 18 ld  re, 0(r9)
+9d0f0000 19 ld  rf, 0(rd)
+0ef30000 1a add r3, re, rf
+a8300000 1b st  0(r8), r3
+b3000000 1c show r3
+81010001 1d addi r1, r1, 1
+c0000013 1e j w3
+f0000000 1f halt 

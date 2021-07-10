@@ -1,0 +1,27 @@
+800effff    0    addi sp, r0, ffff
+80040000    1    addi r4, r0, 0000          # r4 <- base de VET
+8005000f    2    addi r5, r0, 15            # limite de VET
+80060000    3    addi r6, r0, 0             # i <- 0
+66570000    4    slt r7, r6, r5             # r7 <- (i < 15) 
+e7000019    5    beq r7, r0, 0019            # r7 = FALSO -> ???
+04680000    6       add r8, r4, r6          # r8 <- V + i
+98090000    7       ld r9, 0(r8)            # r9 <- M(V+i)
+00620000    8       add r2, r0, r6          # a1 <- i
+c00f000d    9       jal 000a, 000d          # chama a função times_6()
+a8100000    a       st 0(r8), r1            # r8 <- retorno da função
+86060001    b       addi r6, r6, 1          # i <- i + 1
+c0000004    c       j 0004                  # repete
+8e0efff7    d    addi, sp, sp, -9           # aloca
+aef00001    e    st 1(sp), ra               # r_0 <- ra 
+c00f0015    f    jal 000e, 0015             # chama a função times_2()
+800a0003    10   addi r10, r0, 3            # r10 <- 3    
+21a10000    11   mul r1, r1, r10          # r15 <- r15 * 3
+9e0f0001    12   ld 1(sp), ra               # volta p/ cod principal
+8e0e0009    13   addi sp, sp, +9            # devolve
+df000000    14   jr ra                        
+8e0efffc    15   addi sp, sp, -4            # aloca 
+02210000    16   add r1, r2, r2            # r15 <- num + num (retorno)
+8e0e0004    17   addi sp, sp, -4            # devolve
+df000000    18   jr ra                      # retorna para times_6()
+            19   halt 
+

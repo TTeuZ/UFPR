@@ -1,0 +1,85 @@
+8e0effff        0           addi    sp, sp, ffff                # inicia a pilha
+80040000        1           addi    r4, r0, 0000                # base do vetor vetor
+00420000        2           add     r2, r0, r4                  # a0 <- base do vetor
+80030010        3           addi    r3, r0, 16                  # a1 <- 16 (tamanho)
+8005fff3        4           addi    r5, r0, -13                 # r5 <- -13 (inicial)
+80060001        5           addi    r6, r0, 1                   # r6 <- 1 (incremento)
+80070010        6           addi    r7, r0, 16                  # r7 <- 16  (constante)
+8e0effff        7           addi    sp, sp, -1                  # aloca o espaço para as 2 variaveis amais da função
+ae500001        8           st      1(sp), r5                   # armazena na pilha o a3
+ae600000        9           st      0(sp), r6                   # armazena na pilha o a4
+c00f000e        a           jal     rf, initVet                 # vai para a função initVet
+c00f002d        b           jal     rf, somaVet                 # vai para a função soma vet
+b1000000        c           show    r1                          # mostra o retorno da função
+f0000000        d           halt
+8e0efff8        e   f1:     addi    sp, sp -8                   # aloca espaço na pilha
+ae800000        f           st      0(sp), r8                   # armazena o valor antigo de r8 (i)
+ae900001        10          st      1(sp), r9                   # armazena o valor antigo de r9
+aea00002        11          st      2(sp), ra                   # armazena o valor antigo de ra
+aeb00003        12          st      3(sp), rb                   # armazena o valor antigo de rb
+aec00004        13          st      4(sp), rc                   # armazena o valor antigo de rc
+aef00005        14          st      5(sp), rf                   # armazena o endereço de retorno
+aed00006        15          st      6(sp), rd                   # armazena o antigo valor de rd
+ae400007        16          st      7(sp), r4                   # armazena o antigo valor de rd
+9e0d0009        17          ld      rd, 9(sp)                   # pega o valor do argumento a3
+9e040008        18          ld      r4, 8(sp)                   # pega o valor do argumento a4
+80080000        19          addi    r8, r0, 0                   # r8 <- 0 (i)
+68390000        1a  w1:     slt     r9, i, r3                   # r9 <- (i < r3(size))
+687a0000        1b          slt     ra, i, r7                   # ra <- (i < r7(constante))
+39ab0000        1c          and     rb, r9, ra                  # rb <- (r9 AND ra)
+eb000023        1d          beq     rb, r0, ff1                 # se rb = 0 , vai para o fim da funçao
+082c0000        1e          add     rc, r8, r2                  # rc <- i + base do vetor
+acd00000        1f          st      0(rc), rd                   # vet[i] <- init(rd)
+0d4d0000        20          add     rd, rd, r4                  # rd <- rd + r4 (init <- init + incremento)
+88080001        21          addi    r8, r8, 1                   # r8 <- r8 + 1 (i <- i + 1)
+c000001a        22          j       w1                          # volta para o inicio do while 
+9e080000        23  ff1:    ld      r8, 0(sp)                   # retorna para o valor antigo de r8
+9e090001        24          ld      r9, 1(sp)                   # retorna para o valor antigo de r9
+9e0a0002        25          ld      ra, 2(sp)                   # retorna para o valor antigo de ra
+9e0b0003        26          ld      rb, 3(sp)                   # retorna para o valor antigo de rb
+9e0c0004        27          ld      rc, 4(sp)                   # retorna para o valor antigo de rc
+9e0f0005        28          ld      rf, 5(sp)                   # pega o endereço de retorno
+9e0d0006        29          ld      rd, 6(sp)                   # retorna para o valor antigo de rd
+9e040007        2a          ld      r4, 7(sp)                   # retorna para o valor antigo de r4
+8e0e0008        2b          addi    sp, sp, 8                   # devolve os espaços da pilha
+df000000        2c          jr      rf                          # retorna para o cod. fonte
+8e0efff6        2d  f2:     addi    sp, sp, -10                 # armazena espaço na pilha
+ae800000        2e          st      0(sp), r8                   # armazena o valor antigo de r8 (i)
+ae900001        2f          st      1(sp), r9                   # armazena o valor antigo de r9 (soma)
+ae600002        30          st      2(sp), r6                   # armazena o valor antigo ed r6
+aea00003        31          st      3(sp), ra                   # armazena o valor antigo de ra
+aeb00004        32          st      4(sp), rb                   # armazena o valor antigo de rb
+aec00005        33          st      5(sp), rc                   # armazena o valor antigo de rc
+aed00006        34          st      6(sp), rd                   # armazena o valor antigo de rd
+aef00007        35          st      7(sp), rf                   # armazena o  endereço de retorno
+ae400008        36          st      8(sp), r4                   # armazena o valor antigo de r4
+ae500009        37          st      9(sp), r5                   # armazena o valor antigo de r5
+80080000        38          addi    r8, r0, 0                   # i <- 0
+80090000        39          addi    r9, r0, 0                   # soma <- 0
+8006ffff        3a          addi    r6, r0, -1                  # r6 <- -1
+683a0000        3b  w2:     slt     ra, i, r3                   # r9 <- (i < r3(size))
+687b0000        3c          slt     rb, i, r7                   # ra <- (i < r7(constante))
+3abc0000        3d          and     rc, ra, rb                  # rb <- (r9 AND ra)
+ec000048        3e          beq     rc, r0, ff2                 # se rc = 0 , vai para o fim da funçao
+028d0000        3f          add     rd, r2, r8                  # rd <- fte + i
+9d040000        40          ld      r4, 0(rd)                   # r4 <- fte[i]
+64050000        41  if:     slt     r5, r4, r0                  # r5 <- (fte[i] < 0)
+e5000045        42          beq     r5, r0, ff3                 # se r5 = 0 sai do if
+24640000        43          mul     r4, r6, r4                  # fte[i] <- -1 * fte[i]
+ad400000        44          st      0(rd), r4                   # armazena o novo valor do fte[i]
+09490000        45  ff3:    add     r9, r9, r4                  # soma <- soma + fte[i]
+88080001        46          addi    r8, r8, 1                   # i <- i + 1
+c000003a        47          j       w2                          # volta para o inicio do while
+00910000        48  ff2:    add     r1, r0, r9                  # v0 <- soma
+9e080000        49          ld      r8, 0(sp)                   # armazena o valor antigo de r8 (i)
+9e090001        4a          ld      r9, 1(sp)                   # armazena o valor antigo de r9 (soma)
+9e060002        4b          ld      r6, 2(sp)                   # armazena o valor antigo ed r6
+9e0a0003        4c          ld      ra, 3(sp)                   # armazena o valor antigo de ra
+9e0b0004        4d          ld      rb, 4(sp)                   # armazena o valor antigo de rb
+9e0c0005        4e          ld      rc, 5(sp)                   # armazena o valor antigo de rc
+9e0d0006        4f          ld      rd, 6(sp)                   # armazena o valor antigo de rd
+9e0f0007        50          ld      rf, 7(sp)                   # pega o endereço de retorno
+9e040008        51          ld      r4, 8(sp)                   # armazena o valor antigo de r4
+9e050009        52          ld      r5, 9(sp)                   # armazena o valor antigo de r5
+8e0e0010        53          addi    sp, sp, 10                  # armazena espaço na pilha
+df000000        54          jr      rf

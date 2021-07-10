@@ -1,0 +1,37 @@
+800effff    0           addi sp, r0, ffff
+80040000    1           addi r4, r0, 0000          # r4 <- base de VET     
+80050000    2           addi r5, r0, 0             # r5 <- 0 (ri <- 0)
+80060008    3           addi r6, r0, 8             # r6 <- 8
+65670000    4   w1:     slt  r7, r5, r6             # r7 <- r10 < r11 (r12 <- i < 8)
+e7000024    5           beq  r7, r0, f1           # r7 = FALSO -> acaba
+80080002    6               addi r8, r0, 2         # r8 <- 2
+28520000    7               mul  r2, r5, r8        # a0 <- i * 2
+c00f000e    8               jal  rf, fibo          # vai para a funçao fibo
+05490000    9               add  r9, r5, r4        # r9 <- v + i
+a9100000    a               st   0(r9), r1        # armazena no vetor o retorno da função
+85050001    b               addi r5, r5, 1         # i <- i + 1
+c0000004    c               j w1                   # volta para o while
+00000000    d   f1       nop
+8e0efffb    e   fibo:   addi  re, re, -5           # aloca espaço na pilha
+aea00000    f           st    0(re), ra            # armazena o valor antigo de ra 
+aeb00001    10          st    1(re), rb            # armazena o valor antigo de rb
+aec00002    11          st    2(re), rc            # armazena o valor antigo de rc
+aed00003    12          st    3(re), rd            # armazena o valor antigo de rd
+aef00004    13          st    4(re), rf            # armazena o endereço de retorno
+800a0001    14          addi  ra, r0, 1            # ra <- 1
+800b0000    15          addi  rb, r0, 0            # rb <- 0
+800c0000    16          addi  rc, r0, 0            # rc <- 0
+6b2d0000    17  w2:     slt   rd, rb, r2           # rd <- (ra < a0)
+ed00001d    18          beq   rd, r0, f2           # se rd = 0 acaba
+0abc0000    19              add rc, ra, rb         # rc <- ra + rb
+0b0a0000    1a              add ra, rb, r0         # ra <- rb
+0c0b0000    1b              add rb, rc, r0         # rb <- rc
+c0000017    1c              j   w2                 # volta para o while
+0c010000    1d  f2:     add r1, rc, r0             # v0 <- rc
+9e0a0000    1e          ld    ra, 0(re)            # retorna o valor antigo de ra
+9e0b0001    1f          ld    rb, 1(re)            # retorna o valor antigo de rb
+9e0c0002    20          ld    rc, 2(re)            # retorna o valor antigo de rc
+9e0d0003    21          ld    rd, 3(re)            # retorna o valor antigo de rd
+9e0f0004    22          ld    rf, 4(re)            # retorna o valor do endereço de retorno
+df000000    23          jr    rf                   # volta para o codigo principal
+f0000000    24          halt

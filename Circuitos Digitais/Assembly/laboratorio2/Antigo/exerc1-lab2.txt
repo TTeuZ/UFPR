@@ -1,0 +1,28 @@
+800effff    0    addi sp, r0, ffff
+80040000    1    addi r4, r0, 0000          # r4 <- base de VET     
+800a0000    2    addi r10, r0, 0            # r10 <- 0 (ri <- 0)
+800b0008    3    addi r11, r0, 8            # r11 <- 8
+6abc0000    4    slt r12, r10, r11          # r12 <- r10 < r11 (r12 <- i < 8)
+ec00001a    5    beq r12, r0, 001a          # r12 = FALSO -> ?
+80090002    6       addi r9, r0, 2          # r9 <- 2
+2a920000    7       mul r2, r10, r9
+0a4c0000    8       add r13, r10, r4        # r13 <- V + i
+9d050000    9       ld r5, 0(r13)           # r5 <- M(r13) = M(V+i)
+c00f000f    a       jal 000f, 000f          # chama a função
+ac100000    b       st 0(r13), r1            # r13 <- retorno da função
+8a0a0001    c       addi r10, r10, 1        # i <- i + 1
+c0000004    d       j 0004                  # repete
+00000000    e    nop 
+80050001    f    addi r5, r0, 0001          # r5 <- 1 (f1 <- 1)
+80060000    10   addi r6, r0, 0000          # r6 <- 0 (f2 <- 0)
+80070000    11   addi r7, r0, 0000          # r7 <- 0 (r7 = aux)
+66280000    12   slt r8, r6, r2             # r8 <- r6 < r2 (r8 <- f2 < num)
+e8000018    13   beq r8, r0, 0018           # r8 = FALSO -> ?
+06570000    14      add r7, r5, r6          # aux <- r5 + r6 (f1 + f2)
+00650000    15      add r5, r6, r0          # r5 <- r6 + 0 (f1 <- f2)
+00760000    16      add r6, r7, r0          # r6 <- r7 + 0 (f2 <- aux)
+c0000012    17      j 0012                  # repete
+00710000    18   add r1, r7, r0             # r1 <- r7 + r0 (fib <- aux)
+df000000    19   jr 000f                     # volta para o cod principal
+f0000000    1a   halt
+

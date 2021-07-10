@@ -1,0 +1,30 @@
+800effff    0           addi    se, r0, ffff        # sp <- ffff
+80040000    1           addi    r4, r4, 0           # r4 recebe base do VET
+8005000f    2           addi    r5, r0, 15          # limite do vetor
+80060000    3           addi    r6, r0, 0           # i <- i
+66570000    4   w:      slt     r7, r6, r5          # se i < 15
+e700001d    5           beq     r7, r0, f           # se r7 = 0 vai para o fim
+04680000    6               add     r8, r6, r4      # r7 <- i + VET
+06020000    7               add     a0, r0, r6      # coloca o i como parametro
+c00f000d    8               jal     rf, f1          # manda para o times_6
+a8100000    9               st      0(r8), v0       # armazena o resultado da função no vetor
+86060001    a               addi    r6, r6, 1       # i <- i + 1
+c0000004    b               j       w               # repete
+00000000    c   f:      nop
+8e0efffe    d   tm6:    addi    re, re, -2          # aloca na pilha
+aef00001    e           st      1(re), r15          # salva o endereço de retorno
+ae700000    f           st      0(re), r7           # quarda o valor antigo do r7
+80070003    10          addi    r7, r0, 3           # r7 <- 3
+c00f0017    11          jal     tm2                 # vai para o times 2
+21710000    12          mul     v0, v0, r7          # retorno de times_2 * 3
+9e0f0001    13          ld      rf, 1(re)           # carrega o endereço de retorno
+9e070000    14          ld      r7, 0(re)           # retorno o valor do r7 para o antigo
+8e0e0002    15          addi    re, re, 02          # devolve para a pilha
+df000000    16          jr      rf                  # volta para o endereço de retorno
+8e0effff    17  tm2:    addi    re, re, - 1         # aloca 1 espaços para a função
+aef00000    18          st      0(re), r15          # armazena o endereço de retorno
+02210000    19          add     r1, r2, r2          # v0 <- a0 + a0
+9e0f0000    1a          ld      rf, 0(re)           # recompoe o endereço
+8e0e0001    1b          addi    re, re, 1           # retorna os valores na pilha
+df000000    1c          jr      rf                  # vai para o rf
+            1d  halt

@@ -1,0 +1,21 @@
+8001ffff 0 addi r1, r0, -1
+5012ffff 1 xor  r2, r0, r1
+51130000 2 xor  r3, r1, r1
+73040000 3 not  r4, r3
+80055555 4 addi r5, r0, 5555
+055a0000 5 add  ra, r5, r5
+800f7fff 6 addi rf, r0, 7fff
+8f0f0001 7 addi rf, rf, 1
+2afc0000 8 mul  rc, ra, rf
+bc000000 9 show rc
+00000000 a nop
+c00f000d b jal  r15, d
+00000000 c nop
+00000000 d nop
+c0000011 e j    11
+00000000 f nop
+00000000 10 nop 
+00000000 11 nop
+00000000 12 nop
+f0000000 13 halt
+00000000
