@@ -1,0 +1,1 @@
+Pasta com programa em pascal que le imagens em pgm.
