@@ -1,1 +1,1 @@
-ls -F usr/bin | grep @ | wc -l
+ls -F /usr/bin | grep @ | wc -l
