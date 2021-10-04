@@ -5,7 +5,7 @@
 #       - Lista com os 10 nomes que mais ocorrem, juntamente com o nùmero de ocorrência, ordenando do que mais ocorre para o que menos ocorre.
 #O formato de saida deve mostrar um prenome por linha para a primeira parte do exercıcio e em seguida as linhas devem ter a quantidade de ocorrencias seguida de um nome.
 
-#! /usr/bin/env bash
+#!/bin/bash
 
 USERS_LIST=`ls /home/bcc`
 
