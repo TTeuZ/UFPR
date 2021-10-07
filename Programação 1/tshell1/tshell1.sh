@@ -22,5 +22,45 @@ push_csvs() {
         done
 }
 
+# Função que pega todas as CSVs e transforma elas de data para UTF8, retirando os caracteres indesejados
+clean_csv() {
+        CSVS=`ls /nobackup/bcc/pmla20/156/urls`
+        for csv in $CSVS
+        do
+                iconv -f ISO8859-1 -t UTF8 $NOBACKUP_DIR/urls/$csv -o $NOBACKUP_DIR/urls/$csv
+                dos2unix $NOBACKUP_DIR/urls/$csv
+                sed -i 's/\x00/ /g' $NOBACKUP_DIR/urls/$csv
+        done
+}
+
+#Função que pega todos os arquivos na pasta, filtra pela coluna de assuntos e os envia agrupados por repetições para um arquivo subjects.txt
+get_all_subjects() {
+        CSVS=`ls /nobackup/bcc/pmla20/156/urls`
+        for csv in $CSVS
+        do
+                cut -d';' $NOBACKUP_DIR/urls/$csv -f6 | tail -n +3 >> passage.txt
+        done
+        cat passage.txt | sed -r '/^\s*$/d' | uniq -c > subjects.txt
+        rm passage.txt
+}
+
+#Função que pega todos os arquivos na pasta, filtra pela coluna de subdivisões e os envia agrupados por repetições para um arquivo subdivs.txt
+get_all_subdiv() {
+        CSVS=`ls /nobackup/bcc/pmla20/156/urls`
+        for csv in $CSVS
+        do
+                cut -d';' $NOBACKUP_DIR/urls/$csv -f7 | tail -n +3 >> passage.txt
+        done
+        cat passage.txt | sed -r '/^\s*$/d' | uniq -c > subdivs.txt
+        rm passage.txt
+}
+
 #Main Script
 push_csvs
+clean_csv
+get_all_subjects
+get_all_subdiv
+
+#Tentativa sem usar arquivo de passagem
+# VALUES="$VALUES $(cut -d';' $NOBACKUP_DIR/urls/$csv -f6 | tail -n +3)"
+# cat $VALUES | uniq -c > teste.txt
