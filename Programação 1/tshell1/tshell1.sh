@@ -43,7 +43,7 @@ get_all_subjects() {
         do
                 cut -d';' $NOBACKUP_DIR/urls/$csv -f6 | tail -n +3 >> passage.txt
         done
-        cat passage.txt | sed -r '/^\s*$/d' | uniq -c > subjects.txt
+        cat passage.txt | sed -r '/^\s*$/d' | uniq -c > ASSUNTO.txt
         rm passage.txt
 }
 
@@ -54,14 +54,14 @@ get_all_subdiv() {
         do
                 cut -d';' $NOBACKUP_DIR/urls/$csv -f7 | tail -n +3 >> passage.txt
         done
-        cat passage.txt | sed -r '/^\s*$/d' | uniq -c > subdivs.txt
+        cat passage.txt | sed -r '/^\s*$/d' | uniq -c > SUBDIVISAO.txt
         rm passage.txt
 }
 
 #Main Script
 push_csvs
 clean_csv
-get_all_subjects
+get_all_ASSUNTO
 get_all_subdiv
 
 #Tentativa sem usar arquivo de passagem
