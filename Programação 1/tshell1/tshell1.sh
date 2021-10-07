@@ -27,9 +27,12 @@ clean_csv() {
         CSVS=`ls /nobackup/bcc/pmla20/156/urls`
         for csv in $CSVS
         do
-                iconv -f ISO8859-1 -t UTF8 $NOBACKUP_DIR/urls/$csv -o $NOBACKUP_DIR/urls/$csv
-                dos2unix $NOBACKUP_DIR/urls/$csv
-                sed -i 's/\x00/ /g' $NOBACKUP_DIR/urls/$csv
+                if file $NOBACKUP_DIR/urls/$csv | grep data
+                then
+                        iconv -f "ISO8859-1" -t UTF8 $NOBACKUP_DIR/urls/$csv -o $NOBACKUP_DIR/urls/$csv
+                        dos2unix $NOBACKUP_DIR/urls/$csv
+                        sed -i 's/\x00/ /g' $NOBACKUP_DIR/urls/$csv
+                fi
         done
 }
 
