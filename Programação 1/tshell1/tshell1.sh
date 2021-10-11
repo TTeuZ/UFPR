@@ -26,6 +26,7 @@ clean_csv() {
                 if file $NOBACKUP_DIR/urls/$csv | grep data; then
                         sed -i 's/\x00/ /g' $NOBACKUP_DIR/urls/$csv
                         iconv -f "ISO8859-1" -t UTF8 $NOBACKUP_DIR/urls/$csv -o $NOBACKUP_DIR/urls/'utf8'$csv
+                        sed -i 's/./\U&/g' $NOBACKUP_DIR/urls/'utf8'$csv
                         rm $NOBACKUP_DIR/urls/$csv
                 fi
         done
