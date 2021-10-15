@@ -11,11 +11,11 @@ void main(int argc, char *argv[]) {
 }
 
 int *intercala(int v[], int a, int m, int b) {
-    if (a > b) return v;
+    if (a >= b) return v;
     int u[100];
     int i = a;
     int j = m + 1;
-    for (int k = 0; k <= b-a; k++) {
+    for (int k = a; k <= b; k++) {
         if (j>b || (i<=m && v[i] <= v[j])) {
             u[k] = v[i];
             i += 1;
@@ -24,8 +24,8 @@ int *intercala(int v[], int a, int m, int b) {
             j += 1;
         }
     }
-    for (int p = 0; p <= b; p++) {
-            v[p] = u[p];
-        }
+    for (int p = a; p <= b; p++) {
+        v[p] = u[p];
+    }
     return v;
 }

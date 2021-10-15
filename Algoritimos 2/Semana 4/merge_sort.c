@@ -31,7 +31,7 @@ int *merge(int v[], int a, int m, int b) {
             j += 1;
         }
     };
-    for (int p = 0; p <= b; p++) {
+    for (int p = a; p <= b; p++) {
         v[p] = u[p];
     };
     return v;
