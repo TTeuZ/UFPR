@@ -17,5 +17,9 @@ A função f(n) retorna: a^n;
 
 Formula de recorrencia:
 
-f(a, b) = { 1 ,se b=0; f(a^2, b/2) ,se b é par|b > 0; f(a^2, b/2)*a ,se b é impar }
+f(a, b) = { 0 ,se b=0; f(a^2, b/2) ,se b é par|b > 0; f(a^2, b/2)*a ,se b é impar }
+
+ERRADOOOOOOOOOOO
+
+O certo esta na folha da aula do dia 15/10/2021.
 */
