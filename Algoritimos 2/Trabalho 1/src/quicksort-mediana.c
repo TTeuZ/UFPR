@@ -1,4 +1,5 @@
 #include "particiona.h"
+#include "biblioteca.h"
 
 #include <time.h>
 #include <stdlib.h>
@@ -7,11 +8,11 @@
 /* devolve a mediana de a, b e c                                              */
 
 static int mediana(int a, int b, int c) {
-  if (a > b) {
-    if (a > c) return a;
+  if (compara(a, b) == 1) {
+    if (compara(a, c) == 1) return a;
     return c;
   } else {
-    if (b > c) return b;
+    if (compara(b, c) == 1) return b;
     return c;
   }
 }
@@ -20,13 +21,13 @@ static int mediana(int a, int b, int c) {
 /* Retorna o posição da mediana encontrada*/
 
 int correct_position(int v[], int pivo, int a, int b, int c) {
-  if (pivo == v[a]) {
-      return a;
-    } else if (pivo == v[b]) {
-      return b;
-    } else {
-      return c;
-    }
+  if (compara(pivo, v[a]) == 0) {
+    return a;
+  } else if (compara(pivo, v[b]) == 0) {
+    return b;
+  } else {
+    return c;
+  }
 }
 
 /* -------------------------------------------------------------------------- */
