@@ -1,5 +1,5 @@
 #include <stdio.h>
-void f(int vetor[], int vetor_length, int enpty_pos);
+void f(int vetor[], int vetor_length, int pos);
 void print_array(int v[], int a, int b);
 
 void main() {
@@ -9,12 +9,12 @@ void main() {
     f(vetor, n, 0);
 }
 
-void f(int vetor[], int vetor_length, int enpty_pos) {
-    if (enpty_pos == vetor_length) return print_array(vetor, 0, vetor_length - 1);
-    vetor[enpty_pos] = 0;
-    f(vetor, vetor_length, enpty_pos+1);
-    vetor[enpty_pos] = 1;
-    f(vetor, vetor_length, enpty_pos+1);
+void f(int vetor[], int vetor_length, int pos) {
+    if (pos == vetor_length) return print_array(vetor, 0, vetor_length - 1);
+    vetor[pos] = 0;
+    f(vetor, vetor_length, pos+1);
+    vetor[pos] = 1;
+    f(vetor, vetor_length, pos+1);
 }
 
 void print_array(int v[], int a, int b) {
