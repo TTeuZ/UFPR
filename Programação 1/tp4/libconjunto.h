@@ -1,8 +1,7 @@
-#define MAX 102
-
 struct conjunto {
-    int card;
-    int *v;
+    int max;    /* tamanho do vetor atualmente alocado           */
+    int card;   /* cardinalidade, isto eh, tamanho usado ate max */
+    int *v;     /* vetor de inteiros com no maximo max elementos */
 };
 
 typedef struct conjunto conjunto_t;
