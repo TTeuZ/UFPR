@@ -7,13 +7,12 @@
 
 int *quicksort_insercao(int v[], int a, int b, unsigned int m) {
   if (a >= b) return v;
-  int particionador = particiona(v, a, b, v[b]);
 
   if (m >= (b-a+1)) {
     insercao(v, a, b);
   } else {
+    int particionador = particiona(v, a, b, v[b]);
     quicksort_insercao(v, a, particionador-1, m);
     quicksort_insercao(v, particionador+1, b, m);
   }
-  return v;
 }
