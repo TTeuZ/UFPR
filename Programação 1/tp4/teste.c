@@ -3,7 +3,7 @@
 #include "libconjunto.h"
 
 int main () {
-    conjunto_t *conj, *conj2, *conj3; /* Declaração dos 3 conjuntos */
+    conjunto_t *conj, *conj2, *conj3, *conj4, *conj5; /* Declaração dos 3 conjuntos */
     int count; /* Contador para as iterações */
     int ret; /* variavel para armazenar retornos de funcoes */
 
@@ -274,7 +274,46 @@ int main () {
         else printf("O elemento %d não pertence ao conjunto 3!\n", count*5);
     }
 
+    printf("\n");
     printf("------------------------------------------------------------------\n");
+    printf("Testando igualdade de conjuntos...\n");
+    printf("\n");
+
+    if (sao_iguais(conj, conj2) == 1)
+        printf("O conjuto 1 é igual 2!\n");
+    else printf("O conjunto 1 não é igual ao conjunto 2!\n");
+    if (sao_iguais(conj, conj3) == 1)
+        printf("O conjuto 1 é igual conjuto 3!\n");
+    else printf("O conjunto 1 não é iqual ao conjunto 3!\n");
+    if (sao_iguais(conj2, conj) == 1)
+        printf("O conjuto 2 é igual conjuto 1!\n");
+    else printf("O conjunto 2 não é iqual ao conjunto 1!\n");
+    if (sao_iguais(conj2, conj3) == 1)
+        printf("O conjuto 2 é igual conjuto 3!\n");
+    else printf("O conjunto 2 não é iqual ao conjunto 3!\n");
+    if (sao_iguais(conj3, conj2) == 1)
+        printf("O conjuto 3 é igual conjuto 2!\n");
+    else printf("O conjunto 3 não é iqual ao conjunto 2!\n");
+    if (sao_iguais(conj3, conj) == 1)
+        printf("O conjuto 3 é igual conjuto 1!\n");
+    else printf("O conjunto 3 não é iqual ao conjunto 1!\n");
+
+    printf("\n");
+
+    printf("Construindo e preenchendo 2 conjuntos de maneira igual...\n");
+    conj4 = cria_conjunto(10);
+    conj5 = cria_conjunto(10);
+
+    for (count = 0; count < (conj->max/2); count++) {
+        insere(count, conj4);
+        insere(count, conj5);
+    }
+    printf("\n");
+
+    printf("Testando se estes são iguais...\n");
+    if (sao_iguais(conj4, conj5) == 1)
+        printf("O conjuto 4 é igual 5!\n");
+    else printf("O conjunto 4 não é igual ao conjunto 5!\n");
     printf("\n");
 
     /* Liberando a memoria alocada dinamicamente para os 3 conjuntos durante a execução do teste */

@@ -74,9 +74,8 @@ int contido (conjunto_t *c1, conjunto_t *c2) {
     int count;
     if (c1->card > c2->card) return 0;
     else {
-        for (count = 0; count < c1->card; count++) {
+        for (count = 0; count < c1->card; count++) 
             if (!busca_binaria(*(c1->v+count), c2)) return 0;
-        }
         return 1;
     }
 }
@@ -93,6 +92,18 @@ int eh_vazio (conjunto_t *c) {
 int pertence (int n, conjunto_t *c) {
     if (!busca_binaria(n, c)) return 0;
     else return 1;
+}
+
+/* Como essa lib trabalha sempre deixando o conujnto ordenado, para testar se são iguais
+basta verificar a igualdade de cada posição equivalente */
+int sao_iguais (conjunto_t *c1, conjunto_t *c2) {
+    int count;
+    if (c1->card != c2->card) return 0;
+    else {
+        for (count = 0; count < c1->card; count++) 
+            if (!(*(c1->v+count) == *(c2->v+count))) return 0;
+        return 1;
+    }
 }
 
 int insere (int n, conjunto_t *c) {
