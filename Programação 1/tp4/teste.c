@@ -15,8 +15,6 @@ int main () {
     printf("Testando a criação dos conjuntos...\n");
     printf("\n");
 
-    /* Testando as possibilidades de criações de conjuntos com valor passando do max
-     e valor coerente */
     conj = cria_conjunto(100);
     printf("O endereço do primeiro conjunto é: %p\n", &conj);
     conj2 = cria_conjunto(50);
@@ -45,11 +43,11 @@ int main () {
     printf("\n");
 
     /* Iniciando a inserção da primeira metade de elementos no vetor */
-    for (count = 0; count < (conj->max/2); count++)  /* inserindo elemento somando de 1 em 1 */
+    for (count = 0; count < 50; count++)  /* inserindo elemento somando de 1 em 1 */
         insere(count, conj);
-    for (count = 0; count < (conj2->max/2); count++) /* inserindo elemento somando de 2 em 2 */
+    for (count = 0; count < 25; count++) /* inserindo elemento somando de 2 em 2 */
         insere(count*2, conj2);
-    for (count = 0; count < (conj3->max/2); count++)  /* inserindo elemento somando de 5 em 5 */
+    for (count = 0; count < 5; count++)  /* inserindo elemento somando de 5 em 5 */
         insere(count*5, conj3);
 
     printf("------------------------------------------------------------------\n");
@@ -110,11 +108,11 @@ int main () {
     printf("\n");
 
     /* Iniciando a remoção da primeira metade de elementos no vetor */
-    for (count = 0; count < (conj->max/2); count++)  /* retirando elemento somando de 1 em 1 */
+    for (count = 0; count < 50; count++)  /* retirando elemento somando de 1 em 1 */
         retira(count, conj);
-    for (count = 0; count < (conj2->max/2); count++)  /* retirando elemento somando de 1 em 1 */
+    for (count = 0; count < 25; count++)  /* retirando elemento somando de 1 em 1 */
         retira(count*2, conj2);
-    for (count = 0; count < (conj3->max/2); count++)  /* retirando elemento somando de 1 em 1 */
+    for (count = 0; count < 5; count++)  /* retirando elemento somando de 1 em 1 */
         retira(count*5, conj3);
 
     printf("------------------------------------------------------------------\n");
@@ -149,11 +147,11 @@ int main () {
     printf("\n");
 
     /* Iniciando a inserção dos elementoss no conjunto */
-    for (count = 0; count < (conj->max); count++)  /* inserindo elemento somando de 1 em 1, soma */
+    for (count = 0; count < 100; count++)  /* inserindo elemento somando de 1 em 1, soma */
         insere(count, conj);
-    for (count = 0; count < (conj2->max); count++) /* inserindo elemento somando de 2 em 2, soma */
+    for (count = 0; count < 50; count++) /* inserindo elemento somando de 2 em 2, soma */
         insere(count*2, conj2);
-    for (count = 0; count < (conj3->max); count++)  /* inserindo elemento somando de 5 em 5, soma */
+    for (count = 0; count < 10; count++)  /* inserindo elemento somando de 5 em 5, soma */
         insere(count*5, conj3);
 
     printf("------------------------------------------------------------------\n");
@@ -307,7 +305,7 @@ int main () {
     conj4 = cria_conjunto(10);
     conj5 = cria_conjunto(10);
 
-    for (count = 0; count < (conj->max/2); count++) {
+    for (count = 0; count < 10; count++) {
         insere(count, conj4);
         insere(count, conj5);
     }
