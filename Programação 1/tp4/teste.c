@@ -5,6 +5,7 @@
 int main () {
     conjunto_t *conj, *conj2, *conj3, *conj4, *conj5; /* Declaração dos 5 conjuntos */
     conjunto_t *conj_intersec1, *conj_intersec2; /* Declaração de 2 conjuntos para intersecções */
+    conjunto_t *conj_uni1, *conj_uni2; /* Declaração de 2 conjuntos para uniões */
     int count; /* Contador para as iterações */
     int ret; /* variavel para armazenar retornos de funcoes */
 
@@ -315,7 +316,6 @@ int main () {
     if (sao_iguais(conj4, conj5) == 1)
         printf("O conjuto 4 é igual 5!\n");
     else printf("O conjunto 4 não é igual ao conjunto 5!\n");
-    printf("\n");
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -330,6 +330,20 @@ int main () {
     printf("Printando a intersecção do conjunto 2 com o 3...\n");
     imprime (conj_intersec2);
 
+    printf("\n");
+    printf("------------------------------------------------------------------\n");
+    printf("Criando união de conjuntos...\n");
+    printf("\n");
+
+    conj_uni1 = cria_uniao (conj, conj2);
+    conj_uni2 = cria_uniao (conj2, conj3);
+
+    printf("Printando a união do conjunto 1 com o 2...\n");
+    imprime (conj_uni1);
+    printf("Printando a união do conjunto 2 com o 3...\n");
+    imprime (conj_uni2);
+
+    printf("\n"); 
     printf("------------------------------------------------------------------\n");
     printf("\n");
 
@@ -348,6 +362,10 @@ int main () {
     destroi_conjunto(conj_intersec1);
     printf("Liberando a memoria utilizada pelo conjunto_interseccao 2...\n");
     destroi_conjunto(conj_intersec2);
+    printf("Liberando a memoria utilizada pelo conjunto_uniao 1...\n");
+    destroi_conjunto(conj_uni1);
+    printf("Liberando a memoria utilizada pelo conjunto_uniao 2...\n");
+    destroi_conjunto(conj_uni2);
 
     printf("\n");
     printf("FIM DO TESTE\n");
