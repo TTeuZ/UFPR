@@ -121,11 +121,7 @@ conjunto_t * cria_diferenca (conjunto_t *c1, conjunto_t *c2) {
     conjunto_t *conj;
     int count;
 
-    if ((conj = malloc(sizeof(conjunto_t)*((c1->max+1))))) {
-        conj->max = c1->max;
-        conj->card = 0;
-        conj->v = (int*) malloc(sizeof(int)*((c1->max+1)));
-    } else return 0;
+    conj = cria_conjunto (c1->max);
 
     for (count = 0; count < c1->card; count++) {
         if (!busca_binaria(*(c1->v+count), c2)) 
@@ -142,11 +138,7 @@ conjunto_t * cria_interseccao (conjunto_t *c1, conjunto_t *c2) {
     b_conj = bigger_conj(c1, c2);
     l_conj = lower_conj(c1, c2);
 
-    if ((conj = malloc(sizeof(conjunto_t)*((b_conj->max+1))))) {
-        conj->max = b_conj->max;
-        conj->card = 0;
-        conj->v = (int*) malloc(sizeof(int)*((b_conj->max+1)));
-    } else return 0;
+    conj = cria_conjunto (b_conj->max);
 
     for (count = 0; count < l_conj->card; count++) {
         if (busca_binaria(*(l_conj->v+count), b_conj) == 1) 
@@ -163,11 +155,7 @@ conjunto_t * cria_uniao (conjunto_t *c1, conjunto_t *c2) {
     b_conj = bigger_conj(c1, c2);
     l_conj = lower_conj(c1, c2);
 
-    if ((conj = malloc(sizeof(conjunto_t)*(max+1)))) {
-        conj->max = max;
-        conj->card = 0;
-        conj->v = (int*) malloc(sizeof(int)*(max+1));
-    } else return 0;
+    conj = cria_conjunto (max);
 
     for (count = 0; count < b_conj->card; count++) {
         if (count < l_conj->card)
