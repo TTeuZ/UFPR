@@ -6,6 +6,7 @@ int main () {
     conjunto_t *conj, *conj2, *conj3, *conj4, *conj5; /* Declaração dos 5 conjuntos */
     conjunto_t *conj_intersec1, *conj_intersec2; /* Declaração de 2 conjuntos para intersecções */
     conjunto_t *conj_uni1, *conj_uni2; /* Declaração de 2 conjuntos para uniões */
+    conjunto_t *conj_diff1, *conj_diff2; /* Declaração de 2 conjuntos para as diferencas */
     int count; /* Contador para as iterações */
     int ret; /* variavel para armazenar retornos de funcoes */
 
@@ -343,6 +344,19 @@ int main () {
     printf("Printando a união do conjunto 2 com o 3...\n");
     imprime (conj_uni2);
 
+    printf("\n");
+    printf("------------------------------------------------------------------\n");
+    printf("Criando a diferença de conjuntos...\n");
+    printf("\n");
+
+    conj_diff1 = cria_diferenca (conj, conj2);
+    conj_diff2 = cria_diferenca (conj, conj3);
+
+    printf("Printando a diferença do conjunto 1 com o 2...\n");
+    imprime (conj_diff1);
+    printf("Printando a diferença do conjunto 1 com o 3...\n");
+    imprime (conj_diff2);
+
     printf("\n"); 
     printf("------------------------------------------------------------------\n");
     printf("\n");
@@ -366,6 +380,10 @@ int main () {
     destroi_conjunto(conj_uni1);
     printf("Liberando a memoria utilizada pelo conjunto_uniao 2...\n");
     destroi_conjunto(conj_uni2);
+    printf("Liberando a memoria utilizada pelo conjunto_diff 1...\n");
+    destroi_conjunto(conj_diff1);
+    printf("Liberando a memoria utilizada pelo conjunto_diff 2...\n");
+    destroi_conjunto(conj_diff2);
 
     printf("\n");
     printf("FIM DO TESTE\n");

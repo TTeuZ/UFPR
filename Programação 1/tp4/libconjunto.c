@@ -49,6 +49,16 @@ void sort_remove(int x, conjunto_t *c) {
     }
 }
 
+conjunto_t * bigger_conj (conjunto_t *c1, conjunto_t *c2) {
+    if (c1->card > c2->card) return c1;
+    else return c2;
+}
+
+conjunto_t * lower_conj (conjunto_t *c1, conjunto_t *c2) {
+    if (c1->card < c2->card) return c1;
+    else return c2;
+}
+
 /* Funções internas */
 
 /* Funções publicas */
@@ -106,42 +116,52 @@ int sao_iguais (conjunto_t *c1, conjunto_t *c2) {
     }
 }
 
-/* O max do conjunto nunca passa do max do maior conjunto. */
-conjunto_t * cria_interseccao (conjunto_t *c1, conjunto_t *c2) {
-    conjunto_t *conj, *lower_conj, *higher_conj;
+/* O max do conjunto nunca passa do max do c1 */
+conjunto_t * cria_diferenca (conjunto_t *c1, conjunto_t *c2) {
+    conjunto_t *conj;
     int count;
-    if (c1->card > c2->card) {
-        higher_conj = c1;
-        lower_conj = c2;
-    } else {
-        higher_conj = c2;
-        lower_conj = c1;
-    } 
 
-    if ((conj = malloc(sizeof(conjunto_t)*((higher_conj->max+1))))) {
-        conj->max = higher_conj->max;
+    if ((conj = malloc(sizeof(conjunto_t)*((c1->max+1))))) {
+        conj->max = c1->max;
         conj->card = 0;
-        conj->v = (int*) malloc(sizeof(int)*((higher_conj->max+1)));
+        conj->v = (int*) malloc(sizeof(int)*((c1->max+1)));
     } else return 0;
 
-    for (count = 0; count < lower_conj->card; count++) {
-        if (busca_binaria(*(lower_conj->v+count), higher_conj) == 1) 
-            insere(*(lower_conj->v+count), conj);
+    for (count = 0; count < c1->card; count++) {
+        if (!busca_binaria(*(c1->v+count), c2)) 
+            insere(*(c1->v+count), conj);
+    }
+
+    return conj;
+}
+
+/* O max do conjunto nunca passa do max do maior conjunto. */
+conjunto_t * cria_interseccao (conjunto_t *c1, conjunto_t *c2) {
+    conjunto_t *conj, *l_conj, *b_conj;
+    int count;
+    b_conj = bigger_conj(c1, c2);
+    l_conj = lower_conj(c1, c2);
+
+    if ((conj = malloc(sizeof(conjunto_t)*((b_conj->max+1))))) {
+        conj->max = b_conj->max;
+        conj->card = 0;
+        conj->v = (int*) malloc(sizeof(int)*((b_conj->max+1)));
+    } else return 0;
+
+    for (count = 0; count < l_conj->card; count++) {
+        if (busca_binaria(*(l_conj->v+count), b_conj) == 1) 
+            insere(*(l_conj->v+count), conj);
     }
     return conj;
 }
 
+/* O max do conjunto é equivalente a soma dos maximos de embos os conjuntos */
 conjunto_t * cria_uniao (conjunto_t *c1, conjunto_t *c2) {
-    conjunto_t *conj, *lower_conj, *higher_conj;
+    conjunto_t *conj, *l_conj, *b_conj;
     int count, max;
     max = (c1->max)+(c2->max);
-    if (c1->card > c2->card) {
-        higher_conj = c1;
-        lower_conj = c2;
-    } else {
-        higher_conj = c2;
-        lower_conj = c1;
-    } 
+    b_conj = bigger_conj(c1, c2);
+    l_conj = lower_conj(c1, c2);
 
     if ((conj = malloc(sizeof(conjunto_t)*(max+1)))) {
         conj->max = max;
@@ -149,11 +169,11 @@ conjunto_t * cria_uniao (conjunto_t *c1, conjunto_t *c2) {
         conj->v = (int*) malloc(sizeof(int)*(max+1));
     } else return 0;
 
-    for (count = 0; count < higher_conj->card; count++) {
-        if (count < lower_conj->card)
-            insere(*(lower_conj->v+count), conj);
-        if (count < higher_conj->card)
-            insere(*(higher_conj->v+count), conj);
+    for (count = 0; count < b_conj->card; count++) {
+        if (count < l_conj->card)
+            insere(*(l_conj->v+count), conj);
+        if (count < b_conj->card)
+            insere(*(b_conj->v+count), conj);
     }
     return conj;
 }
