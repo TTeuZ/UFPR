@@ -3,7 +3,8 @@
 #include "libconjunto.h"
 
 int main () {
-    conjunto_t *conj, *conj2, *conj3, *conj4, *conj5; /* Declaração dos 3 conjuntos */
+    conjunto_t *conj, *conj2, *conj3, *conj4, *conj5; /* Declaração dos 5 conjuntos */
+    conjunto_t *conj_intersec1, *conj_intersec2; /* Declaração de 2 conjuntos para intersecções */
     int count; /* Contador para as iterações */
     int ret; /* variavel para armazenar retornos de funcoes */
 
@@ -316,6 +317,22 @@ int main () {
     else printf("O conjunto 4 não é igual ao conjunto 5!\n");
     printf("\n");
 
+    printf("\n");
+    printf("------------------------------------------------------------------\n");
+    printf("Criando intersecção de conjuntos...\n");
+    printf("\n");
+
+    conj_intersec1 = cria_interseccao (conj, conj2);
+    conj_intersec2 = cria_interseccao (conj2, conj3);
+
+    printf("Printando a intersecção do conjunto 1 com o 2...\n");
+    imprime (conj_intersec1);
+    printf("Printando a intersecção do conjunto 2 com o 3...\n");
+    imprime (conj_intersec2);
+
+    printf("------------------------------------------------------------------\n");
+    printf("\n");
+
     /* Liberando a memoria alocada dinamicamente para os 3 conjuntos durante a execução do teste */
     printf("Liberando a memoria utilizada pelo conjunto 1...\n");
     destroi_conjunto(conj);
@@ -323,6 +340,14 @@ int main () {
     destroi_conjunto(conj2);
     printf("Liberando a memoria utilizada pelo conjunto 3...\n");
     destroi_conjunto(conj3);
+    printf("Liberando a memoria utilizada pelo conjunto 4...\n");
+    destroi_conjunto(conj4);
+    printf("Liberando a memoria utilizada pelo conjunto 5...\n");
+    destroi_conjunto(conj5);
+    printf("Liberando a memoria utilizada pelo conjunto_interseccao 1...\n");
+    destroi_conjunto(conj_intersec1);
+    printf("Liberando a memoria utilizada pelo conjunto_interseccao 2...\n");
+    destroi_conjunto(conj_intersec2);
 
     printf("\n");
     printf("FIM DO TESTE\n");
