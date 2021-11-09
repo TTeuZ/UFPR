@@ -70,6 +70,17 @@ void destroi_conjunto (conjunto_t *c) {
     free (c);
 }
 
+int contido (conjunto_t *c1, conjunto_t *c2) {
+    int count;
+    if (c1->card > c2->card) return 0;
+    else {
+        for (count = 0; count < c1->card; count++) {
+            if (!busca_binaria(*(c1->v+count), c2)) return 0;
+        }
+        return 1;
+    }
+}
+
 int cardinalidade (conjunto_t *c) {
     return c->card;
 }
@@ -77,6 +88,11 @@ int cardinalidade (conjunto_t *c) {
 int eh_vazio (conjunto_t *c) {
     if (c->card == 0) return 1;
     else return 0;
+}
+
+int pertence (int n, conjunto_t *c) {
+    if (!busca_binaria(n, c)) return 0;
+    else return 1;
 }
 
 int insere (int n, conjunto_t *c) {

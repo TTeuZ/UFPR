@@ -204,7 +204,76 @@ int main () {
         else if(ret == 0)
             printf("Não é possivel adicionar o elemento, elemento ja existente, retorno: %d\n", ret);
     }
-        
+
+    printf("\n");
+    printf("------------------------------------------------------------------\n");
+    printf("Testando se os conjutos atuais estão contidos...\n");
+    printf("\n");
+
+    if (contido(conj, conj2) == 1)
+        printf("O conjuto 1 esta contido no conjuto 2!\n");
+    else printf("O conjunto 1 não está contido no conjunto 2!\n");
+    if (contido(conj, conj3) == 1)
+        printf("O conjuto 1 esta contido no conjuto 3!\n");
+    else printf("O conjunto 1 não está contido no conjunto 3!\n");
+    if (contido(conj2, conj) == 1)
+        printf("O conjuto 2 esta contido no conjuto 1!\n");
+    else printf("O conjunto 2 não está contido no conjunto 1!\n");
+    if (contido(conj2, conj3) == 1)
+        printf("O conjuto 2 esta contido no conjuto 3!\n");
+    else printf("O conjunto 2 não está contido no conjunto 3!\n");
+    if (contido(conj3, conj2) == 1)
+        printf("O conjuto 3 esta contido no conjuto 2!\n");
+    else printf("O conjunto 3 não está contido no conjunto 2!\n");
+    if (contido(conj3, conj) == 1)
+        printf("O conjuto 3 esta contido no conjuto 1!\n");
+    else printf("O conjunto 3 não está contido no conjunto 1!\n");
+
+    printf("\n");
+    printf("------------------------------------------------------------------\n");
+    printf("Testando pertencimentos de elementos nos conjutos...\n");
+    printf("\n");
+
+    for (count = 1; count <= 2; count ++) { /* Testando o pertecimento de elementos em seguencia 1,2 */
+        if (pertence(count, conj) == 1)
+            printf("O elemento %d pertence ao conjunto 1!\n", count);
+        else printf("O elemento %d não pertence ao conjunto 1!\n", count);
+        if (pertence(count, conj2) == 1)
+            printf("O elemento %d pertence ao conjunto 2!\n", count);
+        else printf("O elemento %d não pertence ao conjunto 2!\n", count);
+        if (pertence(count, conj3) == 1)
+            printf("O elemento %d pertence ao conjunto 3!\n", count);
+        else printf("O elemento %d não pertence ao conjunto 3!\n", count);
+    }
+
+    printf("------------------------------------------------------------------\n");
+
+       for (count = 1; count <= 2; count ++) { /* Testando o pertecimento de elementos em seguencia 2,4 */
+        if (pertence(count*2, conj) == 1)
+            printf("O elemento %d pertence ao conjunto 1!\n", count*2);
+        else printf("O elemento %d não pertence ao conjunto 1!\n", count*2);
+        if (pertence(count*2, conj2) == 1)
+            printf("O elemento %d pertence ao conjunto 2!\n", count*2);
+        else printf("O elemento %d não pertence ao conjunto 2!\n", count*2);
+        if (pertence(count*2, conj3) == 1)
+            printf("O elemento %d pertence ao conjunto 3!\n", count*2);
+        else printf("O elemento %d não pertence ao conjunto 3!\n", count*2);
+    }
+
+    printf("------------------------------------------------------------------\n");
+
+       for (count = 1; count <= 2; count ++) { /* Testando o pertecimento de elementos em seguencia 5,10 */
+        if (pertence(count*5, conj) == 1)
+            printf("O elemento %d pertence ao conjunto 1!\n", count*5);
+        else printf("O elemento %d não pertence ao conjunto 1!\n", count*5);
+        if (pertence(count*5, conj2) == 1)
+            printf("O elemento %d pertence ao conjunto 2!\n", count*5);
+        else printf("O elemento %d não pertence ao conjunto 2!\n", count*5);
+        if (pertence(count*5, conj3) == 1)
+            printf("O elemento %d pertence ao conjunto 3!\n", count*5);
+        else printf("O elemento %d não pertence ao conjunto 3!\n", count*5);
+    }
+
     printf("------------------------------------------------------------------\n");
     printf("\n");
 
