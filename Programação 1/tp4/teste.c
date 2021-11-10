@@ -50,6 +50,7 @@ int main () {
     for (count = 0; count < 5; count++)  /* inserindo elemento somando de 5 em 5 */
         insere(count*5, conj3);
 
+    printf("\n");
     printf("------------------------------------------------------------------\n");
     printf("validando que o conjunto não está vazio...\n");
     printf("\n");
@@ -104,15 +105,59 @@ int main () {
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
+    printf("Adicionar elementos fora de ordem para averiguar que mantem ordenado...\n");
+    printf("\n");
+
+    count = 1;
+    while (count <= 10) { /* Adicionando numeros inpares 1-3-5-7... */
+        insere(count, conj2);
+        count = count + 2;
+    } 
+    for (count = 0; count < 5; count++)  /* Adicionando numeros multiplos de 2 */
+        insere(count*2, conj3);
+
+    printf("------------------------------------------------------------------\n");
+    printf("Imprimindo conjuntos apos a inserção dos elementos extras...\n");
+    printf("\n");
+
+    printf("Conjunto 2: ");
+    imprime(conj2);
+    printf("Conjunto 3: ");
+    imprime(conj3);
+
+    printf("\n");
+    printf("------------------------------------------------------------------\n");
+    printf("removendo elementos fora de ordem para averiguar que mantem ordenado...\n");
+    printf("\n");
+
+    count = 1;
+    while (count <= 10) { /* Adicionando numeros inpares 1-3-5-7... */
+        retira(count, conj2);
+        count = count + 2;
+    } 
+    for (count = 0; count < 5; count++)  /* Adicionando numeros multiplos de 2 */
+        retira(count*2, conj3);
+
+    printf("------------------------------------------------------------------\n");
+    printf("Imprimindo conjuntos apos a remoca dos elementos extras...\n");
+    printf("\n");
+
+    printf("Conjunto 2: ");
+    imprime(conj2);
+    printf("Conjunto 3: ");
+    imprime(conj3);
+
+    printf("\n");
+    printf("------------------------------------------------------------------\n");
     printf("removendo a primeira metade de elementos dos conjuntos...\n");
     printf("\n");
 
     /* Iniciando a remoção da primeira metade de elementos no vetor */
     for (count = 0; count < 50; count++)  /* retirando elemento somando de 1 em 1 */
         retira(count, conj);
-    for (count = 0; count < 25; count++)  /* retirando elemento somando de 1 em 1 */
+    for (count = 0; count < 25; count++)  /* retirando elemento somando de 2 em 2 */
         retira(count*2, conj2);
-    for (count = 0; count < 5; count++)  /* retirando elemento somando de 1 em 1 */
+    for (count = 0; count < 5; count++)  /* retirando elemento somando de 5 em 5 */
         retira(count*5, conj3);
 
     printf("------------------------------------------------------------------\n");

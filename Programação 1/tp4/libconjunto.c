@@ -62,7 +62,6 @@ conjunto_t * lower_conj (conjunto_t *c1, conjunto_t *c2) {
 /* Funções internas */
 
 /* Funções publicas */
-
 /* A utilização do (max+1) nos mallocs veio por conta de um erro encontrado pelo valgrind
 De 'invalid write of size 4' */
 conjunto_t * cria_conjunto(int max) {
