@@ -120,7 +120,7 @@ conjunto_t * cria_diferenca (conjunto_t *c1, conjunto_t *c2) {
     conjunto_t *conj;
     int count;
 
-    if ((conj = cria_conjunto (c1->max))) {
+    if ((conj = cria_conjunto (c1->max)) != 0) {
         for (count = 0; count < c1->card; count++) {
             if (!busca_binaria(*(c1->v+count), c2)) 
                 insere(*(c1->v+count), conj);
@@ -136,7 +136,7 @@ conjunto_t * cria_interseccao (conjunto_t *c1, conjunto_t *c2) {
     b_conj = bigger_conj(c1, c2);
     l_conj = lower_conj(c1, c2);
 
-    if ((conj = cria_conjunto (b_conj->max))) {
+    if ((conj = cria_conjunto (b_conj->max)) != 0) {
         for (count = 0; count < l_conj->card; count++) {
             if (busca_binaria(*(l_conj->v+count), b_conj) == 1) 
                 insere(*(l_conj->v+count), conj);
@@ -153,7 +153,7 @@ conjunto_t * cria_uniao (conjunto_t *c1, conjunto_t *c2) {
     b_conj = bigger_conj(c1, c2);
     l_conj = lower_conj(c1, c2);
 
-    if ((conj = cria_conjunto (max))) {
+    if ((conj = cria_conjunto (max)) != 0) {
         for (count = 0; count < b_conj->card; count++) {
             if (count < l_conj->card)
                 insere(*(l_conj->v+count), conj);
