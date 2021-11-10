@@ -120,14 +120,13 @@ conjunto_t * cria_diferenca (conjunto_t *c1, conjunto_t *c2) {
     conjunto_t *conj;
     int count;
 
-    conj = cria_conjunto (c1->max);
-
-    for (count = 0; count < c1->card; count++) {
-        if (!busca_binaria(*(c1->v+count), c2)) 
-            insere(*(c1->v+count), conj);
-    }
-
-    return conj;
+    if ((conj = cria_conjunto (c1->max))) {
+        for (count = 0; count < c1->card; count++) {
+            if (!busca_binaria(*(c1->v+count), c2)) 
+                insere(*(c1->v+count), conj);
+        }
+        return conj;
+    } else return 0;
 }
 
 /* O max do conjunto nunca passa do max do maior conjunto. */
@@ -137,13 +136,13 @@ conjunto_t * cria_interseccao (conjunto_t *c1, conjunto_t *c2) {
     b_conj = bigger_conj(c1, c2);
     l_conj = lower_conj(c1, c2);
 
-    conj = cria_conjunto (b_conj->max);
-
-    for (count = 0; count < l_conj->card; count++) {
-        if (busca_binaria(*(l_conj->v+count), b_conj) == 1) 
-            insere(*(l_conj->v+count), conj);
-    }
-    return conj;
+    if ((conj = cria_conjunto (b_conj->max))) {
+        for (count = 0; count < l_conj->card; count++) {
+            if (busca_binaria(*(l_conj->v+count), b_conj) == 1) 
+                insere(*(l_conj->v+count), conj);
+            }
+        return conj;
+    } else return 0;
 }
 
 /* O max do conjunto é equivalente a soma dos maximos de embos os conjuntos */
@@ -154,15 +153,15 @@ conjunto_t * cria_uniao (conjunto_t *c1, conjunto_t *c2) {
     b_conj = bigger_conj(c1, c2);
     l_conj = lower_conj(c1, c2);
 
-    conj = cria_conjunto (max);
-
-    for (count = 0; count < b_conj->card; count++) {
-        if (count < l_conj->card)
-            insere(*(l_conj->v+count), conj);
-        if (count < b_conj->card)
-            insere(*(b_conj->v+count), conj);
-    }
-    return conj;
+    if ((conj = cria_conjunto (max))) {
+        for (count = 0; count < b_conj->card; count++) {
+            if (count < l_conj->card)
+                insere(*(l_conj->v+count), conj);
+            if (count < b_conj->card)
+                insere(*(b_conj->v+count), conj);
+        }
+        return conj;
+    } else return 0;
 }
 
 int insere (int n, conjunto_t *c) {

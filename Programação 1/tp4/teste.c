@@ -50,7 +50,6 @@ int main () {
     for (count = 0; count < 5; count++)  /* inserindo elemento somando de 5 em 5 */
         insere(count*5, conj3);
 
-    printf("\n");
     printf("------------------------------------------------------------------\n");
     printf("validando que o conjunto não está vazio...\n");
     printf("\n");
