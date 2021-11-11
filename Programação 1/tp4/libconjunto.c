@@ -66,7 +66,7 @@ conjunto_t * lower_conj (conjunto_t *c1, conjunto_t *c2) {
 De 'invalid write of size 4' */
 conjunto_t * cria_conjunto(int max) {
     conjunto_t *conj;
-    if ((conj = malloc(sizeof(conjunto_t)*(max+1)))) {
+    if ((conj = malloc(sizeof(conjunto_t)))) {
         conj->max = max;
         conj->card = 0;
         conj->v = (int*) malloc(sizeof(int)*(max+1));

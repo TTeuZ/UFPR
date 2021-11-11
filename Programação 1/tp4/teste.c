@@ -10,7 +10,6 @@ int main () {
     int count; /* Contador para as iterações */
     int ret; /* variavel para armazenar retornos de funcoes */
 
-    printf("\n");
     printf("------------------------------------------------------------------\n");
     printf("Testando a criação dos conjuntos...\n");
     printf("\n");
