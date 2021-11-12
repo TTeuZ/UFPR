@@ -129,14 +129,14 @@ conjunto_t * cria_diferenca (conjunto_t *c1, conjunto_t *c2) {
     } else return 0;
 }
 
-/* O max do conjunto nunca passa do max do maior conjunto. */
+/* O max do conjunto nunca passa do max do menor conjunto. */
 conjunto_t * cria_interseccao (conjunto_t *c1, conjunto_t *c2) {
     conjunto_t *conj, *l_conj, *b_conj;
     int count;
     b_conj = bigger_conj(c1, c2);
     l_conj = lower_conj(c1, c2);
 
-    if ((conj = cria_conjunto (b_conj->max)) != 0) {
+    if ((conj = cria_conjunto (l_conj->max)) != 0) {
         for (count = 0; count < l_conj->card; count++) {
             if (busca_binaria(*(l_conj->v+count), b_conj) == 1) 
                 insere(*(l_conj->v+count), conj);

@@ -11,14 +11,14 @@ COMPILER = gcc
 # -std=c90	Para utilizar a linguagem C90 na compilação
 FLAGS = -g -std=c90 -Wall
 
-teste: libconjunto.o teste.o 
-		$(COMPILER) $(FLAGS) libconjunto.o teste.o -o teste
+teste: libconjunto.o testa.o 
+		$(COMPILER) $(FLAGS) libconjunto.o testa.o -o testa
 	
 libconjunto.o: libconjunto.c
 		$(COMPILER) $(FLAGS) -c libconjunto.c
 
 teste.o: teste.c
-		$(COMPILER) $(FLAGS) -c teste.c
+		$(COMPILER) $(FLAGS) -c testa.c
 
 clean: 
-		rm *.o teste
+		rm *.o testa
