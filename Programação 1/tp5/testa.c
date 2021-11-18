@@ -11,6 +11,7 @@ int main () {
     conjunto_t *conj_diff1, *conj_diff2; /* Declaração de 2 conjuntos para as diferencas */
     int count; /* Contador para as iterações */
     int ret; /* variavel para armazenar retornos de funcoes */
+    int elemento1, elemento2; /* inteiro utilizado para receber o retorno do ponteiro ptr */
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -114,8 +115,8 @@ int main () {
         insere_conjunto (conj2, count);
         count = count + 2;
     } 
-    for (count = 0; count < 5; count++)  /* Adicionando numeros multiplos de 2 */
-        insere_conjunto (conj3, count*2);
+    for (count = 1; count <= 5; count++)  /* Adicionando numeros multiplos de 6 */
+        insere_conjunto (conj3, count*6);
 
     printf("------------------------------------------------------------------\n");
     printf("Imprimindo conjuntos apos a inserção dos elementos extras...\n");
@@ -136,11 +137,11 @@ int main () {
         retira_conjunto (conj2, count);
         count = count + 2;
     } 
-    for (count = 0; count < 5; count++)  /* Adicionando numeros multiplos de 2 */
-        retira_conjunto (conj3, count*2);
+    for (count = 1; count <= 5; count++)  /* removendo numeros multiplos de 6 */
+        retira_conjunto (conj3, count*6);
 
     printf("------------------------------------------------------------------\n");
-    printf("Imprimindo conjuntos apos a remoca dos elementos extras...\n");
+    printf("Imprimindo conjuntos apos a remocao dos elementos extras...\n");
     printf("\n");
 
     printf("Conjunto 2: ");
@@ -508,17 +509,19 @@ int main () {
     printf("Incrementando os ponteiros dos conjuntos e imprimindo seus respectivos elementos...\n");
     printf("\n");
 
-    for (count = 1; count <= 10; count++) {
-        printf("Iterador do conjunto 1 em %d, o elemento respectivo eh: %d\n", count, incrementar_iterador(conj, count));
-        printf("Iterador do conjunto 2 em %d, o elemento respectivo eh: %d\n", count, incrementar_iterador(conj2, count));
+    for (count = 0; count <= 10; count++) {
+        incrementar_iterador(conj, &elemento1);
+        printf("Iterador do conjunto 1 em %d, o elemento respectivo eh: %d\n", count+1, elemento1);
+        incrementar_iterador(conj2, &elemento2);
+        printf("Iterador do conjunto 2 em %d, o elemento respectivo eh: %d\n", count+1, elemento2);
     }
 
     printf("\n");
     printf("Incrementando os ponteiros até o limite...\n");
     printf("\n");
 
-    for (count = 1; count <= 91; count++) {
-        if (!incrementar_iterador(conj2, count)) {
+    for (count = 1; count <= 90; count++) {
+        if (!incrementar_iterador(conj2, &elemento1)) {
             printf("Chegou ao fim do conjunto!\n");
         }
     }
