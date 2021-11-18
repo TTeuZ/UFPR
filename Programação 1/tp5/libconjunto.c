@@ -182,6 +182,28 @@ conjunto_t * cria_interseccao (conjunto_t *c1, conjunto_t *c2) {
     } else return NULL;
 }
 
+/* O max do conjunto é equivalente a soma dos maximos de embos os conjuntos */
+conjunto_t * cria_uniao (conjunto_t *c1, conjunto_t *c2) {
+    conjunto_t *conj;
+    int count, max;
+    /* O max do conujnto de união pode ser no maximo a soma do maximo dos dois demais conjuntos */
+    max = (c1->max)+(c2->max);
+
+    /* Verifica se a criação do conjunto para a diferença ocorreu corretamente */
+    if ((conj = cria_conjunto (max)) != NULL) {
+        /* Inicia um for que vai até o ultimo elemento do maior conjunto */
+        for (count = 0; count < c1->card; count++) 
+            /* insere o elemento da vez no conjunto união ** regras do insere aplicadas ** */
+            insere_conjunto (conj, *(c1->v+count));
+
+        for (count = 0; count < c2->card; count++) 
+            /* insere o elemento da vez no conjunto união ** regras do insere aplicadas ** */
+            insere_conjunto (conj, *(c2->v+count));
+        
+        return conj;
+    } else return NULL;
+}
+
 /* cria uma copia do conjunto enviado como parametro */
 conjunto_t * cria_copia (conjunto_t *c) {
     conjunto_t *conj;
@@ -212,28 +234,6 @@ conjunto_t * cria_subconjunto (conjunto_t *c, int n) {
             if (insere_conjunto (conj, *(c->v+(rand() % (c->card+1)))))
                 count++;
         }
-        return conj;
-    } else return NULL;
-}
-
-/* O max do conjunto é equivalente a soma dos maximos de embos os conjuntos */
-conjunto_t * cria_uniao (conjunto_t *c1, conjunto_t *c2) {
-    conjunto_t *conj;
-    int count, max;
-    /* O max do conujnto de união pode ser no maximo a soma do maximo dos dois demais conjuntos */
-    max = (c1->max)+(c2->max);
-
-    /* Verifica se a criação do conjunto para a diferença ocorreu corretamente */
-    if ((conj = cria_conjunto (max)) != NULL) {
-        /* Inicia um for que vai até o ultimo elemento do maior conjunto */
-        for (count = 0; count < c1->card; count++) 
-            /* insere o elemento da vez no conjunto união ** regras do insere aplicadas ** */
-            insere_conjunto (conj, *(c1->v+count));
-
-        for (count = 0; count < c2->card; count++) 
-            /* insere o elemento da vez no conjunto união ** regras do insere aplicadas ** */
-            insere_conjunto (conj, *(c2->v+count));
-        
         return conj;
     } else return NULL;
 }
