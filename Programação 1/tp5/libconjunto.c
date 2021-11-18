@@ -72,6 +72,10 @@ conjunto_t * cria_conjunto (int max) {
 
 /* Libera os espaços alocados par ao conjunto. */
 void destroi_conjunto (conjunto_t *c) {
+    int count;
+    for (count = 0; count < c->card; count++) {
+        retira_conjunto(c, *(c->v+count));
+    }
     free (c->v);
     free (c);
 }
