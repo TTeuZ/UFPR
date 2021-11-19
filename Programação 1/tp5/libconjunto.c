@@ -219,8 +219,8 @@ conjunto_t * cria_copia (conjunto_t *c) {
         for (count = 0; count < c->card; count++) {
             insere_conjunto (conj, *(c->v+count));
         }
-    }
-    return conj;
+        return conj;
+    } else return 0;
 }
 
 conjunto_t * cria_subconjunto (conjunto_t *c, int n) {
