@@ -4,7 +4,7 @@
 
 /* Funções internas */
 /* -------------------------------------------------------------------------- */
-int insere_lista_vazia(lista_t *l, int elemento) {
+int insere_lista_vazia (lista_t *l, int elemento) {
     nodo_t *nodo;
     /* Testa se o malloc ocorreu certo para continuar */
     if ((nodo = (nodo_t *) malloc (sizeof (nodo_t)))) {
@@ -188,7 +188,7 @@ int retira_elemento_lista (lista_t *l, int elemento) {
         else {
             /* faz o prev do nodo da frente apontar para o prev do nodo que vai ser removido */
             nodo->prox->prev = nodo->prev;
-            /* faz o prro do nodo de traz apontar para o prox do nodo que vai ser removido */
+            /* faz o prox do nodo de traz apontar para o prox do nodo que vai ser removido */
             nodo->prev->prox = nodo->prox;
             l->tamanho--;
             free (nodo);

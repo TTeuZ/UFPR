@@ -3,7 +3,7 @@
 #include "liblista.h"
 
 int main() {
-    lista_t *list1, *list2, *list3; /* Declaração de 2 listas para teste */
+    lista_t *list1, *list2, *list3; /* Declaração de 3 listas para teste */
     int elemento; /* Variavel que recebe os elementos removidos das listas */
     int count; /* contador para os loops */
 
@@ -187,7 +187,7 @@ int main() {
     printf("Retirando os 3 ultimos elementos da lista 2...\n");
     printf("\n");
 
-    for (count = 1; count <= 3; count++) {
+    for (count = 1; count <= 4; count++) {
         if (retira_fim_lista (list2, &elemento)) /* inserindo numeros multiplos de 5 */
             printf("O numero %d foi removido da lista 2! O tamanhao da lista eh: %d\n", elemento, tamanho_lista(list2));
         else printf("Nao foi possivel remover o numero %d da lista 2\n", elemento);
@@ -198,10 +198,10 @@ int main() {
     printf("Retirando os 3 ultimos elementos da lista 1...\n");
     printf("\n");
 
-    for (count = 1; count <= 3; count++) {
+    for (count = 1; count <= 4; count++) {
         if (retira_fim_lista (list1, &elemento)) /* inserindo numeros multiplos de 5 */
             printf("O numero %d foi removido da lista 1! O tamanhao da lista eh: %d\n", elemento, tamanho_lista(list1));
-        else printf("Nao foi possivel remover o numero %d da lista 1\n", elemento);
+        else printf("Nao foi possivel remover o numero, lista 1 zerada\n");
     }
 
     printf("\n");
@@ -212,7 +212,7 @@ int main() {
     for (count = 1; count <= 3; count++) {
         if (retira_inicio_lista (list2, &elemento)) /* inserindo numeros multiplos de 5 */
             printf("O numero %d foi removido da lista 2! O tamanhao da lista eh: %d\n", elemento, tamanho_lista(list2));
-        else printf("Nao foi possivel remover o numero %d da lista 2\n", elemento);
+        else printf("Nao foi possivel remover o numero, lista 2 zerada\n");
     }
 
     printf("\n");
@@ -238,19 +238,19 @@ int main() {
     for (count = 3; count <= 4; count++) {
         if (retira_elemento_lista (list3, count*5)) /* inserindo numeros multiplos de 5 */
             printf("O numero %d foi removido corretamente da lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista(list3));
-        else printf("Nao foi possivel remover numero %d, o tamanho atual da lista 3 é: %d\n", count*5, tamanho_lista(list3));
+        else printf("Nao foi possivel remover o numero, lista 3 zerada\n");
     }
     printf("------------------------------------------------------------------\n");
     for (count = 5; count <= 6; count++) {
         if (retira_elemento_lista (list3, count*5)) /* inserindo numeros multiplos de 5 */
             printf("O numero %d foi removido corretamente da lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista(list3));
-        else printf("Nao foi possivel remover numero %d, o tamanho atual da lista 3 é: %d\n", count*5, tamanho_lista(list3));
+        else printf("Nao foi possivel remover o numero, lista 3 zerada\n");
     }
     printf("------------------------------------------------------------------\n");
-    for (count = 1; count <= 2; count++) {
+    for (count = 1; count <= 3; count++) {
         if (retira_elemento_lista (list3, count*5)) /* inserindo numeros multiplos de 5 */
             printf("O numero %d foi removido corretamente da lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista(list3));
-        else printf("Nao foi possivel remover numero %d, o tamanho atual da lista 3 é: %d\n", count*5, tamanho_lista(list3));
+        else printf("Nao foi possivel remover o numero, lista 3 zerada\n");
     }
 
     printf("\n");
