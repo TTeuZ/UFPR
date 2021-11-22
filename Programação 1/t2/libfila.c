@@ -135,6 +135,8 @@ int retira_atual_fila (fila_t *f, int *elemento) {
     nodo_f_t *nodo;
     /* Se a fila estiver vazia retorna 0 */
     if (fila_vazia (f)) return 0;
+    /* Se o atual estiver apontando para NULL retorna 0 */
+    if (f->atual == NULL) return 0;
 
     nodo = f->atual; /* Armazena o nodo atual */
     *elemento = nodo->chave; /* Retorna o elemento removido */
