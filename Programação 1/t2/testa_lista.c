@@ -12,11 +12,11 @@ int main() {
     printf("Testando a criacao das listas...\n");
     printf("\n");
 
-    list1 = cria_lista();
+    list1 = cria_lista ();
     printf("O endereço da primeira lista eh: %p\n", &list1);
-    list2 = cria_lista();
+    list2 = cria_lista ();
     printf("O endereço da primeira lista eh: %p\n", &list2);
-    list3 = cria_lista();
+    list3 = cria_lista ();
     printf("O endereço da primeira lista eh: %p\n", &list3);
 
     printf("\n");
@@ -25,19 +25,19 @@ int main() {
     printf("\n");
 
     if (lista_vazia (list1))
-        printf("A lista 1 esta vazia, seu tamanho eh: %d\n", tamanho_lista(list1));
+        printf("A lista 1 esta vazia, seu tamanho eh: %d\n", tamanho_lista (list1));
     else 
-        printf("A lista 1 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista(list1));
+        printf("A lista 1 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista (list1));
 
     if (lista_vazia (list2))
-        printf("A lista 2 esta vazia, seu tamanho eh: %d\n", tamanho_lista(list2));
+        printf("A lista 2 esta vazia, seu tamanho eh: %d\n", tamanho_lista (list2));
     else 
-        printf("A lista 2 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista(list2));
+        printf("A lista 2 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista (list2));
 
     if (lista_vazia (list3))
-        printf("A lista 2 esta vazia, seu tamanho eh: %d\n", tamanho_lista(list3));
+        printf("A lista 2 esta vazia, seu tamanho eh: %d\n", tamanho_lista (list3));
     else 
-        printf("A lista 2 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista(list3));
+        printf("A lista 2 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista (list3));
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -46,8 +46,8 @@ int main() {
 
     for (count = 1; count <= 3; count++) {
         if (insere_inicio_lista (list1, count*2)) /* inserindo numeros multiplos de 2 */
-            printf("O numero %d foi inserido corretamente na lista 1, o tamanho atual da lista é: %d\n", count*2, tamanho_lista(list1));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 1 é: %d\n", count*2, tamanho_lista(list1));
+            printf("O numero %d foi inserido corretamente na lista 1, o tamanho atual da lista é: %d\n", count*2, tamanho_lista (list1));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 1 é: %d\n", count*2, tamanho_lista (list1));
     }
 
     printf("\n");
@@ -57,8 +57,8 @@ int main() {
 
     for (count = 1; count <= 3; count++) {
         if (insere_fim_lista (list2, count*3)) /* inserindo numeros multiplos de 3 */
-            printf("O numero %d foi inserido corretamente na lista 2, o tamanho atual da lista é: %d\n", count*3, tamanho_lista(list2));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 2 é: %d\n", count*3, tamanho_lista(list2));
+            printf("O numero %d foi inserido corretamente na lista 2, o tamanho atual da lista é: %d\n", count*3, tamanho_lista (list2));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 2 é: %d\n", count*3, tamanho_lista (list2));
     }
 
     printf("\n");
@@ -85,8 +85,8 @@ int main() {
 
     for (count = 4; count <= 6; count++) {
         if (insere_fim_lista (list1, count*2)) /* inserindo numeros multiplos de 2 */
-            printf("O numero %d foi inserido corretamente na lista 1, o tamanho atual da lista é: %d\n", count*2, tamanho_lista(list1));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 1 é: %d\n", count*2, tamanho_lista(list1));
+            printf("O numero %d foi inserido corretamente na lista 1, o tamanho atual da lista é: %d\n", count*2, tamanho_lista (list1));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 1 é: %d\n", count*2, tamanho_lista (list1));
     }
 
     printf("\n");
@@ -96,8 +96,8 @@ int main() {
 
     for (count = 4; count <= 6; count++) {
         if (insere_inicio_lista (list2, count*3)) /* inserindo numeros multiplos de 3 */
-            printf("O numero %d foi inserido corretamente na lista 2, o tamanho atual da lista é: %d\n", count*3, tamanho_lista(list2));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 2 é: %d\n", count*3, tamanho_lista(list2));
+            printf("O numero %d foi inserido corretamente na lista 2, o tamanho atual da lista é: %d\n", count*3, tamanho_lista (list2));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 2 é: %d\n", count*3, tamanho_lista (list2));
     }
 
     printf("\n");
@@ -142,22 +142,22 @@ int main() {
     printf("Inserindo elementos 25 e 30 na lista 3...\n");
     for (count = 5; count <= 6; count++) {
         if (insere_ordenado_lista (list3, count*5)) /* inserindo numeros multiplos de 5 */
-            printf("O numero %d foi inserido corretamente na lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista(list3));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 3 é: %d\n", count*5, tamanho_lista(list3));
+            printf("O numero %d foi inserido corretamente na lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista (list3));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 3 é: %d\n", count*5, tamanho_lista (list3));
     }
     printf("------------------------------------------------------------------\n");
     printf("Inserindo elementos 5 e 10 na lista 3...\n");
     for (count = 1; count <= 2; count++) {
         if (insere_ordenado_lista (list3, count*5)) /* inserindo numeros multiplos de 5 */
-            printf("O numero %d foi inserido corretamente na lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista(list3));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 3 é: %d\n", count*5, tamanho_lista(list3));
+            printf("O numero %d foi inserido corretamente na lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista (list3));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 3 é: %d\n", count*5, tamanho_lista (list3));
     }
     printf("------------------------------------------------------------------\n");
     printf("Inserindo elementos 15 e 20 na lista 3...\n");
     for (count = 3; count <= 4; count++) {
         if (insere_ordenado_lista (list3, count*5)) /* inserindo numeros multiplos de 5 */
-            printf("O numero %d foi inserido corretamente na lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista(list3));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 3 é: %d\n", count*5, tamanho_lista(list3));
+            printf("O numero %d foi inserido corretamente na lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista (list3));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da lista 3 é: %d\n", count*5, tamanho_lista (list3));
     }
 
     printf("\n");
@@ -178,7 +178,7 @@ int main() {
 
     for (count = 1; count <= 3; count++) {
         if (retira_inicio_lista (list1, &elemento)) /* inserindo numeros multiplos de 5 */
-            printf("O numero %d foi removido da lista 1! O tamanhao da lista eh: %d\n", elemento, tamanho_lista(list1));
+            printf("O numero %d foi removido da lista 1! O tamanhao da lista eh: %d\n", elemento, tamanho_lista (list1));
         else printf("Nao foi possivel remover o numero %d da lista 1\n", elemento);
     }
 
@@ -189,7 +189,7 @@ int main() {
 
     for (count = 1; count <= 4; count++) {
         if (retira_fim_lista (list2, &elemento)) /* inserindo numeros multiplos de 5 */
-            printf("O numero %d foi removido da lista 2! O tamanhao da lista eh: %d\n", elemento, tamanho_lista(list2));
+            printf("O numero %d foi removido da lista 2! O tamanhao da lista eh: %d\n", elemento, tamanho_lista (list2));
         else printf("Nao foi possivel remover o numero %d da lista 2\n", elemento);
     }
 
@@ -200,7 +200,7 @@ int main() {
 
     for (count = 1; count <= 4; count++) {
         if (retira_fim_lista (list1, &elemento)) /* inserindo numeros multiplos de 5 */
-            printf("O numero %d foi removido da lista 1! O tamanhao da lista eh: %d\n", elemento, tamanho_lista(list1));
+            printf("O numero %d foi removido da lista 1! O tamanhao da lista eh: %d\n", elemento, tamanho_lista (list1));
         else printf("Nao foi possivel remover o numero, lista 1 zerada\n");
     }
 
@@ -211,7 +211,7 @@ int main() {
 
     for (count = 1; count <= 3; count++) {
         if (retira_inicio_lista (list2, &elemento)) /* inserindo numeros multiplos de 5 */
-            printf("O numero %d foi removido da lista 2! O tamanhao da lista eh: %d\n", elemento, tamanho_lista(list2));
+            printf("O numero %d foi removido da lista 2! O tamanhao da lista eh: %d\n", elemento, tamanho_lista (list2));
         else printf("Nao foi possivel remover o numero, lista 2 zerada\n");
     }
 
@@ -221,14 +221,14 @@ int main() {
     printf("\n");
 
     if (lista_vazia (list1))
-        printf("A lista 1 esta vazia, seu tamanho eh: %d\n", tamanho_lista(list1));
+        printf("A lista 1 esta vazia, seu tamanho eh: %d\n", tamanho_lista (list1));
     else 
-        printf("A lista 1 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista(list1));
+        printf("A lista 1 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista (list1));
 
     if (lista_vazia (list2))
-        printf("A lista 2 esta vazia, seu tamanho eh: %d\n", tamanho_lista(list2));
+        printf("A lista 2 esta vazia, seu tamanho eh: %d\n", tamanho_lista (list2));
     else 
-        printf("A lista 2 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista(list2));
+        printf("A lista 2 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista (list2));
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -237,19 +237,19 @@ int main() {
 
     for (count = 3; count <= 4; count++) {
         if (retira_elemento_lista (list3, count*5)) /* inserindo numeros multiplos de 5 */
-            printf("O numero %d foi removido corretamente da lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista(list3));
+            printf("O numero %d foi removido corretamente da lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista (list3));
         else printf("Nao foi possivel remover o numero, lista 3 zerada\n");
     }
     printf("------------------------------------------------------------------\n");
     for (count = 5; count <= 6; count++) {
         if (retira_elemento_lista (list3, count*5)) /* inserindo numeros multiplos de 5 */
-            printf("O numero %d foi removido corretamente da lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista(list3));
+            printf("O numero %d foi removido corretamente da lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista (list3));
         else printf("Nao foi possivel remover o numero, lista 3 zerada\n");
     }
     printf("------------------------------------------------------------------\n");
     for (count = 1; count <= 3; count++) {
         if (retira_elemento_lista (list3, count*5)) /* inserindo numeros multiplos de 5 */
-            printf("O numero %d foi removido corretamente da lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista(list3));
+            printf("O numero %d foi removido corretamente da lista 3, o tamanho atual da lista é: %d\n", count*5, tamanho_lista (list3));
         else printf("Nao foi possivel remover o numero, lista 3 zerada\n");
     }
 
@@ -259,9 +259,9 @@ int main() {
     printf("\n");
 
     if (lista_vazia (list3))
-        printf("A lista 2 esta vazia, seu tamanho eh: %d\n", tamanho_lista(list3));
+        printf("A lista 2 esta vazia, seu tamanho eh: %d\n", tamanho_lista (list3));
     else 
-        printf("A lista 2 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista(list3));
+        printf("A lista 2 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista (list3));
 
     printf("\n"); 
     printf("------------------------------------------------------------------\n");

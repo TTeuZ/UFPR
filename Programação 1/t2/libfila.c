@@ -69,7 +69,7 @@ int tamanho_fila (fila_t *f) {
 int insere_fila (fila_t *f, int elemento) {
     nodo_f_t *nodo;
     /* Se a minha fila for vazia, chama uma função especifica para esse caso */
-    if (fila_vazia (f)) return insere_fila_vazia(f, elemento);
+    if (fila_vazia (f)) return insere_fila_vazia (f, elemento);
     /* Testa se o malloc ocorreu certo para continuar */
     if ((nodo = (nodo_f_t *) malloc (sizeof (nodo_f_t)))) {
         /* Setando os valores e apontadores do novo nodo */

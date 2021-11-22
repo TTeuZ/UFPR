@@ -19,7 +19,7 @@ int busca_binaria (int x, conjunto_t *c) {
 }
 
 /* Insere o elemento x no conjunto, de maneira a manter ele ordenado. */
-void sort_insertion(int x, conjunto_t *c) {
+void sorted_insertion (int x, conjunto_t *c) {
     int count;
     count = c->card;
 
@@ -39,7 +39,7 @@ void sort_insertion(int x, conjunto_t *c) {
 }
 
 /* Remove o elemento x no conjunto, de maneira a manter ele ordenado. */
-void sort_remove(int x, conjunto_t *c) {
+void sorted_remove (int x, conjunto_t *c) {
     int pos, count;
     /* busca a posição que o elemento no conjunto precisa somar +1 porque a busca binaria retorna exatamente a posição, e precisamos de 1 acima*/
     pos = busca_binaria (x, c)+1;
@@ -56,12 +56,12 @@ void sort_remove(int x, conjunto_t *c) {
 conjunto_t * cria_conjunto (int max) {
     conjunto_t *conj;
     /* Testa o malloc para toda a estrutura do conjunto e inicia as variaveis */
-    if ((conj = malloc(sizeof(conjunto_t)))) {
+    if ((conj = malloc (sizeof(conjunto_t)))) {
         conj->max = max;
         conj->card = 0;
         /* Testa o malloc para o vetor do conjunto */
         /* Em caso de falha livra o espaço posteriormente alocado e retorna 0 */
-        if ((conj->v = (int*) malloc(sizeof(int)*(max+1))))
+        if ((conj->v = (int*) malloc (sizeof(int)*(max+1))))
             return conj;
         else {
             free (conj);
@@ -74,7 +74,7 @@ conjunto_t * cria_conjunto (int max) {
 conjunto_t * destroi_conjunto (conjunto_t *c) {
     int count;
     for (count = 0; count < c->card; count++) {
-        retira_conjunto(c, *(c->v+count));
+        retira_conjunto (c, *(c->v+count));
     }
     free (c->v);
     free (c);
@@ -98,7 +98,7 @@ int insere_conjunto (conjunto_t *c, int elemento) {
         /* verifica se adicionarmor o elemento a tamanho maximo do conjunto nao sera excedido*/
         if (c->card + 1 > c->max) return -1;
         else {
-           sort_insertion (elemento, c); /* insere o elemento */
+           sorted_insertion (elemento, c); /* insere o elemento */
            c->card++;
            return 1;
         }
@@ -109,7 +109,7 @@ int insere_conjunto (conjunto_t *c, int elemento) {
 int retira_conjunto (conjunto_t *c, int elemento) {
     /* verifica se o elemento existe no conjunto */
     if (busca_binaria (elemento, c) != -1) {
-        sort_remove (elemento, c); /* remove o elemento */
+        sorted_remove (elemento, c); /* remove o elemento */
         c->card--;
         return 1;
     } else return 0;
@@ -130,7 +130,7 @@ int contido (conjunto_t *c1, conjunto_t *c2) {
     else {
         /* verifica se cada elemento de c1 esta em c2 */
         for (count = 0; count < c1->card; count++) 
-            if (busca_binaria(*(c1->v+count), c2) == -1) return 0;
+            if (busca_binaria (*(c1->v+count), c2) == -1) return 0;
         return 1;
     }
 }
@@ -191,7 +191,7 @@ conjunto_t * cria_uniao (conjunto_t *c1, conjunto_t *c2) {
     conjunto_t *conj;
     int count, max;
     /* O max do conujnto de união pode ser no maximo a soma do maximo dos dois demais conjuntos */
-    max = (c1->max)+(c2->max);
+    max = (c1->max) + (c2->max);
 
     /* Verifica se a criação do conjunto para a diferença ocorreu corretamente */
     if ((conj = cria_conjunto (max)) != NULL) {
@@ -232,7 +232,7 @@ conjunto_t * cria_subconjunto (conjunto_t *c, int n) {
     /* consideramos o max do subconjunto sendo o max do conjunto enviado */
     if ((conj = cria_conjunto (c->max)) != NULL) {
         if (c->card == 0) return conj;
-        srand(c->card);
+        srand (c->card);
         while (count <= n) {
             /* Se a inserção ocorrer ok, ou seja, o elemento nao existir no conjunto, soma + 1 no count */
             if (insere_conjunto (conj, *(c->v+(rand() % (c->card+1)))))
@@ -246,8 +246,8 @@ conjunto_t * cria_subconjunto (conjunto_t *c, int n) {
 void imprime (conjunto_t *c) {
     int count;
     for (count = 0; count < c->card; count++) 
-        printf(" %d ", *(c->v+count));
-    printf("\n");
+        printf (" %d ", *(c->v+count));
+    printf ("\n");
 }
 
 int redimensiona (conjunto_t *c) {

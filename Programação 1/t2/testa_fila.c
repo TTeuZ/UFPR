@@ -12,9 +12,9 @@ int main() {
     printf("Testando a criacao das filas..\n");
     printf("\n");
 
-    fila1 = cria_fila();
+    fila1 = cria_fila ();
     printf("O endereço da primeira fila eh: %p\n", &fila1);
-    fila2 = cria_fila();
+    fila2 = cria_fila ();
     printf("O endereço da primeira fila eh: %p\n", &fila2);
 
     printf("\n");
@@ -24,14 +24,14 @@ int main() {
 
     for (count = 1; count <= 6; count++) {
         if (insere_fila (fila1, count*2)) /* inserindo numeros multiplos de 2 */
-            printf("O numero %d foi inserido corretamente na fila 1, o tamanho atual da fila é: %d\n", count*2, tamanho_fila(fila1));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da fila 1 é: %d\n", count*2, tamanho_fila(fila1));
+            printf("O numero %d foi inserido corretamente na fila 1, o tamanho atual da fila é: %d\n", count*2, tamanho_fila (fila1));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da fila 1 é: %d\n", count*2, tamanho_fila (fila1));
     }
     printf("------------------------------------------------------------------\n");
     for (count = 1; count <= 6; count++) {
         if (insere_fila (fila2, count*3)) /* inserindo numeros multiplos de 3 */
-            printf("O numero %d foi inserido corretamente na fila 2, o tamanho atual da fila é: %d\n", count*3, tamanho_fila(fila2));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da fila 2 é: %d\n", count*3, tamanho_fila(fila2));
+            printf("O numero %d foi inserido corretamente na fila 2, o tamanho atual da fila é: %d\n", count*3, tamanho_fila (fila2));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da fila 2 é: %d\n", count*3, tamanho_fila (fila2));
     }
 
     printf("\n");
@@ -76,14 +76,14 @@ int main() {
 
     for (count = 1; count <= 6; count++) {
         if (insere_fila (fila1, count*2)) /* inserindo numeros multiplos de 2 */
-            printf("O numero %d foi inserido corretamente na fila 1, o tamanho atual da fila é: %d\n", count*2, tamanho_fila(fila1));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da fila 1 é: %d\n", count*2, tamanho_fila(fila1));
+            printf("O numero %d foi inserido corretamente na fila 1, o tamanho atual da fila é: %d\n", count*2, tamanho_fila (fila1));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da fila 1 é: %d\n", count*2, tamanho_fila (fila1));
     }
     printf("------------------------------------------------------------------\n");
     for (count = 1; count <= 6; count++) {
         if (insere_fila (fila2, count*3)) /* inserindo numeros multiplos de 3 */
-            printf("O numero %d foi inserido corretamente na fila 2, o tamanho atual da fila é: %d\n", count*3, tamanho_fila(fila2));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da fila 2 é: %d\n", count*3, tamanho_fila(fila2));
+            printf("O numero %d foi inserido corretamente na fila 2, o tamanho atual da fila é: %d\n", count*3, tamanho_fila (fila2));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da fila 2 é: %d\n", count*3, tamanho_fila (fila2));
     }
 
     printf("\n");
@@ -204,14 +204,14 @@ int main() {
 
     for (count = 1; count <= 6; count++) {
         if (insere_fila (fila1, count*2)) /* inserindo numeros multiplos de 2 */
-            printf("O numero %d foi inserido corretamente na fila 1, o tamanho atual da fila é: %d\n", count*2, tamanho_fila(fila1));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da fila 1 é: %d\n", count*2, tamanho_fila(fila1));
+            printf("O numero %d foi inserido corretamente na fila 1, o tamanho atual da fila é: %d\n", count*2, tamanho_fila (fila1));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da fila 1 é: %d\n", count*2, tamanho_fila (fila1));
     }
     printf("------------------------------------------------------------------\n");
     for (count = 1; count <= 6; count++) {
         if (insere_fila (fila2, count*3)) /* inserindo numeros multiplos de 3 */
-            printf("O numero %d foi inserido corretamente na fila 2, o tamanho atual da fila é: %d\n", count*3, tamanho_fila(fila2));
-        else printf("Nao foi possivel inserir numero %d, o tamanho atual da fila 2 é: %d\n", count*3, tamanho_fila(fila2));
+            printf("O numero %d foi inserido corretamente na fila 2, o tamanho atual da fila é: %d\n", count*3, tamanho_fila (fila2));
+        else printf("Nao foi possivel inserir numero %d, o tamanho atual da fila 2 é: %d\n", count*3, tamanho_fila (fila2));
     }
 
     printf("\n");

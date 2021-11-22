@@ -39,7 +39,7 @@ lista_t * cria_lista () {
 
 lista_t * destroi_lista (lista_t *l) {
     nodo_t *nodo;
-    if (lista_vazia(l)) {
+    if (lista_vazia (l)) {
         free (l); /* Libero o espaço alocado para a estrutura da lista */
         return NULL;
     }
@@ -68,7 +68,7 @@ int tamanho_lista (lista_t *l) {
 int insere_inicio_lista (lista_t *l, int elemento) {
     nodo_t *nodo;
     /* Se a minha lista for vazia, chama uma função especifica para esse caso */
-    if (lista_vazia (l)) return insere_lista_vazia(l, elemento);
+    if (lista_vazia (l)) return insere_lista_vazia (l, elemento);
     /* Testa se o malloc ocorreu certo para continuar */
     if ((nodo = (nodo_t *) malloc (sizeof (nodo_t)))) {
         /* Setando os valores e apontadores do novo nodo */
@@ -87,7 +87,7 @@ int insere_inicio_lista (lista_t *l, int elemento) {
 int insere_fim_lista (lista_t *l, int elemento) {
     nodo_t *nodo;
     /* Se a minha lista for vazia, chama uma função especifica para esse caso */
-    if (lista_vazia (l)) return insere_lista_vazia(l, elemento);
+    if (lista_vazia (l)) return insere_lista_vazia (l, elemento);
     /* Testa se o malloc ocorreu certo para continuar */
     if ((nodo = (nodo_t *) malloc (sizeof (nodo_t)))) {
         /* Setando os valores e apontadores do novo nodo */
@@ -106,7 +106,7 @@ int insere_fim_lista (lista_t *l, int elemento) {
 int insere_ordenado_lista (lista_t *l, int elemento) {
     nodo_t *nodo, *nodo_ante, *nodo_atual;
     /* Se a minha lista for vazia, chama uma função especifica para esse caso */
-    if (lista_vazia (l)) return insere_lista_vazia(l, elemento);    
+    if (lista_vazia (l)) return insere_lista_vazia (l, elemento);    
 
     nodo_atual = l->ini;
     /* While par encontrar a posicao que o elemento deve ser inserido */
@@ -140,7 +140,7 @@ int insere_ordenado_lista (lista_t *l, int elemento) {
 int retira_inicio_lista (lista_t *l, int *elemento) {
     nodo_t *nodo;
     /* Se a lista estiver vazia retorna 0 */
-    if (lista_vazia(l)) return 0;
+    if (lista_vazia (l)) return 0;
     nodo = l->ini; /* Armazena o antigo nodo de inicio */
     l->ini = nodo->prox; /* Aponta o ini para o prox nodo */
     /* Se a lista nao tiver ficado vazia, aponta o prev para NULL */
@@ -155,7 +155,7 @@ int retira_inicio_lista (lista_t *l, int *elemento) {
 int retira_fim_lista (lista_t *l, int *elemento) {
     nodo_t *nodo;
     /* Se a lista estiver vazia retorna 0 */
-    if (lista_vazia(l)) return 0;
+    if (lista_vazia (l)) return 0;
     nodo = l->fim; /* Armazena o antigo nodo de fim */
     l->fim = nodo->prev; /* Aponta o fim para o nodo anterior */
     /* Se a lista nao tiver ficado vazia, aponta o prox para NULL */
@@ -171,7 +171,7 @@ int retira_elemento_lista (lista_t *l, int elemento) {
     nodo_t *nodo;
     int temp; /* inteiro para receber os retornos do retira inicio/fim (nao utilizado) */
     /* Se a lista esta vazia, retorna 0 */
-    if (lista_vazia(l)) return 0;
+    if (lista_vazia (l)) return 0;
 
     nodo = l->ini;
     /* While par encontrar a posicao que o elemento deve ser inserido */
@@ -200,7 +200,7 @@ int retira_elemento_lista (lista_t *l, int elemento) {
 int pertence_lista (lista_t *l, int elemento) {
     nodo_t *nodo;
     /* Se a lista esta vazia, retorna 0 */
-    if (lista_vazia(l)) return 0;
+    if (lista_vazia (l)) return 0;
     nodo = l->ini; /* Inicializa com a primeira posicao */
     /* Passa por todos os elementos da lista, até seu final, ou até encontrar um nodo com o mesmo elemento procurado */
     while (nodo != NULL && nodo->elemento != elemento) 

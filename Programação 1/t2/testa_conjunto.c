@@ -18,11 +18,11 @@ int main () {
     printf("Testando a criação dos conjuntos...\n");
     printf("\n");
 
-    conj = cria_conjunto(100);
+    conj = cria_conjunto (100);
     printf("O endereço do primeiro conjunto é: %p\n", &conj);
-    conj2 = cria_conjunto(50);
+    conj2 = cria_conjunto (50);
     printf("O endereço do segundo conjunto é: %p\n", &conj2);
-    conj3 = cria_conjunto(10);
+    conj3 = cria_conjunto (10);
     printf("O endereço do terceiro conjunto é: %p\n", &conj3);
 
     printf("\n");
@@ -30,15 +30,15 @@ int main () {
     printf("validando que o conjunto está vazio...\n");
     printf("\n");
 
-    if (conjunto_vazio(conj) == 1) 
-        printf("O Conjunto 1 está vazio!, sua cardinalidade é %d\n", cardinalidade(conj));
-    else printf("O Conjunto 1 não está vazio!, sua cardinalidade é %d\n", cardinalidade(conj));
-    if (conjunto_vazio(conj2) == 1) 
-        printf("O Conjunto 2 está vazio!, sua cardinalidade é %d\n", cardinalidade(conj2));
-    else printf("O Conjunto 2 não está vazio!, sua cardinalidade é %d\n", cardinalidade(conj2));
-    if (conjunto_vazio(conj3) == 1) 
-        printf("O Conjunto 3 está vazio!, sua cardinalidade é %d\n", cardinalidade(conj3));
-    else printf("O Conjunto 3 não está vazio!, sua cardinalidade é %d\n", cardinalidade(conj3));
+    if (conjunto_vazio (conj) == 1) 
+        printf("O Conjunto 1 está vazio!, sua cardinalidade é %d\n", cardinalidade (conj));
+    else printf("O Conjunto 1 não está vazio!, sua cardinalidade é %d\n", cardinalidade (conj));
+    if (conjunto_vazio (conj2) == 1) 
+        printf("O Conjunto 2 está vazio!, sua cardinalidade é %d\n", cardinalidade (conj2));
+    else printf("O Conjunto 2 não está vazio!, sua cardinalidade é %d\n", cardinalidade (conj2));
+    if (conjunto_vazio (conj3) == 1) 
+        printf("O Conjunto 3 está vazio!, sua cardinalidade é %d\n", cardinalidade (conj3));
+    else printf("O Conjunto 3 não está vazio!, sua cardinalidade é %d\n", cardinalidade (conj3));
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -57,26 +57,26 @@ int main () {
     printf("validando que o conjunto não está vazio...\n");
     printf("\n");
 
-    if (conjunto_vazio(conj) == 1) 
-        printf("O Conjunto 1 está vazio!, sua cardinalidade é %d\n", cardinalidade(conj));
-    else printf("O Conjunto 1 não está vazio!, sua cardinalidade é %d\n", cardinalidade(conj));
-    if (conjunto_vazio(conj2) == 1) 
-        printf("O Conjunto 2 está vazio!, sua cardinalidade é %d\n", cardinalidade(conj2));
-    else printf("O Conjunto 2 não está vazio!, sua cardinalidade é %d\n", cardinalidade(conj2));
-    if (conjunto_vazio(conj3) == 1) 
-        printf("O Conjunto 3 está vazio!, sua cardinalidade é %d\n", cardinalidade(conj3));
-    else printf("O Conjunto 3 não está vazio!, sua cardinalidade é %d\n", cardinalidade(conj3));
+    if (conjunto_vazio (conj) == 1) 
+        printf("O Conjunto 1 está vazio!, sua cardinalidade é %d\n", cardinalidade (conj));
+    else printf("O Conjunto 1 não está vazio!, sua cardinalidade é %d\n", cardinalidade (conj));
+    if (conjunto_vazio (conj2) == 1) 
+        printf("O Conjunto 2 está vazio!, sua cardinalidade é %d\n", cardinalidade (conj2));
+    else printf("O Conjunto 2 não está vazio!, sua cardinalidade é %d\n", cardinalidade (conj2));
+    if (conjunto_vazio (conj3) == 1) 
+        printf("O Conjunto 3 está vazio!, sua cardinalidade é %d\n", cardinalidade (conj3));
+    else printf("O Conjunto 3 não está vazio!, sua cardinalidade é %d\n", cardinalidade (conj3));
 
     printf("------------------------------------------------------------------\n");
     printf("Imprimindo conjuntos apos a inserção da primeira metade...\n");
     printf("\n");
 
     printf("Conjunto 1: ");
-    imprime(conj);
+    imprime (conj);
     printf("Conjunto 2: ");
-    imprime(conj2);
+    imprime (conj2);
     printf("Conjunto 3: ");
-    imprime(conj3);
+    imprime (conj3);
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -87,21 +87,21 @@ int main () {
         ret = insere_conjunto (conj, count);
         if (ret == -1) 
             printf("Não é possivel adicionar o elemento, conjunto cheio, retorno: %d\n", ret);
-        else if(ret == 0)
+        else if (ret == 0)
             printf("Não é possivel adicionar o elemento, elemento ja existente, retorno: %d\n", ret);
     }
     for (count = 0; count < 2; count++) { /* inserindo elementos diferentes */
         ret = insere_conjunto (conj2, count*2);
         if (ret == -1) 
             printf("Não é possivel adicionar o elemento, conjunto cheio, retorno: %d\n", ret);
-        else if(ret == 0)
+        else if (ret == 0)
             printf("Não é possivel adicionar o elemento, elemento ja existente, retorno: %d\n", ret);
     }
     for (count = 0; count < 2; count++) { /* inserindo elementos diferentes */
         ret = insere_conjunto (conj3,count*5);
         if (ret == -1) 
             printf("Não é possivel adicionar o elemento, conjunto cheio, retorno: %d\n", ret);
-        else if(ret == 0)
+        else if (ret == 0)
             printf("Não é possivel adicionar o elemento, elemento ja existente, retorno: %d\n", ret);
     }
 
@@ -123,9 +123,9 @@ int main () {
     printf("\n");
 
     printf("Conjunto 2: ");
-    imprime(conj2);
+    imprime (conj2);
     printf("Conjunto 3: ");
-    imprime(conj3);
+    imprime (conj3);
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -145,9 +145,9 @@ int main () {
     printf("\n");
 
     printf("Conjunto 2: ");
-    imprime(conj2);
+    imprime (conj2);
     printf("Conjunto 3: ");
-    imprime(conj3);
+    imprime (conj3);
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -166,15 +166,15 @@ int main () {
     printf("validando que o conjunto está novamente vazio...\n");
     printf("\n");
 
-    if (conjunto_vazio(conj) == 1) 
-        printf("O Conjunto 1 está vazio!, sua cardinalidade é %d\n", cardinalidade(conj));
-    else printf("O Conjunto 1 não está vazio!, sua cardinalidade é %d\n", cardinalidade(conj));
-    if (conjunto_vazio(conj2) == 1) 
-        printf("O Conjunto 2 está vazio!, sua cardinalidade é %d\n", cardinalidade(conj2));
-    else printf("O Conjunto 2 não está vazio!, sua cardinalidade é %d\n", cardinalidade(conj2));
-    if (conjunto_vazio(conj3) == 1) 
-        printf("O Conjunto 3 está vazio!, sua cardinalidade é %d\n", cardinalidade(conj3));
-    else printf("O Conjunto 3 não está vazio!, sua cardinalidade é %d\n", cardinalidade(conj3));
+    if (conjunto_vazio (conj) == 1) 
+        printf("O Conjunto 1 está vazio!, sua cardinalidade é %d\n", cardinalidade (conj));
+    else printf("O Conjunto 1 não está vazio!, sua cardinalidade é %d\n", cardinalidade (conj));
+    if (conjunto_vazio (conj2) == 1) 
+        printf("O Conjunto 2 está vazio!, sua cardinalidade é %d\n", cardinalidade (conj2));
+    else printf("O Conjunto 2 não está vazio!, sua cardinalidade é %d\n", cardinalidade (conj2));
+    if (conjunto_vazio (conj3) == 1) 
+        printf("O Conjunto 3 está vazio!, sua cardinalidade é %d\n", cardinalidade (conj3));
+    else printf("O Conjunto 3 não está vazio!, sua cardinalidade é %d\n", cardinalidade (conj3));
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -182,11 +182,11 @@ int main () {
     printf("\n");
 
     printf("Conjunto 1: ");
-    imprime(conj);
+    imprime (conj);
     printf("Conjunto 2: ");
-    imprime(conj2);
+    imprime (conj2);
     printf("Conjunto 3: ");
-    imprime(conj3);
+    imprime (conj3);
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -194,7 +194,7 @@ int main () {
     printf("\n");
 
     for (count = 0; count < 2; count++) {
-        if (retira_conjunto(conj, count))
+        if (retira_conjunto (conj, count))
             printf("Elemento retirado com sucesso!\n");
         else printf("Impossivel retirar! Conjunto vazio ou elemento inexistente!\n");
     }
@@ -204,10 +204,10 @@ int main () {
     printf("Criando subconjunto com o conjunto vazio...\n");
     printf("\n");
 
-    subconj1 = cria_subconjunto(conj, 10);
+    subconj1 = cria_subconjunto (conj, 10);
     printf("validando que o conjunto retornado é vazio...\n");
-    if (conjunto_vazio(conj) == 1) 
-        printf("O Sub-conjunto 1 está vazio!, sua cardinalidade é %d\n", cardinalidade(subconj1));
+    if (conjunto_vazio (conj) == 1) 
+        printf("O Sub-conjunto 1 está vazio!, sua cardinalidade é %d\n", cardinalidade (subconj1));
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -226,15 +226,15 @@ int main () {
     printf("validando que o conjunto não está novamente vazio...\n");
     printf("\n");
 
-    if (conjunto_vazio(conj) == 1) 
-        printf("O Conjunto 1 está vazio!, sua cardinalidade é %d\n", cardinalidade(conj));
-    else printf("O Conjunto 1 não está vazio!, sua cardinalidade é %d\n", cardinalidade(conj));
-    if (conjunto_vazio(conj2) == 1) 
-        printf("O Conjunto 2 está vazio!, sua cardinalidade é %d\n", cardinalidade(conj2));
-    else printf("O Conjunto 2 não está vazio!, sua cardinalidade é %d\n", cardinalidade(conj2));
-    if (conjunto_vazio(conj3) == 1) 
-        printf("O Conjunto 3 está vazio!, sua cardinalidade é %d\n", cardinalidade(conj3));
-    else printf("O Conjunto 3 não está vazio!, sua cardinalidade é %d\n", cardinalidade(conj3));
+    if (conjunto_vazio (conj) == 1) 
+        printf("O Conjunto 1 está vazio!, sua cardinalidade é %d\n", cardinalidade (conj));
+    else printf("O Conjunto 1 não está vazio!, sua cardinalidade é %d\n", cardinalidade (conj));
+    if (conjunto_vazio (conj2) == 1) 
+        printf("O Conjunto 2 está vazio!, sua cardinalidade é %d\n", cardinalidade (conj2));
+    else printf("O Conjunto 2 não está vazio!, sua cardinalidade é %d\n", cardinalidade (conj2));
+    if (conjunto_vazio (conj3) == 1) 
+        printf("O Conjunto 3 está vazio!, sua cardinalidade é %d\n", cardinalidade (conj3));
+    else printf("O Conjunto 3 não está vazio!, sua cardinalidade é %d\n", cardinalidade (conj3));
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -242,11 +242,11 @@ int main () {
     printf("\n");
 
     printf("Conjunto 1: ");
-    imprime(conj);
+    imprime (conj);
     printf("Conjunto 2: ");
-    imprime(conj2);
+    imprime (conj2);
     printf("Conjunto 3: ");
-    imprime(conj3);
+    imprime (conj3);
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -257,21 +257,21 @@ int main () {
         ret = insere_conjunto (conj, (count+1)*100);
         if (ret == -1) 
             printf("Não é possivel adicionar o elemento, conjunto cheio, retorno: %d\n", ret);
-        else if(ret == 0)
+        else if (ret == 0)
             printf("Não é possivel adicionar o elemento, elemento ja existente, retorno: %d\n", ret);
     }
     for (count = 0; count < 2; count++) { /* inserindo elementos diferentes */
         ret = insere_conjunto (conj2, (count+1)*100);
         if (ret == -1) 
             printf("Não é possivel adicionar o elemento, conjunto cheio, retorno: %d\n", ret);
-        else if(ret == 0)
+        else if (ret == 0)
             printf("Não é possivel adicionar o elemento, elemento ja existente, retorno: %d\n", ret);
     }
     for (count = 0; count < 2; count++) { /* inserindo elementos diferentes */
         ret = insere_conjunto (conj3, (count+1)*100);
         if (ret == -1) 
             printf("Não é possivel adicionar o elemento, conjunto cheio, retorno: %d\n", ret);
-        else if(ret == 0)
+        else if (ret == 0)
             printf("Não é possivel adicionar o elemento, elemento ja existente, retorno: %d\n", ret);
     }
 
@@ -280,9 +280,9 @@ int main () {
     printf("Criando subconjunto com n maior que a cardinalidade do conjunto 2...\n");
     printf("\n");
 
-    subconj2 = cria_subconjunto(conj2, 51);
+    subconj2 = cria_subconjunto (conj2, 51);
     printf("validando que o conjunto retornado é uma copia do conjunto 2...\n");
-    if (sao_iguais(conj2, subconj2) == 1)
+    if (sao_iguais (conj2, subconj2) == 1)
         printf("O subconjunto 2 é igual ao conjunto 2!\n");
     else printf("O subconjunto 2 não é igual ao conjunto 2!\n");
 
@@ -291,9 +291,9 @@ int main () {
     printf("Criando subconjunto com n menor que a cardinalidade do conjunto 3...\n");
     printf("\n");
 
-    subconj3 = cria_subconjunto(conj3, 5);
+    subconj3 = cria_subconjunto (conj3, 5);
     printf("printando o conjunto para validar que ele possui elementos aleatorios do conjunto 3...\n");
-    imprime(subconj3);
+    imprime (subconj3);
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
@@ -301,15 +301,15 @@ int main () {
     printf("\n");
 
     printf("copiando conjunto 1...\n");
-    conj_copy1 = cria_copia(conj);
+    conj_copy1 = cria_copia (conj);
     printf("copiando conjunto 2...\n");
-    conj_copy2 = cria_copia(conj2);
+    conj_copy2 = cria_copia (conj2);
     printf("\n");
     printf("Verificando que as copias são iguais...\n");
-    if (sao_iguais(conj, conj_copy1) == 1)
+    if (sao_iguais (conj, conj_copy1) == 1)
         printf("O conjuto 1 é igual a sua copia!\n");
     else printf("O conjunto 1 não é igual a sua copia!\n");
-    if (sao_iguais(conj2, conj_copy2) == 1)
+    if (sao_iguais (conj2, conj_copy2) == 1)
         printf("O conjuto 2 é igual a sua copia!\n");
     else printf("O conjunto 2 não é iqual a sua copia!\n");
 
@@ -318,22 +318,22 @@ int main () {
     printf("Testando se os conjutos atuais estão contidos...\n");
     printf("\n");
 
-    if (contido(conj, conj2) == 1)
+    if (contido (conj, conj2) == 1)
         printf("O conjuto 1 esta contido no conjuto 2!\n");
     else printf("O conjunto 1 não está contido no conjunto 2!\n");
-    if (contido(conj, conj3) == 1)
+    if (contido (conj, conj3) == 1)
         printf("O conjuto 1 esta contido no conjuto 3!\n");
     else printf("O conjunto 1 não está contido no conjunto 3!\n");
-    if (contido(conj2, conj) == 1)
+    if (contido (conj2, conj) == 1)
         printf("O conjuto 2 esta contido no conjuto 1!\n");
     else printf("O conjunto 2 não está contido no conjunto 1!\n");
-    if (contido(conj2, conj3) == 1)
+    if (contido (conj2, conj3) == 1)
         printf("O conjuto 2 esta contido no conjuto 3!\n");
     else printf("O conjunto 2 não está contido no conjunto 3!\n");
-    if (contido(conj3, conj2) == 1)
+    if (contido (conj3, conj2) == 1)
         printf("O conjuto 3 esta contido no conjuto 2!\n");
     else printf("O conjunto 3 não está contido no conjunto 2!\n");
-    if (contido(conj3, conj) == 1)
+    if (contido (conj3, conj) == 1)
         printf("O conjuto 3 esta contido no conjuto 1!\n");
     else printf("O conjunto 3 não está contido no conjunto 1!\n");
 
@@ -343,13 +343,13 @@ int main () {
     printf("\n");
 
     for (count = 1; count <= 2; count ++) { /* Testando o pertecimento de elementos em seguencia 1,2 */
-        if (pertence(conj, count) == 1)
+        if (pertence (conj, count) == 1)
             printf("O elemento %d pertence ao conjunto 1!\n", count);
         else printf("O elemento %d não pertence ao conjunto 1!\n", count);
-        if (pertence(conj2, count) == 1)
+        if (pertence (conj2, count) == 1)
             printf("O elemento %d pertence ao conjunto 2!\n", count);
         else printf("O elemento %d não pertence ao conjunto 2!\n", count);
-        if (pertence(conj3, count) == 1)
+        if (pertence (conj3, count) == 1)
             printf("O elemento %d pertence ao conjunto 3!\n", count);
         else printf("O elemento %d não pertence ao conjunto 3!\n", count);
     }
@@ -357,13 +357,13 @@ int main () {
     printf("------------------------------------------------------------------\n");
 
        for (count = 1; count <= 2; count ++) { /* Testando o pertecimento de elementos em seguencia 2,4 */
-        if (pertence(conj, count*2) == 1)
+        if (pertence (conj, count*2) == 1)
             printf("O elemento %d pertence ao conjunto 1!\n", count*2);
         else printf("O elemento %d não pertence ao conjunto 1!\n", count*2);
-        if (pertence(conj2, count*2) == 1)
+        if (pertence (conj2, count*2) == 1)
             printf("O elemento %d pertence ao conjunto 2!\n", count*2);
         else printf("O elemento %d não pertence ao conjunto 2!\n", count*2);
-        if (pertence(conj3, count*2) == 1)
+        if (pertence (conj3, count*2) == 1)
             printf("O elemento %d pertence ao conjunto 3!\n", count*2);
         else printf("O elemento %d não pertence ao conjunto 3!\n", count*2);
     }
@@ -371,13 +371,13 @@ int main () {
     printf("------------------------------------------------------------------\n");
 
        for (count = 1; count <= 2; count ++) { /* Testando o pertecimento de elementos em seguencia 5,10 */
-        if (pertence(conj, count*5) == 1)
+        if (pertence (conj, count*5) == 1)
             printf("O elemento %d pertence ao conjunto 1!\n", count*5);
         else printf("O elemento %d não pertence ao conjunto 1!\n", count*5);
-        if (pertence(conj2, count*5) == 1)
+        if (pertence (conj2, count*5) == 1)
             printf("O elemento %d pertence ao conjunto 2!\n", count*5);
         else printf("O elemento %d não pertence ao conjunto 2!\n", count*5);
-        if (pertence(conj3, count*5) == 1)
+        if (pertence (conj3, count*5) == 1)
             printf("O elemento %d pertence ao conjunto 3!\n", count*5);
         else printf("O elemento %d não pertence ao conjunto 3!\n", count*5);
     }
@@ -387,30 +387,30 @@ int main () {
     printf("Testando igualdade de conjuntos...\n");
     printf("\n");
 
-    if (sao_iguais(conj, conj2) == 1)
+    if (sao_iguais (conj, conj2) == 1)
         printf("O conjuto 1 é igual 2!\n");
     else printf("O conjunto 1 não é igual ao conjunto 2!\n");
-    if (sao_iguais(conj, conj3) == 1)
+    if (sao_iguais (conj, conj3) == 1)
         printf("O conjuto 1 é igual conjuto 3!\n");
     else printf("O conjunto 1 não é iqual ao conjunto 3!\n");
-    if (sao_iguais(conj2, conj) == 1)
+    if (sao_iguais (conj2, conj) == 1)
         printf("O conjuto 2 é igual conjuto 1!\n");
     else printf("O conjunto 2 não é iqual ao conjunto 1!\n");
-    if (sao_iguais(conj2, conj3) == 1)
+    if (sao_iguais (conj2, conj3) == 1)
         printf("O conjuto 2 é igual conjuto 3!\n");
     else printf("O conjunto 2 não é iqual ao conjunto 3!\n");
-    if (sao_iguais(conj3, conj2) == 1)
+    if (sao_iguais (conj3, conj2) == 1)
         printf("O conjuto 3 é igual conjuto 2!\n");
     else printf("O conjunto 3 não é iqual ao conjunto 2!\n");
-    if (sao_iguais(conj3, conj) == 1)
+    if (sao_iguais (conj3, conj) == 1)
         printf("O conjuto 3 é igual conjuto 1!\n");
     else printf("O conjunto 3 não é iqual ao conjunto 1!\n");
 
     printf("\n");
 
     printf("Construindo e preenchendo 2 conjuntos de maneira igual...\n");
-    conj4 = cria_conjunto(10);
-    conj5 = cria_conjunto(10);
+    conj4 = cria_conjunto (10);
+    conj5 = cria_conjunto (10);
 
     for (count = 0; count < 10; count++) {
         insere_conjunto (conj4, count);
@@ -419,7 +419,7 @@ int main () {
     printf("\n");
 
     printf("Testando se estes são iguais...\n");
-    if (sao_iguais(conj4, conj5) == 1)
+    if (sao_iguais (conj4, conj5) == 1)
         printf("O conjuto 4 é igual 5!\n");
     else printf("O conjunto 4 não é igual ao conjunto 5!\n");
 
@@ -467,10 +467,10 @@ int main () {
     printf("Realocando o tamanho dos conjuntos...\n");
     printf("\n");
 
-    if (redimensiona(conj2) == 1) 
+    if (redimensiona (conj2) == 1) 
         printf("Conjunto 2 realocado corretamente!\n");
     else printf("Falha ao realocar o conjunto 2!\n");
-    if (redimensiona(conj3) == 1) 
+    if (redimensiona (conj3) == 1) 
         printf("Conjunto 3 realocado corretamente!\n");
     else printf("Falha ao realocar o conjunto 3!\n");
 
@@ -492,17 +492,17 @@ int main () {
     printf("Imprimindo o conjunto pos a inserção...\n");
 
     printf("Conjunto 2: ");
-    imprime(conj2);
+    imprime (conj2);
     printf("Conjunto 3: ");
-    imprime(conj3);
+    imprime (conj3);
 
     printf("\n");
     printf("------------------------------------------------------------------\n");
     printf("Inicializando os ponteiros dos conjuntos...\n");
     printf("\n");
 
-    iniciar_iterador(conj);
-    iniciar_iterador(conj2);
+    iniciar_iterador (conj);
+    iniciar_iterador (conj2);
     printf("Ponteiros inicializados!\n");
 
     printf("\n");
@@ -510,9 +510,9 @@ int main () {
     printf("\n");
 
     for (count = 0; count <= 10; count++) {
-        incrementar_iterador(conj, &elemento1);
+        incrementar_iterador (conj, &elemento1);
         printf("Iterador do conjunto 1 em %d, o elemento respectivo eh: %d\n", count+1, elemento1);
-        incrementar_iterador(conj2, &elemento2);
+        incrementar_iterador (conj2, &elemento2);
         printf("Iterador do conjunto 2 em %d, o elemento respectivo eh: %d\n", count+1, elemento2);
     }
 
@@ -521,7 +521,7 @@ int main () {
     printf("\n");
 
     for (count = 1; count <= 90; count++) {
-        if (!incrementar_iterador(conj2, &elemento1)) {
+        if (!incrementar_iterador (conj2, &elemento1)) {
             printf("Chegou ao fim do conjunto!\n");
         }
     }
@@ -532,7 +532,7 @@ int main () {
     printf("\n");
 
     for (count = 0; count < 2; count ++)
-        if (retirar_um_elemento(conj3)) {
+        if (retirar_um_elemento (conj3)) {
             printf("Imprimindo o conjunto 3 apos a remoção aleatoria...\n");
             imprime (conj3);
         }
@@ -543,37 +543,37 @@ int main () {
 
     /* Liberando a memoria alocada dinamicamente para os 3 conjuntos durante a execução do teste */
     printf("Liberando a memoria utilizada pelo conjunto 1...\n");
-    conj = destroi_conjunto(conj);
+    conj = destroi_conjunto (conj);
     printf("Liberando a memoria utilizada pelo conjunto 2...\n");
-    conj2 = destroi_conjunto(conj2);
+    conj2 = destroi_conjunto (conj2);
     printf("Liberando a memoria utilizada pelo conjunto 3...\n");
-    conj3 = destroi_conjunto(conj3);
+    conj3 = destroi_conjunto (conj3);
     printf("Liberando a memoria utilizada pelo conjunto 4...\n");
-    conj4 = destroi_conjunto(conj4);
+    conj4 = destroi_conjunto (conj4);
     printf("Liberando a memoria utilizada pelo conjunto 5...\n");
-    conj5 = destroi_conjunto(conj5);
+    conj5 = destroi_conjunto (conj5);
     printf("Liberando a memoria utilizada pelo conjunto_copia 1...\n");
-    conj_copy1 = destroi_conjunto(conj_copy1);
+    conj_copy1 = destroi_conjunto (conj_copy1);
     printf("Liberando a memoria utilizada pelo conjunto_copia 2...\n");
-    conj_copy2 = destroi_conjunto(conj_copy2);
+    conj_copy2 = destroi_conjunto (conj_copy2);
     printf("Liberando a memoria utilizada pelo subconjunto 1...\n");
-    subconj1 = destroi_conjunto(subconj1);
+    subconj1 = destroi_conjunto (subconj1);
     printf("Liberando a memoria utilizada pelo subconjunto 2...\n");
-    subconj2 = destroi_conjunto(subconj2);
+    subconj2 = destroi_conjunto (subconj2);
     printf("Liberando a memoria utilizada pelo subconjunto 3...\n");
-    subconj3 = destroi_conjunto(subconj3);
+    subconj3 = destroi_conjunto (subconj3);
     printf("Liberando a memoria utilizada pelo conjunto_interseccao 1...\n");
-    conj_intersec1 = destroi_conjunto(conj_intersec1);
+    conj_intersec1 = destroi_conjunto (conj_intersec1);
     printf("Liberando a memoria utilizada pelo conjunto_interseccao 2...\n");
-    conj_intersec2 = destroi_conjunto(conj_intersec2);
+    conj_intersec2 = destroi_conjunto (conj_intersec2);
     printf("Liberando a memoria utilizada pelo conjunto_uniao 1...\n");
-    conj_uni1 = destroi_conjunto(conj_uni1);
+    conj_uni1 = destroi_conjunto (conj_uni1);
     printf("Liberando a memoria utilizada pelo conjunto_uniao 2...\n");
-    conj_uni2 = destroi_conjunto(conj_uni2);
+    conj_uni2 = destroi_conjunto (conj_uni2);
     printf("Liberando a memoria utilizada pelo conjunto_diff 1...\n");
-    conj_diff1 = destroi_conjunto(conj_diff1);
+    conj_diff1 = destroi_conjunto (conj_diff1);
     printf("Liberando a memoria utilizada pelo conjunto_diff 2...\n");
-    conj_diff2 = destroi_conjunto(conj_diff2);
+    conj_diff2 = destroi_conjunto (conj_diff2);
 
     printf("\n");
     printf("FIM DO TESTE\n");
