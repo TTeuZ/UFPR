@@ -3,8 +3,8 @@
 
 /* definindo os max do mundo */
 #define MAX_PESSOAS 100
-#define MAX_LOCAIS 10
-#define MAX_RUMORES 100
+#define MAX_LOCAIS 8
+#define MAX_RUMORES 30
 
 /*
 * Arquivo que contem todas as structs que serao utilizadas na simução do mundo.
@@ -27,7 +27,7 @@ typedef struct pessoa {
     int extroversao; /* valor de 0 a 100 que indica o grau de extroversao da pessoa */
     int paciencia; /* valor de 0 a 100 que indica o grau de paciencia da pessoa */
     int idade; /* valor de 18 a 100 que indica a idade da pessoa */
-    conjunto_t rumores; /* conjunto de rumores que a pessoa possui */
+    conjunto_t *rumores; /* conjunto de rumores que a pessoa possui */
 } pessoa_m;
 
 
@@ -37,8 +37,8 @@ typedef struct pessoa {
 typedef struct local {
     int id; /* id do local */
     int lot_max; /* numero max de pessoas para o local */
-    conjunto_t pessoas; /* pessoas que estao no lugar */
-    fila_t fila; /* fila de pessoas que querem entrar no lugar */
+    conjunto_t *pessoas; /* pessoas que estao no lugar */
+    fila_t *fila; /* fila de pessoas que querem entrar no lugar */
     coordenada_m localizacao; /* coordenadas do lugar */
 } local_m;
 
@@ -56,5 +56,6 @@ typedef struct mundo {
 } mundo_m;
 
 /*
-* Nao existe uma estrutura para o rumor, pois ele eh apenas um inteiro.
+* Nao existe uma estrutura para o rumor, pois ele eh apenas sera um conjunto de inteiros apenas.
+* a intencao de usar o tad conjuto vem do motivo da criacao de subconjuntos para as pessoas.
 */

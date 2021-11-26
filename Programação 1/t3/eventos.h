@@ -1,13 +1,11 @@
 #include "entidades.h"
-/* #include "libconjunto.h"
-#include "libfila.h"
-#include "liblef.h" */
+#include "liblef.h"
 
 /* 
 * Funcao responsavel por inicializar tudo o que for necessario para
 * a simulacao do mundo
 */
-void cria_mundo();
+void cria_mundo (pessoa_m pessoas[], local_m locais[], conjunto_t rumores[], lef_t *eventos);
 
 /*
 * função relacionada ao evento de chegada de pessoa em um local
