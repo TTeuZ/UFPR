@@ -15,15 +15,15 @@ int main () {
     cria_mundo (pessoas, locais, rumores, eventos);
 
     printf("rumor numero 20: %d\n", rumores->v[19]);
-    printf("-------------------------------------------------------");
+    printf("-------------------------------------------------------\n");
     printf("id do 7 local = %d\n", locais[7].id);
     printf("lot_max do 7 local = %d\n", locais[7].lot_max);
     printf("localizacao x do 7 local = %d\n", locais[7].localizacao.x);
     printf("localizacao x do 7 local = %d\n", locais[7].localizacao.y);
     printf("ponteiro do conjutno do 7 local = %p\n", locais[7].pessoas);
     printf("ponteiro da fila do 7 local = %p\n", locais[7].fila);
-    printf("-------------------------------------------------------");
-    printf("id do 7 pessoas = %d\n", pessoas[7].id);
+    printf("-------------------------------------------------------\n");
+    printf("id do 7 pessoas = %d\n", pessoas[99].id);
     printf("extroversao do 7 pessoas = %d\n", pessoas[7].extroversao);
     printf("paciencia do 7 pessoas = %d\n", pessoas[7].paciencia);
     printf("idade do 7 pessoas = %d\n", pessoas[7].idade);

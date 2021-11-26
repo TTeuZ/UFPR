@@ -228,14 +228,13 @@ conjunto_t * cria_subconjunto (conjunto_t *c, int n) {
     int count = 1;
     /* Se o n for maior que a cardinalidade retorna uma copia do conjunto */
     if (n >= c->card) return cria_copia (c);
-
+    srand (c->card);
     /* consideramos o max do subconjunto sendo o max do conjunto enviado */
     if ((conj = cria_conjunto (c->max)) != NULL) {
         if (c->card == 0) return conj;
-        srand (c->card);
         while (count <= n) {
             /* Se a inserção ocorrer ok, ou seja, o elemento nao existir no conjunto, soma + 1 no count */
-            if (insere_conjunto (conj, *(c->v+(rand() % (c->card+1)))))
+            if (insere_conjunto (conj, *(c->v+(rand() % (c->card-3)))))
                 count++;
         }
         return conj;

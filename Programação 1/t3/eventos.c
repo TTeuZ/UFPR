@@ -37,7 +37,7 @@ void cria_locais_mundo (local_m locais[]) {
         local.fila = cria_fila (); /* gera a lista de espera */
 
         /* adiciona esse local no array */
-        locais[count] = local;
+        locais[count-1] = local;
     }
 }
 
@@ -53,7 +53,7 @@ void cria_pessoas_mundo (pessoa_m pessoas[], conjunto_t rumores[], lef_t *evento
         pessoa.idade = gerar_numeros_aleatorios (18, 100);
         pessoa.rumores = cria_subconjunto (rumores, gerar_numeros_aleatorios (1, 5));
     
-        pessoas[count] = pessoa;
+        pessoas[count-1] = pessoa;
     }
 }
 /* ------------------------------------------------------------------------------- */
