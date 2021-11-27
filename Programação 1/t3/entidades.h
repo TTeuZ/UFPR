@@ -49,7 +49,7 @@ typedef struct mundo {
     int tempo_atual; /* tempo atual do mundo */
     pessoa_m pessoas[MAX_PESSOAS]; /* vetor com todas as pessaos pertencentes ao mundo */
     local_m locais[MAX_LOCAIS]; /* vetor que contem todos os locais */
-    int rumores[MAX_RUMORES]; /* vetor que armazena todos os rumores do mundo */
+    conjunto_t *rumores; /* vetor que armazena todos os rumores do mundo */
     int n_pessoas; /* variavel com o numero de pessoas do mundo */
     int n_locais; /* variavel com o numero de locais do mundo */
     coordenada_m tam_mundo; /* coordenadas maximas do mundo */
