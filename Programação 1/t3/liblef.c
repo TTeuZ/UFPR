@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "liblef.h"
 
 /* Funções publicas */
@@ -41,7 +42,7 @@ int adiciona_inicio_lef (lef_t *l, evento_t *evento) {
         evento_copy->tempo = evento->tempo;
         evento_copy->tipo = evento->tipo;
         evento_copy->tamanho = evento->tamanho;
-        evento_copy->dados = evento->dados;
+        memcpy (evento_copy->dados, evento->dados, evento->tamanho);
     } else return 0;
     /* Verifica se o malloc para o nodo deu boa */
     if ((nodo =  malloc (sizeof (nodo_lef_t)))) {
@@ -67,7 +68,7 @@ void adiciona_ordem_lef  (lef_t *l, evento_t *evento) {
         evento_copy->tempo = evento->tempo;
         evento_copy->tipo = evento->tipo;
         evento_copy->tamanho = evento->tamanho;
-        evento_copy->dados = evento->dados;
+        memcpy (evento_copy->dados, evento->dados, evento->tamanho);
     } else return;
 
     temp_atual = l->Primeiro;
