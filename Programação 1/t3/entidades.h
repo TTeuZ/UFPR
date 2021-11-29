@@ -18,7 +18,6 @@ typedef struct coordenada {
     int y; /* posicao y da coordenada */
 } coordenada_m;
 
-
 /*
 * Struct para representar as pessoas do mundo
 */
@@ -29,7 +28,6 @@ typedef struct pessoa {
     int idade; /* valor de 18 a 100 que indica a idade da pessoa */
     conjunto_t *rumores; /* conjunto de rumores que a pessoa possui */
 } pessoa_m;
-
 
 /*
 * Struct para representar os locais do mundo
