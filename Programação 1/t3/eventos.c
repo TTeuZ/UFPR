@@ -14,7 +14,6 @@
 int gerar_numeros_aleatorios (int min, int max) {
     return min + (rand() % max);
 }
-
 /* cria o array de rumores e o retorna em rumores */
 void cria_rumores_mundo (conjunto_t rumores[]) {
     int count;
@@ -22,7 +21,6 @@ void cria_rumores_mundo (conjunto_t rumores[]) {
     for (count = 1; count <= RUMORES_MUNDO; count++) 
         insere_conjunto (rumores, count);
 }
-
 /* Cria todos os locais que vão ser usados na simulacao do mundo */
 void cria_locais_mundo (local_m locais[]) {
     local_m local;
@@ -35,30 +33,27 @@ void cria_locais_mundo (local_m locais[]) {
         local.localizacao.y = gerar_numeros_aleatorios (0, TAM_MUNDO-1); /* gera a posicao no eixo xy*/
         local.pessoas = cria_conjunto (local.lot_max); /* gera o conjunto de pessoas do local */
         local.fila = cria_fila (); /* gera a lista de espera */
-
         /* adiciona esse local no array */
         locais[count-1] = local;
     }
 }
-
 /* cria todas as pessoas que participaram da simulacao do mundo */
 void cria_pessoas_mundo (pessoa_m pessoas[], conjunto_t rumores[], lef_t *eventos) {
     pessoa_m pessoa;
     int count;
-
+    /* gera todas as pessoas do mundo */
     for (count = 1; count <= PESSOAS_MUNDO; count++) {
         pessoa.id = count;
-        pessoa.extroversao = gerar_numeros_aleatorios (0, 100);
-        pessoa.paciencia = gerar_numeros_aleatorios (0, 100);
-        pessoa.idade = gerar_numeros_aleatorios (18, 101);
-        pessoa.rumores = cria_subconjunto (rumores, gerar_numeros_aleatorios (1, 5));
-    
+        pessoa.extroversao = gerar_numeros_aleatorios (0, 100); /* gera o nivel de extroversao dela */
+        pessoa.paciencia = gerar_numeros_aleatorios (0, 100); /* gera o nivel de passiencia dela */
+        pessoa.idade = gerar_numeros_aleatorios (18, 101); /* gera a idade dela */
+        pessoa.rumores = cria_subconjunto (rumores, gerar_numeros_aleatorios (1, 5)); /* gera o conjunto de rumores dela */
+        /* insere a pessoa no array */
         pessoas[count-1] = pessoa;
     }
 }
 /* ------------------------------------------------------------------------------- */
 /* Funções internas */
-
 /* Funções externas */
 /* ------------------------------------------------------------------------------- */
 mundo_m cria_mundo (lef_t *eventos) {
@@ -68,12 +63,11 @@ mundo_m cria_mundo (lef_t *eventos) {
     mundo.n_locais = LOCAIS_MUNDO; /* seta o numero de locais do mundo */
     mundo.tam_mundo.x = TAM_MUNDO; /* seta o tamanho max do eixo x do mundo */
     mundo.tam_mundo.y = TAM_MUNDO; /* seta o tamanho max do eixo y do mundo */
-
     mundo.rumores = cria_conjunto (RUMORES_MUNDO); /* cria o conjunto de rumores */
     cria_rumores_mundo (mundo.rumores); /* cria todos os rumores para a simulacao */
     cria_locais_mundo (mundo.locais); /* cria todos os locais para a simulacao */
     cria_pessoas_mundo (mundo.pessoas, mundo.rumores, eventos); /* cria todas as pessoas para a simulacao */
-
+    /* retorna o mundo criado para a main */
     return mundo;
 }
 /* ------------------------------------------------------------------------------- */
