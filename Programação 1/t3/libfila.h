@@ -69,9 +69,7 @@ int retira_fila (fila_t *f, int *elemento);
 int inicializa_atual_fila (fila_t *f);
 
 /*
- * Faz o ponteiro atual apontar para o próximo nodo da fila f e retorna 
- * este ponteiro. Se atual estiver apontando para o último, isto eh, nao 
- * tem proximo, retorna NULL.
+ * Faz o ponteiro atual apontar para o próximo nodo da fila f.
 */
 void incrementa_atual_fila (fila_t *f);
 
