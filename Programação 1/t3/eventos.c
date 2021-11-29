@@ -14,6 +14,7 @@
 int gerar_numeros_aleatorios (int min, int max) {
     return min + (rand() % max);
 }
+
 /* cria o array de rumores e o retorna em rumores */
 void cria_rumores_mundo (conjunto_t rumores[]) {
     int count;
@@ -21,6 +22,7 @@ void cria_rumores_mundo (conjunto_t rumores[]) {
     for (count = 1; count <= RUMORES_MUNDO; count++) 
         insere_conjunto (rumores, count);
 }
+
 /* Cria todos os locais que vão ser usados na simulacao do mundo */
 void cria_locais_mundo (local_m locais[]) {
     local_m local;
@@ -37,6 +39,7 @@ void cria_locais_mundo (local_m locais[]) {
         locais[count-1] = local;
     }
 }
+
 /* cria todas as pessoas que participaram da simulacao do mundo */
 void cria_pessoas_mundo (pessoa_m pessoas[], conjunto_t rumores[], lef_t *eventos) {
     pessoa_m pessoa;
@@ -50,11 +53,14 @@ void cria_pessoas_mundo (pessoa_m pessoas[], conjunto_t rumores[], lef_t *evento
         pessoa.rumores = cria_subconjunto (rumores, gerar_numeros_aleatorios (1, 5)); /* gera o conjunto de rumores dela */
         /* insere a pessoa no array */
         pessoas[count-1] = pessoa;
+
+        cria_evento_de_chegada (pessoa, eventos);
     }
 }
 /* ------------------------------------------------------------------------------- */
 /* Funções internas */
-/* Funções externas */
+
+/* Funções de criacao */
 /* ------------------------------------------------------------------------------- */
 mundo_m cria_mundo (lef_t *eventos) {
     mundo_m mundo;
@@ -70,5 +76,26 @@ mundo_m cria_mundo (lef_t *eventos) {
     /* retorna o mundo criado para a main */
     return mundo;
 }
+
+/* cria os eventos de chegada iniciais para cada pessoa do mundo */
+void cria_evento_de_chegada (pessoa_m pessoa, lef_t *eventos) {
+    evento_t evento; /* evento que vai ser inserido */
+    dados_chegada_m chegada_pessoa; /* dados do evento */
+
+    chegada_pessoa.id_pessoa = pessoa.id;
+    chegada_pessoa.id_local = gerar_numeros_aleatorios (0, LOCAIS_MUNDO-1);
+
+    evento.tempo = gerar_numeros_aleatorios (0, 96*7);
+    evento.tipo = 1;
+    evento.tamanho = sizeof(dados_chegada_m);
+    evento.dados = &chegada_pessoa;
+
+    adiciona_ordem_lef (eventos, &evento);
+}
 /* ------------------------------------------------------------------------------- */
-/* Funções externas */
+/* Funções de criacao */
+
+/* Funções de execucao */
+/* ------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------- */
+/* Funções de execucao */
