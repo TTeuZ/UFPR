@@ -20,16 +20,14 @@ int busca_binaria (int x, conjunto_t *c) {
 
 /* Insere o elemento x no conjunto, de maneira a manter ele ordenado. */
 void sorted_insertion (int x, conjunto_t *c) {
-    int count;
-    count = c->card;
-
+    int count = c->card;
     /* Caso o array esteja vazio, insere no primeiro espaço */
     /* feito para evitar acessar um espaço fora do maloc */
     if (c->card == 0) 
         *(c->v+c->card) = x;
     else {
         /* Enquanto o valor da posição foi maior que o elemento empurra as valores uma 'casa' para frente */
-        while (x < *(c->v+count-1)) {
+        while (count != 0 && x <= *(c->v+count-1)) {
             *(c->v+count) = *(c->v+count-1);
             count--;
         }
@@ -225,17 +223,15 @@ conjunto_t * cria_copia (conjunto_t *c) {
 
 conjunto_t * cria_subconjunto (conjunto_t *c, int n) {
     conjunto_t *conj;
-    int count = 1;
+    int count = 0;
     /* Se o n for maior que a cardinalidade retorna uma copia do conjunto */
     if (n >= c->card) return cria_copia (c);
-
     /* consideramos o max do subconjunto sendo o max do conjunto enviado */
     if ((conj = cria_conjunto (c->max)) != NULL) {
         if (c->card == 0) return conj;
-        srand (c->card);
-        while (count <= n) {
+        while (count < n) {
             /* Se a inserção ocorrer ok, ou seja, o elemento nao existir no conjunto, soma + 1 no count */
-            if (insere_conjunto (conj, *(c->v+(rand() % (c->card+1)))))
+            if (insere_conjunto (conj, (rand() % (cardinalidade (c)))))
                 count++;
         }
         return conj;
