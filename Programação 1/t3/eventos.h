@@ -27,7 +27,10 @@ typedef struct dados_disceminacao {
 mundo_m cria_mundo (lef_t *eventos);
 
 /* Funcao que cria eventos de chegada em locais aleatorios do mundo */
-void cria_evento_de_chegada (pessoa_m pessoa, lef_t *eventos);
+void cria_evento_de_chegada (pessoa_m pessoa, lef_t *eventos, int lim_inf, int lim_sup);
+
+/* Funcao que cria o evento de fim do mundo */
+void cria_evento_de_fim (lef_t *eventos);
 /* ------------------------------------------------------------------------------- */
 /* Eventos de criacao */
 
@@ -43,6 +46,6 @@ void evento_saida (int id_pessoa, int id_local);
 void evento_disseminacao (int id_pessoa, int id_local, conjunto_t *cj_rumores);
 
 /* função relacionada ao evento de fim de mundo */
-void evento_fim ();
+void evento_fim (mundo_m mundo);
 /* ------------------------------------------------------------------------------- */
 /* Eventos de execucao */
