@@ -81,20 +81,13 @@ void adiciona_ordem_lef  (lef_t *l, evento_t *evento) {
         adiciona_inicio_lef (l, evento);
         return;
     }
-    /* situação para caso tenha 2 elementos mantendo a ordenacao */
-    if (temp_atual->prox == NULL && temp_atual->evento->tempo <= evento->tempo) {
-        nodo->evento = evento_copy; /* seta o valor do evento */
-        temp_atual->prox = nodo; /* aponta o prox do atual para o nodo */
-        nodo->prox = NULL; /* seta o prox do nodo para null (evitar erroo do while) */
-        return;
-    }
     /* While par encontrar a posicao que o elemento deve ser inserido */
     while (temp_atual->prox != NULL && temp_atual->evento->tempo < evento->tempo) {
         temp_ante = temp_atual;
         temp_atual = temp_atual->prox;
     }
-    /* Se a posição encontrada for a primeira, insere no inicio */
-    if (temp_atual == l->Primeiro) {
+    /* Se a posição encontrada for a primeira, insere no inicio e o tempo do evento for maior */
+    if (temp_atual == l->Primeiro && temp_atual->evento->tempo > evento->tempo) {
         free (evento_copy); /* libera o espaço da copia criada aqui */
         free (nodo); /* libera espaço no nodo previamente malocado */
         adiciona_inicio_lef (l, evento);
