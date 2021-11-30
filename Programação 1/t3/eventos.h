@@ -34,13 +34,13 @@ void cria_evento_de_chegada (pessoa_m pessoa, lef_t *eventos);
 /* Eventos de execucao */
 /* ------------------------------------------------------------------------------- */
 /* função relacionada ao evento de chegada de pessoa em um local */
-void evento_chegada (int id_pessoas, int id_local);
+void evento_chegada (int id_pessoa, int id_local);
 
 /* função relacionada ao evento de saida de pessoa em um local */
-void evento_saida (int id_pessoas, int id_local);
+void evento_saida (int id_pessoa, int id_local);
 
 /* função relacionada a disseminacao de rumores por uma pessoa no local */
-void evento_disseminacao (int id_pessoas, int id_local, conjunto_t *cj_rumores);
+void evento_disseminacao (int id_pessoa, int id_local, conjunto_t *cj_rumores);
 
 /* função relacionada ao evento de fim de mundo */
 void evento_fim ();

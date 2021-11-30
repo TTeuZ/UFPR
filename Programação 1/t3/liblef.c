@@ -42,7 +42,7 @@ int adiciona_inicio_lef (lef_t *l, evento_t *evento) {
         evento_copy->tempo = evento->tempo;
         evento_copy->tipo = evento->tipo;
         evento_copy->tamanho = evento->tamanho;
-        memcpy (evento_copy->dados, evento->dados, evento->tamanho);
+        memcpy (&evento_copy->dados, &evento->dados, evento->tamanho);
     } else return 0;
     /* Verifica se o malloc para o nodo deu boa */
     if ((nodo =  malloc (sizeof (nodo_lef_t)))) {
@@ -64,20 +64,33 @@ void adiciona_ordem_lef  (lef_t *l, evento_t *evento) {
     nodo_lef_t *nodo, *temp_ante, *temp_atual;
     evento_t *evento_copy;
     /* Cria uma copia do evento */
-    if ((evento_copy = malloc (sizeof(evento_t)))) {
+    if ((evento_copy = malloc (evento->tamanho * sizeof(evento_t)))) {
         evento_copy->tempo = evento->tempo;
         evento_copy->tipo = evento->tipo;
         evento_copy->tamanho = evento->tamanho;
-        memcpy (evento_copy->dados, evento->dados, evento->tamanho);
+        memcpy (&evento_copy->dados, &evento->dados, evento->tamanho);
     } else return;
 
     temp_atual = l->Primeiro;
+    /* se a minha lista estiver vazia, adiciona de cara no inicio */
+    if (temp_atual == NULL) {
+        adiciona_inicio_lef (l, evento);
+        return;
+    }
+    /* situação para caso tenha 2 elementos mantendo a ordenacao */
+    if (temp_atual->prox == NULL && temp_atual->evento->tempo <= evento->tempo) {
+         if ((nodo =  malloc (sizeof (nodo_lef_t)))) {
+            nodo->evento = evento_copy; /* seta o valor do evento */
+            temp_atual->prox = nodo; /* aponta o prox do atual para o nodo */
+            nodo->prox = NULL; /* seta o prox do nodo para null (evitar erroo do while) */
+            return;
+        } else return;
+    }
     /* While par encontrar a posicao que o elemento deve ser inserido */
-    while (temp_atual->prox != NULL && temp_atual->evento->tempo >= evento->tempo) {
+    while (temp_atual->prox != NULL && temp_atual->evento->tempo <= evento->tempo) {
         temp_ante = temp_atual;
         temp_atual = temp_atual->prox;
     }
-
     /* Se a posição encontrada for a primeira, insere no inicio */
     if (temp_atual == l->Primeiro) {
         adiciona_inicio_lef (l, evento);
@@ -86,7 +99,6 @@ void adiciona_ordem_lef  (lef_t *l, evento_t *evento) {
         /* Verifica se o malloc para o nodo deu boa */
         if ((nodo =  malloc (sizeof (nodo_lef_t)))) {
             nodo->evento = evento_copy; /* seta o valor do evento */
-
             temp_ante->prox = nodo; /* Aponta o prox do anterior para o noco nodo */
             nodo->prox = temp_atual; /* aponta o prox do novo nodo para o nodo da seguencia */
             return;

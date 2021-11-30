@@ -97,5 +97,9 @@ void cria_evento_de_chegada (pessoa_m pessoa, lef_t *eventos) {
 
 /* Funções de execucao */
 /* ------------------------------------------------------------------------------- */
+void evento_chegada (int id_pessoa, int id_local) {
+    printf("id da pessoa de chegada: %d\n", id_pessoa);
+    printf("id do local: %d\n", id_local);
+}
 /* ------------------------------------------------------------------------------- */
 /* Funções de execucao */
