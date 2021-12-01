@@ -12,7 +12,7 @@
 /* ------------------------------------------------------------------------------- */
 /* funcao que gera um numero aleatorio entre dois limites */
 int gerar_numeros_aleatorios (int min, int max) {
-    return min + (rand() % max);
+    return min + (rand() % max); 
 }
 
 /* cria o array de rumores e o retorna em rumores */
@@ -54,7 +54,7 @@ void cria_pessoas_mundo (pessoa_m pessoas[], conjunto_t rumores[], lef_t *evento
         /* insere a pessoa no array */
         pessoas[count-1] = pessoa;
 
-        cria_evento_de_chegada (pessoa, eventos, 0, 96*7);
+        cria_evento_de_chegada (pessoa, eventos, gerar_numeros_aleatorios (0, 96*7));
     }
 }
 /* ------------------------------------------------------------------------------- */
@@ -80,22 +80,60 @@ mundo_m cria_mundo (lef_t *eventos) {
     return mundo;
 }
 
-/* cria os eventos de chegada iniciais para cada pessoa do mundo */
-void cria_evento_de_chegada (pessoa_m pessoa, lef_t *eventos, int lim_inf, int lim_sup) {
+/* função para criar eventos de chegada */
+void cria_evento_de_chegada (pessoa_m pessoa, lef_t *eventos, int tempo) {
     evento_t evento; /* evento que vai ser inserido */
     dados_chegada_m chegada_pessoa; /* dados do evento */
 
-    chegada_pessoa.id_pessoa = pessoa.id;
-    chegada_pessoa.id_local = gerar_numeros_aleatorios (0, LOCAIS_MUNDO-1);
-
-    evento.tempo = gerar_numeros_aleatorios (lim_inf, lim_sup);
+    chegada_pessoa.id_pessoa = pessoa.id; /* id da pessoa que vai chegar */
+    chegada_pessoa.id_local = gerar_numeros_aleatorios (1, LOCAIS_MUNDO); /* gera um local aleatorio */
+    /* setando as informações do evento */
+    evento.tempo = tempo;
     evento.tipo = 1;
     evento.tamanho = sizeof(dados_chegada_m);
     evento.dados = &chegada_pessoa;
-
+    /* adicionando na LEF */
     adiciona_ordem_lef (eventos, &evento);
 }
 
+/* função para criar eventos de saida */
+void cria_evento_de_saida (pessoa_m pessoa, local_m local, lef_t *eventos, int tempo) {
+    evento_t evento; /* evento que vai ser inserido */
+    dados_saida_m saida_pessoa; /* dados do evento */
+
+    saida_pessoa.id_pessoa = pessoa.id; /* pessoa que ta saindo */
+    saida_pessoa.id_local = local.id; /* local que ela esta saindo */
+    /* setando as informações do evento */
+    evento.tempo = tempo;
+    evento.tipo = 2;
+    evento.tamanho = sizeof(dados_saida_m);
+    evento.dados = &saida_pessoa;
+    /* adicionando na LEF */
+    adiciona_ordem_lef (eventos, &evento);
+}
+
+/* função para criar eventos de disceminacao */
+void cria_evento_de_disceminacao (pessoa_m pessoa, local_m local, lef_t *eventos, int tempo) {
+    evento_t evento; /* evento que vai ser inserido */
+    dados_disceminacao_m disceminacao_pessoa; /* dados do evento */
+    conjunto_t *dis_rumores; /* conjunto de rumores que vamos tentar propagar */
+    int nrd = pessoa.extroversao/10; /* quantidade de rumores */
+    /* cria o subconjunto de rumores */
+    dis_rumores = cria_subconjunto (pessoa.rumores, nrd);
+
+    disceminacao_pessoa.id_pessoa_origem = pessoa.id; /* pessoa que ta disceminando */
+    disceminacao_pessoa.id_local = local.id; /* local que ocorre */
+    disceminacao_pessoa.cj_rumores = dis_rumores; /* conjunto de rumores que vao ser discemindados */
+    /* setando as informações do evento */
+    evento.tempo = tempo;
+    evento.tipo = 3;
+    evento.tamanho = sizeof(dados_disceminacao_m);
+    evento.dados = &disceminacao_pessoa;
+    /* adicionando na LEF */
+    adiciona_ordem_lef (eventos, &evento);
+} 
+
+/* função para criar eventos de fim */
 void cria_evento_de_fim (lef_t *eventos) {
     evento_t evento; /* evento que vai ser inserido */
 
@@ -110,9 +148,24 @@ void cria_evento_de_fim (lef_t *eventos) {
 
 /* Funções de execucao */
 /* ------------------------------------------------------------------------------- */
-void evento_chegada (int id_pessoa, int id_local) {
-    printf("id da pessoa de chegada: %d\n", id_pessoa);
-    printf("id do local: %d\n", id_local);
+void evento_chegada (mundo_m mundo, lef_t *eventos, int id_pessoa, int id_local) {
+    local_m local = mundo.locais[id_local-1]; /* variavel para o local */
+    pessoa_m pessoa = mundo.pessoas[id_pessoa-1]; /* variavel para a pessoa */
+    int tpl; /* variavel para o tempo de permanencia */
+    /* se o local estiver lotado, decide se vai para a fila ou se vai para outro lugar */
+    if (cardinalidade (local.pessoas) == local.lot_max) {
+        /* se a paciencia for suficiente, entra na fila */
+        if ((pessoa.paciencia / 4 - tamanho_fila (local.fila)) > 0)
+            insere_fila (local.fila, id_pessoa);
+        /* caso não, cria um evento de saida da pessoa */
+        else cria_evento_de_saida (pessoa, local, eventos, mundo.tempo_atual);
+    } else { /* se o local não estiver lotado */
+        insere_conjunto (local.pessoas, id_pessoa); /* adiciona a pessoa no conjunto de pessaos do lugar */
+        tpl = 1 + (pessoa.paciencia/10+gerar_numeros_aleatorios (-2, 6)); /* calcula o tempo de permanencia */
+        
+        cria_evento_de_disceminacao (pessoa, local, eventos, mundo.tempo_atual+gerar_numeros_aleatorios (0, tpl));
+        cria_evento_de_saida (pessoa, local, eventos, mundo.tempo_atual+tpl); /* cria o evento de saida da pessoa */
+    }
 }
 
 void evento_fim (mundo_m mundo) {
