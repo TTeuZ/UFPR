@@ -15,37 +15,45 @@ int main () {
 
     /* while para executar os eventos */
     while ((ev_atual = obtem_primeiro_lef (eventos)) != NULL) {
+        /* atualiza o tempo do mundo */
         mundo.tempo_atual = mundo.tempo_atual + ev_atual->tempo;
-
-        ev_dados_chegada = (dados_chegada_m*)ev_atual->dados;
-
-        printf("id da pessoa de chegada: %d\n", ((dados_chegada_m*)ev_dados_chegada)->id_pessoa);
 
         /* switch para os possiveis casos */
         switch (ev_atual->tipo) {
             /* caso para o evento de chegada */
-            case 1: { 
-                /* ev_dados_chegada = (dados_chegada_m*)ev_atual->dados;
-                printf("id da pessoa de chegada: %d\n", ((dados_chegada_m*)ev_atual->dados)->id_pessoa); */
-                /* printf("id do local: %d\n", ((dados_chegada_m*)ev_atual->dados)->id_local); */
-                /* evento_chegada (ev_dados_chegada->id_pessoa, ev_dados_chegada->id_local);
-                free (ev_atual); */
+            case 1: {
+                /* faz o cast correto dos dados do evento */
+                ev_dados_chegada = (dados_chegada_m*)ev_atual->dados;
+                /* chama o evento de chegada */
+                evento_chegada (mundo, eventos, ev_dados_chegada->id_pessoa,ev_dados_chegada->id_local);
+                /* libera as estruturas do evento */
+                free (ev_atual->dados);
+                free (ev_atual);
                 break;
             }
             /* caso para o evento de saida */
             case 2: { 
+                printf("entramo na saida\n");
+                free (ev_atual->dados);
+                free (ev_atual);
                 break;
             }
             /* caso para o evento de disceminacao */
             case 3: {
+                printf("entramo na fofoca\n");
+                free (ev_atual->dados);
+                free (ev_atual);
                 break;
             }
             /* caso para o evento de fim */
             case 4: {
+                free (ev_atual->dados);
+                free (ev_atual);
+                evento_fim (mundo);
                 break;
             }
         }
     }
-
+    destroi_lef (eventos); /* libera a LEF */
     return 1;
 }
