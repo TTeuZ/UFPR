@@ -26,6 +26,7 @@ lef_t * destroi_lef (lef_t *l) {
     while (l->Primeiro != NULL) {
         nodo = l->Primeiro;
         l->Primeiro = l->Primeiro->prox;
+        free (nodo->evento->dados);
         free (nodo->evento); /* aponta o primeiro para o prox elemento */
         free (nodo); /* libera o espaço do nodo */
     }
@@ -42,10 +43,11 @@ int adiciona_inicio_lef (lef_t *l, evento_t *evento) {
         evento_copy->tempo = evento->tempo;
         evento_copy->tipo = evento->tipo;
         evento_copy->tamanho = evento->tamanho;
-        memcpy (&evento_copy->dados, &evento->dados, evento->tamanho);
+        evento_copy->dados = malloc (evento->tamanho);
+        memcpy (evento_copy->dados, evento->dados, evento->tamanho);
     } else return 0;
     /* Verifica se o malloc para o nodo deu boa */
-    if ((nodo =  malloc (sizeof (nodo_lef_t)))) {
+    if ((nodo = malloc (sizeof (nodo_lef_t)))) {
         nodo->evento = evento_copy; /* seta o valor do evento */
         nodo->prox = NULL; /* Seta o prox do nodo como null */
     } else return 0;
@@ -64,11 +66,12 @@ void adiciona_ordem_lef  (lef_t *l, evento_t *evento) {
     nodo_lef_t *nodo, *temp_ante, *temp_atual;
     evento_t *evento_copy;
     /* Cria uma copia do evento */
-    if ((evento_copy = malloc (sizeof(evento_t)))) {
+    if ((evento_copy = (evento_t*) malloc (sizeof(evento_t)))) {
         evento_copy->tempo = evento->tempo;
         evento_copy->tipo = evento->tipo;
         evento_copy->tamanho = evento->tamanho;
-        memcpy (&evento_copy->dados, &evento->dados, evento->tamanho);
+        evento_copy->dados = malloc (evento->tamanho);
+        memcpy (evento_copy->dados, evento->dados, evento->tamanho);
     } else return;
     /* faço o malloc do nodo que vai ser inserido */
     if (!(nodo =  malloc (sizeof (nodo_lef_t)))) return;
@@ -76,6 +79,7 @@ void adiciona_ordem_lef  (lef_t *l, evento_t *evento) {
     temp_atual = l->Primeiro;
     /* se a minha lista estiver vazia, adiciona de cara no inicio */
     if (temp_atual == NULL) {
+        free (evento_copy->dados); /* libera o espaço da copia criada aqui */
         free (evento_copy); /* libera o espaço da copia criada aqui */
         free (nodo); /* libera espaço no nodo previamente malocado */
         adiciona_inicio_lef (l, evento);
@@ -88,6 +92,7 @@ void adiciona_ordem_lef  (lef_t *l, evento_t *evento) {
     }
     /* Se a posição encontrada for a primeira, insere no inicio e o tempo do evento for maior */
     if (temp_atual == l->Primeiro && temp_atual->evento->tempo > evento->tempo) {
+        free (evento_copy->dados); /* libera o espaço da copia criada aqui */
         free (evento_copy); /* libera o espaço da copia criada aqui */
         free (nodo); /* libera espaço no nodo previamente malocado */
         adiciona_inicio_lef (l, evento);
