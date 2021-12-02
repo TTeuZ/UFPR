@@ -12,6 +12,8 @@ int main () {
     dados_saida_m *ev_dados_saida; /* ponteiro que vai receber os dados de saida */
     dados_disceminacao_m *ev_dados_disceminacao; /* ponteiro que vai receber os dados de disceminacao */
 
+    srand (time(NULL));
+
     /* Iniciamos a lista de eventos futuros do mundo */
     eventos = cria_lef ();
     /* inicializa tudo o que precimos para o mundo da simulacao */

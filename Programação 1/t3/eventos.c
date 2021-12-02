@@ -57,15 +57,15 @@ void cria_pessoas_mundo (pessoa_m pessoas[], local_m locais[], conjunto_t rumore
 void tratamento_saida_ev_chegada (mundo_m mundo, pessoa_m pessoa, local_m local, int caso) {
     switch (caso) {
         case 1: { /* caso de entrada */
-            printf("%6d:CHEGA Pessoa %4d Local %2d (%2d/%2d), ENTRA\n", mundo.tempo_atual, pessoa.id, local.id, cardinalidade (local.pessoas), local.lot_max);
+            printf ("%6d:CHEGA Pessoa %4d Local %2d (%2d/%2d), ENTRA\n", mundo.tempo_atual, pessoa.id, local.id, cardinalidade (local.pessoas), local.lot_max);
             break;
         }
         case 2: { /* caso de ida para fila */
-            printf("%6d:CHEGA Pessoa %4d Local %2d (%2d/%2d), FILA %2d\n", mundo.tempo_atual, pessoa.id, local.id, cardinalidade (local.pessoas), local.lot_max, tamanho_fila(local.fila));
+            printf ("%6d:CHEGA Pessoa %4d Local %2d (%2d/%2d), FILA %2d\n", mundo.tempo_atual, pessoa.id, local.id, cardinalidade (local.pessoas), local.lot_max, tamanho_fila(local.fila));
             break;
         }
         case 3: { /* caso de desistencia */
-            printf("%6d:CHEGA Pessoa %4d Local %2d (%2d/%2d), DESISTE\n", mundo.tempo_atual, pessoa.id, local.id, cardinalidade (local.pessoas), local.lot_max);
+            printf ("%6d:CHEGA Pessoa %4d Local %2d (%2d/%2d), DESISTE\n", mundo.tempo_atual, pessoa.id, local.id, cardinalidade (local.pessoas), local.lot_max);
             break;
         }
     }
@@ -75,11 +75,11 @@ void tratamento_saida_ev_chegada (mundo_m mundo, pessoa_m pessoa, local_m local,
 void tratamento_saida_ev_saida (mundo_m mundo, pessoa_m pessoa_saida, int pessoa_fila, local_m local, int caso) {
     switch (caso) {
         case 1: { /* caso de saida sem liberar espaço na fila */
-            printf("%6d:SAIDA Pessoa %4d Local %2d (%2d/%2d)\n", mundo.tempo_atual, pessoa_saida.id, local.id, cardinalidade (local.pessoas), local.lot_max);
+            printf ("%6d:SAIDA Pessoa %4d Local %2d (%2d/%2d)\n", mundo.tempo_atual, pessoa_saida.id, local.id, cardinalidade (local.pessoas), local.lot_max);
             break;
         }
         case 2: { /* caso de saida libearando espaço na fila */
-            printf("%6d:SAIDA Pessoa %4d Local %2d (%2d/%2d), REMOVE FILA %2d\n", mundo.tempo_atual, pessoa_saida.id, local.id, cardinalidade (local.pessoas), local.lot_max, pessoa_fila);
+            printf ("%6d:SAIDA Pessoa %4d Local %2d (%2d/%2d), REMOVE FILA %2d\n", mundo.tempo_atual, pessoa_saida.id, local.id, cardinalidade (local.pessoas), local.lot_max, pessoa_fila);
             break;
         }
     }
@@ -226,21 +226,26 @@ void evento_saida (mundo_m mundo, lef_t *eventos, int id_pessoa, int id_local) {
     tratamento_saida_ev_saida (mundo, pessoa, -1, local, 1); /* output para caso de entrada */
 }
 
+/* possui o tratamento de retorno verbose na propia funcao, devido a maneira que este evento funciona */
 void evento_disseminacao (mundo_m mundo, int id_pessoa, int id_local, conjunto_t *cj_rumores) {
     local_m local = mundo.locais[id_local-1]; /* variavel para o local */
+    pessoa_m pessoa_origem = mundo.pessoas[id_pessoa-1]; /* variavel para a pessoa de origem dos rumores */
     int id_pessoa_destino;
     int iterador_rumor, iterador_pessoa, rumor;
-    iniciar_iterador (cj_rumores);
+    printf ("%6d:RUMOR Pessoa %4d Local %2d ", mundo.tempo_atual, pessoa_origem.id, local.id); /* incio do retorno verbose da funcao */
+
+    iniciar_iterador (cj_rumores); /* inicia o iterador dos rumors que vao ser disciminados */
     for (iterador_rumor = 0; iterador_rumor < cardinalidade (cj_rumores); iterador_rumor++) {
-        incrementar_iterador (cj_rumores, &rumor);
-        iniciar_iterador (local.pessoas);
+        incrementar_iterador (cj_rumores, &rumor); /* incrementa o iterador e pega o rumor da vez */
+        iniciar_iterador (local.pessoas); /* inicia o iterador das pessoas do local */
         for (iterador_pessoa = 0; iterador_pessoa < cardinalidade (local.pessoas); iterador_pessoa++) {
-            incrementar_iterador (local.pessoas, &id_pessoa_destino);
-            if (gerar_numeros_aleatorios (0, 100) < mundo.pessoas[id_pessoa_destino-1].extroversao) {
-                insere_conjunto (mundo.pessoas[id_pessoa_destino-1].rumores, rumor);
-            } 
+            incrementar_iterador (local.pessoas, &id_pessoa_destino); /* incrementa o iterador e pega a pessoa da vez */
+            if (gerar_numeros_aleatorios (0, 100) < mundo.pessoas[id_pessoa_destino-1].extroversao)  /* verifica se a pessoa vai assimilar rumor */
+                if (insere_conjunto (mundo.pessoas[id_pessoa_destino-1].rumores, rumor)) /* se a pessoo já não tiver assimilado este rumor, da um retorno verbose */
+                    printf ("(P%2d/R%2d) ", mundo.pessoas[id_pessoa_destino-1].id, rumor); /* retorno verbose dos rumores assimilados */ 
         }
     }
+    printf ("\n"); /* final do retorno verbose da funcao*/
 }
 
 void evento_fim (mundo_m mundo) {
