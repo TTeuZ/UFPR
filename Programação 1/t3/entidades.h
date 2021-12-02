@@ -6,10 +6,6 @@
 #define MAX_LOCAIS 8
 #define MAX_RUMORES 30
 
-/*
-* Arquivo que contem todas as structs que serao utilizadas na simução do mundo.
-*/
-
 /* 
 * Struct para armazenar as coordenadas que serão utilizadas pelas pessoas e pelo mundo 
 */
