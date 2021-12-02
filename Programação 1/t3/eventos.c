@@ -242,7 +242,7 @@ void evento_disseminacao (mundo_m mundo, int id_pessoa, int id_local, conjunto_t
             incrementar_iterador (local.pessoas, &id_pessoa_destino); /* incrementa o iterador e pega a pessoa da vez */
             if (gerar_numeros_aleatorios (0, 100) < mundo.pessoas[id_pessoa_destino-1].extroversao)  /* verifica se a pessoa vai assimilar rumor */
                 if (insere_conjunto (mundo.pessoas[id_pessoa_destino-1].rumores, rumor)) /* se a pessoo já não tiver assimilado este rumor, da um retorno verbose */
-                    printf ("(P%2d/R%2d) ", mundo.pessoas[id_pessoa_destino-1].id, rumor); /* retorno verbose dos rumores assimilados */ 
+                    printf ("(P%d/R%d) ", mundo.pessoas[id_pessoa_destino-1].id, rumor); /* retorno verbose dos rumores assimilados */ 
         }
     }
     printf ("\n"); /* final do retorno verbose da funcao*/
