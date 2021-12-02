@@ -213,10 +213,9 @@ void evento_saida (mundo_m mundo, lef_t *eventos, int id_pessoa, int id_local) {
     velocidade = 100 - (pessoa.idade-40);
     tdl = dist_cart/velocidade;
 
+    retira_conjunto (local.pessoas, pessoa.id); /* retira a pessoa do local */
     /* cria evento de cehada da pessoa no proximo lugar */
     cria_evento_de_chegada (pessoa, local_dest, eventos, mundo.tempo_atual+(tdl/15));
-
-    retira_conjunto (local.pessoas, pessoa.id); /* retira a pessoa do local */
     if (!fila_vazia (local.fila)) {
         retira_fila (local.fila, &pessoa_fila);
         cria_evento_de_chegada (mundo.pessoas[pessoa_fila-1], local, eventos, mundo.tempo_atual);
