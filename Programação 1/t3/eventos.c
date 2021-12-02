@@ -232,6 +232,7 @@ void evento_disseminacao (mundo_m mundo, int id_pessoa, int id_local, conjunto_t
     pessoa_m pessoa_origem = mundo.pessoas[id_pessoa-1]; /* variavel para a pessoa de origem dos rumores */
     int id_pessoa_destino;
     int iterador_rumor, iterador_pessoa, rumor;
+
     printf ("%6d:RUMOR Pessoa %4d Local %2d ", mundo.tempo_atual, pessoa_origem.id, local.id); /* incio do retorno verbose da funcao */
 
     iniciar_iterador (cj_rumores); /* inicia o iterador dos rumors que vao ser disciminados */

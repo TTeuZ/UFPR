@@ -12,8 +12,6 @@ int main () {
     dados_saida_m *ev_dados_saida; /* ponteiro que vai receber os dados de saida */
     dados_disceminacao_m *ev_dados_disceminacao; /* ponteiro que vai receber os dados de disceminacao */
 
-    srand (time(NULL));
-
     /* Iniciamos a lista de eventos futuros do mundo */
     eventos = cria_lef ();
     /* inicializa tudo o que precimos para o mundo da simulacao */
@@ -21,7 +19,7 @@ int main () {
     /* while para executar os eventos */
     while ((ev_atual = obtem_primeiro_lef (eventos)) != NULL) {
         /* atualiza o tempo do mundo */
-        mundo.tempo_atual = mundo.tempo_atual + ev_atual->tempo;
+        mundo.tempo_atual = ev_atual->tempo;
 
         /* switch para os possiveis casos */
         switch (ev_atual->tipo) {
