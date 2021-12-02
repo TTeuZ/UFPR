@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "libconjunto.h"
 
 /* Funções internas */
@@ -232,7 +231,7 @@ conjunto_t * cria_subconjunto (conjunto_t *c, int n) {
         if (c->card == 0) return conj;
         while (count < n) {
             /* Se a inserção ocorrer ok, ou seja, o elemento nao existir no conjunto, soma + 1 no count */
-            if (insere_conjunto (conj, (rand() % (cardinalidade (c)))))
+            if (insere_conjunto (conj, 1 + (rand() % (cardinalidade (c)))))
                 count++;
         }
         return conj;

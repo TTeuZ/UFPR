@@ -74,7 +74,7 @@ void adiciona_ordem_lef  (lef_t *l, evento_t *evento) {
         memcpy (evento_copy->dados, evento->dados, evento->tamanho);
     } else return;
     /* faço o malloc do nodo que vai ser inserido */
-    if (!(nodo =  malloc (sizeof (nodo_lef_t)))) return;
+    if (!(nodo = malloc (sizeof (nodo_lef_t)))) return;
     /* inicia o auxiliar no primeiro elemento da lef */
     temp_atual = l->Primeiro;
     /* se a minha lista estiver vazia, adiciona de cara no inicio */

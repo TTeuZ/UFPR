@@ -13,7 +13,7 @@ COMPILER = gcc
 FLAGS = -g -std=c90 -Wall
 
 mundo: libconjunto.o libfila.o liblef.o eventos.o mundo.o 
-		$(COMPILER) $(FLAGS) libconjunto.o libfila.o liblef.o eventos.o mundo.o -o mundo
+		$(COMPILER) $(FLAGS) libconjunto.o libfila.o liblef.o eventos.o mundo.o -lm -o mundo
 
 libconjunto.o: libconjunto.c
 		$(COMPILER) $(FLAGS) -c libconjunto.c
