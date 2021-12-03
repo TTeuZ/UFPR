@@ -259,9 +259,9 @@ int main() {
     printf("\n");
 
     if (lista_vazia (list3))
-        printf("A lista 2 esta vazia, seu tamanho eh: %d\n", tamanho_lista (list3));
+        printf("A lista 3 esta vazia, seu tamanho eh: %d\n", tamanho_lista (list3));
     else 
-        printf("A lista 2 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista (list3));
+        printf("A lista 3 nao esta vazia, seu tamanho eh: %d\n", tamanho_lista (list3));
 
     printf("\n"); 
     printf("------------------------------------------------------------------\n");
