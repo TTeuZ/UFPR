@@ -10,13 +10,10 @@ void imprime_vetor(int set[], int v[], int a) {
 int eh_menor (int set[], int v[], int n, int b) {
     int count, soma = 0;
 
-    for(count = 0; count <= n; count++) {
-        if (v[count]) {
+    for(count = 0; count < n; count++) 
+        if (v[count]) 
             soma = soma + set[count];
-        }
-    }
-    if (soma >= b) return 0;
-    return 1;
+    return soma;
 }
 // algoritmo backtracking
 void bt(int set[], int v[], int n, int i, int b) {
@@ -24,9 +21,9 @@ void bt(int set[], int v[], int n, int i, int b) {
         imprime_vetor(set, v, n);
         return;
     }
-    if (eh_menor (set, v, i, b)) {
-        v[i] = 0;
-        bt(set, v, n, i + 1, b);
+    v[i] = 0;
+    bt(set, v, n, i + 1, b);
+    if (set[i] + eh_menor (set, v, i, b) < b) {
         v[i] = 1;
         bt(set, v, n, i + 1, b);
     }
