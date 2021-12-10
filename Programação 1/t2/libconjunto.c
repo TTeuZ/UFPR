@@ -220,7 +220,7 @@ conjunto_t * cria_subconjunto (conjunto_t *c, int n) {
     if ((conj = cria_conjunto (c->max)) != NULL) {
         if (c->card == 0) return conj;
         while (count < n) {
-            if (insere_conjunto (conj, 1 + (rand() % (cardinalidade (c)))))
+            if (insere_conjunto (conj, *(c->v+(rand() % (cardinalidade (c))))))
                 count++;
         }
         return conj;
