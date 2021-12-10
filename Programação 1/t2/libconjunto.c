@@ -147,39 +147,53 @@ conjunto_t * cria_diferenca (conjunto_t *c1, conjunto_t *c2) {
     } else return 0;
 }
 
-/* O max do conjunto nunca passa do max do menor conjunto. */
-/* Passa por cada elemento do menor conjunto insere ele no conjunto de interseccao caso ele esteja no maior conjunto */
+/* se os valores são iguas, adiciona no conjunto, se forem diferentes, faz o iterador que ponta para o 
+menor numero andar uma 'casa' para frente. */
+/* finaliza o processo quando um dos iteradores chegar ao fim do conjunto */
 conjunto_t * cria_interseccao (conjunto_t *c1, conjunto_t *c2) {
-    conjunto_t *conj, *min;
-    int count;
+    int ite1 = 0, ite2 = 0;
+    conjunto_t *conj;
 
-    if (c1->card < c2->card) min = c1;
-    else min = c2;
-
-    if ((conj = cria_conjunto (min->max)) != NULL) {
-        for (count = 0; count < c1->card; count++) {
-            if (pertence (c2, *(c1->v+count))) 
-                insere_conjunto (conj, *(c1->v+count));
-            }
+    if ((conj = cria_conjunto (c1->max)) != NULL) {
+        while (ite1 < c1->card && ite2 < c2->card) {
+            if (*(c1->v+ite1) == *(c2->v+ite2)) {
+                insere_conjunto (conj, *(c1->v+ite1));
+                ite1++;
+                ite2++;
+            } 
+            else if (*(c1->v+ite1) < *(c2->v+ite2)) ite1++;
+            else ite2++;
+        }
         return conj;
     } else return 0;
 }
 
 /* O max do conjunto é equivalente a soma dos maximos de embos os conjuntos */
-/* Inicia um for que vai até o ultimo elemento do maior conjunto */
-/* insere o elemento da vez no conjunto união ** regras do insere aplicadas ** */
 conjunto_t * cria_uniao (conjunto_t *c1, conjunto_t *c2) {
     conjunto_t *conj;
-    int count, max;
+    int ite1 = 0, ite2 = 0, max;
     max = (c1->max) + (c2->max);
 
     if ((conj = cria_conjunto (max)) != NULL) {
-        for (count = 0; count < c1->card; count++) 
-            insere_conjunto (conj, *(c1->v+count));
-        for (count = 0; count < c2->card; count++) 
-            insere_conjunto (conj, *(c2->v+count));       
+        while (ite1 < c1->card || ite2 < c2->card) {
+            if (ite1 >= c1->card) {
+                insere_conjunto (conj, *(c2->v+ite2));
+                ite2++;
+            }
+            else if (ite2 >= c2->card) {
+                insere_conjunto (conj, *(c1->v+ite1));
+                ite1++;
+            }
+            else if (*(c1->v+ite1) <= *(c2->v+ite2)) {
+                insere_conjunto (conj, *(c1->v+ite1));
+                ite1++;
+            } else {
+                insere_conjunto (conj, *(c2->v+ite2));
+                ite2++;
+            }
+        }
         return conj;
-    } else return NULL;
+    } else return 0;
 }
 
 /* cria uma copia do conjunto enviado como parametro */
