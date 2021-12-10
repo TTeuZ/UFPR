@@ -5,7 +5,7 @@
 /* Funções internas */
 /* Busca iterativa o elemento x dentro do conjunto. */
 /* Retorna a posição do elemento se ele foi encontrado e -1 caso ele não esteja no conjunto */
-int busca_binaria (int x, conjunto_t *c) {
+int busca_binaria (conjunto_t *c, int x) {
     int begin, end, iterator;
     begin = 0;
     end = c->card;
@@ -40,7 +40,7 @@ void sorted_insertion (int x, conjunto_t *c) {
 void sorted_remove (int x, conjunto_t *c) {
     int pos, count;
     /* busca a posição que o elemento no conjunto precisa somar +1 porque a busca binaria retorna exatamente a posição, e precisamos de 1 acima*/
-    pos = busca_binaria (x, c)+1;
+    pos = busca_binaria (c, x)+1;
     /* Faz a remoção de maneira a manter o conjunto ordenado */
     for (count = pos; count <= c->card; count++) {
         *(c->v+count-1) = *(c->v+count);
@@ -92,7 +92,7 @@ int cardinalidade (conjunto_t *c) {
 /* Insere o elemento no conjunto caso ele ja não exista. */
 int insere_conjunto (conjunto_t *c, int elemento) {
     /* Verifica se o elemento ja esta no conjunto */
-    if (busca_binaria (elemento, c) == -1) {
+    if (!pertence (c, elemento)) {
         /* verifica se adicionarmor o elemento a tamanho maximo do conjunto nao sera excedido*/
         if (c->card + 1 > c->max) return -1;
         else {
@@ -106,7 +106,7 @@ int insere_conjunto (conjunto_t *c, int elemento) {
 /* remove o elemento do conjunto mantendo a ornedacao */
 int retira_conjunto (conjunto_t *c, int elemento) {
     /* verifica se o elemento existe no conjunto */
-    if (busca_binaria (elemento, c) != -1) {
+    if (pertence (c, elemento)) {
         sorted_remove (elemento, c); /* remove o elemento */
         c->card--;
         return 1;
@@ -115,8 +115,7 @@ int retira_conjunto (conjunto_t *c, int elemento) {
 
 /* Retorna se o elemento pertence ao conjunto */
 int pertence (conjunto_t *c, int elemento) {
-   /* return busca_binaria(elemento, c); */
-   if (busca_binaria (elemento, c) == -1) return 0;
+   if (busca_binaria (c, elemento) == -1) return 0;
    return 1;
 }
 
@@ -128,7 +127,7 @@ int contido (conjunto_t *c1, conjunto_t *c2) {
     else {
         /* verifica se cada elemento de c1 esta em c2 */
         for (count = 0; count < c1->card; count++) 
-            if (busca_binaria (*(c1->v+count), c2) == -1) return 0;
+            if (!pertence (c2, *(c1->v+count))) return 0;
         return 1;
     }
 }
@@ -157,7 +156,7 @@ conjunto_t * cria_diferenca (conjunto_t *c1, conjunto_t *c2) {
         /* Passa por cada elemento do c1 */
         for (count = 0; count < c1->card; count++) {
             /* insere ele no conjunto de diferença caso ele não esteja em c2 */
-            if (busca_binaria (*(c1->v+count), c2) == -1) 
+            if (!pertence (c2, *(c1->v+count))) 
                 insere_conjunto (conj, *(c1->v+count));
         }
         return conj;
@@ -177,7 +176,7 @@ conjunto_t * cria_interseccao (conjunto_t *c1, conjunto_t *c2) {
         /* Passa por cada elemento do menor conjunto */
         for (count = 0; count < c1->card; count++) {
             /* insere ele no conjunto de interseccao caso ele esteja no maior conjunto */
-            if (busca_binaria (*(c1->v+count), c2) != -1) 
+            if (pertence (c2, *(c1->v+count))) 
                 insere_conjunto (conj, *(c1->v+count));
             }
         return conj;
