@@ -259,6 +259,10 @@ int incrementar_iterador (conjunto_t *c, int *elemento) {
 }
 
 int retirar_um_elemento (conjunto_t *c) {
-    return retira_conjunto (c, *(c->v+(rand() % c->card)));
+    int random;
+    random = *(c->v+(rand() % (cardinalidade (c))));
+    if (retira_conjunto (c, random)) {
+        return random;
+    } else return 0;
 }
 /* Funções publicas */
