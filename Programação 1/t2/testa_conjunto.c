@@ -531,11 +531,11 @@ int main () {
     printf("Removendo elementos aleatorios do conjunto...\n");
     printf("\n");
 
-    for (count = 0; count < 2; count ++)
-        if (retirar_um_elemento (conj3)) {
-            printf("Imprimindo o conjunto 3 apos a remoção aleatoria...\n");
-            imprime (conj3);
-        }
+    printf("Imprimindo os elementos na seguencia que foram retirados...\n");
+    while (!conjunto_vazio (conj3)){
+        printf("%d ", retirar_um_elemento (conj3));
+    }
+    printf("\n"); 
         
     printf("\n"); 
     printf("------------------------------------------------------------------\n");
