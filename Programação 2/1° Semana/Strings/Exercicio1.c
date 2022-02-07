@@ -5,7 +5,8 @@ void main() {
     char string[100];
 
     printf("Digite a string: \n");
-    scanf("%s", string);
+    // scanf("%s", string);
+    fgets(string, 100, stdin);
 
     for (int i = strlen(string); i >= 0; i--) {
         putchar(string[i]);
