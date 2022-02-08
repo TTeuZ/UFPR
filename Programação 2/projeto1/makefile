@@ -1,8 +1,5 @@
 SHELL = /bin/sh
 
-# Variavel com o nome do compilador utilizado pelo makefile
-COMPILER = gcc
-
 FLAGS = -g -Wall
 LIBS = -lm
 
@@ -16,42 +13,42 @@ purge: clean
 		-rm -f pgmlbp pgmlimiar pgmmedia pgmmediana pgmnega pgmrotacao
 
 # Construção dos executaveis
-pgmlbp: pgmlbp.o
-		$(COMPILER) $(FLAGS) $(LIBS) pgmlbp.o -o pgmlbp
+pgmlbp: pgmlbp.o core_functions.o
+		$(CC) $(FLAGS) $(LIBS) core_functions.o pgmlbp.o -o pgmlbp
 
-pgmlimiar: pgmlimiar.o
-		$(COMPILER) $(FLAGS) $(LIBS) pgmlimiar.o -o pgmlimiar
+pgmlimiar: pgmlimiar.o core_functions.o
+		$(CC) $(FLAGS) $(LIBS) core_functions.o pgmlimiar.o -o pgmlimiar
 
-pgmmedia: pgmmedia.o
-		$(COMPILER) $(FLAGS) $(LIBS) pgmmedia.o -o pgmmedia
+pgmmedia: pgmmedia.o core_functions.o
+		$(CC) $(FLAGS) $(LIBS) core_functions.o pgmmedia.o -o pgmmedia
 
-pgmmediana: pgmmediana.o
-		$(COMPILER) $(FLAGS) $(LIBS) pgmmediana.o -o pgmmediana
+pgmmediana: pgmmediana.o core_functions.o
+		$(CC) $(FLAGS) $(LIBS) core_functions.o pgmmediana.o -o pgmmediana
 
-pgmnega: pgmnega.o
-		$(COMPILER) $(FLAGS) $(LIBS) pgmnega.o -o pgmnega
+pgmnega: pgmnega.o core_functions.o
+		$(CC) $(FLAGS) $(LIBS) core_functions.o pgmnega.o -o pgmnega
 
-pgmrotacao: pgmrotacao.o
-		$(COMPILER) $(FLAGS) $(LIBS) pgmrotacao.o -o pgmrotacao
+pgmrotacao: pgmrotacao.o core_functions.o
+		$(CC) $(FLAGS) $(LIBS) core_functions.o pgmrotacao.o -o pgmrotacao
 
 # Construção dos Objetos
-core_function.o: core_functions.c
-		$(COMPILER) $(FLAGS) $(LIBS) -c core_functions.c
+core_functions.o: core_functions.c
+		$(CC) $(FLAGS) -c core_functions.c
 
 pgmlbp.o: pgmlbp.c
-		$(COMPILER) $(FLAGS) $(LIBS) -c pgmlbp.c
+		$(CC) $(FLAGS) -c pgmlbp.c
 
 pgmlimiar.o: pgmlimiar.c
-		$(COMPILER) $(FLAGS) $(LIBS) -c pgmlimiar.c
+		$(CC) $(FLAGS) -c pgmlimiar.c
 
 pgmmedia.o: pgmmedia.c
-		$(COMPILER) $(FLAGS) $(LIBS) -c pgmmedia.c
+		$(CC) $(FLAGS) -c pgmmedia.c
 
 pgmmediana.o: pgmmediana.c
-		$(COMPILER) $(FLAGS) $(LIBS) -c pgmmediana.c
+		$(CC) $(FLAGS) -c pgmmediana.c
 
 pgmnega.o: pgmnega.c
-		$(COMPILER) $(FLAGS) $(LIBS) -c pgmnega.c
+		$(CC) $(FLAGS) -c pgmnega.c
 
 pgmrotacao.o: pgmrotacao.c
-		$(COMPILER) $(FLAGS) $(LIBS) -c pgmrotacao.c
+		$(CC) $(FLAGS) -c pgmrotacao.c
