@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "entities.h"
-#include "core_function.h"
+#include "core_functions.h"
 
-void main (int argc, char *argv[]) {
+int main (int argc, char *argv[]) {
     printf("tamo no limiar\n");
+    return 1;
 }
