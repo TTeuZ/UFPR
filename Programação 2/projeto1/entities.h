@@ -7,10 +7,10 @@ typedef struct image {
     int column_size;
     int max_value;
     unsigned char *image_data;
-} image;
+} image_f;
 
 typedef struct paramns {
     int input;
     int output;
     float ex_param;
-} paramns;
+} paramns_f;
