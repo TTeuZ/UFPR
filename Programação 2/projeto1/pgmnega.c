@@ -11,6 +11,7 @@ int main (int argc, char *argv[]) {
     image = initialize_image ();
     paramns = initialize_paramns ();
 
+    /* tratamento dos parametros enviados para o filtro */
     treat_paramns (argv, argc, paramns);
 
     printf("endereço da imagem: %p\n", &image);

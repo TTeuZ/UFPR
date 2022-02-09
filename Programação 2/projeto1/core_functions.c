@@ -28,7 +28,12 @@ paramns_f *initialize_paramns () {
     if (!(paramns = malloc (sizeof(paramns_f)))) {
         emit_error("Falha na alocação de memória para os parametros!\n");
         exit(EXIT_FAILURE);
-    } else return paramns;
+    } else {
+        paramns->input = 0;
+        paramns->output = 0;
+        paramns->ex_param = 0;
+        return paramns;
+    }
 }
 
 /*
