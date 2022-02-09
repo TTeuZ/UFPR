@@ -23,4 +23,4 @@ paramns_f *initialize_paramns ();
 /*
 * Função que ajusta os parametros enviados enviados na chamada do filtro
 */
-void treat_paramns (char *paramns[], int qtd, paramns_f *param);
+void treat_paramns (char *paramns[], int qtd, paramns_f *param, char *extra_param, int need_extra);

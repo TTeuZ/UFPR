@@ -12,13 +12,15 @@ int main (int argc, char *argv[]) {
     paramns = initialize_paramns ();
 
     /* tratamento dos parametros enviados para o filtro */
-    treat_paramns (argv, argc, paramns);
+    treat_paramns (argv, argc, paramns, "", 0);
 
-    printf("endereço da imagem: %p\n", &image);
-    printf("endereço dos parametros: %p\n", &paramns);
+    printf("input: %d\n", paramns->input);
+    printf("output: %d\n", paramns->output);
+    printf("extra: %f\n", paramns->ex_param);
+    printf("\n");
 
     /* Libera todo o espaço alocado */
     clean_structs (image, paramns);
 
-    return 1;
+    exit(EXIT_SUCCESS);
 }

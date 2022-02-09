@@ -11,13 +11,11 @@ int main (int argc, char *argv[]) {
     image = initialize_image ();
     paramns = initialize_paramns ();
 
-    treat_paramns (argv, argc, paramns);
-
     printf("endereço da imagem: %p\n", &image);
     printf("endereço dos parametros: %p\n", &paramns);
 
     /* Libera todo o espaço alocado */
     clean_structs (image, paramns);
 
-    return 1;
+    exit(EXIT_SUCCESS);
 }
