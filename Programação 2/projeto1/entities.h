@@ -2,7 +2,7 @@
 * Struct que define a imagem recebida
 */
 typedef struct image {
-    int image_type;
+    char image_type[3];
     int row_size;
     int column_size;
     int max_value;

@@ -29,7 +29,7 @@ void treat_paramns (char *paramns[], int qtd, paramns_f *param, char *extra_para
 /*
 * Função que faz a leitura e constroi o imagem que vai ser utilizada no filtro
 */
-void read_image (image_f *image, paramns_f *paramns);
+void read_image (image_f *image, paramns_f *param, char *paramns[]);
 
 /*
 * Função que retorna a nova imagem construida para o output

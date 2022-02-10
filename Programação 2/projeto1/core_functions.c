@@ -66,7 +66,15 @@ void treat_paramns (char *paramns[], int qtd, paramns_f *param, char *extra_para
 }
 
 /*----------------------------------  Image Functions ----------------------------------------*/
-void read_image (image_f *image, paramns_f *paramns) {
-    printf("batata\n");
+void read_image (image_f *image, paramns_f *param, char *paramns[]) {
+    FILE *image_r;
+    char line[100];
+
+    if (param->input != 0) 
+        image_r = fopen(paramns[param->input], "r");
+    else image_r = stdin;
+
+    fgets (line, 1024, image_r);
+    printf ("%s\n",line) ;
 }
 /*----------------------------------  Image Functions ----------------------------------------*/

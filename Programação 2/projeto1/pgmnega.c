@@ -14,7 +14,7 @@ int main (int argc, char *argv[]) {
     treat_paramns (argv, argc, paramns, "", 0);
 
     /* chama a função que lê o pgm */
-    read_image (image, paramns);
+    read_image (image, paramns, argv);
 
     /* Libera todo o espaço alocado */
     clean_structs (image, paramns);
