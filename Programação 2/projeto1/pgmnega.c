@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "core_functions.h"
-#include "image_functions.h"
 
 int main (int argc, char *argv[]) {
     image_f *image;
@@ -14,10 +13,8 @@ int main (int argc, char *argv[]) {
     /* tratamento dos parametros enviados para o filtro */
     treat_paramns (argv, argc, paramns, "", 0);
 
-    printf("input: %d\n", paramns->input);
-    printf("output: %d\n", paramns->output);
-    printf("extra: %f\n", paramns->ex_param);
-    printf("\n");
+    /* chama a função que lê o pgm */
+    read_image (image, paramns);
 
     /* Libera todo o espaço alocado */
     clean_structs (image, paramns);

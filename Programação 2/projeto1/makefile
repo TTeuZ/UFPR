@@ -13,30 +13,27 @@ purge: clean
 		-rm -f pgmlbp pgmlimiar pgmmedia pgmmediana pgmnega pgmrotacao
 
 # Construção dos executaveis
-pgmlbp: pgmlbp.o core_functions.o image_functions.o
-		$(CC) $(FLAGS) $(LIBS) image_functions.o core_functions.o pgmlbp.o -o pgmlbp
+pgmlbp: pgmlbp.o core_functions.o
+		$(CC) $(FLAGS) $(LIBS) core_functions.o pgmlbp.o -o pgmlbp
 
-pgmlimiar: pgmlimiar.o core_functions.o image_functions.o
-		$(CC) $(FLAGS) $(LIBS) image_functions.o core_functions.o pgmlimiar.o -o pgmlimiar
+pgmlimiar: pgmlimiar.o core_functions.o
+		$(CC) $(FLAGS) $(LIBS) core_functions.o pgmlimiar.o -o pgmlimiar
 
-pgmmedia: pgmmedia.o core_functions.o image_functions.o
-		$(CC) $(FLAGS) $(LIBS) image_functions.o core_functions.o pgmmedia.o -o pgmmedia
+pgmmedia: pgmmedia.o core_functions.o
+		$(CC) $(FLAGS) $(LIBS) core_functions.o pgmmedia.o -o pgmmedia
 
-pgmmediana: pgmmediana.o core_functions.o image_functions.o
-		$(CC) $(FLAGS) $(LIBS) image_functions.o core_functions.o pgmmediana.o -o pgmmediana
+pgmmediana: pgmmediana.o core_functions.o
+		$(CC) $(FLAGS) $(LIBS) core_functions.o pgmmediana.o -o pgmmediana
 
-pgmnega: pgmnega.o core_functions.o image_functions.o
-		$(CC) $(FLAGS) $(LIBS) image_functions.o core_functions.o pgmnega.o -o pgmnega
+pgmnega: pgmnega.o core_functions.o
+		$(CC) $(FLAGS) $(LIBS) core_functions.o pgmnega.o -o pgmnega
 
-pgmrotacao: pgmrotacao.o core_functions.o image_functions.o
-		$(CC) $(FLAGS) $(LIBS) image_functions.o core_functions.o pgmrotacao.o -o pgmrotacao
+pgmrotacao: pgmrotacao.o core_functions.o
+		$(CC) $(FLAGS) $(LIBS) core_functions.o pgmrotacao.o -o pgmrotacao
 
 # Construção dos Objetos
 core_functions.o: core_functions.c
 		$(CC) $(FLAGS) -c core_functions.c
-
-image_functions.o: image_functions.c
-		$(CC) $(FLAGS) -c image_functions.c
 
 pgmlbp.o: pgmlbp.c
 		$(CC) $(FLAGS) -c pgmlbp.c

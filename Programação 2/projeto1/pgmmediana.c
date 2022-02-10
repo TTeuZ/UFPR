@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "core_functions.h"
-#include "image_functions.h"
 
 int main (int argc, char *argv[]) {
     image_f *image;

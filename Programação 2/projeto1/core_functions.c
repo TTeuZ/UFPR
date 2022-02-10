@@ -64,3 +64,9 @@ void treat_paramns (char *paramns[], int qtd, paramns_f *param, char *extra_para
     if ((param->ex_param == 0) &&  need_extra) 
         emit_error("Você não indicou o parametro de configuração");
 }
+
+/*----------------------------------  Image Functions ----------------------------------------*/
+void read_image (image_f *image, paramns_f *paramns) {
+    printf("batata\n");
+}
+/*----------------------------------  Image Functions ----------------------------------------*/
