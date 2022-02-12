@@ -6,34 +6,38 @@
 #define RED "\e[0;31m"
 #define NC "\e[0m"
 
-void emit_error(char *message) {
-    fprintf(stderr, RED "[ERROR] " NC "%s\n", message);
+void emit_error (image_f *image, paramns_f *paramns, char *message) {
+    fprintf (stderr, RED "[ERROR] " NC "%s\n", message);
+    clean_structs (image, paramns);
     exit (EXIT_FAILURE);
 }
 
 void clean_structs (image_f *image, paramns_f *paramns) {
-    if (image) {
-        if (image->image_data)
+    if (image != NULL) {
+        if (image->image_data != NULL)
             free (image->image_data);
         free (image);
     }
-    if (paramns)
+    if (paramns != NULL)
         free (paramns);
 }
 
 image_f *initialize_image () {
     image_f *image;
-    if (!(image = malloc (sizeof(image_f)))) {
-        emit_error("Falha na alocação de memória para a imagem!\n");
-        exit(EXIT_FAILURE);
-    } else return image;
+    if (! (image = malloc (sizeof (image_f)))) {
+        emit_error (NULL, NULL, "Falha na alocação de memória para a imagem!\n");
+        exit (EXIT_FAILURE);
+    } else {
+        image->image_data = NULL;
+        return image;
+    }
 }
 
-paramns_f *initialize_paramns () {
+paramns_f *initialize_paramns (image_f *image) {
     paramns_f *paramns;
-    if (!(paramns = malloc (sizeof(paramns_f)))) {
-        emit_error("Falha na alocação de memória para os parametros!\n");
-        exit(EXIT_FAILURE);
+    if (! (paramns = malloc (sizeof (paramns_f)))) {
+        emit_error (image, NULL, "Falha na alocação de memória para os parametros!\n");
+        exit (EXIT_FAILURE);
     } else {
         paramns->input = 0;
         paramns->output = 0;
@@ -48,37 +52,37 @@ paramns_f *initialize_paramns () {
 * Se o -o não for indicado, e não tive nada na saida padrão, encerra o filtro com erro
 * need_extra indica se teremos erro caso o parametro extra não seja indicado.
 */
-void treat_paramns (char *paramns[], int qtd, paramns_f *param, char *extra_param, int need_extra) {
+void treat_paramns (image_f *image, paramns_f *paramns, char *extra_param, int need_extra, char *param[], int qtd) {
     int count;
     /* caso o parametro exista, armazena a sua posição na struct */
     for (count = 1; count < qtd; count++) {
-        if (! strcmp (paramns[count], "-i")) 
-            param->input = count+1;
-        if (! strcmp (paramns[count], "-o")) 
-            param->output = count+1;
-        if (! strcmp (paramns[count], extra_param))
-            param->ex_param = count+1;
+        if (! strcmp (param[count], "-i")) 
+            paramns->input = count+1;
+        if (! strcmp (param[count], "-o")) 
+            paramns->output = count+1;
+        if (! strcmp (param[count], extra_param))
+            paramns->ex_param = count+1;
     }
     /* Verifica se os paramentros não indicados possuem respando nas entradas e saidas padrões
     Verifica se o parametro extra é obrigatório, e se for, verifica se foi preenchido */
-    if ((param->input == 0) && fseek(stdin, 0, SEEK_END)) 
-        emit_error("Você não indicou um arquivo de entrada");
+    if ((paramns->input == 0) && fseek(stdin, 0, SEEK_END)) 
+        emit_error (image, paramns, "Você não indicou um arquivo de entrada");
     else rewind (stdin);
-    if ((param->output == 0) && fseek(stdout, 0, SEEK_END)) 
-        emit_error("Você não indicou um arquivo de saida");
+    if ((paramns->output == 0) && fseek(stdout, 0, SEEK_END)) 
+        emit_error (image, paramns,"Você não indicou um arquivo de saida");
     else rewind (stdout);
-    if ((param->ex_param == 0) &&  need_extra) 
-        emit_error("Você não indicou o parametro de configuração");
+    if ((paramns->ex_param == 0) &&  need_extra) 
+        emit_error (image, paramns, "Você não indicou o parametro de configuração");
 }
 
 /*----------------------------------  Image Functions ----------------------------------------*/
-void read_image (image_f *image, paramns_f *param, char *paramns[]) {
+void read_image (image_f *image, paramns_f *paramns, char *param[]) {
     FILE *image_r;
     char line[100];
 
-    if (param->input != 0) {
-        if (! (image_r = fopen(paramns[param->input], "r")))
-            emit_error("A imagem enviada é invalida");
+    if (paramns->input != 0) {
+        if (! (image_r = fopen(param[paramns->input], "r")))
+            emit_error (image, paramns, "A imagem enviada é invalida");
     } else image_r = stdin;
 
     fgets (line, 1024, image_r);
