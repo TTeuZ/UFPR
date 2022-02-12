@@ -8,10 +8,10 @@ int main (int argc, char *argv[]) {
 
     /* Inicializa as imagens e os parametros */
     image = initialize_image ();
-    paramns = initialize_paramns ();
+    paramns = initialize_paramns (image);
 
     /* tratamento dos parametros enviados para o filtro */
-    treat_paramns (argv, argc, paramns, "", 0);
+    treat_paramns (image, paramns, "", 0, argv, argc);
 
     /* chama a função que lê o pgm */
     read_image (image, paramns, argv);
