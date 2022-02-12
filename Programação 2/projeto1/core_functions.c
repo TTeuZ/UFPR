@@ -76,16 +76,42 @@ void treat_paramns (image_f *image, paramns_f *paramns, char *extra_param, int n
 }
 
 /*----------------------------------  Image Functions ----------------------------------------*/
+/*
+* Função responsavel por ler e armazenas as informações da imagem de tipo P2
+*/
+void read_p2_file (image_f *image, paramns_f *paramns, FILE *image_r) {
+    printf("Boura ler um p2\n");
+    fclose (image_r);
+}
+
+/*
+* Função responsavel por ler e armazenas as informações da imagem de tipo P5
+*/
+void read_p5_file (image_f *image, paramns_f *paramns, FILE *image_r) {
+    printf("Boura ler um p5\n");
+    fclose (image_r);
+}
+
 void read_image (image_f *image, paramns_f *paramns, char *param[]) {
     FILE *image_r;
-    char line[100];
 
+    /* verifica se vai carregar a imagem do parametro ou do stdin */
     if (paramns->input != 0) {
         if (! (image_r = fopen(param[paramns->input], "r")))
             emit_error (image, paramns, "A imagem enviada é invalida");
     } else image_r = stdin;
 
-    fgets (line, 1024, image_r);
-    printf ("%s\n",line);
+    /* Pegando o image_type da PMG */
+    fgets (image->image_type, sizeof (image->image_type), image_r);
+
+    /* verifica se o arquivo enviado é de um tipo permitido */
+    if (strcmp (image->image_type, "P2") && strcmp (image->image_type, "P5")) {
+        fclose (image_r);
+        emit_error (image, paramns, "O tipo de imagem não é compátivel!");
+    } else {
+        if (! strcmp (image->image_type, "P2")) 
+            read_p2_file (image, paramns, image_r);
+        else read_p5_file (image, paramns, image_r);
+    }
 }
 /*----------------------------------  Image Functions ----------------------------------------*/
