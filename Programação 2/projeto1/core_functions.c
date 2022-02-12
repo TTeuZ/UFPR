@@ -7,14 +7,18 @@
 #define NC "\e[0m"
 
 void emit_error(char *message) {
-    fprintf(stderr, RED "[ERROR] "
-    NC "%s\n", message);
-    exit(EXIT_FAILURE);
+    fprintf(stderr, RED "[ERROR] " NC "%s\n", message);
+    exit (EXIT_FAILURE);
 }
 
 void clean_structs (image_f *image, paramns_f *paramns) {
-    free (image);
-    free (paramns);
+    if (image) {
+        if (image->image_data)
+            free (image->image_data);
+        free (image);
+    }
+    if (paramns)
+        free (paramns);
 }
 
 image_f *initialize_image () {
@@ -59,8 +63,10 @@ void treat_paramns (char *paramns[], int qtd, paramns_f *param, char *extra_para
     Verifica se o parametro extra é obrigatório, e se for, verifica se foi preenchido */
     if ((param->input == 0) && fseek(stdin, 0, SEEK_END)) 
         emit_error("Você não indicou um arquivo de entrada");
+    else rewind (stdin);
     if ((param->output == 0) && fseek(stdout, 0, SEEK_END)) 
         emit_error("Você não indicou um arquivo de saida");
+    else rewind (stdout);
     if ((param->ex_param == 0) &&  need_extra) 
         emit_error("Você não indicou o parametro de configuração");
 }
@@ -70,11 +76,12 @@ void read_image (image_f *image, paramns_f *param, char *paramns[]) {
     FILE *image_r;
     char line[100];
 
-    if (param->input != 0) 
-        image_r = fopen(paramns[param->input], "r");
-    else image_r = stdin;
+    if (param->input != 0) {
+        if (! (image_r = fopen(paramns[param->input], "r")))
+            emit_error("A imagem enviada é invalida");
+    } else image_r = stdin;
 
     fgets (line, 1024, image_r);
-    printf ("%s\n",line) ;
+    printf ("%s\n",line);
 }
 /*----------------------------------  Image Functions ----------------------------------------*/

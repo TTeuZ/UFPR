@@ -19,5 +19,5 @@ int main (int argc, char *argv[]) {
     /* Libera todo o espaço alocado */
     clean_structs (image, paramns);
 
-    exit(EXIT_SUCCESS);
+    exit (EXIT_SUCCESS);
 }
