@@ -17,6 +17,9 @@ int main (int argc, char *argv[]) {
     /* chama a função que lê o pgm */
     read_image (image, params, argv);
 
+    /* chama a função que grava a nova pgm */
+    send_image (image, params, argv);
+
     /* Libera todo o espaço alocado */
     clean_structs (image, params);
 

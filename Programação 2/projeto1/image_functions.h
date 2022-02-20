@@ -3,9 +3,9 @@
 /*
 * Função que faz a leitura e constroi o imagem que vai ser utilizada no filtro
 */
-void read_image (image_f *image, params_f *param, char *params[]);
+void read_image (image_f *image, params_f *params, char *param[]);
 
 /*
 * Função que retorna a nova imagem construida para o output
 */
-void send_image ();
+void send_image (image_f *image, params_f *params, char *param[]);

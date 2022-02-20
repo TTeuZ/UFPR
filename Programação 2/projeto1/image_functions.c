@@ -55,14 +55,35 @@ void read_image (image_f *image, params_f *params, char *param[]) {
             emit_error (image, params, "A imagem enviada é invalida");
     } else image_r = stdin;
 
-    /* Pegando o image_type da PMG */
-    fgets (image->image_type, sizeof (image->image_type), image_r);
+    /* Pegando o type da PMG */
+    fgets (image->type, sizeof (image->type), image_r);
 
     /* verifica se o arquivo enviado é de um tipo permitido */
-    if (strcmp (image->image_type, "P2") && strcmp (image->image_type, "P5")) {
+    if (strcmp (image->type, "P2") && strcmp (image->type, "P5")) {
         fclose (image_r);
         emit_error (image, params, "O tipo de imagem não é compátivel!");
-    } else if (! strcmp (image->image_type, "P2")) 
+    } else if (! strcmp (image->type, "P2")) 
         read_p2_file (image, params, image_r);
     else read_p5_file (image, params, image_r);
+}
+
+void send_image (image_f *image, params_f *params, char *param[]) {
+    int row, col;
+    FILE *new_image;
+
+    fprintf(stdout, GREEN "[PROCESSANDO] "  NC "Gravando a imagem resultante...\n\n");
+
+    if (! (new_image = fopen(param[params->output], "w")))
+        emit_error (image, params, "A imagem enviada é invalida");
+
+    fprintf (new_image, "%s\n", image->type);
+    fprintf (new_image, "%d %d\n", image->width, image->height);
+    fprintf (new_image, "%d\n", image->max_value);
+
+    for (row = 0; row < image->height; row++) {
+        for (col = 0; col < image->height; col++) 
+            fprintf(new_image, "%d ", image->data[(row * image->height) + col]);
+        fprintf(new_image, "\n");
+    }
+    fclose (new_image);
 }

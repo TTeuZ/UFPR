@@ -5,7 +5,7 @@
 #ifndef IMAGE_F
 #define IMAGE_F 
 typedef struct image {
-    char image_type[3];
+    char type[3];
     int width;
     int height;
     int max_value;
