@@ -3,19 +3,16 @@
 #include <string.h>
 #include "core_functions.h"
 
-#define RED "\e[0;31m"
-#define NC "\e[0m"
-
 void emit_error (image_f *image, params_f *params, char *message) {
-    fprintf (stderr, RED "[ERROR] " NC "%s\n", message);
+    fprintf (stderr, RED "[ERROR] " NC "%s\n\n", message);
     clean_structs (image, params);
     exit (EXIT_FAILURE);
 }
 
 void clean_structs (image_f *image, params_f *params) {
     if (image != NULL) {
-        if (image->image_data != NULL)
-            free (image->image_data);
+        if (image->data != NULL)
+            free (image->data);
         free (image);
     }
     if (params != NULL)
@@ -28,7 +25,7 @@ image_f *initialize_image () {
         emit_error (NULL, NULL, "Falha na alocação de memória para a imagem!\n");
         exit (EXIT_FAILURE);
     } else {
-        image->image_data = NULL;
+        image->data = NULL;
         return image;
     }
 }
