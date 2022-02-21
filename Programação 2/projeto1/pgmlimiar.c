@@ -24,12 +24,13 @@ int main (int argc, char *argv[]) {
 
     /* seta o valor limite para decidir se o bit vai virar preto ou branco */
     divider = (int) image->max_value * limiar;
-
+    /* seta o novo valor maximo para a pgm */
+    image->max_value = 255;
     /* aplica o efeito de limiar */
     for (row = 0; row < image->height; row++)
         for (col = 0; col < image->width; col++) {
             if (image->data[(row * image->width) + col] >= divider) 
-                image->data[(row * image->width) + col] = image->max_value;
+                image->data[(row * image->width) + col] = 255;
             else image->data[(row * image->width) + col] = 0;
         } 
 
