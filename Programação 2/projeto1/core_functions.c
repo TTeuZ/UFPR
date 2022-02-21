@@ -38,7 +38,7 @@ params_f *initialize_params (image_f *image) {
     } else {
         params->input = 0;
         params->output = 0;
-        params->ex_param = 0;
+        params->ex_param = -1;
         return params;
     }
 }
@@ -68,6 +68,6 @@ void treat_params (image_f *image, params_f *params, char *extra_param, int need
     if ((params->output == 0) && fseek (stdout, 0, SEEK_END)) 
         emit_error (image, params,"Você não indicou um arquivo de saida");
     else rewind (stdout);
-    if ((params->ex_param == 0) &&  need_extra) 
+    if ((params->ex_param == -1) &&  need_extra) 
         emit_error (image, params, "Você não indicou o parametro de configuração");
 }
