@@ -62,10 +62,10 @@ void treat_params (image_f *image, params_f *params, char *extra_param, int need
     }
     /* Verifica se os paramentros não indicados possuem respando nas entradas e saidas padrões
     Verifica se o parametro extra é obrigatório, e se for, verifica se foi preenchido */
-    if ((params->input == 0) && fseek(stdin, 0, SEEK_END)) 
+    if ((params->input == 0) && fseek (stdin, 0, SEEK_END)) 
         emit_error (image, params, "Você não indicou um arquivo de entrada");
     else rewind (stdin);
-    if ((params->output == 0) && fseek(stdout, 0, SEEK_END)) 
+    if ((params->output == 0) && fseek (stdout, 0, SEEK_END)) 
         emit_error (image, params,"Você não indicou um arquivo de saida");
     else rewind (stdout);
     if ((params->ex_param == 0) &&  need_extra) 

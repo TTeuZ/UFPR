@@ -13,7 +13,7 @@ void read_p2_file (image_f *image, params_f *params, FILE *image_r) {
     /* le a matriz da imagem e armazena na struct */
     for (row = 0; row < image->height; row++)
         for (col = 0; col < image->width; col++) {
-            fscanf(image_r,"%d", &value);
+            fscanf (image_r,"%d", &value);
             image->data[(row * image->width) + col] = value;
         } 
 }
@@ -28,7 +28,7 @@ void read_p5_file (image_f *image, params_f *params, FILE *image_r) {
     /* le a matriz da imagem e armazena na struct */
      for (row = 0; row < image->height; row++)
         for (col = 0; col < image->width; col++) {
-            value = getc(image_r);
+            value = getc (image_r);
             image->data[(row * image->width) + col] = value;
         } 
 }
@@ -36,7 +36,7 @@ void read_p5_file (image_f *image, params_f *params, FILE *image_r) {
 void read_image (image_f *image, params_f *params, char *param[]) {
     FILE *image_r;
 
-    fprintf(stdout, YELLOW "[PROCESSANDO] "  NC "Lendo a imagem enviada...\n\n");
+    fprintf (stdout, YELLOW "[PROCESSANDO] "  NC "Lendo a imagem enviada...\n\n");
 
     /* verifica se vai carregar a imagem do parametro ou do stdin */
     if (params->input != 0) {
@@ -53,9 +53,9 @@ void read_image (image_f *image, params_f *params, char *param[]) {
         emit_error (image, params, "O tipo de imagem não é compátivel!");
     }
 
-    while (getc(image_r) != '\n'); /* Vai até o fim da linha */
-    while (getc(image_r) == '#') { /* Pula os comentarios */
-        while (getc(image_r) != '\n'); /* Vai até o fim da linha */
+    while (getc (image_r) != '\n'); /* Vai até o fim da linha */
+    while (getc (image_r) == '#') { /* Pula os comentarios */
+        while (getc (image_r) != '\n'); /* Vai até o fim da linha */
     }
     fseek (image_r, -1, SEEK_CUR); /* volta um caracter para traz */
     /* armazena as informações da estrutura da pgm */
@@ -101,6 +101,6 @@ void send_image (image_f *image, params_f *params, char *param[]) {
     }
     fprintf (new_image, "\n");
 
-    fprintf(stdout, GREEN "[SUCESSO] "  NC "Gravando efetuada com sucesso!\n\n");
+    fprintf (stdout, GREEN "[SUCESSO] "  NC "Gravando efetuada com sucesso!\n\n");
     fclose (new_image);
 }
