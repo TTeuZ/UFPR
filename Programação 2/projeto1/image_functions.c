@@ -79,8 +79,10 @@ void send_image (image_f *image, params_f *params, char *param[]) {
     fprintf (stdout, YELLOW "[PROCESSANDO] "  NC "Gravando a imagem resultante...\n\n");
 
     /* abre um arquivo para escrita */
-    if (! (new_image = fopen(param[params->output], "w")))
-        emit_error (image, params, "A imagem enviada é invalida");
+    if (params->output != 0) {
+        if (! (new_image = fopen(param[params->output], "w")))
+            emit_error (image, params, "A imagem enviada é invalida");
+    } else new_image = stdout;
 
     /* adiciona os valores de configuração */
     fprintf (new_image, "%s\n", image->type);
