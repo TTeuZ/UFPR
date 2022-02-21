@@ -1,5 +1,6 @@
 #define RED "\e[0;31m"
 #define GREEN "\e[0;32m"
+#define YELLOW "\e[1;33m"
 #define NC "\e[0m"
 
 #ifndef IMAGE_F
@@ -9,7 +10,7 @@ typedef struct image {
     int width;
     int height;
     int max_value;
-    int *data;
+    unsigned char *data;
 } image_f;
 #endif
 
