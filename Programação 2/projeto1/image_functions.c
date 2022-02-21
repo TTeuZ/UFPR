@@ -11,15 +11,11 @@ void read_p2_file (image_f *image, params_f *params, FILE *image_r) {
     int row, col, value;
     
     /* le a matriz da imagem e armazena na struct */
-    if ((image->data = malloc (sizeof (image->data) * image->height * image->width))) {
-        for (row = 0; row < image->height; row++)
-            for (col = 0; col < image->width; col++) {
-                fscanf(image_r,"%d", &value);
-                image->data[(row * image->width) + col] = value;
-            } 
-    } else emit_error (image, params, "Falha na alocação de memória para o data da imagem!\n");
-
-    fclose (image_r);
+    for (row = 0; row < image->height; row++)
+        for (col = 0; col < image->width; col++) {
+            fscanf(image_r,"%d", &value);
+            image->data[(row * image->width) + col] = value;
+        } 
 }
 
 /*
@@ -30,15 +26,11 @@ void read_p5_file (image_f *image, params_f *params, FILE *image_r) {
     char value;
 
     /* le a matriz da imagem e armazena na struct */
-    if ((image->data = malloc (sizeof (image->data) * image->height * image->width))) {
-        for (row = 0; row < image->height; row++)
-            for (col = 0; col < image->width; col++) {
-                value = getc(image_r);
-                image->data[(row * image->width) + col] = value;
-            } 
-    } else emit_error (image, params, "Falha na alocação de memória para o data da imagem!\n");
-
-    fclose (image_r);
+     for (row = 0; row < image->height; row++)
+        for (col = 0; col < image->width; col++) {
+            value = getc(image_r);
+            image->data[(row * image->width) + col] = value;
+        } 
 }
 
 void read_image (image_f *image, params_f *params, char *param[]) {
@@ -71,9 +63,13 @@ void read_image (image_f *image, params_f *params, char *param[]) {
     fscanf (image_r, "%d", &image->height);
     fscanf (image_r, "%d", &image->max_value);
     
-    if (! strcmp (image->type, "P2")) 
-        read_p2_file (image, params, image_r);
-    else read_p5_file (image, params, image_r);
+    if ((image->data = malloc (sizeof (image->data) * image->height * image->width))) {
+        if (! strcmp (image->type, "P2")) 
+            read_p2_file (image, params, image_r);
+        else read_p5_file (image, params, image_r);
+    } else emit_error (image, params, "Falha na alocação de memória para o data da imagem!\n");
+
+    fclose (image_r);
 }
 
 void send_image (image_f *image, params_f *params, char *param[]) {
