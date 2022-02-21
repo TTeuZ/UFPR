@@ -24,6 +24,8 @@ int main (int argc, char *argv[]) {
 
     if (! (intern_image = malloc (sizeof (image_f)))) 
         emit_error (image, params, "Alocação da imagem de passagem falhou!");
+    
+    /* gera uma copia da imagem que foi enviada*/
     strcpy (intern_image->type, image->type);
     intern_image->max_value = image-> max_value;
     intern_image->width = image->width;
