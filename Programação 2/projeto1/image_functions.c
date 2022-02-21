@@ -36,7 +36,7 @@ void read_p5_file (image_f *image, params_f *params, FILE *image_r) {
 void read_image (image_f *image, params_f *params, char *param[]) {
     FILE *image_r;
 
-    fprintf (stdout, YELLOW "[PROCESSANDO] "  NC "Lendo a imagem enviada...\n\n");
+    fprintf (stderr, YELLOW "[PROCESSANDO] "  NC "Lendo a imagem enviada...\n\n");
 
     /* verifica se vai carregar a imagem do parametro ou do stdin */
     if (params->input != 0) {
@@ -76,7 +76,7 @@ void send_image (image_f *image, params_f *params, char *param[]) {
     int row, col;
     FILE *new_image;
 
-    fprintf (stdout, YELLOW "[PROCESSANDO] "  NC "Gravando a imagem resultante...\n\n");
+    fprintf (stderr, YELLOW "[PROCESSANDO] "  NC "Gravando a imagem resultante...\n\n"); 
 
     /* abre um arquivo para escrita */
     if (params->output != 0) {
@@ -103,6 +103,6 @@ void send_image (image_f *image, params_f *params, char *param[]) {
     }
     fprintf (new_image, "\n");
 
-    fprintf (stdout, GREEN "[SUCESSO] "  NC "Gravando efetuada com sucesso!\n\n");
+    fprintf (stderr, GREEN "[SUCESSO] "  NC "Gravando efetuada com sucesso!\n\n");
     fclose (new_image);
 }
