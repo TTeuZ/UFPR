@@ -1,6 +1,6 @@
 SHELL = /bin/sh
 
-FLAGS = -g -std=c90 -Wall
+FLAGS = -g -std=c99 -Wall
 LIBS = -lm
 
 # Funções gerais
