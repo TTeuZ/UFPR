@@ -10,18 +10,23 @@
 int main (int argc, char *argv[]) {
     image_f *image, *intern_image;
     params_f *params;
-    int degrees, row, col;
+    int degrees, row, col, row_a, col_a;
     double radians, cos_a, sin_a;
 
     /* Inicializa as imagens e os parametros */
     image = initialize_image ();
     params = initialize_params (image);
-
     /* tratamento dos parametros enviados para o filtro */
     treat_params (image, params, "-a", 0, argv, argc);
     /* chama a função que lê o pgm */
     read_image (image, params, argv);
 
+    /* verifica se o parametro para rotação foi enviado */
+    if (params->ex_param == -1)
+        degrees = 90;
+    else degrees =  atoi (argv[(int) params->ex_param]);
+
+    /* Aloca o espaço da nova imagem */
     if (! (intern_image = malloc (sizeof (image_f)))) 
         emit_error (image, params, "Alocação da imagem de passagem falhou!");
     
@@ -31,22 +36,23 @@ int main (int argc, char *argv[]) {
     intern_image->width = image->width;
     intern_image->height = image->height;
     intern_image->data = malloc (sizeof (intern_image->data) * intern_image->height * intern_image->width);
-    for (row = 0; row < intern_image->height; row++)
+     for (row = 0; row < intern_image->height; row++)
         for (col = 0; col < intern_image->width; col++) {
             intern_image->data[(row * intern_image->width) + col] = image->data[(row * image->width) + col];
         } 
-
-    /* verifica se o parametro para rotação foi enviado */
-    if (params->ex_param == -1)
-        degrees = 90;
-    else degrees =  atoi (argv[(int) params->ex_param]);
 
     /* Calcula o algulo dado para radianos, seu seno e seu cosseno */
     radians = (M_PI * degrees) / 180;
     cos_a = cos (radians);
     sin_a = sin (radians);
 
-
+    for (row = 0; row < intern_image->height; row++)
+        for (col = 0; col < intern_image->width; col++) {
+            row_a = round ((row * cos_a) + (col * sin_a));
+            col_a =  round ((-row * sin_a) + (col * cos_a));
+            intern_image->data[(row * intern_image->width) + col] = image->data[(row_a * image->width) + col_a];
+        }
+    
     /* chama a função que grava a nova pgm */
     send_image (intern_image, params, argv);
     /* Libera todo o espaço alocado */
