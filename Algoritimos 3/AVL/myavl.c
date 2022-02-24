@@ -19,11 +19,10 @@ int main () {
     while (! feof (stdin)) {
         /* seleciona e executa a ação indicada */
         if (action == 'i') 
-            insert_in_leave (tree, tree->root, value);
-         else {
-            nodo = search_tree (tree->root, value);
+            insert_in_leave (tree, tree->root, 0, value);
+         else if (! (nodo = search_tree (tree->root, value)))
             transplant_nodo_delete (tree, nodo);
-        }
+
         /* busca a proxima ação e valor do stdin */
         fscanf (stdin, "%c %d", &action, &value);
         getc (stdin);
