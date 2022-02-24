@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "bst.h"
 
 int main () {
@@ -108,20 +109,19 @@ int main () {
     printf("removendo todos os elementos a partir da raiz\n");
     printf("\n");
 
-    /* nodo = search_tree (tree->root, 90);
-    transplant_nodo_delete (tree, nodo);
-    in_order (tree->root); */
-
     count = tree->nodos_qtd;
     for (count = tree->nodos_qtd; count > 0; count--) {
         transplant_nodo_delete (tree, tree->root);
         in_order (tree->root);
-        printf("\n");
-        printf("Raiz da arvore: %d\n", tree->root->value);
+        printf("\n\n");
+        if (tree->root != NULL)
+            printf("Raiz da arvore: %d\n", tree->root->value);
         printf("altura da arvore: %d\n", tree->height);
         printf("numero de nodos da arvore: %d\n", tree->nodos_qtd);
         printf("\n");
-    }
+    } 
+
+    free (tree);
 
     return 0;
 }

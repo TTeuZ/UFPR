@@ -75,7 +75,7 @@ void right_rotate_tree (tree_t *tree, nodo_t *nodo) {
 
 int tree_height (nodo_t *nodo) {
     int height_left, height_right;
-    if (nodo == NULL) return -1;
+    if (nodo == NULL) return 0;
 
     height_left = tree_height (nodo->left);
     height_right = tree_height (nodo->right);
@@ -90,9 +90,9 @@ nodo_t *tree_minimum (nodo_t *nodo) {
 }
 
 void nodo_transplant (tree_t *tree, nodo_t *removed, nodo_t *transplanted) {
-    if (removed->father == NULL)
+    if (removed->father == NULL) 
         tree->root = transplanted;
-    else if (removed == transplanted->father->left)
+    else if (removed == removed->father->left)
         removed->father->left = transplanted;
     else 
         removed->father->right = transplanted;
@@ -114,13 +114,11 @@ void transplant_nodo_delete (tree_t *tree, nodo_t *nodo) {
             nodo_transplant (tree, inside_nodo, inside_nodo->right);
             inside_nodo->right = nodo->right;
             inside_nodo->right->father = inside_nodo;
-            free (nodo);
-        } else {
-            nodo_transplant (tree, nodo, inside_nodo);
-            inside_nodo->left = nodo->left;
-            inside_nodo->left->father = inside_nodo;
-            free (nodo);
         }
+        nodo_transplant (tree, nodo, inside_nodo);
+        inside_nodo->left = nodo->left;
+        inside_nodo->left->father = inside_nodo;
+        free (nodo);
     }
     tree->nodos_qtd--;
     tree->height = tree_height (tree->root);
