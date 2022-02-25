@@ -38,13 +38,13 @@ nodo_t *search_tree (nodo_t *nodo, int value);
 * Função de rotação do nodo selecionado para a esquerda em relação ao seu filho da direita
 * O nodo a ser enviado é o pai do nodo o qual voce deseja rotacionar
 */ 
-void left_rotate_tree (tree_t *tree, nodo_t *nodo);
+nodo_t *left_rotate_tree (tree_t *tree, nodo_t *nodo);
 
 /*
 * Função de rotação do nodo selecionado para a direita em relação ao seu filho da esquerda
 * O nodo a ser enviado é o pai do nodo o qual voce deseja rotacionar
 */ 
-void right_rotate_tree (tree_t *tree, nodo_t *nodo);
+nodo_t *right_rotate_tree (tree_t *tree, nodo_t *nodo);
 
 /*
 * Função de inserção de valor nas folhas da arvore

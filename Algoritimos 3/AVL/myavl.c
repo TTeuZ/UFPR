@@ -20,7 +20,7 @@ int main () {
         /* seleciona e executa a ação indicada */
         if (action == 'i') 
             insert_in_leave (tree, tree->root, 0, value);
-         else if (! (nodo = search_tree (tree->root, value)))
+         else if ((nodo = search_tree (tree->root, value)))
             transplant_nodo_delete (tree, nodo);
 
         /* busca a proxima ação e valor do stdin */
@@ -32,10 +32,10 @@ int main () {
     in_order (tree->root);
 
     /* limpa as estruturas na finalização do programa */
-    while (tree->nodos_qtd > 0) {
+    /* while (tree->nodos_qtd > 0) {
         transplant_nodo_delete (tree, tree->root);
     }
-    free (tree);
+    free (tree); */
 
     return 0;
 }
