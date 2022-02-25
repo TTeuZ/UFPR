@@ -10,8 +10,10 @@
 int main (int argc, char *argv[]) {
     image_f *image, *intern_image;
     params_f *params;
-    int degrees, row, col, row_a, col_a;
-    double radians, cos_a, sin_a;
+    int degree, cong_degree; /* variaveis para os angulas em graus */
+    int row, col, row_a, col_a, row_center, col_center; /* variaveis das linhas e colunas */
+    double radian, cong_radian; /* variaveis para os angulos em radianos */
+    double cos_r, sin_r, cos_g, sin_g; /* variaveis para os seno e cosseno do angulo de rotação */
 
     /* Inicializa as imagens e os parametros */
     image = initialize_image ();
@@ -23,36 +25,44 @@ int main (int argc, char *argv[]) {
 
     /* verifica se o parametro para rotação foi enviado */
     if (params->ex_param == -1)
-        degrees = 90;
-    else degrees =  atoi (argv[(int) params->ex_param]);
+        degree = 90;
+    else degree =  atoi (argv[(int) params->ex_param]);
+
+    /* calcula o algulo congruente da imagem (considerando o 90° da borda a imagem) */
+    cong_degree = 90 - degree; 
+
+    /* calcula o angulo em radianos */
+    radian = (M_PI * degree) / 180;
+    cong_radian = (M_PI * cong_degree) / 180;
+
+    /* calcula os senos e cossenos */
+    cos_r = cos (radian);
+    sin_r = sin (radian);
+    cos_g = cos (cong_radian);
+    sin_g = sin (cong_radian);
 
     /* Aloca o espaço da nova imagem */
     if (! (intern_image = malloc (sizeof (image_f)))) 
-        emit_error (image, params, "Alocação da imagem de passagem falhou!");
-    
-    /* gera uma copia da imagem que foi enviada*/
+        emit_error (image, params, "Alocação da imagem de passagem falhou!");   
+
+    /* seta os novos valores de altura e largura de acordo com o angulo de rotação */
     strcpy (intern_image->type, image->type);
     intern_image->max_value = image-> max_value;
-    intern_image->width = image->width;
-    intern_image->height = image->height;
+    intern_image->width = abs (round ((cos_g * image->height) + (cos_r * image->width)));
+    intern_image->height = abs (round ((sin_g * image->height) + (sin_r * image->width)));
+
+    /* calcula o centro da imagem */
+    col_center = round (intern_image->width / 2);
+    row_center = round (intern_image->height / 2);
+
     intern_image->data = malloc (sizeof (intern_image->data) * intern_image->height * intern_image->width);
-     for (row = 0; row < intern_image->height; row++)
-        for (col = 0; col < intern_image->width; col++) {
-            intern_image->data[(row * intern_image->width) + col] = image->data[(row * image->width) + col];
-        } 
-
-    /* Calcula o algulo dado para radianos, seu seno e seu cosseno */
-    radians = (M_PI * degrees) / 180;
-    cos_a = cos (radians);
-    sin_a = sin (radians);
-
     for (row = 0; row < intern_image->height; row++)
         for (col = 0; col < intern_image->width; col++) {
-            row_a = round ((row * cos_a) + (col * sin_a));
-            col_a =  round ((-row * sin_a) + (col * cos_a));
+            row_a = round ((row * cos_r) + (col * sin_r) - (col_center * cos_r) - (row_center * sin_r) + row_center);
+            col_a =  round (-(row * sin_r) + (col * cos_r) - (col_center * cos_r) + (row_center * sin_r) + col_center);
             intern_image->data[(row * intern_image->width) + col] = image->data[(row_a * image->width) + col_a];
         }
-    
+
     /* chama a função que grava a nova pgm */
     send_image (intern_image, params, argv);
     /* Libera todo o espaço alocado */
