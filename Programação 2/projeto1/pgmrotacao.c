@@ -11,7 +11,7 @@ int main (int argc, char *argv[]) {
     image_f *image, *intern_image;
     params_f *params;
     int degree, cong_degree; /* variaveis para os angulas em graus */
-    int row, col, row_a, col_a, row_center, col_center; /* variaveis das linhas e colunas */
+    int row, col, row_a, col_a; /* variaveis das linhas e colunas */
     double radian, cong_radian; /* variaveis para os angulos em radianos */
     double cos_r, sin_r, cos_g, sin_g; /* variaveis para os seno e cosseno do angulo de rotação */
 
@@ -47,20 +47,28 @@ int main (int argc, char *argv[]) {
 
     /* seta os novos valores de altura e largura de acordo com o angulo de rotação */
     strcpy (intern_image->type, image->type);
-    intern_image->max_value = image-> max_value;
+    intern_image->max_value = 255;
     intern_image->width = abs (round ((cos_g * image->height) + (cos_r * image->width)));
     intern_image->height = abs (round ((sin_g * image->height) + (sin_r * image->width)));
 
-    /* calcula o centro da imagem */
-    col_center = round (intern_image->width / 2);
-    row_center = round (intern_image->height / 2);
 
     intern_image->data = malloc (sizeof (intern_image->data) * intern_image->height * intern_image->width);
     for (row = 0; row < intern_image->height; row++)
         for (col = 0; col < intern_image->width; col++) {
-            row_a = round ((row * cos_r) + (col * sin_r) - (col_center * cos_r) - (row_center * sin_r) + row_center);
-            col_a =  round (-(row * sin_r) + (col * cos_r) - (col_center * cos_r) + (row_center * sin_r) + col_center);
-            intern_image->data[(row * intern_image->width) + col] = image->data[(row_a * image->width) + col_a];
+            intern_image->data[(row * intern_image->width) + col] = 255;
+        }
+
+    for (row = 0; row < intern_image->height; row++)
+        for (col = 0; col < intern_image->width; col++) {
+            /*row_a = round ((row * cos_r) + (col * sin_r) - (col_center * sin_r) - (row_center * sin_r) + col_center);
+            col_a =  round (-(row * sin_r) + (col * cos_r) - (col_center * cos_r) + (row_center * sin_r) + row_center); */
+            /* row_a = (row * cos_r) - (col * sin_r) - ymin;
+            col_a = (col * cos_r) + (row * sin_r) - xmin; */
+            row_a = (row * cos_r) - (col * sin_r);
+            col_a = (col * cos_r) + (row * sin_r);
+            if (row_a >= 0 && row_a < image->height && col_a >= 0 && col_a < image->width) {
+                intern_image->data[(row * intern_image->width) + col] = image->data[(row_a * image->width) + col_a];  
+            }
         }
 
     /* chama a função que grava a nova pgm */
