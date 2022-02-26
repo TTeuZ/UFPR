@@ -8,13 +8,11 @@ int main (int argc, char *argv[]) {
     params_f *params;
     int row, col;
 
-    /* Inicializa as imagens e os parametros */
-    image = initialize_image ();
-    params = initialize_params (image);
+    params = initialize_params ();
     /* tratamento dos parametros enviados para o filtro */
-    treat_params (image, params, "", 0, argv, argc);
+    treat_params (params, "", 0, argv, argc);
     /* chama a função que lê o pgm */
-    read_image (image, params, argv);
+    image = read_image (params, argv);
     
     /* aplica o efeito de negativo */
     for (row = 0; row < image->height; row++)

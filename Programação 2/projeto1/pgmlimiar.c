@@ -9,13 +9,12 @@ int main (int argc, char *argv[]) {
     float limiar;
     int divider, row, col;
 
-    /* Inicializa as imagens e os parametros */
-    image = initialize_image ();
-    params = initialize_params (image);
+
+    params = initialize_params ();
     /* tratamento dos parametros enviados para o filtro */
-    treat_params (image, params, "-l", 0, argv, argc);
+    treat_params (params, "-l", 0, argv, argc);
     /* chama a função que lê o pgm */
-    read_image (image, params, argv);
+    image = read_image (params, argv);
 
     /* verifica se o parametro do limiar foi enviado */
     if (params->ex_param == -1)

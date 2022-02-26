@@ -19,21 +19,26 @@ void clean_structs (image_f *image, params_f *params) {
         free (params);
 }
 
-image_f *initialize_image () {
+image_f *initialize_image (char *type, int height, int width, int max_value, params_f *params) {
     image_f *image;
     if (! (image = malloc (sizeof (image_f)))) {
-        emit_error (NULL, NULL, "Falha na alocação de memória para a imagem!\n");
+        emit_error (NULL, params, "Falha na alocação de memória para a imagem!\n");
         exit (EXIT_FAILURE);
     } else {
-        image->data = NULL;
+        strcpy (image->type, type);
+        image->height = height;
+        image->width = width;
+        image->max_value = max_value;
+        if (! (image->data = malloc (sizeof (image->data) * image->height * image->width)))
+            emit_error (image, params, "Falha na alocação de memória para o data da imagem!\n");
         return image;
     }
 }
 
-params_f *initialize_params (image_f *image) {
+params_f *initialize_params () {
     params_f *params;
     if (! (params = malloc (sizeof (params_f)))) {
-        emit_error (image, NULL, "Falha na alocação de memória para os parametros!\n");
+        emit_error (NULL, NULL, "Falha na alocação de memória para os parametros!\n");
         exit (EXIT_FAILURE);
     } else {
         params->input = 0;
@@ -49,7 +54,7 @@ params_f *initialize_params (image_f *image) {
 * Se o -o não for indicado, e não tive nada na saida padrão, encerra o filtro com erro
 * need_extra indica se teremos erro caso o parametro extra não seja indicado.
 */
-void treat_params (image_f *image, params_f *params, char *extra_param, int need_extra, char *param[], int qtd) {
+void treat_params (params_f *params, char *extra_param, int need_extra, char *param[], int qtd) {
     int count;
     /* caso o parametro exista, armazena a sua posição na struct */
     for (count = 1; count < qtd; count++) {
@@ -63,11 +68,11 @@ void treat_params (image_f *image, params_f *params, char *extra_param, int need
     /* Verifica se os paramentros não indicados possuem respando nas entradas e saidas padrões
     Verifica se o parametro extra é obrigatório, e se for, verifica se foi preenchido */
     if ((params->input == 0) && fseek (stdin, 0, SEEK_END)) 
-        emit_error (image, params, "Você não indicou um arquivo de entrada");
+        emit_error (NULL, params, "Você não indicou um arquivo de entrada");
     else rewind (stdin);
     if ((params->output == 0) && fseek (stdout, 0, SEEK_END)) 
-        emit_error (image, params,"Você não indicou um arquivo de saida");
+        emit_error (NULL, params,"Você não indicou um arquivo de saida");
     else rewind (stdout);
     if ((params->ex_param == -1) &&  need_extra) 
-        emit_error (image, params, "Você não indicou o parametro de configuração");
+        emit_error (NULL, params, "Você não indicou o parametro de configuração");
 }

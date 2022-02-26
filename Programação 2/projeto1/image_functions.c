@@ -33,7 +33,10 @@ void read_p5_file (image_f *image, params_f *params, FILE *image_r) {
         } 
 }
 
-void read_image (image_f *image, params_f *params, char *param[]) {
+image_f *read_image (params_f *params, char *param[]) {
+    char type[3];
+    int width, height, max_value;
+    image_f *image;
     FILE *image_r;
 
     fprintf (stderr, YELLOW "[PROCESSANDO] "  NC "Lendo a imagem enviada...\n\n");
@@ -41,16 +44,16 @@ void read_image (image_f *image, params_f *params, char *param[]) {
     /* verifica se vai carregar a imagem do parametro ou do stdin */
     if (params->input != 0) {
         if (! (image_r = fopen(param[params->input], "r")))
-            emit_error (image, params, "A imagem enviada é invalida");
+            emit_error (NULL, params, "A imagem enviada é invalida");
     } else image_r = stdin;
 
     /* Pegando o type da PMG */
-    fgets (image->type, sizeof (image->type), image_r);
+    fgets (type, 3, image_r);
 
     /* verifica se o arquivo enviado é de um tipo permitido */
-    if (strcmp (image->type, "P2") && strcmp (image->type, "P5")) {
+    if (strcmp (type, "P2") && strcmp (type, "P5")) {
         fclose (image_r);
-        emit_error (image, params, "O tipo de imagem não é compátivel!");
+        emit_error (NULL, params, "O tipo de imagem não é compátivel!");
     }
 
     while (getc (image_r) != '\n'); /* Vai até o fim da linha */
@@ -59,17 +62,18 @@ void read_image (image_f *image, params_f *params, char *param[]) {
     }
     fseek (image_r, -1, SEEK_CUR); /* volta um caracter para traz */
     /* armazena as informações da estrutura da pgm */
-    fscanf (image_r, "%d", &image->width);
-    fscanf (image_r, "%d", &image->height);
-    fscanf (image_r, "%d", &image->max_value);
+    fscanf (image_r, "%d", &width);
+    fscanf (image_r, "%d", &height);
+    fscanf (image_r, "%d", &max_value);
     
-    if ((image->data = malloc (sizeof (image->data) * image->height * image->width))) {
-        if (! strcmp (image->type, "P2")) 
-            read_p2_file (image, params, image_r);
-        else read_p5_file (image, params, image_r);
-    } else emit_error (image, params, "Falha na alocação de memória para o data da imagem!\n");
+    image = initialize_image (type, height, width, max_value, params);
+
+    if (! strcmp (image->type, "P2")) 
+        read_p2_file (image, params, image_r);
+    else read_p5_file (image, params, image_r);
 
     fclose (image_r);
+    return image;
 }
 
 void send_image (image_f *image, params_f *params, char *param[]) {
