@@ -5,7 +5,7 @@
 
 int main (int argc, char *argv[]) {
     image_f *image, *intern_image;
-    int row, col, row_a, col_a,average;
+    int row, col, row_a, col_a, average;
     params_f *params;
 
     params = initialize_params ();

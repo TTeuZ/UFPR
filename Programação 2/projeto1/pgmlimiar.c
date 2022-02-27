@@ -21,6 +21,9 @@ int main (int argc, char *argv[]) {
         limiar = 0.5;
     else limiar =  atof (argv[(int) params->ex_param]);
 
+    if (limiar > 1 || limiar < 0)
+        emit_error (image, params, "O limiar deve ser um numero entre 0 e 1!");
+
     /* seta o valor limite para decidir se o bit vai virar preto ou branco */
     divider = (int) image->max_value * limiar;
     /* seta o novo valor maximo para a pgm */
