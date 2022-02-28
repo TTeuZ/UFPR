@@ -27,7 +27,7 @@ int main (int argc, char *argv[]) {
     /* verifica se o parametro para rotação foi enviado */
     if (params->ex_param == -1)
         degree = 90;
-    else degree =  atoi (argv[(int) params->ex_param]);
+    else degree = atoi (argv[(int) params->ex_param]);
 
     /* calcula o algulo congruente da imagem (considerando o 90° da borda a imagem 180 - 90 - degree == 90 - degree) */
     cong_degree = 90 - degree; 
