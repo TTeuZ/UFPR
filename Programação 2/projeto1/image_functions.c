@@ -10,7 +10,6 @@
 void read_p2_file (image_f *image, params_f *params, FILE *image_r) {
     int row, col, value;
     
-    /* le a matriz da imagem e armazena na struct */
     for (row = 0; row < image->height; row++)
         for (col = 0; col < image->width; col++) {
             fscanf (image_r,"%d", &value);
@@ -25,8 +24,7 @@ void read_p5_file (image_f *image, params_f *params, FILE *image_r) {
     int row, col;
     char value;
 
-    /* le a matriz da imagem e armazena na struct */
-     for (row = 0; row < image->height; row++)
+    for (row = 0; row < image->height; row++)
         for (col = 0; col < image->width; col++) {
             value = getc (image_r);
             image->data[(row * image->width) + col] = value;
@@ -43,7 +41,7 @@ image_f *read_image (params_f *params, char *param[]) {
 
     /* verifica se vai carregar a imagem do parametro ou do stdin */
     if (params->input != 0) {
-        if (! (image_r = fopen(param[params->input], "r")))
+        if (! (image_r = fopen (param[params->input], "r")))
             emit_error (NULL, params, "A imagem enviada é invalida");
     } else image_r = stdin;
 
@@ -82,7 +80,7 @@ void send_image (image_f *image, params_f *params, char *param[]) {
 
     fprintf (stderr, YELLOW "[PROCESSANDO] "  NC "Gravando a imagem resultante...\n\n"); 
 
-    /* abre um arquivo para escrita */
+    /* verifica se vai carregar a imagem do parametro ou do stdout */
     if (params->output != 0) {
         if (! (new_image = fopen(param[params->output], "w")))
             emit_error (image, params, "A imagem enviada é invalida");
@@ -93,17 +91,14 @@ void send_image (image_f *image, params_f *params, char *param[]) {
     fprintf (new_image, "%d %d\n", image->width, image->height);
     fprintf (new_image, "%d\n", image->max_value);
 
-    /* grava o novo image data */
     if (! strcmp (image->type, "P2")) {
-        for (row = 0; row < image->height; row++) {
+        for (row = 0; row < image->height; row++) 
             for (col = 0; col < image->width; col++) 
                 fprintf (new_image, "%d ", image->data[(row * image->width) + col]);
-        }
     } else {
-        for (row = 0; row < image->height; row++) {
+        for (row = 0; row < image->height; row++) 
             for (col = 0; col < image->width; col++) 
                 putc (image->data[(row * image->width) + col], new_image);
-        }
     }
     fprintf (new_image, "\n");
 
