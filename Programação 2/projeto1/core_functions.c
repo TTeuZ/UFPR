@@ -59,11 +59,11 @@ void treat_params (params_f *params, char *extra_param, int need_extra, char *pa
     /* caso o parametro exista, armazena a sua posição na struct */
     for (count = 1; count < qtd; count++) {
         if (! strcmp (param[count], "-i")) 
-            params->input = count+1;
+            params->input = count + 1;
         if (! strcmp (param[count], "-o")) 
-            params->output = count+1;
+            params->output = count + 1;
         if (! strcmp (param[count], extra_param))
-            params->ex_param = count+1;
+            params->ex_param = count + 1;
     }
     /* Verifica se os paramentros não indicados possuem respando nas entradas e saidas padrões
     Verifica se o parametro extra é obrigatório, e se for, verifica se foi preenchido */
@@ -73,6 +73,6 @@ void treat_params (params_f *params, char *extra_param, int need_extra, char *pa
     if ((params->output == 0) && fseek (stdout, 0, SEEK_END)) 
         emit_error (NULL, params,"Você não indicou um arquivo de saida");
     else rewind (stdout);
-    if ((params->ex_param == -1) &&  need_extra) 
+    if ((params->ex_param == -1) && need_extra) 
         emit_error (NULL, params, "Você não indicou o parametro de configuração");
 }
