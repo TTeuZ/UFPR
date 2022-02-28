@@ -10,18 +10,15 @@
 int main (int argc, char *argv[]) {
     image_f *image, *intern_image;
     params_f *params;
-    int degree, cong_degree; /* variaveis para os angulas em graus */
-    int temp_h, temp_w; /* variaveis para armazenar valores de altura e largura temporarios */
-    int min_col, min_row; /* variaveis que armazeman o min da altura e largura */
-    int row, col, row_a, col_a; /* variaveis das linhas e colunas */
-    double radian, cong_radian; /* variaveis para os angulos em radianos */
-    double cos_r, sin_r, cos_g, sin_g; /* variaveis para os seno e cosseno do angulo de rotação */
+    int degree, cong_degree;
+    int temp_h, temp_w;
+    int min_col, min_row;
+    int row, col, row_a, col_a;
+    double radian, cong_radian;
+    double cos_r, sin_r, cos_g, sin_g; 
 
-    /* Inicializa as imagens e os parametros */
     params = initialize_params ();
-    /* tratamento dos parametros enviados para o filtro */
     treat_params (params, "-a", 0, argv, argc);
-    /* chama a função que lê o pgm */
     image = read_image (params, argv);
 
     /* verifica se o parametro para rotação foi enviado */
@@ -43,7 +40,7 @@ int main (int argc, char *argv[]) {
     /* busca as novas altura e largura da imagem */
     temp_w = abs (round (abs (cos_g * image->height) + abs (cos_r * image->width)));
     temp_h = abs (round (abs (sin_g * image->height) + abs (sin_r * image->width)));
-    /* inicializa a imagem interna */
+
     intern_image = initialize_image (image->type, temp_h, temp_w, 255, params);
 
     /* Busca os valores min de cada eixo da nova imagem */
@@ -65,7 +62,6 @@ int main (int argc, char *argv[]) {
     if (degree <= 90) min_row = 0;
     if (degree <= 360 && degree > 270) min_col = 0;
 
-    /* preenche a nova imagem rotacionada */
     for (row = 0; row < intern_image->height; row++)
         for (col = 0; col < intern_image->width; col++) {
             row_a = (((row + 1 + min_row) * cos_r) - ((col + 1 + min_col) * sin_r));
@@ -75,17 +71,16 @@ int main (int argc, char *argv[]) {
                 intern_image->data[(row * intern_image->width) + col] = image->data[(row_a * image->width) + col_a];
             else {
                 if (row == 0 || row == intern_image->height - 1) 
-                intern_image->data[(row * intern_image->width) + col] = 0;
-            else if (col == 0 || col == intern_image->width - 1)
-                intern_image->data[(row * intern_image->width) + col] = 0;
-            else
-                intern_image->data[(row * intern_image->width) + col] = 255;
+                    intern_image->data[(row * intern_image->width) + col] = 0;
+                else if (col == 0 || col == intern_image->width - 1)
+                    intern_image->data[(row * intern_image->width) + col] = 0;
+                else
+                    intern_image->data[(row * intern_image->width) + col] = 255;
             }  
         } 
 
-    /* chama a função que grava a nova pgm */
     send_image (intern_image, params, argv); 
-    /* Libera todo o espaço alocado */
+
     clean_structs (image, params);
     clean_structs (intern_image, NULL);
 

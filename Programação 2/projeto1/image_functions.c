@@ -45,7 +45,6 @@ image_f *read_image (params_f *params, char *param[]) {
             emit_error (NULL, params, "A imagem enviada é invalida");
     } else image_r = stdin;
 
-    /* Pegando o type da PMG */
     fgets (type, 3, image_r);
 
     /* verifica se o arquivo enviado é de um tipo permitido */
@@ -56,10 +55,10 @@ image_f *read_image (params_f *params, char *param[]) {
 
     while (getc (image_r) != '\n'); /* Vai até o fim da linha */
     while (getc (image_r) == '#') { /* Pula os comentarios */
-        while (getc (image_r) != '\n'); /* Vai até o fim da linha */
+        while (getc (image_r) != '\n');
     }
     fseek (image_r, -1, SEEK_CUR); /* volta um caracter para traz */
-    /* armazena as informações da estrutura da pgm */
+    
     fscanf (image_r, "%d", &width);
     fscanf (image_r, "%d", &height);
     fscanf (image_r, "%d", &max_value);
@@ -86,7 +85,6 @@ void send_image (image_f *image, params_f *params, char *param[]) {
             emit_error (image, params, "A imagem enviada é invalida");
     } else new_image = stdout;
 
-    /* adiciona os valores de configuração */
     fprintf (new_image, "%s\n", image->type);
     fprintf (new_image, "%d %d\n", image->width, image->height);
     fprintf (new_image, "%d\n", image->max_value);
