@@ -9,7 +9,7 @@ int main () {
     int value;
 
     /* inicializa a estrutura da árvore AVL*/
-    tree = create_tree();
+    tree = create_tree ();
 
     /* busca a primeira ação e o primeiro valor do stdin */
     fscanf (stdin, "%c %d", &action, &value);
@@ -19,7 +19,7 @@ int main () {
     while (! feof (stdin)) {
         /* seleciona e executa a ação indicada */
         if (action == 'i') 
-            insert_in_leave (tree, tree->root, 0, value);
+            insert_in_leave (tree, tree->root, value);
          else if ((nodo = search_tree (tree->root, value)))
             transplant_nodo_delete (tree, nodo);
 
@@ -29,13 +29,13 @@ int main () {
     }
 
     /* faz a impressão da arvore resultante */
-    in_order (tree->root);
+    in_order (tree, tree->root, 0);
 
     /* limpa as estruturas na finalização do programa */
-    /* while (tree->nodos_qtd > 0) {
+    while (tree->nodos_qtd > 0) {
         transplant_nodo_delete (tree, tree->root);
     }
-    free (tree); */
+    free (tree);
 
     return 0;
 }
