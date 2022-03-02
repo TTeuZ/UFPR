@@ -29,6 +29,18 @@ int main () {
 
     printf("\n");
     printf("----------------------------------------------------------------\n");
+    printf("Inserindo elementos na raiz arvore\n");
+    printf("\n");
+
+    insert_in_root (tree, tree->root, 70);
+    printf("Raiz da arvore: %d\n", tree->root->value);
+    insert_in_root (tree, tree->root, 12);
+    printf("Raiz da arvore: %d\n", tree->root->value);
+    insert_in_root (tree, tree->root, 92);
+    printf("Raiz da arvore: %d\n", tree->root->value);
+
+    printf("\n");
+    printf("----------------------------------------------------------------\n");
     printf("Imprimindo arvore\n");
     printf("\n");
 
@@ -68,7 +80,7 @@ int main () {
     printf("\n");
     printf("Raiz da arvore: %d\n", tree->root->value);
 
-    printf("\n");
+    /*printf("\n");
     printf("----------------------------------------------------------------\n");
     printf("Buscando o valor minimo a partir da raiz\n");
     printf("\n");
@@ -90,7 +102,7 @@ int main () {
     printf("\n");
 
     nodo = tree_minimum (tree->root->left);
-    printf("valor: %d\n", nodo->value);
+    printf("valor: %d\n", nodo->value); */
 
     printf("\n");
     printf("----------------------------------------------------------------\n");

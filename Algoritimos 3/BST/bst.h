@@ -27,14 +27,19 @@ nodo_t *create_nodo (int value);
 nodo_t *insert_in_leave (tree_t *tree, nodo_t *nodo, int value);
 
 /*
+* Função de inserção de valor na raiz da arvore
+*/ 
+nodo_t *insert_in_root (tree_t *tree, nodo_t *nodo, int value);
+
+/*
 * Função que rotaciona o nodo enviado para a esquerda
 */ 
-void left_rotate_tree (tree_t *tree, nodo_t *nodo);
+nodo_t *left_rotate_tree (tree_t *tree, nodo_t *nodo);
 
 /*
 * Função que rotaciona o nodo enviado para a direita
 */ 
-void right_rotate_tree (tree_t *tree, nodo_t *nodo);
+nodo_t *right_rotate_tree (tree_t *tree, nodo_t *nodo);
 
 /*
 * Função que pega a altura da BST a partir do nodo enviado, ou seja,

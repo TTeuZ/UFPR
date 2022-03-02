@@ -43,34 +43,58 @@ nodo_t *insert_in_leave (tree_t *tree, nodo_t *nodo, int value) {
     return nodo;
 }
 
-void left_rotate_tree (tree_t *tree, nodo_t *nodo) {
+nodo_t *insert_in_root (tree_t *tree, nodo_t *nodo, int value) {
+    nodo_t *inside_nodo;
+    if (nodo == NULL) { 
+        inside_nodo = create_nodo(value);
+        if (tree->root == NULL)
+            tree->root = inside_nodo;
+        tree->nodos_qtd++;
+        tree->height = tree_height(tree->root);
+        return inside_nodo;
+    }
+    if (value < nodo->value) {
+        nodo->left = insert_in_root (tree, nodo->left, value);
+        nodo->left->father = nodo;
+        return right_rotate_tree (tree, nodo);
+    } else {
+        nodo->right = insert_in_root (tree, nodo->right, value);
+        nodo->right->father = nodo;
+        return left_rotate_tree (tree, nodo);
+    }
+    return nodo;
+}
+
+nodo_t *left_rotate_tree (tree_t *tree, nodo_t *nodo) {
     nodo_t *inside_nodo;
 
     inside_nodo = nodo->right;
     nodo->right = inside_nodo->left;
     inside_nodo->father = nodo->father;
+    nodo->father = inside_nodo;
+    if (inside_nodo->left != NULL) inside_nodo->left->father = nodo;
 
     /* Se o nodo rotacionado virar a nova raiz, altera na struct da arvore */
     if (inside_nodo->father == NULL) tree->root = inside_nodo;
-    nodo->father = inside_nodo;
-
-    if (inside_nodo->left != NULL) inside_nodo->left->father = nodo;
     inside_nodo->left = nodo;
+
+    return inside_nodo;
 }
 
-void right_rotate_tree (tree_t *tree, nodo_t *nodo) {
+nodo_t *right_rotate_tree (tree_t *tree, nodo_t *nodo) {
     nodo_t *inside_nodo;
 
     inside_nodo = nodo->left;
     nodo->left = inside_nodo->right;
     inside_nodo->father = nodo->father;
+    nodo->father = inside_nodo;
+    if (inside_nodo->right != NULL) inside_nodo->right->father = nodo;
 
     /* Se o nodo rotacionado virar a nova raiz, altera na struct da arvore */
     if (inside_nodo->father == NULL) tree->root = inside_nodo;
-    nodo->father = inside_nodo;
-
-    if (inside_nodo->right != NULL) inside_nodo->right->father = nodo;
     inside_nodo->right = nodo;
+
+    return inside_nodo;
 }
 
 int tree_height (nodo_t *nodo) {
