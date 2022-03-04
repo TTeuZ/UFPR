@@ -48,14 +48,15 @@ int main (int argc, char *argv[]) {
     /* Busca os valores min de cada eixo da nova imagem */
     min_col = (image->width * cos_r);
     min_row = (image->width * sin_r);
+
     temp_col = (image->width * cos_r) - (image->height * sin_r);
     temp_row = (image->width * sin_r) + (image->height * cos_r);
 
     if (temp_col < min_col) min_col = temp_col;
     if (temp_row < min_row) min_row = temp_row;
 
-    temp_col = (0 * cos_r) - (image->height * sin_r);
-    temp_row = (0 * sin_r) + (image->height * cos_r);
+    temp_col = -(image->height * sin_r);
+    temp_row = (image->height * cos_r);
 
     if (temp_col < min_col) min_col = temp_col;
     if (temp_row < min_row) min_row = temp_row;
