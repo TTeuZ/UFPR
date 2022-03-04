@@ -18,7 +18,7 @@ int tree_height (nodo_t *nodo) {
 }
 
 /*
-* Função que retorna a diferença da altura da folha mais distante da subarvore da esquerda
+* Função que retorna a diferença da altura da subarvore da esquerda
 * com a da direita.
 */
 int get_balance (nodo_t *nodo) {
