@@ -4,7 +4,7 @@
 
 /*-------------------------------Funções internas----------------------------------*/
 /*
-* Função que retorna a altura do nodo indicado, e caso seja null, retorna 0;
+* Função que retorna a altura do nodo indicado, e caso seja NULL, retorna 0.
 */
 int tree_height (nodo_t *nodo) {
     int height_left, height_right;
@@ -19,7 +19,7 @@ int tree_height (nodo_t *nodo) {
 
 /*
 * Função que retorna a diferença da altura da folha mais distante da subarvore da esquerda
-* com a da direita
+* com a da direita.
 */
 int get_balance (nodo_t *nodo) {
     if (nodo == NULL) return 0;
@@ -50,11 +50,11 @@ nodo_t *create_nodo (int value) {
     } else return NULL;
 }
 
-void in_order (tree_t *tree, nodo_t *nodo, int nivel) {
+void in_order (tree_t *tree, nodo_t *nodo, int level) {
     if (nodo != NULL) {
-        in_order (tree, nodo->left, ++nivel);
-        printf ("%d,%d\n", nodo->value, nivel - 1);
-        in_order (tree, nodo->right, nivel);
+        in_order (tree, nodo->left, ++level);
+        printf ("%d,%d\n", nodo->value, level - 1);
+        in_order (tree, nodo->right, level);
     } 
 }
 
@@ -76,7 +76,7 @@ nodo_t *left_rotate_tree (tree_t *tree, nodo_t *nodo, int d_value) {
     nodo->father = inside_nodo;
     if (inside_nodo->left != NULL) inside_nodo->left->father = nodo;
 
-    /* Se o nodo rotacionado virar a nova raiz, altera na struct da arvore */
+    /* Se o nodo rotacionado virar a nova raiz, altera na struct da arvore. */
     if (inside_nodo->father == NULL) tree->root = inside_nodo;
     inside_nodo->left = nodo;
 
@@ -143,7 +143,7 @@ nodo_t *insert_in_leave (tree_t *tree, nodo_t *nodo, int value) {
         nodo->left = left_rotate_tree (tree, nodo->left, 0);
         return right_rotate_tree (tree, nodo, 1);
     }
-    /* zig-zag para a caso da direita*/
+    /* zig-zag para a caso da direita */
     if (balance == -2 && value < nodo->right->value) {
         nodo->right = right_rotate_tree (tree, nodo->right, 0);
         return left_rotate_tree (tree, nodo, 1);
