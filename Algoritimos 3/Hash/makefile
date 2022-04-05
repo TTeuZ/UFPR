@@ -13,7 +13,7 @@ COMPILER = gcc
 FLAGS = -g -std=c90 -Wall
 
 myht: hash.o myht.o
-		$(COMPILER) $(FLAGS) hash.o myht.o -o myht
+		$(COMPILER) $(FLAGS) hash.o myht.o -o myht -lm
 
 hash.o: hash.c
 		$(COMPILER) $(FLAGS) -c hash.c
