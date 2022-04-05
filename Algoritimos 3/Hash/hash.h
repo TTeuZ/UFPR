@@ -11,5 +11,6 @@ void hash_insert (int key, int t1[][M], int t2[][M]);
 
 void hash_delete (int key, int t1[][M], int t2[][M]);
 
-void hash_print (int key, int t1[][M], int t2[][M]);
+void hash_print (int t1[][M], int t2[][M]);
+
 #endif

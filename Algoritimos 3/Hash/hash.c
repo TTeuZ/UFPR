@@ -11,6 +11,19 @@ int h2 (int key) {
     return floor (M * (key * 0.9 - floor (key * 0.9)));
 }
 
+void sorted_inserction (int key_array[M], int column_array[M], int hash_array[M], int key, int column, int hash, int pos) {
+    if (pos != 0) 
+        while (pos != 0 && key <= key_array[pos-1]) {
+            key_array[pos] = key_array[pos-1];
+            column_array[pos] = column_array[pos-1];
+            hash_array[pos] = hash_array[pos-1];
+            pos--;
+        }
+    key_array[pos] = key;
+    column_array[pos] = column;
+    hash_array[pos] = hash;
+}
+
 void inicialize_hash_table (int hash[][M]) {
     int count;
     for (count = 0; count <= M; count++) {
@@ -50,18 +63,26 @@ void hash_delete (int key, int t1[][M], int t2[][M]) {
         t2[pos][0] = -1;
 }
 
-void hash_print (int key, int t1[][M], int t2[][M]) {
-    int count = 0;
+void hash_print (int t1[][M], int t2[][M]) {
+    int key_array[M], column_array[M], hash_array[M];
+    int count, pos;
 
-    printf("T1: ");
+    pos = 0;
     for (count = 0; count < M; count++) {
-        printf(" %d ", t1[count][0]);
+        if (t1[count][0] >= 0) {
+            sorted_inserction (key_array, column_array, hash_array, t1[count][0], count, 1, pos);
+            pos++;
+        }
     }
-    printf("\n");
 
-    printf("T2: ");
     for (count = 0; count < M; count++) {
-        printf(" %d ", t2[count][0]);
+        if (t2[count][0] >= 0) {
+            sorted_inserction (key_array, column_array, hash_array, t2[count][0], count, 2, pos);
+            pos++;
+        }
     }
-    printf("\n");
+
+    for (count = 0; count < pos; count++) {
+        printf("%d,T%d,%d\n", key_array[count], hash_array[count], column_array[count]);
+    }
 }

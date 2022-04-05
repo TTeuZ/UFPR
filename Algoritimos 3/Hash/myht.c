@@ -28,7 +28,7 @@ int main () {
         getc (stdin);
     }
 
-    hash_print (key, t1, t2);
+    hash_print (t1, t2);
 
     return 0;
 }
