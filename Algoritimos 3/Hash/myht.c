@@ -7,6 +7,7 @@ int main () {
     char action;
     int key;
 
+    /* Inicializa os valores das tabelas */
     inicialize_hash_table (t1);
     inicialize_hash_table (t2);
 
@@ -28,6 +29,7 @@ int main () {
         getc (stdin);
     }
 
+    /* printa o resultado das hashs da maneira pedida */
     hash_print (t1, t2);
 
     return 0;

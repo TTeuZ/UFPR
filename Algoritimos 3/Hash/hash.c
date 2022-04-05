@@ -3,14 +3,24 @@
 #include <math.h>
 #include "hash.h"
 
+/* ----------------------------------------- funções internas -------------------------------------------*/
+/*
+* Função de acesso a hash t1
+*/
 int h1 (int key) {
     return key % M;
 }
 
+/*
+* Função de acesso a hash t2
+*/
 int h2 (int key) {
     return floor (M * (key * 0.9 - floor (key * 0.9)));
 }
 
+/*
+* Função de inserção ordenada nos arrays utilizados para o print
+*/
 void sorted_inserction (int key_array[M], int column_array[M], int hash_array[M], int key, int column, int hash, int pos) {
     if (pos != 0) 
         while (pos != 0 && key <= key_array[pos-1]) {
@@ -23,6 +33,8 @@ void sorted_inserction (int key_array[M], int column_array[M], int hash_array[M]
     column_array[pos] = column;
     hash_array[pos] = hash;
 }
+
+/* ----------------------------------------- funções internas -------------------------------------------*/
 
 void inicialize_hash_table (int hash[][M]) {
     int count;
@@ -73,9 +85,6 @@ void hash_print (int t1[][M], int t2[][M]) {
             sorted_inserction (key_array, column_array, hash_array, t1[count][0], count, 1, pos);
             pos++;
         }
-    }
-
-    for (count = 0; count < M; count++) {
         if (t2[count][0] >= 0) {
             sorted_inserction (key_array, column_array, hash_array, t2[count][0], count, 2, pos);
             pos++;
