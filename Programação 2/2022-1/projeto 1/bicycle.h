@@ -1,7 +1,6 @@
 // lembrar de separar depois
-#ifndef ENTITIES_H
-#define ENTITIES_H
-
+#ifndef BICYCLE_F
+#define BICYCLE_F
 typedef struct bicycle_logs {
     char *date;
     float distance;
@@ -12,7 +11,6 @@ typedef struct bicycle_logs {
     int avarage_cadence;
     int accumulated_ascent;
 } bicycle_log_f;
-
 typedef struct bicycle {
     char *name;
     int activities_qtd;
@@ -23,7 +21,8 @@ typedef struct bicycle {
     bicycle_log_f *logs;
 } bicycle_f;
 
-typedef struct bicycles {
-    bicycle_f *bicycles;
-} bicycles_f;
+// função para iniciar uma bibicleta
+// função para modificar/adicionar valores a uma bicicleta
+// função para pegar um histograma da bicicleta
+// função para limpar as bicicletas
 #endif
