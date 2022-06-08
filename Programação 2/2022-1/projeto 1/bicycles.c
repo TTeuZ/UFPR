@@ -8,7 +8,8 @@
 bicycles_f *inicialize_bicycles () {
     bicycles_f *bicycles;
     if (! (bicycles = malloc (sizeof (bicycles_f)))) {
-        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n");
+        fprintf (stderr, RED "[ERROR] " NC "encerrando...\n\n");
         exit (EXIT_FAILURE);
     } else {
         bicycles->qtd = 0;
