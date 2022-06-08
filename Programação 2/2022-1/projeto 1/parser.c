@@ -9,11 +9,6 @@
 char *parse_command_line (char *argv[], int argc, char *paramns) {
     char *dir_name = "";
     int parameter;
-    if (strcmp(dir_name, "") == 0) {
-        fprintf (stderr, RED "[ERROR] " NC "É necessário indicar um diretorio de logs!\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
-    }
     while ((parameter = getopt (argc, argv, paramns)) != -1) {
         switch (parameter) {
             case 'd': {
@@ -32,6 +27,11 @@ char *parse_command_line (char *argv[], int argc, char *paramns) {
                 break;
             }
         }
+    }
+    if (strcmp(dir_name, "") == 0) {
+        fprintf (stderr, RED "[ERROR] " NC "É necessário indicar um diretorio de logs!\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+        exit (EXIT_FAILURE);
     }
     return dir_name;
 }
