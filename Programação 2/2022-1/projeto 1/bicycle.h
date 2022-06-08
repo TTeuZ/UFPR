@@ -18,7 +18,6 @@ typedef struct bicycle {
     float longest_ride;
     float shorter_ride;
     float avarage_distance;
-    int logs_qtd;
     bicycle_log_f **logs;
 } bicycle_f;
 
