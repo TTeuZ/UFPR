@@ -1,6 +1,6 @@
 // lembrar de separar depois
-#ifndef BICYCLE_F
-#define BICYCLE_F
+#ifndef BICYCLE
+#define BICYCLE
 typedef struct bicycle_log {
     char *date;
     float distance;

@@ -1,5 +1,5 @@
-#ifndef PARSER_F
-#define PARSER_F
+#ifndef PARSER
+#define PARSER
 
 /*
 * Função que recebe o argv e trata os parametros recebidos da linha de comandos

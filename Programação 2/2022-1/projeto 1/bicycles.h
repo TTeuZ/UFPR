@@ -1,7 +1,7 @@
 #include "bicycle.h"
 
-#ifndef BICYCLES_F
-#define BICYCLES_F
+#ifndef BICYCLES
+#define BICYCLES
 typedef struct bicycles {
     bicycle_f **bicycles;
     int qtd;
