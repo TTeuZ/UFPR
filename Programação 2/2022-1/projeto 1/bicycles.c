@@ -22,6 +22,6 @@ void clean_bicycles (bicycles_f *bicycles) {
     int count;
     if (bicycles->qtd != 0) 
         for (count = 0; count < bicycles->qtd; count++)
-            free (bicycles->bicycles[count]);
+            clean_bicycle (bicycles->bicycles[count]);
     free (bicycles);
 }
