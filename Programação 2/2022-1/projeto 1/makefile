@@ -1,6 +1,6 @@
 SHELL = /bin/sh
 
-FLAGS = -g -std=c99 -Wall
+FLAGS = -g -Wall
 
 # Funções gerais
 all: gps
