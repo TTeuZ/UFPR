@@ -5,11 +5,11 @@
 #include "constants.h"
 #include "parser.h"
 
-char *parse_command_line (char *argv[], int argc, char *options) {
+char *parse_command_line (char *argv[], int argc, char *paramns) {
     char *dirName;
-    int option;
-    while ((option = getopt (argc, argv, options)) != -1) {
-        switch (option) {
+    int parameter;
+    while ((parameter = getopt (argc, argv, paramns)) != -1) {
+        switch (parameter) {
             case 'd': {
                 dirName = optarg;
                 break;
