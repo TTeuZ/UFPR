@@ -1,0 +1,47 @@
+Gear: BMC TM SRL02
+Date: Feb 1, 2018, 10:46:20 AM
+
+altitude: 889.0 m
+cadence: 51 rpm
+distance: 6.08 m
+enhanced_altitude: 889.0 m
+enhanced_speed: 6.0 m/s
+fractional_cadence: 0.0 rpm
+heart_rate: 94 bpm
+position_lat: -303300722 semicircles
+position_long: -588265355 semicircles
+speed: 6.0 m/s
+temperature: 19 C
+timestamp: 2018-02-01 10:46:20
+unknown_61: 6945
+unknown_66: 126
+
+altitude: 889.5999999999999 m
+cadence: 51 rpm
+distance: 12.36 m
+enhanced_altitude: 889.5999999999999 m
+enhanced_speed: 6.093 m/s
+fractional_cadence: 0.0 rpm
+heart_rate: 93 bpm
+position_lat: -303300111 semicircles
+position_long: -588265674 semicircles
+speed: 6.093 m/s
+temperature: 19 C
+timestamp: 2018-02-01 10:46:21
+unknown_61: 6958
+unknown_66: 150
+
+altitude: 889.8 m
+cadence: 52 rpm
+distance: 25.14 m
+enhanced_altitude: 889.8 m
+enhanced_speed: 6.27 m/s
+fractional_cadence: 0.0 rpm
+heart_rate: 94 bpm
+position_lat: -303298876 semicircles
+position_long: -588266343 semicircles
+speed: 6.27 m/s
+temperature: 19 C
+timestamp: 2018-02-01 10:46:23
+unknown_61: 6965
+unknown_66: 165

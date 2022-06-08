@@ -4,16 +4,20 @@
 #include "bicycles.h"
 #include "bicycle.h"
 #include "parser.h"
+#include "reader.h"
 
 int main (int argc, char *argv[]) {
     bicycles_f *bicycles;
-    char *dirName;
+    directory_f *directory;
+    char *dir_name;
 
     /* executa a função de parser, verificando se o correto/necessário foi indicado */
-    dirName = parse_command_line (argv, argc, "d:");
+    dir_name = parse_command_line (argv, argc, "d:");
 
     /* inicializa a estrutura de dados que irá armazenar as bicicletas */
     bicycles = inicialize_bicycles ();
+
+    directory = get_logs (dir_name);
 
     /* Iniciando o processo de leitura dos logs */
     fprintf (stdout, YELLOW "[PROCESSANDO] " NC "Iniciando leitura dos logs...\n\n");
