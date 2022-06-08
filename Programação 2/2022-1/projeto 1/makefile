@@ -12,8 +12,8 @@ purge: clean
 		-rm -f gps
 
 # Construção do executavel
-gps: gps.o bicycle.o bicycles.o parser.o
-		$(CC) $(FLAGS) bicycle.o bicycles.o parser.o gps.o -o gps
+gps: gps.o bicycle.o bicycles.o parser.o reader.o
+		$(CC) $(FLAGS) bicycle.o bicycles.o parser.o reader.o gps.o -o gps
 
 # Construção dos Objetos
 gps.o: gps.c
@@ -27,3 +27,6 @@ bicycles.o: bicycles.c
 
 parser.o: parser.c
 		$(CC) $(FLAGS) -c parser.c
+
+reader.o: reader.c
+		$(CC) $(FLAGS) -c reader.c
