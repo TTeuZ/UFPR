@@ -23,9 +23,9 @@ typedef struct bicycle {
 } bicycle_f;
 
 /*
-Limpa a estrutura de dados que armazena as informaçãos da bicicleta
-Passa por cada log de atividade da bicicleta limpando seu espaço ocupador
-Ao final, limpa toda a estrutura de armazenamento da bicicleta
+* Limpa a estrutura de dados que armazena as informaçãos da bicicleta
+* Passa por cada log de atividade da bicicleta limpando seu espaço ocupador
+* Ao final, limpa toda a estrutura de armazenamento da bicicleta
 */
 void clean_bicycle (bicycle_f *bicycle);
 
