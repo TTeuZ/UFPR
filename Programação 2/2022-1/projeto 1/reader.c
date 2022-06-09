@@ -49,3 +49,23 @@ directory_f *get_logs (char *dir_name) {
         exit (EXIT_FAILURE);
     } else return directory;
 }
+
+void load_logs (directory_f *directory, char *dir_name) {
+    int count;
+    char file_path[256];
+
+    for (count = 0; count < directory->files_qtd; count++) {
+        file_path[0] = '\0';
+        strcat (file_path, dir_name);
+        strcat (file_path, "/");
+        strcat (file_path, directory->files[count]->d_name);
+
+        read_log (file_path);
+        free (directory->files[count]);
+    }
+    free (directory->files);
+}
+
+void read_log (char *log_path) {
+    printf ("ARQUIVO: %s\n", log_path);
+}

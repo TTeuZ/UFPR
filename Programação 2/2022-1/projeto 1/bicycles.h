@@ -20,6 +20,13 @@ bicycles_f *inicialize_bicycles ();
 */
 void clean_bicycles (bicycles_f *bicycles);
 
+/*
+* Função que adiciona o log a uma bicicleta, ou cria uma nova bicicleta caso ainda não exista
+* Verifica se ja existe uma bicicleta para o log enviado, caso exista adiciona o log nela
+* caso não exista, cria uma nova bicicleta a adiciona o conjunto de bicicletas
+*/
+void add_log ();
+
 // função para adicionar uma bibicleta na lista
 // função para verificar se uma bicicleta ja esta na lista
 // função para atualizar/adicionar informação em uma bicicleta que está na lista

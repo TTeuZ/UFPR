@@ -20,7 +20,20 @@ directory_f *inicialize_directory ();
 */
 directory_f *get_logs (char *dir_name);
 
-// Funçãoq ue le o arquivo e envia as informações pro lugar necessario
-// função que limpa o espaço dos arquivos lidos
+/*
+* Função que recebe os logs carregados do diretorio e aplica a função de leitura para cada log
+* Constroi o nome correto de acesso ao arquivo
+* Limpa o espaço armazenado para od arquivos do diretorio conforme realiza a leitura
+*/
+void load_logs (directory_f *directory, char *dir_name);
 
+/*
+* Função que realiza a leitura de um arquivo de og
+* Ao fazer a leitura, armazena as informações relevantes do log em variaveis internas
+* Apos a finalização da leitura, chama a função de adição do arquivo de log no array de bicicletas
+*/
+void read_log (char *log_path);
+
+
+// função que limpa o espaço dos arquivos lidos
 #endif
