@@ -6,32 +6,26 @@
 #include "constants.h"
 #include "parser.h"
 
-char *parse_command_line (char *argv[], int argc, char *paramns) {
+char *parse_command_line (char *argv[], int argc) {
     char *dir_name = "";
-    int parameter;
-    while ((parameter = getopt (argc, argv, paramns)) != -1) {
-        switch (parameter) {
-            case 'd': {
-                dir_name = optarg;
-                break;
-            }
-            case '?': {
-                if (optopt == 'd' && optarg == NULL) {
-                    fprintf (stderr, RED "[ERROR] " NC "É necessário indicar um diretorio de logs!\n\n");
-                    fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-                } else {
-                    fprintf (stderr, RED "[ERROR] " NC "Parametro invalido!\n\n");
-                    fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-                }
-                exit (EXIT_FAILURE);
-                break;
-            }
-        }
-    }
-    if (strcmp(dir_name, "") == 0) {
+    int count;
+
+    if (argc < 3) {
         fprintf (stderr, RED "[ERROR] " NC "É necessário indicar um diretorio de logs!\n\n");
         fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
         exit (EXIT_FAILURE);
+    } else {
+        for (count = 1; count < argc; count++) {
+            if (! strcmp (argv[count], "-d")) {
+                dir_name = argv[count + 1];
+                count++;
+            } else {
+                fprintf (stderr, RED "[ERROR] " NC "Parametro invalido!\n\n");
+                fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+                exit (EXIT_FAILURE);
+            }
+        }
     }
+    
     return dir_name;
 }

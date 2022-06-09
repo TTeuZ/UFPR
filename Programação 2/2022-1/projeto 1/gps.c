@@ -11,7 +11,7 @@ int main (int argc, char *argv[]) {
     directory_f *directory;
     char *dir_name;
 
-    dir_name = parse_command_line (argv, argc, "d:");
+    dir_name = parse_command_line (argv, argc);
     bicycles = inicialize_bicycles ();
 
     fprintf (stdout, YELLOW "[PROCESSANDO] " NC "Iniciando leitura dos logs...\n\n");

@@ -7,6 +7,6 @@
 * Caso parametros desnecessários sejam enviados emite erro e encerra o programa
 * Em caso de parametros corretos, retorna o parametro
 */
-char *parse_command_line (char *argv[], int argc, char *options);
+char *parse_command_line (char *argv[], int argc);
 
 #endif
