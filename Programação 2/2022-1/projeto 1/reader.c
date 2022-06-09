@@ -43,5 +43,9 @@ directory_f *get_logs (char *dir_name) {
     directory = inicialize_directory ();
     directory->files_qtd = scandir (dir_name, &directory->files, filterFiles, alphasort);
 
-    return directory;
+    if (directory->files_qtd == -1) {
+        fprintf (stderr, RED "[ERROR] " NC "Diretorio não encontrado\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+        exit (EXIT_FAILURE);
+    } else return directory;
 }
