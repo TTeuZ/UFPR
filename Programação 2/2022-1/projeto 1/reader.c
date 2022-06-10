@@ -4,7 +4,7 @@
 #include <dirent.h>
 #include "constants.h"
 #include "reader.h"
-/*---------------------------------------------- Funções internas ----------------------------------------------*/
+/*---------------------------------------------- Funções internas ---------------------------------------------*/
 /*
 * Função que retorna se o arquivo indicado possui '.log' em seu nome,
 * ou seja, é um arquivo de log
@@ -22,7 +22,38 @@ int filterFiles (const struct dirent *current_dir) {
         return 1;
     else return 0;
 }
-/*---------------------------------------------- Funções internas ----------------------------------------------*/
+
+/*
+* Busca uma string dentro do arquivo caracter por caracter até chegar ao token indicado
+* Inicia alocando espaço para o primeiro caracter
+* A cada caractere realoca o espaço necessário
+*/
+char *get_string_until_token (FILE *log_file, char token) {
+    char iterator, *temp_string;
+    int count;
+
+    count = 0;
+    if (! (temp_string = malloc (sizeof (char)))) {
+        fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+        exit (EXIT_FAILURE);
+    }
+
+    iterator = getc (log_file);
+    while (iterator != token) {
+        temp_string[count] = iterator;
+        iterator = getc (log_file);
+        count++;
+        if (! (temp_string = realloc (temp_string, sizeof (char) * (count + 1)))) {
+            fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria realoc\n\n");
+            fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+            exit (EXIT_FAILURE);
+        }
+    }
+    temp_string[count] = '\0';
+    return temp_string;
+}
+/*---------------------------------------------- Funções internas ---------------------------------------------*/
 
 directory_f *inicialize_directory () {
     directory_f *directory;
@@ -60,12 +91,28 @@ void load_logs (directory_f *directory, char *dir_name) {
         strcat (file_path, "/");
         strcat (file_path, directory->files[count]->d_name);
 
-        read_log (file_path);
+        read_log (file_path, directory->files[count]->d_name);
         free (directory->files[count]);
     }
     free (directory->files);
 }
 
-void read_log (char *log_path) {
-    printf ("ARQUIVO: %s\n", log_path);
+void read_log (char *log_path, char *log_name) {
+    FILE *log_file;
+    int count;
+    char *bicycle_name;
+    char iterator;
+
+    if (! (log_file = fopen (log_path, "r"))) {
+        fprintf (stderr, RED "[ERROR] " NC "Erro ao ler o log %s\n\n", log_name);
+        return ;
+    }
+
+    /* Pulando a frase 'Gear: ' */
+    for (count = 0; count < 6; count++) 
+        iterator = getc (log_file);
+    
+    bicycle_name = get_string_until_token (log_file, '\n');
+    
+    printf("\n");
 }

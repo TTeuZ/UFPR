@@ -32,7 +32,7 @@ void load_logs (directory_f *directory, char *dir_name);
 * Ao fazer a leitura, armazena as informações relevantes do log em variaveis internas
 * Apos a finalização da leitura, chama a função de adição do arquivo de log no array de bicicletas
 */
-void read_log (char *log_path);
+void read_log (char *log_path, char *log_name);
 
 
 // função que limpa o espaço dos arquivos lidos
