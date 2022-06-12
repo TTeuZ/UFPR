@@ -20,7 +20,7 @@ int main (int argc, char *argv[]) {
 
     fprintf (stdout, YELLOW "[PROCESSANDO] " NC "Processando os logs carregados...\n\n");
 
-    load_logs (directory, dir_name);
+    load_logs (directory, dir_name, bicycles);
 
     fprintf (stdout, GREEN "[PROCESSADO] " NC "Leitura finalizada com sucesso\n\n");
 

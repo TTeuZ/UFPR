@@ -1,4 +1,3 @@
-// lembrar de separar depois
 #ifndef BICYCLE
 #define BICYCLE
 typedef struct bicycle_log {
@@ -9,7 +8,7 @@ typedef struct bicycle_log {
     int avarage_ht;
     int max_hr;
     int avarage_cadence;
-    int accumulated_ascent;
+    float altimetry_gain;
 } bicycle_log_f;
 typedef struct bicycle {
     char *name;

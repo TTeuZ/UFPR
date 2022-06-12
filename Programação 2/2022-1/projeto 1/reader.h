@@ -1,4 +1,5 @@
 #include <dirent.h>
+#include "bicycles.h"
 
 #ifndef READER
 #define READER
@@ -23,16 +24,16 @@ directory_f *get_logs (char *dir_name);
 /*
 * Função que recebe os logs carregados do diretorio e aplica a função de leitura para cada log
 * Constroi o nome correto de acesso ao arquivo
-* Limpa o espaço armazenado para od arquivos do diretorio conforme realiza a leitura
+* Limpa o espaço armazenado para os arquivos do diretorio conforme realiza a leitura
 */
-void load_logs (directory_f *directory, char *dir_name);
+void load_logs (directory_f *directory, char *dir_name, bicycles_f *bicycles);
 
 /*
-* Função que realiza a leitura de um arquivo de og
+* Função que realiza a leitura de um arquivo de log
 * Ao fazer a leitura, armazena as informações relevantes do log em variaveis internas
 * Apos a finalização da leitura, chama a função de adição do arquivo de log no array de bicicletas
 */
-void read_log (char *log_path, char *log_name);
+void read_log (char *log_path, char *log_name, bicycles_f *bicycles);
 
 
 // função que limpa o espaço dos arquivos lidos

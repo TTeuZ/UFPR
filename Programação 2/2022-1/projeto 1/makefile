@@ -1,6 +1,7 @@
 SHELL = /bin/sh
 
 FLAGS = -g -Wall
+LIBS = -lm
 
 # Funções gerais
 all: gps
@@ -13,7 +14,7 @@ purge: clean
 
 # Construção do executavel
 gps: gps.o bicycle.o bicycles.o parser.o reader.o
-		$(CC) $(FLAGS) bicycle.o bicycles.o parser.o reader.o gps.o -o gps
+		$(CC) $(FLAGS) bicycle.o bicycles.o parser.o reader.o gps.o -o gps $(LIBS)
 
 # Construção dos Objetos
 gps.o: gps.c
