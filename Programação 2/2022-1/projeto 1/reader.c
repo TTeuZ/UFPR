@@ -120,51 +120,44 @@ char *get_string_until_token (FILE *log_file, char token) {
 /*
 * Funçãoq eu recebe o arquivo de log é pega o timestamp do bloco atual
 * Utiliza o ponteiro atual do arquivo para buscar o timestamps
-* Retorna uma string com o valor do timestamp
+* Retorna uma string com o valor do timestamp ou null caso não seja possivel computar a string
 */
 char* get_timestamp (FILE *log_file) {
-    char iterator, *temp_string, *timestamp;
+    char iterator, *temp_string, *timestamp = NULL;
     int qtd = 0, has_found = 0;
 
     iterator = getc (log_file);
-    // if (iterator != -1) {
-    //     while (has_found == 0) {
-    //         fseek (log_file, -1, SEEK_CUR);
-    //         temp_string = get_string_until_token (log_file, ':');
-    //         qtd += strlen (temp_string);
-
-    //         if (strcmp (temp_string, "timestamp") == 0) {
-    //             fseek (log_file, 1, SEEK_CUR);
-    //             timestamp = get_string_until_token (log_file, '\n');
-    //             has_found = 1;
-    //         } else {
-    //             free (temp_string);
-    //             temp_string = get_string_until_token (log_file, '\n');
-    //         }
-    //         free (temp_string);
-    //     }
-    //     printf("%s\n", timestamp);
-    //     fseek (log_file, qtd * -1, SEEK_CUR);
-    // }
-
-    if (iterator != -1) { 
-        for (int count = 0; count < 5; count ++) {
-            fseek (log_file, -1, SEEK_CUR);
-
+    if (iterator != -1) {
+        fseek (log_file, -1, SEEK_CUR);
+        while (has_found == 0) {
             temp_string = get_string_until_token (log_file, ':');
-            printf("%s\n", temp_string);
-            qtd += strlen (temp_string) + 1;
+            qtd += strlen (temp_string);
 
-            free (temp_string);
-            temp_string = get_string_until_token (log_file, '\n');
-            qtd += strlen (temp_string) + 1;
-
-            free (temp_string);
+            if (strcmp (temp_string, "timestamp") == 0) {
+                fseek (log_file, 1, SEEK_CUR);
+                timestamp = get_string_until_token (log_file, '\n');
+                qtd += strlen (timestamp) + 3;
+                has_found = 1;
+            } else {
+                temp_string = get_string_until_token (log_file, '\n');
+                qtd += strlen (temp_string) + 2;
+            }
         }
-        fseek (log_file, qtd * -1, SEEK_CUR);
+        fseek (log_file, (qtd * -1), SEEK_CUR);
     }
 
-    return "batata";
+    return timestamp;
+}
+
+int get_timestamp_sec (char *timestamp) {
+    char *sec, *min, *hour;
+
+    strtok (timestamp, " :");
+    hour = strtok (NULL, " :");
+    min = strtok (NULL, " :");
+    sec = strtok (NULL, " :");
+
+    return (atoi (hour) * 3600) + (atoi (min) * 60) + atoi (sec);
 }
 /*---------------------------------------------- Funções internas ---------------------------------------------*/
 
@@ -214,11 +207,12 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
     FILE *log_file;
     char *temp_string;
     char iterator;
+    int count;
     /* timestamps */
     char *timestamp;
-    int last_timestamp_seg, actual_timestamp_seg;
+    int last_timestamp_sec = 0, actual_timestamp_sec = 0;
     /* contadores dos valores do log */
-    int qtd_log_speed = 0, qtd_log_hr = 0, qtd_log_cadence = 0, timestamp_qtd;
+    int qtd_log_speed = 0, qtd_log_hr = 0, qtd_log_cadence = 0, timestamp_qtd = 0;
     float last_altitude = 0, actual_altitude = 0;
     /* valores do log */
     char *bicycle_name, *date;
@@ -265,8 +259,16 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
                 fseek (log_file, 1, SEEK_CUR);
 
                 temp_string = get_string_until_token (log_file, ' ');
-                avarage_cadence += atoi (temp_string);
-                qtd_log_cadence++;
+
+                if (timestamp_qtd != 0) {
+                    for (count = 0; count < timestamp_qtd; count++) {
+                        avarage_cadence += atoi (temp_string);
+                        qtd_log_cadence++;
+                    }
+                } else {
+                    avarage_cadence += atoi (temp_string);
+                    qtd_log_cadence++;
+                }
 
                 fseek (log_file, 4, SEEK_CUR);
             } else if (strcmp (temp_string, "distance") == 0) {
@@ -281,8 +283,16 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
 
                 temp_string = get_string_until_token (log_file, ' ');
                 max_hr = max_hr < atoi (temp_string) ? atoi (temp_string) : max_hr;
-                avarage_hr += atoi (temp_string);
-                qtd_log_hr++;
+
+                if (timestamp_qtd != 0) {
+                    for (count = 0; count < timestamp_qtd; count++) {
+                        avarage_hr += atoi (temp_string);
+                        qtd_log_hr++;
+                    }
+                } else {
+                    avarage_hr += atoi (temp_string);
+                    qtd_log_hr++;
+                }
 
                 fseek (log_file, 4, SEEK_CUR);
             } else if (strcmp (temp_string, "speed") == 0) {
@@ -300,6 +310,16 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
             free (temp_string);
         } else {
             timestamp = get_timestamp (log_file);
+            if (timestamp != NULL) {
+                if (last_timestamp_sec == 0) {
+                    last_timestamp_sec = get_timestamp_sec (timestamp);
+                    actual_timestamp_sec = last_timestamp_sec;
+                } else {
+                    last_timestamp_sec = actual_timestamp_sec;
+                    actual_timestamp_sec = get_timestamp_sec (timestamp);
+                    timestamp_qtd = actual_timestamp_sec - last_timestamp_sec;
+                }
+            }
         }
         iterator = getc (log_file);
     }
