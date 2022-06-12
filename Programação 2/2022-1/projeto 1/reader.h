@@ -35,6 +35,8 @@ void load_logs (directory_f *directory, char *dir_name, bicycles_f *bicycles);
 */
 void read_log (char *log_path, char *log_name, bicycles_f *bicycles);
 
-
-// função que limpa o espaço dos arquivos lidos
+/*
+* Função que limpa o espaço armazenado pela estrutura de arquivos no diretorio
+*/
+void clean_directory (directory_f *directory);
 #endif

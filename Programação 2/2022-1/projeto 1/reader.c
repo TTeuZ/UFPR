@@ -27,6 +27,36 @@ int filterFiles (const struct dirent *current_dir) {
 }
 
 /*
+* Busca uma string dentro do arquivo caracter por caracter até chegar ao token indicado
+* Inicia alocando espaço para o primeiro caracter
+* A cada caractere realoca o espaço necessário
+*/
+char *get_string_until_token (FILE *log_file, char token) {
+    char iterator, *temp_string;
+    int count;
+
+    count = 0;
+    if (! (temp_string = malloc (sizeof (char)))) {
+        fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+        exit (EXIT_FAILURE);
+    }
+
+    iterator = getc (log_file);
+    while (iterator != token && iterator != -1) {
+        temp_string[count] = iterator;
+        iterator = getc (log_file);
+        count++;
+        if (! (temp_string = realloc (temp_string, sizeof (char) * (count + 1)))) {
+            fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria realoc\n\n");
+            fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+            exit (EXIT_FAILURE);
+        }
+    }
+    temp_string[count] = '\0';
+    return temp_string;
+}
+/*
 * Função que recebe uma string com o nome do mes do log no formato indicado
 * Retorna um int relacionado ao mês, de acordo coma especificação 
 */
@@ -86,37 +116,6 @@ char *treat_date (char *date) {
 }
 
 /*
-* Busca uma string dentro do arquivo caracter por caracter até chegar ao token indicado
-* Inicia alocando espaço para o primeiro caracter
-* A cada caractere realoca o espaço necessário
-*/
-char *get_string_until_token (FILE *log_file, char token) {
-    char iterator, *temp_string;
-    int count;
-
-    count = 0;
-    if (! (temp_string = malloc (sizeof (char)))) {
-        fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
-    }
-
-    iterator = getc (log_file);
-    while (iterator != token && iterator != -1) {
-        temp_string[count] = iterator;
-        iterator = getc (log_file);
-        count++;
-        if (! (temp_string = realloc (temp_string, sizeof (char) * (count + 1)))) {
-            fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria realoc\n\n");
-            fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-            exit (EXIT_FAILURE);
-        }
-    }
-    temp_string[count] = '\0';
-    return temp_string;
-}
-
-/*
 * Funçãoq eu recebe o arquivo de log é pega o timestamp do bloco atual
 * Utiliza o ponteiro atual do arquivo para buscar o timestamps
 * Retorna uma string com o valor do timestamp ou null caso não seja possivel computar a string
@@ -135,14 +134,11 @@ char* get_timestamp (FILE *log_file) {
 
             if (strcmp (temp_string, "timestamp") == 0) {
                 fseek (log_file, 1, SEEK_CUR);
-
                 timestamp = get_string_until_token (log_file, '\n');
                 qtd += strlen (timestamp) + 3;
-
                 has_found = 1;
             } else {
                 free (temp_string); /* limpa a memoria armazenada para o que estava apontando anteriomente */
-
                 temp_string = get_string_until_token (log_file, '\n');
                 qtd += strlen (temp_string) + 2;
             }
@@ -150,10 +146,12 @@ char* get_timestamp (FILE *log_file) {
         }
         fseek (log_file, (qtd * -1), SEEK_CUR); /* volta o ponteiro do arquivo para o ponto correto de leitura */
     }
-
     return timestamp;
 }
 
+/*
+* Função que recebe uma string de timestamp e retorna o valor das horas em segundos
+*/
 int get_timestamp_sec (char *timestamp) {
     char *sec, *min, *hour;
 
@@ -201,11 +199,8 @@ void load_logs (directory_f *directory, char *dir_name, bicycles_f *bicycles) {
         strcat (file_path, dir_name);
         strcat (file_path, "/");
         strcat (file_path, directory->files[count]->d_name);
-
         read_log (file_path, directory->files[count]->d_name, bicycles);
-        free (directory->files[count]);
     }
-    free (directory->files);
 }
 
 void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
@@ -350,9 +345,17 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
     printf ("ganho de altimetria: %f\n", altimetry_gain);
 
     fclose (log_file);
-    free (timestamp);
     free (bicycle_name);
     free (date);
     free (untreated_date);
     printf ("\n");
+}
+
+void clean_directory (directory_f *directory) {
+    int count; 
+    for (count = 0; count < directory->files_qtd; count++) {
+        free (directory->files[count]);
+    }
+    free (directory->files);
+    free (directory);
 }

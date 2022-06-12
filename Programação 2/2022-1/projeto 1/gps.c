@@ -26,6 +26,6 @@ int main (int argc, char *argv[]) {
 
     /* limpa os espaços alocados durante a execução do programa */
     clean_bicycles (bicycles);
-    free (directory);
+    clean_directory (directory);
     exit (EXIT_SUCCESS);
 }
