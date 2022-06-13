@@ -213,7 +213,7 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
     int count;
     /* timestamps */
     char *timestamp = NULL;
-    int last_timestamp_sec = 0, actual_timestamp_sec = 0;
+    int last_timestamp_sec = 0, actual_timestamp_sec = 0, temp_timestamp_sec = 0;
     /* contadores dos valores do log */
     int qtd_log_speed = 0, qtd_log_hr = 0, qtd_log_cadence = 0, timestamp_qtd = 1;
     float last_altitude = 0, actual_altitude = 0;
@@ -304,14 +304,10 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
         } else {
             timestamp = get_timestamp (log_file);
             if (timestamp != NULL) {
-                if (last_timestamp_sec == 0) {
-                    last_timestamp_sec = get_timestamp_sec (timestamp);
-                    actual_timestamp_sec = last_timestamp_sec;
-                } else {
-                    last_timestamp_sec = actual_timestamp_sec;
-                    actual_timestamp_sec = get_timestamp_sec (timestamp);
-                    timestamp_qtd = actual_timestamp_sec - last_timestamp_sec;
-                }
+                temp_timestamp_sec = get_timestamp_sec (timestamp);
+                last_timestamp_sec = last_timestamp_sec == 0 ? temp_timestamp_sec : actual_timestamp_sec;
+                actual_timestamp_sec = temp_timestamp_sec;
+                timestamp_qtd = (actual_timestamp_sec - last_timestamp_sec) == 0 ? 1 :actual_timestamp_sec - last_timestamp_sec;
             }
             free (timestamp);
         }
