@@ -202,7 +202,7 @@ void load_logs (directory_f *directory, char *dir_name, bicycles_f *bicycles) {
         strcat (file_path, "/");
         strcat (file_path, directory->files[count]->d_name);
         log = read_log (file_path, directory->files[count]->d_name);
-        add_bicycle_log (bicycles, log);
+        verify_and_add_bicycle (bicycles, log);
     }
 }
 
