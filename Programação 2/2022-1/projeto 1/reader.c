@@ -6,6 +6,7 @@
 #include <math.h>
 #include "constants.h"
 #include "bicycles.h"
+#include "bicycle.h"
 #include "reader.h"
 /*---------------------------------------------- Funções internas ---------------------------------------------*/
 /*
@@ -191,19 +192,21 @@ directory_f *get_logs (char *dir_name) {
 }
 
 void load_logs (directory_f *directory, char *dir_name, bicycles_f *bicycles) {
-    int count;
+    bicycle_log_f *log;
     char file_path[256];
+    int count;
 
     for (count = 0; count < directory->files_qtd; count++) {
         file_path[0] = '\0';
         strcat (file_path, dir_name);
         strcat (file_path, "/");
         strcat (file_path, directory->files[count]->d_name);
-        read_log (file_path, directory->files[count]->d_name, bicycles);
+        log = read_log (file_path, directory->files[count]->d_name);
+        add_bicycle_log (bicycles, log);
     }
 }
 
-void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
+bicycle_log_f *read_log (char *log_path, char *log_name) {
     FILE *log_file;
     char *temp_string = NULL;
     char iterator;
@@ -216,12 +219,12 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
     float last_altitude = 0, actual_altitude = 0;
     /* valores do log */
     char *bicycle_name, *date, *untreated_date;
-    float distance = 0, avarage_speed = 0, max_speed = 0, altimetry_gain = 0;
-    int avarage_hr = 0, max_hr = 0, avarage_cadence = 0;
+    float distance = 0, average_speed = 0, max_speed = 0, altimetry_gain = 0;
+    int average_hr = 0, max_hr = 0, average_cadence = 0;
 
     if (! (log_file = fopen (log_path, "r"))) {
         fprintf (stderr, RED "[ERROR] " NC "Erro ao ler o log %s\n\n", log_name);
-        return ;
+        return NULL;
     }
 
     /* Pulando a frase 'Gear: ' e buscando o nome da bicicleta*/
@@ -258,7 +261,7 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
                 free (temp_string); /* limpa o espaço armazenado para o nome do valor */
                 temp_string = get_string_until_token (log_file, ' ');
                 for (count = 0; count < timestamp_qtd; count++) {
-                    avarage_cadence += atoi (temp_string);
+                    average_cadence += atoi (temp_string);
                     qtd_log_cadence++;
                 }
 
@@ -278,7 +281,7 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
                 temp_string = get_string_until_token (log_file, ' ');
                 max_hr = max_hr < atoi (temp_string) ? atoi (temp_string) : max_hr;
                 for (count = 0; count < timestamp_qtd; count++) {
-                    avarage_hr += atoi (temp_string);
+                    average_hr += atoi (temp_string);
                     qtd_log_hr++;
                 }
 
@@ -289,7 +292,7 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
                 free (temp_string); /* limpa o espaço armazenado para o nome do valor */
                 temp_string = get_string_until_token (log_file, ' ');
                 max_speed = max_speed < atof (temp_string) ? atof (temp_string) : max_speed;
-                avarage_speed += atof (temp_string);
+                average_speed += atof (temp_string);
                 qtd_log_speed++;
 
                 fseek (log_file, 4, SEEK_CUR);
@@ -315,25 +318,14 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
         iterator = getc (log_file);
     }
 
-    if (qtd_log_speed != 0) avarage_speed = avarage_speed / qtd_log_speed;
-    if (qtd_log_hr != 0) avarage_hr = round (avarage_hr / qtd_log_hr);
-    if (qtd_log_cadence != 0) avarage_cadence = round (avarage_cadence / qtd_log_cadence);
+    if (qtd_log_speed != 0) average_speed = average_speed / qtd_log_speed;
+    if (qtd_log_hr != 0) average_hr = round (average_hr / qtd_log_hr);
+    if (qtd_log_cadence != 0) average_cadence = round (average_cadence / qtd_log_cadence);
 
-    printf ("Nome: %s\n", bicycle_name);
-    printf ("data: %s\n", date);
-    printf ("Distancia: %f\n", distance);
-    printf ("velocidade media: %f\n", avarage_speed);
-    printf ("Velocidade maxima: %f\n", max_speed);
-    printf ("hr media: %d\n", avarage_hr);
-    printf ("hr maxima: %d\n", max_hr);
-    printf ("cadencia media: %d\n", avarage_cadence);
-    printf ("ganho de altimetria: %f\n", altimetry_gain);
-    printf ("\n");
-
-    free (bicycle_name);
-    free (date);
     free (untreated_date);
     fclose (log_file);
+
+    return create_log (bicycle_name, date, distance, average_speed, max_speed, average_hr, max_hr, average_cadence, altimetry_gain);
 }
 
 void clean_directory (directory_f *directory) {
