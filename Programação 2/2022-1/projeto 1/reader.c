@@ -212,7 +212,7 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
     char *timestamp = NULL;
     int last_timestamp_sec = 0, actual_timestamp_sec = 0;
     /* contadores dos valores do log */
-    int qtd_log_speed = 0, qtd_log_hr = 0, qtd_log_cadence = 0, timestamp_qtd = 0;
+    int qtd_log_speed = 0, qtd_log_hr = 0, qtd_log_cadence = 0, timestamp_qtd = 1;
     float last_altitude = 0, actual_altitude = 0;
     /* valores do log */
     char *bicycle_name, *date, *untreated_date;
@@ -244,13 +244,9 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
 
                 free (temp_string); /* limpa o espaço armazenado para o nome do valor */
                 temp_string = get_string_until_token (log_file, ' ');
-                if (last_altitude == 0) {
-                    last_altitude = atof (temp_string );
-                    actual_altitude = atof (temp_string );
-                } else {
-                    last_altitude = actual_altitude;
-                    actual_altitude = atof (temp_string );
-                }
+
+                last_altitude = last_altitude == 0 ? atof (temp_string) : actual_altitude;
+                actual_altitude = atof (temp_string );
 
                 if (actual_altitude > last_altitude) 
                     altimetry_gain += actual_altitude - last_altitude;
@@ -261,12 +257,7 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
 
                 free (temp_string); /* limpa o espaço armazenado para o nome do valor */
                 temp_string = get_string_until_token (log_file, ' ');
-                if (timestamp_qtd != 0) {
-                    for (count = 0; count < timestamp_qtd; count++) {
-                        avarage_cadence += atoi (temp_string);
-                        qtd_log_cadence++;
-                    }
-                } else {
+                for (count = 0; count < timestamp_qtd; count++) {
                     avarage_cadence += atoi (temp_string);
                     qtd_log_cadence++;
                 }
@@ -286,13 +277,7 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
                 free (temp_string); /* limpa o espaço armazenado para o nome do valor */
                 temp_string = get_string_until_token (log_file, ' ');
                 max_hr = max_hr < atoi (temp_string) ? atoi (temp_string) : max_hr;
-
-                if (timestamp_qtd != 0) {
-                    for (count = 0; count < timestamp_qtd; count++) {
-                        avarage_hr += atoi (temp_string);
-                        qtd_log_hr++;
-                    }
-                } else {
+                for (count = 0; count < timestamp_qtd; count++) {
                     avarage_hr += atoi (temp_string);
                     qtd_log_hr++;
                 }
@@ -343,12 +328,12 @@ void read_log (char *log_path, char *log_name, bicycles_f *bicycles) {
     printf ("hr maxima: %d\n", max_hr);
     printf ("cadencia media: %d\n", avarage_cadence);
     printf ("ganho de altimetria: %f\n", altimetry_gain);
+    printf ("\n");
 
-    fclose (log_file);
     free (bicycle_name);
     free (date);
     free (untreated_date);
-    printf ("\n");
+    fclose (log_file);
 }
 
 void clean_directory (directory_f *directory) {
