@@ -18,6 +18,20 @@ bicycles_f *inicialize_bicycles () {
     }
 }
 
+void add_bicycle_log (bicycles_f *bicycles, bicycle_log_f *log) {
+    printf ("Nome: %s\n", log->bicycle_name);
+    printf ("data: %s\n", log->date);
+    printf ("Distancia: %f\n", log->distance);
+    printf ("velocidade media: %f\n", log->average_speed);
+    printf ("Velocidade maxima: %f\n", log->max_speed);
+    printf ("hr media: %d\n", log->average_hr);
+    printf ("hr maxima: %d\n", log->max_hr);
+    printf ("cadencia media: %d\n", log->average_cadence);
+    printf ("ganho de altimetria: %f\n", log->altimetry_gain);
+    printf ("\n");
+}
+
+
 void clean_bicycles (bicycles_f *bicycles) {
     int count;
     if (bicycles->qtd != 0) 
