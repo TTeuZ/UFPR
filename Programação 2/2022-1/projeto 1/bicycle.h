@@ -1,13 +1,14 @@
 #ifndef BICYCLE
 #define BICYCLE
 typedef struct bicycle_log {
+    char *bicycle_name;
     char *date;
     float distance;
     float average_speed;
     float max_speed;
-    int avarage_ht;
+    int average_hr;
     int max_hr;
-    int avarage_cadence;
+    int average_cadence;
     float altimetry_gain;
 } bicycle_log_f;
 typedef struct bicycle {
@@ -16,9 +17,15 @@ typedef struct bicycle {
     float total_km;
     float longest_ride;
     float shorter_ride;
-    float avarage_distance;
+    float average_distance;
     bicycle_log_f **logs;
 } bicycle_f;
+
+/*
+* Função que recebe como parametros os valores do log e cria uma instancia de log
+* retorna esta instancia
+*/
+bicycle_log_f *create_log (char *bicycle_name, char *date, float distance, float average_speed, float max_speed, int average_hr, int max_hr, int average_cadence, float altimetry_gain);
 
 /*
 * Limpa a estrutura de dados que armazena as informaçãos da bicicleta
