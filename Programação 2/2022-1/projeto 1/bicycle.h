@@ -43,6 +43,7 @@ void add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log);
 * Trata as informação de resumo da biciclita, atualizando os valores necessários
 */
 void treat_bicycle_resume (bicycle_f *bicycle, bicycle_log_f *log);
+
 /*
 * Limpa a estrutura de dados que armazena as informaçãos da bicicleta
 * Passa por cada log de atividade da bicicleta limpando seu espaço ocupador

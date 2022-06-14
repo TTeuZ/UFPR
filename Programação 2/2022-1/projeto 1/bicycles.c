@@ -68,6 +68,13 @@ void add_bicycle_to_array (bicycles_f *bicycles, bicycle_f *bicycle) {
     }
 }
 
+void list_bicycles (bicycles_f *bicycles) {
+    int count;
+    for (count = 0; count < bicycles->qtd; count++) 
+        fprintf (stdout, "Nome: %s - Quantidade de atividades: %d\n", bicycles->bicycles[count]->name, bicycles->bicycles[count]->activities_qtd);
+    fprintf (stdout, "\n");
+}
+
 void clean_bicycles (bicycles_f *bicycles) {
     int count;
     if (bicycles->qtd != 0) 

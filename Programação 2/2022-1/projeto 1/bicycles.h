@@ -33,6 +33,11 @@ void verify_and_add_bicycle (bicycles_f *bicycles, bicycle_log_f *log);
 void add_bicycle_to_array (bicycles_f *bicycles, bicycle_f *bicycle);
 
 /*
+* Função que lista as bicicletas que forar armazenadas durante a leitura
+*/
+void list_bicycles (bicycles_f *bicycles);
+
+/*
 * Função que limpa a memoria ocupada pelo estrutura de armazenamento das bicicletas
 * Passa por cada bicicleta dentro do conjunto e chama sua função de limpeza
 * Ao final, limpa a estrutura geral de armazenamento das bicicletas
