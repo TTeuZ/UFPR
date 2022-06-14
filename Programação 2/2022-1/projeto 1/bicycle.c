@@ -1,8 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "bicycle.h"
 #include "constants.h"
+
+/*---------------------------------------------- Funções internas ---------------------------------------------*/
+
+int compare_dates (char *first, char *second) {
+    char *inside_first, *inside_second;
+    int day, month, year, first_time, second_time;
+    inside_first = strdup (first);
+    inside_second = strdup (second);
+
+    day = atoi (strtok (inside_first, "/"));
+    month = atoi (strtok (NULL, "/"));
+    year = atoi (strtok (NULL, "/")) - 1900;
+    first_time = (year * 1000) + (month * 100) + (day * 10);
+
+    day = atoi (strtok (inside_second, "/"));
+    month = atoi (strtok (NULL, "/"));
+    year = atoi (strtok (NULL, "/")) - 1900;
+    second_time = (year * 10000) + (month * 1000) + (day * 10);
+
+    free (inside_first);
+    free (inside_second);
+    return second_time - first_time;
+}
+
+/*---------------------------------------------- Funções internas ---------------------------------------------*/
 
 bicycle_f *create_bicycle (char *name) {
     bicycle_f *bicycle;
@@ -62,7 +88,7 @@ void add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log) {
             exit (EXIT_FAILURE);
         } else {
             count = bicycle->activities_qtd;
-            while (count != 0 && strcmp (log->date, bicycle->logs[count-1]->date) <= 0) {
+            while (count != 0 && compare_dates (log->date, bicycle->logs[count-1]->date) <= 0) {
                 bicycle->logs[count] = bicycle->logs[count - 1];
                 count--;
             }
@@ -70,6 +96,18 @@ void add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log) {
             bicycle->activities_qtd++;
         }
     }
+    treat_bicycle_resume (bicycle, log);
+}
+
+void treat_bicycle_resume (bicycle_f *bicycle, bicycle_log_f *log) {
+    bicycle->total_km += log->distance;
+    bicycle->longest_ride = bicycle->longest_ride < log->distance ? log->distance : bicycle->longest_ride;
+
+    if (bicycle->shorter_ride != 0) {
+        bicycle->shorter_ride = bicycle->shorter_ride > log->distance ? log->distance : bicycle->shorter_ride;
+    } else bicycle->shorter_ride = log->distance;
+    
+    bicycle->average_distance = bicycle->total_km / bicycle->activities_qtd;
 }
 
 void clean_bicycle (bicycle_f *bicycle) {

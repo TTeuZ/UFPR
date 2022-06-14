@@ -39,14 +39,16 @@ bicycle_log_f *create_log (char *bicycle_name, char *date, float distance, float
 void add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log);
 
 /*
+* Função que recebea bicicleta e o ultimo log adicionado
+* Trata as informação de resumo da biciclita, atualizando os valores necessários
+*/
+void treat_bicycle_resume (bicycle_f *bicycle, bicycle_log_f *log);
+/*
 * Limpa a estrutura de dados que armazena as informaçãos da bicicleta
 * Passa por cada log de atividade da bicicleta limpando seu espaço ocupador
 * Ao final, limpa toda a estrutura de armazenamento da bicicleta
 */
 void clean_bicycle (bicycle_f *bicycle);
 
-// função para iniciar uma bibicleta
-// função para modificar/adicionar valores a uma bicicleta
 // função para pegar um histograma da bicicleta
-// função para limpar as bicicletas
 #endif
