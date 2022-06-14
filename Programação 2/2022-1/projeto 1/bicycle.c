@@ -110,6 +110,10 @@ void treat_bicycle_resume (bicycle_f *bicycle, bicycle_log_f *log) {
     bicycle->average_distance = bicycle->total_km / bicycle->activities_qtd;
 }
 
+void print_bicycle_resume_log (bicycle_f *bicycle) {
+    fprintf (stdin, "Bicicleta: %s\n\n", bicycle->name);
+}
+
 void clean_bicycle (bicycle_f *bicycle) {
     int count;
     for (count = 0; count < bicycle->activities_qtd; count++) {

@@ -6,4 +6,6 @@
 #define YELLOW "\e[1;33m"
 #define NC "\e[0m"
 
+#define INPUT_SIZE 1024
+
 #endif

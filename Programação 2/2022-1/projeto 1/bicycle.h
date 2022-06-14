@@ -11,6 +11,7 @@ typedef struct bicycle_log {
     int average_cadence;
     float altimetry_gain;
 } bicycle_log_f;
+
 typedef struct bicycle {
     char *name;
     int activities_qtd;
@@ -43,6 +44,11 @@ void add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log);
 * Trata as informação de resumo da biciclita, atualizando os valores necessários
 */
 void treat_bicycle_resume (bicycle_f *bicycle, bicycle_log_f *log);
+
+/*
+* Função que printa de forma formatada as informações do log da bicicleta 
+*/
+void print_bicycle_resume_log (bicycle_f *bicycle);
 
 /*
 * Limpa a estrutura de dados que armazena as informaçãos da bicicleta

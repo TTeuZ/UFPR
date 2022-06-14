@@ -14,7 +14,7 @@ typedef struct bicycles {
 bicycles_f *inicialize_bicycles ();
 
 /*
-* Funçãoq ue verifica se a bicicleta ja esta no conjunto
+* Função que verifica se a bicicleta ja esta no conjunto
 * Retorna a posição da bicicleta no conjunto caso ja esteja adicionada 
 * Retorna -1 caso contrario
 */
