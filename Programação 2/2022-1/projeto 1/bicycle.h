@@ -34,6 +34,11 @@ bicycle_f *create_bicycle (char *name);
 bicycle_log_f *create_log (char *bicycle_name, char *date, float distance, float average_speed, float max_speed, int average_hr, int max_hr, int average_cadence, float altimetry_gain);
 
 /*
+* Função que, apartir de um log ja existente, recria o conjunto de logs ordenado pela maneira indicada por sort
+*/
+bicycle_log_f **create_temp_sorted_log (bicycle_f *bicycle, int sort);
+
+/*
 * Função que adiciona um novo log para uma bicicleta
 * Adição ocorre de forma ordenada pela data
 */
