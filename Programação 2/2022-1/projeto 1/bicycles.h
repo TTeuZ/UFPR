@@ -38,6 +38,13 @@ void add_bicycle_to_array (bicycles_f *bicycles, bicycle_f *bicycle);
 void list_bicycles (bicycles_f *bicycles);
 
 /*
+* Função que printa todas as atividads armazenadas no conjunto
+* sort: Indica qual o sentido de ordenação do print
+* group: Indica se o print será agrupado por bicicleta ou não
+*/
+void printf_all_activities (bicycles_f *bicycles, int sort, int group);
+
+/*
 * Função que limpa a memoria ocupada pelo estrutura de armazenamento das bicicletas
 * Passa por cada bicicleta dentro do conjunto e chama sua função de limpeza
 * Ao final, limpa a estrutura geral de armazenamento das bicicletas

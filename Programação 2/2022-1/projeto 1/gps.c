@@ -6,11 +6,17 @@
 #include "parser.h"
 #include "reader.h"
 
+void flush_stdin () {
+    int buf = 0;
+    while (buf != '\n' && buf != EOF) 
+        buf = getchar(); 
+}
+
 int main (int argc, char *argv[]) {
     bicycles_f *bicycles;
     directory_f *directory;
     char *dir_name, bicycle_name[256];
-    int action, is_number, buf, bicycle_pos;
+    int action, is_number, bicycle_pos;
 
     dir_name = parse_command_line (argv, argc);
     bicycles = inicialize_bicycles ();
@@ -31,33 +37,18 @@ int main (int argc, char *argv[]) {
         fprintf (stdout, "6 - Histograma da bicicleta\n");
         fprintf (stdout, "0 - Sair\n\n");
         fprintf (stdout, "Selecione uma ação: ");
-        is_number = scanf("%d", &action);
+        is_number = scanf("%d", &action);               
+        flush_stdin ();
 
-        buf = getchar();;                    
-
-        if (action == 2 || action == 6) {
+        if (is_number == 1 && (action == 2 || action == 6)) {
             fprintf (stdout, "Informe o nome da bicicleta: ");
-//            is_number = scanf ("%[^\n]",  bicycle_name);
-            while ( !(buf = scanf("%[^\n]",  bicycle_name)) ) {
-
-                while ( (buf = getchar()) != EOF && buf != '\n' )
-                    printf("%c = %d\n", buf,buf);
-                printf("X%c = %d\n", buf, buf);                    
-            }
-            fprintf(stdout,"is_number: %d\n", buf);            
-            fflush (stdin);
-            // fgets (bicycle_name, INPUT_SIZE, stdin);
-            // getchar ();
-            // scanf ( "%256[^\n]",  bicycle_name);
+            scanf("%[^\n]", bicycle_name);
         }
+
         fprintf (stdout, "-------------------------------------------------------------------\n\n");
         if (is_number != 1) {
-            fprintf (stderr, RED "[ERROR] " NC "Entrada invalida!\n");
-            fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-//            action = getchar();
-//            while (action != '\n' && action != EOF)
-//                action = getchar();
-//            action = 0;
+            fprintf (stderr, RED "[ERROR] " NC "Entrada invalida!\n\n");
+            action = -1;
         } else {
             switch (action) {
                 case 1: {
@@ -65,33 +56,34 @@ int main (int argc, char *argv[]) {
                     break;
                 }
                 case 2: {
-                    printf ("Bicleta: %s\n", bicycle_name);
-
-                    // bicycle_pos = already_added (bicycles, bicycle_name);
-
-                    // printf ("posição: %d\n", bicycle_pos);
-
-                    // print_bicycle_resume_log (bicycles->bicycles[bicycle_pos]);
+                    bicycle_pos = already_added (bicycles, bicycle_name);
+                    if (bicycle_pos != -1)
+                        print_bicycle_resume (bicycles->bicycles[bicycle_pos]);
+                    else
+                        fprintf(stderr, "Bicicleta não encontrada!\n\n");
                     break;
                 }
                 case 3: {
-                    printf("vamos de listar por data\n");
+                    printf_all_activities (bicycles, DATE_SORT, GROUPED);
                     break;
                 }
                 case 4: {
-                    printf("vamos de listar por distância\n");
+                    printf_all_activities (bicycles, DISTANCE_SORT, GROUPED);
                     break;
                 }
                 case 5: {
-                    printf("vamos de listar por subida\n");
+                    printf_all_activities (bicycles, ALTIMETRY_SORT, NOT_GROUPED);
                     break;
                 }
                 case 6: {
                     printf("hora do histograma\n");
                     break;
                 }
+                case 0: {
+                    fprintf(stdout, "Saindo...\n\n");
+                    break;
+                }
                 default: {
-                    printf("%d\n", action);
                     fprintf (stderr, "Comando invalido!\n\n");
                     break;
                 }

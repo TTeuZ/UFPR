@@ -75,6 +75,29 @@ void list_bicycles (bicycles_f *bicycles) {
     fprintf (stdout, "\n");
 }
 
+void printf_all_activities (bicycles_f *bicycles, int sort, int group) {
+    int count, exit = 1;
+    fprintf (stdout, "Data\t\t\tBicicleta\t\t\t\tDistância(Km)\t\tVelocidade Média(Km/h)\t\tVelocidade Máxima(Km/h)\t\tHR Médio(bpm)\t\tHR Máximo(bpm)\t\tCadência Média(rpm)\t\tSubida Acomulada(m)\n");
+    for (count = 0; count < 251; count++)
+        printf("-");
+    printf("\n");
+
+    if (group) {
+        if (sort == DATE_SORT) {
+            for (count = 0; count < bicycles->qtd; count++)
+                print_logs_with_name (bicycles->bicycles[count]->logs, bicycles->bicycles[count]->activities_qtd);
+        } else {
+            printf ("Batata\n");
+        }
+    } else {
+        printf("não vamos agrupado\n\n");
+    }
+
+    fprintf (stdout, "\nAperte 0 para sair: ");
+    while (exit != 0)
+        scanf ("%d", &exit);
+}
+
 void clean_bicycles (bicycles_f *bicycles) {
     int count;
     if (bicycles->qtd != 0) 
