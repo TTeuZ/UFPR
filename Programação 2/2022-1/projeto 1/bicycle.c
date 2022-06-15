@@ -6,7 +6,6 @@
 #include "constants.h"
 
 /*---------------------------------------------- Funções internas ---------------------------------------------*/
-
 int compare_dates (char *first, char *second) {
     char *inside_first, *inside_second;
     int day, month, year, first_time, second_time;
@@ -27,7 +26,6 @@ int compare_dates (char *first, char *second) {
     free (inside_second);
     return second_time - first_time;
 }
-
 /*---------------------------------------------- Funções internas ---------------------------------------------*/
 
 bicycle_f *create_bicycle (char *name) {
@@ -110,8 +108,40 @@ void treat_bicycle_resume (bicycle_f *bicycle, bicycle_log_f *log) {
     bicycle->average_distance = bicycle->total_km / bicycle->activities_qtd;
 }
 
-void print_bicycle_resume_log (bicycle_f *bicycle) {
-    fprintf (stdin, "Bicicleta: %s\n\n", bicycle->name);
+void print_bicycle_resume (bicycle_f *bicycle) {
+    int exit = 1, count;
+    fprintf (stdout, "Bicicleta: %s\n\n", bicycle->name);
+
+    fprintf (stdout, "Data\t\tDistância(Km)\t\tVelocidade Média(Km/h)\t\tVelocidade Máxima(Km/h)\t\tHR Médio(bpm)\t\tHR Máximo(bpm)\t\tCadência Média(rpm)\t\tSubida Acomulada(m)\n");
+    for (count = 0; count < 203; count++)
+        printf("-");
+    printf("\n");
+    for (count = 0; count < bicycle->activities_qtd; count++) {
+        fprintf (stdout, "%-10s\t\t%5.2f\t\t%22.2f\t\t%23.2f\t\t%13d\t\t%14d\t\t%19d\t\t%19.2f\n", bicycle->logs[count]->date, (bicycle->logs[count]->distance / 1000), 
+                                                                                                   bicycle->logs[count]->average_speed, bicycle->logs[count]->max_speed, 
+                                                                                                   bicycle->logs[count]->average_hr, bicycle->logs[count]->max_hr, 
+                                                                                                   bicycle->logs[count]->average_cadence, bicycle->logs[count]->altimetry_gain);
+    }
+
+    fprintf(stdout, "\nQuantidade de atividades: %d\t", bicycle->activities_qtd);
+    fprintf(stdout, "Total percorrido: %5.2f Km\t", (bicycle->total_km / 1000));
+    fprintf(stdout, "Pedal mais longo: %5.2f Km\t", (bicycle->longest_ride / 1000));
+    fprintf(stdout, "Pedal mais curto: %5.2f Km\t", (bicycle->shorter_ride / 1000));
+    fprintf(stdout, "Distância Média: %5.2f Km\n\n", (bicycle->average_distance / 1000));
+
+    fprintf (stdout, "Aperte 0 para sair: ");
+    while (exit != 0)
+        scanf ("%d", &exit);
+}
+
+void print_logs_with_name (bicycle_log_f **logs, int qtd) {
+    int count;
+    for (count = 0; count < qtd; count++) {
+        fprintf (stdout, "%-10s\t\t%-20s\t\t\t\t%5.2f\t\t%22.2f\t\t%23.2f\t\t%13d\t\t%14d\t\t%19d\t\t%19.2f\n", logs[count]->date, logs[count]->bicycle_name, (logs[count]->distance / 1000), 
+                                                                                                   logs[count]->average_speed, logs[count]->max_speed, 
+                                                                                                   logs[count]->average_hr, logs[count]->max_hr, 
+                                                                                                   logs[count]->average_cadence, logs[count]->altimetry_gain);
+    }
 }
 
 void clean_bicycle (bicycle_f *bicycle) {
