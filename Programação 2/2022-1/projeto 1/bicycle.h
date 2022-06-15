@@ -46,9 +46,16 @@ void add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log);
 void treat_bicycle_resume (bicycle_f *bicycle, bicycle_log_f *log);
 
 /*
-* Função que printa de forma formatada as informações do log da bicicleta 
+* Função que printa de forma formatada as informações do log da bicicleta
+* Função especifica, printa o nome, a tabela de logs e o resumo
 */
-void print_bicycle_resume_log (bicycle_f *bicycle);
+void print_bicycle_resume (bicycle_f *bicycle);
+
+/*
+* Função que printa esclusivamente os logs passados como paramentros
+* printa apenas a tabela, junto com o nome como uma coluna
+*/
+void print_logs_with_name (bicycle_log_f **logs, int qtd);
 
 /*
 * Limpa a estrutura de dados que armazena as informaçãos da bicicleta
