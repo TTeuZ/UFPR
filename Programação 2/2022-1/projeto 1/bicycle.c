@@ -194,7 +194,7 @@ void get_histogram (bicycle_f *bicycle) {
     temp_log = create_temp_distance_sorted_log (bicycle);
     min = (int) (bicycle->shorter_ride - ((int) bicycle->shorter_ride % 10000)) / 1000;
     max = (int) (bicycle->longest_ride - ((int) bicycle->longest_ride % 10000)) / 1000;
-    max += 10;
+    max += 11;
 
     fprintf (stdout, "Bicicleta: %s\n\n", bicycle->name);
 
@@ -220,6 +220,21 @@ void get_histogram (bicycle_f *bicycle) {
     fprintf (stdout, "\n");
 
     fprintf (stdout, "Distancia |\t\tquantidade\n\n");
+
+
+    // TESTE DO GNUPLOT
+
+    FILE *gnuplot = popen ("gnuplot -persistent", "w");
+    if (! gnuplot) {
+        printf("deu erro");
+    }
+    fprintf(gnuplot, "plot exp(-x**2) smooth freq w boxes");
+    fflush (gnuplot);
+    pclose(gnuplot);
+
+    // TESTE DO GNUPLOT
+
+
 
     fprintf (stdout, "Aperte 0 para sair: ");
     while (exit != 0)
