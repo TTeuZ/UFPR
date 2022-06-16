@@ -11,7 +11,6 @@
 /*---------------------------------------------- Funções internas ---------------------------------------------*/
 /*
 * Função que retorna se o arquivo indicado possui '.log' em seu nome,
-* ou seja, é um arquivo de log
 */
 int is_log_file (const char *file_name) {
     size_t len = strlen (file_name);
@@ -57,9 +56,10 @@ char *get_string_until_token (FILE *log_file, char token) {
     temp_string[count] = '\0';
     return temp_string;
 }
+
 /*
-* Função que recebe uma string com o nome do mes do log no formato indicado
-* Retorna um int relacionado ao mês, de acordo coma especificação 
+* Função que recebe uma string com o nome do mes no formato indicado (3 letras em ingles)
+* Retorna a string correspondente no formado mm 
 */
 char *get_month (char *month) {
     if (strcmp (month, "Jan") == 0)
@@ -117,7 +117,7 @@ char *treat_date (char *date) {
 }
 
 /*
-* Funçãoq eu recebe o arquivo de log é pega o timestamp do bloco atual
+* Função que recebe o arquivo de log é pega o timestamp do bloco atual
 * Utiliza o ponteiro atual do arquivo para buscar o timestamps
 * Retorna uma string com o valor do timestamp ou null caso não seja possivel computar a string
 */
@@ -243,20 +243,20 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
             temp_string = get_string_until_token (log_file, ':');
 
             if (strcmp (temp_string, "altitude") == 0) {
-                fseek (log_file, 1, SEEK_CUR);
+                fseek (log_file, 1, SEEK_CUR); /* pulando o espaço entre o : e o inicio do valor */
 
                 free (temp_string); /* limpa o espaço armazenado para o nome do valor */
                 temp_string = get_string_until_token (log_file, ' ');
 
                 last_altitude = last_altitude == 0 ? atof (temp_string) : actual_altitude;
-                actual_altitude = atof (temp_string );
+                actual_altitude = atof (temp_string);
 
                 if (actual_altitude > last_altitude) 
                     altimetry_gain += actual_altitude - last_altitude;
 
-                fseek (log_file, 2, SEEK_CUR);
+                fseek (log_file, 2, SEEK_CUR); /* indo para a proxima linha */
             } else if (strcmp (temp_string, "cadence") == 0) {
-                fseek (log_file, 1, SEEK_CUR);
+                fseek (log_file, 1, SEEK_CUR); /* pulando o espaço entre o : e o inicio do valor */
 
                 free (temp_string); /* limpa o espaço armazenado para o nome do valor */
                 temp_string = get_string_until_token (log_file, ' ');
@@ -265,17 +265,17 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                     qtd_log_cadence++;
                 }
 
-                fseek (log_file, 4, SEEK_CUR);
+                fseek (log_file, 4, SEEK_CUR); /* indo para a proxima linha */
             } else if (strcmp (temp_string, "distance") == 0) {
-                fseek (log_file, 1, SEEK_CUR);
+                fseek (log_file, 1, SEEK_CUR); /* pulando o espaço entre o : e o inicio do valor */
 
                 free (temp_string); /* limpa o espaço armazenado para o nome do valor */
                 temp_string = get_string_until_token (log_file, ' ');
                 distance = atof (temp_string);
 
-                fseek (log_file, 2, SEEK_CUR);
+                fseek (log_file, 2, SEEK_CUR); /* indo para a proxima linha */
             } else if (strcmp (temp_string, "heart_rate") == 0) {
-                fseek (log_file, 1, SEEK_CUR);
+                fseek (log_file, 1, SEEK_CUR); /* pulando o espaço entre o : e o inicio do valor */
 
                 free (temp_string); /* limpa o espaço armazenado para o nome do valor */
                 temp_string = get_string_until_token (log_file, ' ');
@@ -285,9 +285,9 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                     qtd_log_hr++;
                 }
 
-                fseek (log_file, 4, SEEK_CUR);
+                fseek (log_file, 4, SEEK_CUR); /* indo para a proxima linha */
             } else if (strcmp (temp_string, "speed") == 0) {
-                fseek (log_file, 1, SEEK_CUR);
+                fseek (log_file, 1, SEEK_CUR); /* pulando o espaço entre o : e o inicio do valor */
 
                 free (temp_string); /* limpa o espaço armazenado para o nome do valor */
                 temp_string = get_string_until_token (log_file, ' ');
@@ -295,7 +295,7 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                 average_speed += atof (temp_string);
                 qtd_log_speed++;
 
-                fseek (log_file, 4, SEEK_CUR);
+                fseek (log_file, 4, SEEK_CUR); /* indo para a proxima linha */
             } else {
                 free (temp_string); /* limpa o espaço armazenado para o nome do valor */
                 temp_string = get_string_until_token (log_file, '\n');

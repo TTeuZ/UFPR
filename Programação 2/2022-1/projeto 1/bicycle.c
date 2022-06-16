@@ -7,6 +7,13 @@
 #include "constants.h"
 
 /*---------------------------------------------- Funções internas ---------------------------------------------*/
+/*
+* Função que recebe duas strings de data e as transforma em valores inteiros
+* os valores inteiros são comaparados retornando:
+* valores negativos se first > second
+* 0 se iguais
+* valores positivos se first < second
+*/
 int compare_dates (char *first, char *second) {
     char *inside_first, *inside_second;
     int day, month, year, first_time, second_time;
@@ -139,8 +146,8 @@ void print_bicycle_resume (bicycle_f *bicycle) {
 
     fprintf (stdout, "Data\t\tDistância(Km)\t\tVelocidade Média(Km/h)\t\tVelocidade Máxima(Km/h)\t\tHR Médio(bpm)\t\tHR Máximo(bpm)\t\tCadência Média(rpm)\t\tSubida Acomulada(m)\n");
     for (count = 0; count < 203; count++)
-        printf("-");
-    printf("\n");
+        fprintf (stdout, "-");
+    fprintf (stdout, "\n");
 
     for (count = 0; count < bicycle->activities_qtd; count++) {
         fprintf (stdout, "%-10s\t\t", bicycle->logs[count]->date);
@@ -189,7 +196,7 @@ void get_histogram (bicycle_f *bicycle) {
     max = (int) (bicycle->longest_ride - ((int) bicycle->longest_ride % 10000)) / 1000;
     max += 10;
 
-    fprintf (stdout ,"Bicicleta: %s\n\n", bicycle->name);
+    fprintf (stdout, "Bicicleta: %s\n\n", bicycle->name);
 
     count = 0;
     higher_qtd = 0;
@@ -197,11 +204,11 @@ void get_histogram (bicycle_f *bicycle) {
         fprintf (stdout, "%3d - %3d | ", min, min + 9);
         temp_qtd = 0;
         while (count < bicycle->activities_qtd && (temp_log[count]->distance / 1000) < (min + 9)) {
-            printf("*");
+            fprintf (stdout, "*");
             temp_qtd++;
             count++;
         }
-        printf ("\n");
+        fprintf (stdout, "\n");
         higher_qtd = temp_qtd > higher_qtd ? temp_qtd : higher_qtd;
         min += 10;
     }

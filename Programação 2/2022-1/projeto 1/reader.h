@@ -12,7 +12,7 @@ typedef struct directory {
 
 /* 
 * Função que inicializa a estrutura de dados de armazenamento dos arquivos de log do diretorio
-* Realiza a alocação inicial de espaço da propia estrutura e retorna o ponteiro de acesso
+* Realiza a alocação inicial de espaço da estrutura e retorna o ponteiro de acesso
 */
 directory_f *inicialize_directory ();
 

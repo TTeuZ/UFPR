@@ -9,7 +9,7 @@ typedef struct bicycles {
 
 /* 
 * Função que inicializa a estrutura de dados de armazenamento das bicicletas encontradas nos logs
-* Realiza a alocação inicial de espaço da propia estrutura e retorna o ponteiro de acesso
+* Realiza a alocação inicial de espaço da estrutura e retorna o ponteiro de acesso
 */
 bicycles_f *inicialize_bicycles ();
 
@@ -29,11 +29,12 @@ void verify_and_add_bicycle (bicycles_f *bicycles, bicycle_log_f *log);
 
 /*
 * Função que adiciona uma nova bicicleta ao conjunto de bicicletas
+* inserção ordenada por nome
 */
 void add_bicycle_to_array (bicycles_f *bicycles, bicycle_f *bicycle);
 
 /*
-* Função que lista as bicicletas que forar armazenadas durante a leitura
+* Função que lista as bicicletas que foram armazenadas durante a leitura
 */
 void list_bicycles (bicycles_f *bicycles);
 
@@ -49,6 +50,4 @@ void printf_all_activities (bicycles_f *bicycles, int sort);
 * Ao final, limpa a estrutura geral de armazenamento das bicicletas
 */
 void clean_bicycles (bicycles_f *bicycles);
-
-// função que gera um retorno da lista de atividades das bicicletas de acordo com um sort especificado
 #endif

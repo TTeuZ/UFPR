@@ -23,18 +23,18 @@ typedef struct bicycle {
 } bicycle_f;
 
 /*
-* Função que aloca espaço para uma bicicleta e retorna seu ponteiro ed acesso
+* Função que aloca espaço para uma bicicleta e retorna seu ponteiro de acesso
 */
 bicycle_f *create_bicycle (char *name);
 
 /*
 * Função que recebe como parametros os valores do log e cria uma instancia de log
-* retorna esta instancia
+* retorna o ponteiro de aceso ao log
 */
 bicycle_log_f *create_log (char *bicycle_name, char *date, float distance, float average_speed, float max_speed, int average_hr, int max_hr, int average_cadence, float altimetry_gain);
 
 /*
-* Função que, apartir de um log ja existente, recria o conjunto de logs ordenados pela distancia
+* Função que, apartir de um log ja existente, recria o conjunto de logs ordenados pela distância
 */
 bicycle_log_f **create_temp_distance_sorted_log (bicycle_f *bicycle);
 
@@ -46,7 +46,7 @@ void add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log);
 
 /*
 * Função que recebea bicicleta e o ultimo log adicionado
-* Trata as informação de resumo da biciclita, atualizando os valores necessários
+* Trata as informação de resumo da bicicleta, atualizando os valores necessários do resumo
 */
 void treat_bicycle_resume (bicycle_f *bicycle, bicycle_log_f *log);
 
@@ -73,6 +73,4 @@ void get_histogram (bicycle_f *bicycle);
 * Ao final, limpa toda a estrutura de armazenamento da bicicleta
 */
 void clean_bicycle (bicycle_f *bicycle);
-
-// função para pegar um histograma da bicicleta
 #endif

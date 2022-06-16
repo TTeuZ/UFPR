@@ -37,12 +37,12 @@ int main (int argc, char *argv[]) {
         fprintf (stdout, "6 - Histograma da bicicleta\n");
         fprintf (stdout, "0 - Sair\n\n");
         fprintf (stdout, "Selecione uma ação: ");
-        is_number = scanf("%d", &action);               
+        is_number = scanf ("%d", &action);               
         flush_stdin ();
 
         if (is_number == 1 && (action == 2 || action == 6)) {
             fprintf (stdout, "Informe o nome da bicicleta: ");
-            scanf("%[^\n]", bicycle_name);
+            scanf ("%[^\n]", bicycle_name);
         }
 
         fprintf (stdout, "-------------------------------------------------------------------\n\n");
@@ -60,7 +60,7 @@ int main (int argc, char *argv[]) {
                     if (bicycle_pos != -1)
                         print_bicycle_resume (bicycles->bicycles[bicycle_pos]);
                     else
-                        fprintf(stderr, "Bicicleta não encontrada!\n\n");
+                        fprintf (stderr, "Bicicleta não encontrada!\n\n");
                     break;
                 }
                 case 3: {
@@ -80,11 +80,11 @@ int main (int argc, char *argv[]) {
                     if (bicycle_pos != -1)
                         get_histogram (bicycles->bicycles[bicycle_pos]);
                     else
-                        fprintf(stderr, "Bicicleta não encontrada!\n\n");
+                        fprintf (stderr, "Bicicleta não encontrada!\n\n");
                     break;
                 }
                 case 0: {
-                    fprintf(stdout, "Saindo...\n\n");
+                    fprintf (stdout, "Saindo...\n\n");
                     break;
                 }
                 default: {

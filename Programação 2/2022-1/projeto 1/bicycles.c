@@ -12,7 +12,7 @@ bicycle_log_f **join_all_logs_and_altimetry_sort (bicycles_f *bicycles, int *log
     for (b_count = 0; b_count < bicycles->qtd; b_count++) 
         *logs_qtd += bicycles->bicycles[b_count]->activities_qtd;
     
-    if (! (temp_log = malloc(sizeof(bicycle_log_f) * *logs_qtd))) {
+    if (! (temp_log = malloc (sizeof(bicycle_log_f) * *logs_qtd))) {
         fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
         fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
         exit (EXIT_FAILURE);
@@ -111,10 +111,11 @@ void list_bicycles (bicycles_f *bicycles) {
 void printf_all_activities (bicycles_f *bicycles, int sort) {
     bicycle_log_f **temp_log;
     int count, logs_qtd = 0, exit = 1;
+
     fprintf (stdout, "Data\t\t\tBicicleta\t\t\t\tDistância(Km)\t\tVelocidade Média(Km/h)\t\tVelocidade Máxima(Km/h)\t\tHR Médio(bpm)\t\tHR Máximo(bpm)\t\tCadência Média(rpm)\t\tSubida Acomulada(m)\n");
     for (count = 0; count < 251; count++)
-        printf("-");
-    printf("\n");
+        fprintf (stdout, "-");
+    fprintf(stdout, "\n");
 
     switch (sort) {
         case DATE_SORT: {
