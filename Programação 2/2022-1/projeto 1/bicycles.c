@@ -5,6 +5,39 @@
 #include "bicycle.h"
 #include "constants.h"
 
+/*---------------------------------------------- Funções internas ---------------------------------------------*/
+bicycle_log_f **join_all_logs_and_altimetry_sort (bicycles_f *bicycles, int *logs_qtd) {
+    bicycle_log_f **temp_log;
+    int count, b_count, l_count, actual_log_size = 0;
+    for (b_count = 0; b_count < bicycles->qtd; b_count++) 
+        *logs_qtd += bicycles->bicycles[b_count]->activities_qtd;
+    
+    if (! (temp_log = malloc(sizeof(bicycle_log_f) * *logs_qtd))) {
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+        exit (EXIT_FAILURE);
+    } else {
+        for (b_count = 0; b_count < bicycles->qtd; b_count++) {
+            for (l_count = 0; l_count < bicycles->bicycles[b_count]->activities_qtd; l_count++) {
+                if (actual_log_size == 0) {
+                    temp_log[actual_log_size] = bicycles->bicycles[b_count]->logs[l_count];
+                    actual_log_size++;
+                } else {
+                    count = actual_log_size;
+                    while (count != 0 && bicycles->bicycles[b_count]->logs[l_count]->altimetry_gain <= temp_log[count - 1]->altimetry_gain) {
+                        temp_log[count] = temp_log[count - 1];
+                        count--;
+                    }
+                    temp_log[count] = bicycles->bicycles[b_count]->logs[l_count];
+                    actual_log_size++;
+                }
+            }
+        }
+    }
+    return temp_log;
+}
+/*---------------------------------------------- Funções internas ---------------------------------------------*/
+
 bicycles_f *inicialize_bicycles () {
     bicycles_f *bicycles;
     if (! (bicycles = malloc (sizeof (bicycles_f)))) {
@@ -75,27 +108,34 @@ void list_bicycles (bicycles_f *bicycles) {
     fprintf (stdout, "\n");
 }
 
-void printf_all_activities (bicycles_f *bicycles, int sort, int group) {
+void printf_all_activities (bicycles_f *bicycles, int sort) {
     bicycle_log_f **temp_log;
-    int count, exit = 1;
+    int count, logs_qtd = 0, exit = 1;
     fprintf (stdout, "Data\t\t\tBicicleta\t\t\t\tDistância(Km)\t\tVelocidade Média(Km/h)\t\tVelocidade Máxima(Km/h)\t\tHR Médio(bpm)\t\tHR Máximo(bpm)\t\tCadência Média(rpm)\t\tSubida Acomulada(m)\n");
     for (count = 0; count < 251; count++)
         printf("-");
     printf("\n");
 
-    if (group) {
-        if (sort == DATE_SORT) {
+    switch (sort) {
+        case DATE_SORT: {
             for (count = 0; count < bicycles->qtd; count++)
                 print_logs_with_name (bicycles->bicycles[count]->logs, bicycles->bicycles[count]->activities_qtd);
-        } else {
+            break;
+        }
+        case DISTANCE_SORT: {
             for (count = 0; count < bicycles->qtd; count++) {
-                temp_log = create_temp_sorted_log (bicycles->bicycles[count], sort);
+                temp_log = create_temp_distance_sorted_log (bicycles->bicycles[count], sort);
                 print_logs_with_name (temp_log, bicycles->bicycles[count]->activities_qtd);
                 free (temp_log);
             }
+            break;
         }
-    } else {
-        printf("não vamos agrupado\n\n");
+        case ALTIMETRY_SORT: {
+            temp_log = join_all_logs_and_altimetry_sort (bicycles, &logs_qtd);
+            print_logs_with_name (temp_log, logs_qtd);
+            free (temp_log);
+            break;
+        }
     }
 
     fprintf (stdout, "\nAperte 0 para sair: ");
