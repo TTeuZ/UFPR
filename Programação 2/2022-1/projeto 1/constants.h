@@ -11,7 +11,5 @@
 #define DATE_SORT 1
 #define DISTANCE_SORT 2
 #define ALTIMETRY_SORT 3
-#define GROUPED 1
-#define NOT_GROUPED 0
 
 #endif

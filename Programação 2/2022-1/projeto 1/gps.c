@@ -64,15 +64,15 @@ int main (int argc, char *argv[]) {
                     break;
                 }
                 case 3: {
-                    printf_all_activities (bicycles, DATE_SORT, GROUPED);
+                    printf_all_activities (bicycles, DATE_SORT);
                     break;
                 }
                 case 4: {
-                    printf_all_activities (bicycles, DISTANCE_SORT, GROUPED);
+                    printf_all_activities (bicycles, DISTANCE_SORT);
                     break;
                 }
                 case 5: {
-                    printf_all_activities (bicycles, ALTIMETRY_SORT, NOT_GROUPED);
+                    printf_all_activities (bicycles, ALTIMETRY_SORT);
                     break;
                 }
                 case 6: {
