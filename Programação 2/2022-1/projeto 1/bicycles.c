@@ -124,7 +124,7 @@ void printf_all_activities (bicycles_f *bicycles, int sort) {
         }
         case DISTANCE_SORT: {
             for (count = 0; count < bicycles->qtd; count++) {
-                temp_log = create_temp_distance_sorted_log (bicycles->bicycles[count], sort);
+                temp_log = create_temp_distance_sorted_log (bicycles->bicycles[count]);
                 print_logs_with_name (temp_log, bicycles->bicycles[count]->activities_qtd);
                 free (temp_log);
             }
