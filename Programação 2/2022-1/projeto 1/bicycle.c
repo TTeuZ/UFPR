@@ -68,7 +68,7 @@ bicycle_log_f *create_log (char *bicycle_name, char *date, float distance, float
     return log;
 }
 
-bicycle_log_f **create_temp_distance_sorted_log (bicycle_f *bicycle, int sort) {
+bicycle_log_f **create_temp_distance_sorted_log (bicycle_f *bicycle) {
     bicycle_log_f **temp_log;
     int count, iterator;
     if (! (temp_log = malloc (sizeof (bicycle_log_f) * bicycle->activities_qtd))) {
@@ -177,6 +177,27 @@ void print_logs_with_name (bicycle_log_f **logs, int qtd) {
         fprintf (stdout, "%19d\t\t", logs[count]->average_cadence);
         fprintf (stdout, "%19.2f\n", logs[count]->altimetry_gain);
     }
+}
+
+void get_histogram (bicycle_f *bicycle) {
+    bicycle_log_f **temp_log;
+    int min, max, count;
+    temp_log = create_temp_distance_sorted_log (bicycle);
+    min = (int) (bicycle->shorter_ride - ((int) bicycle->shorter_ride % 10000)) / 1000;
+    max = (int) (bicycle->longest_ride - ((int) bicycle->longest_ride % 10000)) / 1000;
+    max += 10;
+
+    count = 0;
+    while (min < max) {
+        fprintf (stdout, "%3d - %3d | ", min, min + 9);
+        while (count < bicycle->activities_qtd &&  (temp_log[count]->distance / 1000) < (min + 9)) {
+            printf("*");
+            count++;
+        }
+        printf ("\n");
+        min += 10;
+    }
+    fprintf (stdout, "Distancia |\t\tquantidade\n");
 }
 
 void clean_bicycle (bicycle_f *bicycle) {

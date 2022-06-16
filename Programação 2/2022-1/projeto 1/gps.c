@@ -76,7 +76,11 @@ int main (int argc, char *argv[]) {
                     break;
                 }
                 case 6: {
-                    printf("hora do histograma\n");
+                    bicycle_pos = already_added (bicycles, bicycle_name);
+                    if (bicycle_pos != -1)
+                        get_histogram (bicycles->bicycles[bicycle_pos]);
+                    else
+                        fprintf(stderr, "Bicicleta não encontrada!\n\n");
                     break;
                 }
                 case 0: {
