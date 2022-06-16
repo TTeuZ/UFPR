@@ -36,7 +36,7 @@ bicycle_log_f *create_log (char *bicycle_name, char *date, float distance, float
 /*
 * Função que, apartir de um log ja existente, recria o conjunto de logs ordenado pela maneira indicada por sort
 */
-bicycle_log_f **create_temp_sorted_log (bicycle_f *bicycle, int sort);
+bicycle_log_f **create_temp_distance_sorted_log (bicycle_f *bicycle, int sort);
 
 /*
 * Função que adiciona um novo log para uma bicicleta

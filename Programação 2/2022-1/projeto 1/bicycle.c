@@ -68,9 +68,28 @@ bicycle_log_f *create_log (char *bicycle_name, char *date, float distance, float
     return log;
 }
 
-bicycle_log_f **create_temp_sorted_log (bicycle_f *bicycle, int sort) {
+bicycle_log_f **create_temp_distance_sorted_log (bicycle_f *bicycle, int sort) {
     bicycle_log_f **temp_log;
-    
+    int count, iterator;
+    if (! (temp_log = malloc (sizeof (bicycle_log_f) * bicycle->activities_qtd))) {
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+        exit (EXIT_FAILURE);
+    } else {
+        for (count = 0; count < bicycle->activities_qtd; count++) {
+            if (count == 0) {
+                temp_log[count] = bicycle->logs[count];
+            } else {
+                iterator = count;
+                while (iterator != 0 && bicycle->logs[count]->distance <= temp_log[iterator - 1]->distance) {
+                    temp_log[iterator] = temp_log[iterator - 1];
+                    iterator--;
+                }
+                temp_log[iterator] = bicycle->logs[count];
+            }
+        }
+    }
+    return temp_log;
 }
 
 void add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log) {
