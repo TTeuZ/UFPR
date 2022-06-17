@@ -194,7 +194,7 @@ void get_histogram (bicycle_f *bicycle) {
     int higher_qtd, temp_qtd, exit_f = 1;
 
     temp_log = create_temp_distance_sorted_log (bicycle);
-    if (! (temp_file = fopen ("temp.data", "w"))) {
+    if (! (temp_file = fopen ("data.temp", "w"))) {
         fprintf (stderr, RED "[ERROR] " NC "Erro na abertura do arquivo de dados temporarios\n\n");
         fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
         exit (EXIT_FAILURE);
@@ -235,7 +235,7 @@ void get_histogram (bicycle_f *bicycle) {
     fprintf (stdout, "\n");
     fprintf (stdout, "Distancia |\t\tquantidade\n\n");
 
-    // // TESTE DO GNUPLOT
+    // print do grafico
 
     if (! (gnuplot = popen ("gnuplot -persistent", "w"))) {
         fprintf (stderr, RED "[ERROR] " NC "Erro na abertura do gnuplot\n\n");
@@ -243,15 +243,19 @@ void get_histogram (bicycle_f *bicycle) {
         exit (EXIT_FAILURE);
     }
 
-    fprintf(gnuplot, "set style data histograms\n");
+    // configurando o histograma
+    fprintf(gnuplot, "set xlabel 'Quantidade'\n");
+    fprintf(gnuplot, "set size 1.0, 1.0\n");
+    fprintf(gnuplot, "set xrange [0:*]\n");
+    fprintf(gnuplot, "set yrange [:] reverse\n");
+    fprintf(gnuplot, "set offsets 0,0,0.5,0.5\n");
     fprintf(gnuplot, "set style fill solid\n");
-    fprintf(gnuplot, "plot 'temp.data' ");
-    fprintf (gnuplot, "using 2:xtic(1) ");
-    fprintf (gnuplot, "title 'Atividades de %s' ", bicycle->name);
-    fprintf (gnuplot, "linecolor 'blue'\n");
-    fflush (gnuplot);
+
+    // plotando o histograma e o exibindo em tempo de execução
+    fprintf(gnuplot, "plot 'data.temp' using 2:0:(0):2:($0-%f/2.):($0+%f/2.):($0+1):ytic(1) with boxxyerror linecolor 'blue' title 'Atividades de %s'\n", 0.8, 0.8, bicycle->name);
     fflush (gnuplot);
     pclose(gnuplot);
+    free (temp_log);
 
     fprintf (stdout, "Aperte 0 para sair: ");
     while (exit_f != 0)
