@@ -244,17 +244,17 @@ void get_histogram (bicycle_f *bicycle) {
     }
 
     // configurando o histograma
-    fprintf(gnuplot, "set xlabel 'Quantidade'\n");
-    fprintf(gnuplot, "set size 1.0, 1.0\n");
-    fprintf(gnuplot, "set xrange [0:*]\n");
-    fprintf(gnuplot, "set yrange [:] reverse\n");
-    fprintf(gnuplot, "set offsets 0,0,0.5,0.5\n");
-    fprintf(gnuplot, "set style fill solid\n");
+    fprintf (gnuplot, "set xlabel 'Quantidade'\n");
+    fprintf (gnuplot, "set size 1.0, 1.0\n");
+    fprintf (gnuplot, "set xrange [0:*]\n");
+    fprintf (gnuplot, "set yrange [:] reverse\n");
+    fprintf (gnuplot, "set offsets 0,0,0.5,0.5\n");
+    fprintf (gnuplot, "set style fill solid\n");
 
     // plotando o histograma e o exibindo em tempo de execução
-    fprintf(gnuplot, "plot 'data.temp' using 2:0:(0):2:($0-%f/2.):($0+%f/2.):($0+1):ytic(1) with boxxyerror linecolor 'black' title 'Atividades de %s'\n", 0.8, 0.8, bicycle->name);
+    fprintf (gnuplot, "plot 'data.temp' using 2:0:(0):2:($0-%f/2.):($0+%f/2.):($0+1):ytic(1) with boxxyerror linecolor 'black' title 'Atividades de %s'\n", 0.8, 0.8, bicycle->name);
     fflush (gnuplot);
-    pclose(gnuplot);
+    pclose (gnuplot);
     free (temp_log);
 
     fprintf (stdout, "Aperte 0 para sair: ");
