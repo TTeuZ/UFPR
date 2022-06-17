@@ -202,7 +202,7 @@ void get_histogram (bicycle_f *bicycle) {
 
     min = (int) (bicycle->shorter_ride - ((int) bicycle->shorter_ride % 10000)) / 1000;
     max = (int) (bicycle->longest_ride - ((int) bicycle->longest_ride % 10000)) / 1000;
-    max += 11;
+    max += ((int) bicycle->longest_ride % 10000) > 9000 ? 11 : 10;
 
     fprintf (stdout, "Bicicleta: %s\n\n", bicycle->name);
     fprintf (temp_file, "#Range Count\n");
@@ -252,7 +252,7 @@ void get_histogram (bicycle_f *bicycle) {
     fprintf(gnuplot, "set style fill solid\n");
 
     // plotando o histograma e o exibindo em tempo de execução
-    fprintf(gnuplot, "plot 'data.temp' using 2:0:(0):2:($0-%f/2.):($0+%f/2.):($0+1):ytic(1) with boxxyerror linecolor 'blue' title 'Atividades de %s'\n", 0.8, 0.8, bicycle->name);
+    fprintf(gnuplot, "plot 'data.temp' using 2:0:(0):2:($0-%f/2.):($0+%f/2.):($0+1):ytic(1) with boxxyerror linecolor 'black' title 'Atividades de %s'\n", 0.8, 0.8, bicycle->name);
     fflush (gnuplot);
     pclose(gnuplot);
     free (temp_log);
@@ -260,6 +260,7 @@ void get_histogram (bicycle_f *bicycle) {
     fprintf (stdout, "Aperte 0 para sair: ");
     while (exit_f != 0)
         scanf ("%d", &exit_f);
+    remove ("data.temp");
 }
 
 void clean_bicycle (bicycle_f *bicycle) {
