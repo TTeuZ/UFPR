@@ -188,57 +188,79 @@ void print_logs_with_name (bicycle_log_f **logs, int qtd) {
 }
 
 void get_histogram (bicycle_f *bicycle) {
+    FILE *temp_file, *gnuplot;
     bicycle_log_f **temp_log;
     int min, max, count;
-    int higher_qtd, temp_qtd, exit = 1;
+    int higher_qtd, temp_qtd, exit_f = 1;
+
     temp_log = create_temp_distance_sorted_log (bicycle);
+    if (! (temp_file = fopen ("data.temp", "w"))) {
+        fprintf (stderr, RED "[ERROR] " NC "Erro na abertura do arquivo de dados temporarios\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+        exit (EXIT_FAILURE);
+    }
+
     min = (int) (bicycle->shorter_ride - ((int) bicycle->shorter_ride % 10000)) / 1000;
     max = (int) (bicycle->longest_ride - ((int) bicycle->longest_ride % 10000)) / 1000;
-    max += 11;
+    max += ((int) bicycle->longest_ride % 10000) > 9000 ? 11 : 10;
 
     fprintf (stdout, "Bicicleta: %s\n\n", bicycle->name);
+    fprintf (temp_file, "#Range Count\n");
 
     count = 0;
     higher_qtd = 0;
     while (min < max) {
         fprintf (stdout, "%3d - %3d | ", min, min + 9);
+        fprintf (temp_file, "%d-%d ", min, min + 9);
+
         temp_qtd = 0;
         while (count < bicycle->activities_qtd && (temp_log[count]->distance / 1000) < (min + 9)) {
             fprintf (stdout, "*");
             temp_qtd++;
             count++;
         }
+
         fprintf (stdout, "\n");
+        fprintf (temp_file, "%d\n", temp_qtd);
+
         higher_qtd = temp_qtd > higher_qtd ? temp_qtd : higher_qtd;
         min += 10;
     }
-    higher_qtd = round (higher_qtd / 10) + 1;
+    fclose (temp_file);
 
+    higher_qtd = round (higher_qtd / 10) + 1;
     fprintf (stdout, "            ");
     for (count = 0; count < higher_qtd; count++)
         fprintf (stdout, "123456789#");
     fprintf (stdout, "\n");
-
     fprintf (stdout, "Distancia |\t\tquantidade\n\n");
 
+    // print do grafico
 
-    // TESTE DO GNUPLOT
-
-    FILE *gnuplot = popen ("gnuplot -persistent", "w");
-    if (! gnuplot) {
-        printf("deu erro");
+    if (! (gnuplot = popen ("gnuplot -persistent", "w"))) {
+        fprintf (stderr, RED "[ERROR] " NC "Erro na abertura do gnuplot\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+        exit (EXIT_FAILURE);
     }
-    fprintf(gnuplot, "plot exp(-x**2) smooth freq w boxes");
+
+    // configurando o histograma
+    fprintf (gnuplot, "set xlabel 'Quantidade'\n");
+    fprintf (gnuplot, "set size 1.0, 1.0\n");
+    fprintf (gnuplot, "set xrange [0:*]\n");
+    fprintf (gnuplot, "set yrange [:] reverse\n");
+    fprintf (gnuplot, "set offsets 0,0,0.5,0.5\n");
+    fprintf (gnuplot, "set style fill solid\n");
+
+    // plotando o histograma e o exibindo em tempo de execução
+    fprintf (gnuplot, "plot 'data.temp' using 2:0:(0):2:($0-%f/2.):($0+%f/2.):($0+1):ytic(1) with boxxyerror linecolor 'black' title 'Atividades de %s'\n", 0.8, 0.8, bicycle->name);
     fflush (gnuplot);
-    pclose(gnuplot);
-
-    // TESTE DO GNUPLOT
-
-
+    pclose (gnuplot);
+    free (temp_log);
 
     fprintf (stdout, "Aperte 0 para sair: ");
-    while (exit != 0)
-        scanf ("%d", &exit);
+    while (exit_f != 0)
+        scanf ("%d", &exit_f);
+    remove ("data.temp");
 }
 
 void clean_bicycle (bicycle_f *bicycle) {
