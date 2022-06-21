@@ -32,29 +32,42 @@ int filterFiles (const struct dirent *current_dir) {
 * A cada caractere realoca o espaço necessário
 */
 char *get_string_until_token (FILE *log_file, char token) {
-    char iterator, *temp_string;
-    int count;
+    // char iterator, temp_string[256];
+    // int count;
 
-    count = 0;
-    if (! (temp_string = malloc (sizeof (char)))) {
-        fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
-    }
+    // count = 0;
+    // iterator = getc (log_file);
+    // while (iterator != token && iterator != -1) {
+    //     temp_string[count] = iterator;
+    //     iterator = getc (log_file);
+    //     count++;
+    // }
+    // temp_string[count] = '\0';
+    // return temp_string;
 
-    iterator = getc (log_file);
-    while (iterator != token && iterator != -1) {
-        temp_string[count] = iterator;
-        iterator = getc (log_file);
-        count++;
-        if (! (temp_string = realloc (temp_string, sizeof (char) * (count + 1)))) {
-            fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria realoc\n\n");
-            fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-            exit (EXIT_FAILURE);
-        }
-    }
-    temp_string[count] = '\0';
-    return temp_string;
+    // char iterator, *temp_string;
+    // int count;
+
+    // count = 0;
+    // if (! (temp_string = malloc (sizeof (char)))) {
+    //     fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria\n\n");
+    //     fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+    //     exit (EXIT_FAILURE);
+    // }
+
+    // iterator = getc (log_file);
+    // while (iterator != token && iterator != -1) {
+    //     temp_string[count] = iterator;
+    //     iterator = getc (log_file);
+    //     count++;
+    //     if (! (temp_string = realloc (temp_string, sizeof (char) * (count + 1)))) {
+    //         fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria realoc\n\n");
+    //         fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+    //         exit (EXIT_FAILURE);
+    //     }
+    // }
+    // temp_string[count] = '\0';
+    // return temp_string;
 }
 
 /*
@@ -193,7 +206,7 @@ directory_f *get_logs (char *dir_name) {
 
 void load_logs (directory_f *directory, char *dir_name, bicycles_f *bicycles) {
     bicycle_log_f *log;
-    char file_path[256];
+    char file_path[BUFSIZ];
     int count;
 
     for (count = 0; count < directory->files_qtd; count++) {

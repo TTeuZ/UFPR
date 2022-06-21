@@ -24,7 +24,7 @@ void wait_exit () {
 int main (int argc, char *argv[]) {
     bicycles_f *bicycles;
     directory_f *directory;
-    char *dir_name, bicycle_name[256];
+    char *dir_name, bicycle_name[BUFSIZ];
     int action, is_number, bicycle_pos;
 
     dir_name = parse_command_line (argv, argc);
