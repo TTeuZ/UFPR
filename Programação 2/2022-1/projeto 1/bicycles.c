@@ -110,7 +110,7 @@ void list_bicycles (bicycles_f *bicycles) {
 
 void printf_all_activities (bicycles_f *bicycles, int sort) {
     bicycle_log_f **temp_log;
-    int count, logs_qtd = 0, exit = 1;
+    int count, logs_qtd = 0;
 
     fprintf (stdout, "Data\t\tBicicleta\tDistância(Km)\tVelocidade Média(Km/h)\tVelocidade Máxima(Km/h)\tHR Médio(bpm)\tHR Máximo(bpm)\tCadência Média(rpm)\tSubida Acomulada(m)\n");
     for (count = 0; count < 171; count++)
@@ -138,10 +138,6 @@ void printf_all_activities (bicycles_f *bicycles, int sort) {
             break;
         }
     }
-
-    fprintf (stdout, "\nAperte 0 para sair: ");
-    while (exit != 0)
-        scanf ("%d", &exit);
 }
 
 void clean_bicycles (bicycles_f *bicycles) {
