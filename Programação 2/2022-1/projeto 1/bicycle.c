@@ -175,14 +175,14 @@ void print_bicycle_resume (bicycle_f *bicycle) {
 void print_logs_with_name (bicycle_log_f **logs, int qtd) {
     int count;
     for (count = 0; count < qtd; count++) {
-        fprintf (stdout, "%-10s\t\t", logs[count]->date);
-        fprintf (stdout, "%-20s\t\t\t\t", logs[count]->bicycle_name);
-        fprintf (stdout, "%5.2f\t\t", (logs[count]->distance / 1000));
-        fprintf (stdout, "%22.2f\t\t", logs[count]->average_speed);
-        fprintf (stdout, "%23.2f\t\t", logs[count]->max_speed);
-        fprintf (stdout, "%13d\t\t", logs[count]->average_hr);
-        fprintf (stdout, "%14d\t\t", logs[count]->max_hr);
-        fprintf (stdout, "%19d\t\t", logs[count]->average_cadence);
+        fprintf (stdout, "%-10s\t", logs[count]->date);
+        fprintf (stdout, "%-20s\t", logs[count]->bicycle_name);
+        fprintf (stdout, "%5.2f\t", (logs[count]->distance / 1000));
+        fprintf (stdout, "%22.2f\t", logs[count]->average_speed);
+        fprintf (stdout, "%23.2f\t", logs[count]->max_speed);
+        fprintf (stdout, "%13d\t", logs[count]->average_hr);
+        fprintf (stdout, "%14d\t", logs[count]->max_hr);
+        fprintf (stdout, "%19d\t", logs[count]->average_cadence);
         fprintf (stdout, "%19.2f\n", logs[count]->altimetry_gain);
     }
 }
