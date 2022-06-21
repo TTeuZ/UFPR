@@ -32,42 +32,29 @@ int filterFiles (const struct dirent *current_dir) {
 * A cada caractere realoca o espaço necessário
 */
 char *get_string_until_token (FILE *log_file, char token) {
-    // char iterator, temp_string[256];
-    // int count;
+    char iterator, *temp_string;
+    int count;
 
-    // count = 0;
-    // iterator = getc (log_file);
-    // while (iterator != token && iterator != -1) {
-    //     temp_string[count] = iterator;
-    //     iterator = getc (log_file);
-    //     count++;
-    // }
-    // temp_string[count] = '\0';
-    // return temp_string;
+    count = 0;
+    if (! (temp_string = malloc (sizeof (char)))) {
+        fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+        exit (EXIT_FAILURE);
+    }
 
-    // char iterator, *temp_string;
-    // int count;
-
-    // count = 0;
-    // if (! (temp_string = malloc (sizeof (char)))) {
-    //     fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria\n\n");
-    //     fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-    //     exit (EXIT_FAILURE);
-    // }
-
-    // iterator = getc (log_file);
-    // while (iterator != token && iterator != -1) {
-    //     temp_string[count] = iterator;
-    //     iterator = getc (log_file);
-    //     count++;
-    //     if (! (temp_string = realloc (temp_string, sizeof (char) * (count + 1)))) {
-    //         fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria realoc\n\n");
-    //         fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-    //         exit (EXIT_FAILURE);
-    //     }
-    // }
-    // temp_string[count] = '\0';
-    // return temp_string;
+    iterator = getc (log_file);
+    while (iterator != token && iterator != -1) {
+        temp_string[count] = iterator;
+        iterator = getc (log_file);
+        count++;
+        if (! (temp_string = realloc (temp_string, sizeof (char) * (count + 1)))) {
+            fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria realoc\n\n");
+            fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+            exit (EXIT_FAILURE);
+        }
+    }
+    temp_string[count] = '\0';
+    return temp_string;
 }
 
 /*
