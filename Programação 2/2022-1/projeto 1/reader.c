@@ -193,7 +193,7 @@ directory_f *get_logs (char *dir_name) {
 
 void load_logs (directory_f *directory, char *dir_name, bicycles_f *bicycles) {
     bicycle_log_f *log;
-    char file_path[256];
+    char file_path[BUFSIZ];
     int count;
 
     for (count = 0; count < directory->files_qtd; count++) {

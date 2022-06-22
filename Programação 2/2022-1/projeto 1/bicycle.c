@@ -141,7 +141,7 @@ void treat_bicycle_resume (bicycle_f *bicycle, bicycle_log_f *log) {
 }
 
 void print_bicycle_resume (bicycle_f *bicycle) {
-    int exit = 1, count;
+    int count;
     fprintf (stdout, "Bicicleta: %s\n\n", bicycle->name);
 
     fprintf (stdout, "Data\t\tDistância(Km)\t\tVelocidade Média(Km/h)\t\tVelocidade Máxima(Km/h)\t\tHR Médio(bpm)\t\tHR Máximo(bpm)\t\tCadência Média(rpm)\t\tSubida Acomulada(m)\n");
@@ -166,23 +166,19 @@ void print_bicycle_resume (bicycle_f *bicycle) {
     fprintf(stdout, "Pedal mais longo: %5.2f Km\t", (bicycle->longest_ride / 1000));
     fprintf(stdout, "Pedal mais curto: %5.2f Km\t", (bicycle->shorter_ride / 1000));
     fprintf(stdout, "Distância Média: %5.2f Km\n\n", (bicycle->average_distance / 1000));
-
-    fprintf (stdout, "Aperte 0 para sair: ");
-    while (exit != 0)
-        scanf ("%d", &exit);
 }
 
 void print_logs_with_name (bicycle_log_f **logs, int qtd) {
     int count;
     for (count = 0; count < qtd; count++) {
-        fprintf (stdout, "%-10s\t\t", logs[count]->date);
-        fprintf (stdout, "%-20s\t\t\t\t", logs[count]->bicycle_name);
-        fprintf (stdout, "%5.2f\t\t", (logs[count]->distance / 1000));
-        fprintf (stdout, "%22.2f\t\t", logs[count]->average_speed);
-        fprintf (stdout, "%23.2f\t\t", logs[count]->max_speed);
-        fprintf (stdout, "%13d\t\t", logs[count]->average_hr);
-        fprintf (stdout, "%14d\t\t", logs[count]->max_hr);
-        fprintf (stdout, "%19d\t\t", logs[count]->average_cadence);
+        fprintf (stdout, "%-10s\t", logs[count]->date);
+        fprintf (stdout, "%-20s\t", logs[count]->bicycle_name);
+        fprintf (stdout, "%5.2f\t", (logs[count]->distance / 1000));
+        fprintf (stdout, "%22.2f\t", logs[count]->average_speed);
+        fprintf (stdout, "%23.2f\t", logs[count]->max_speed);
+        fprintf (stdout, "%13d\t", logs[count]->average_hr);
+        fprintf (stdout, "%14d\t", logs[count]->max_hr);
+        fprintf (stdout, "%19d\t", logs[count]->average_cadence);
         fprintf (stdout, "%19.2f\n", logs[count]->altimetry_gain);
     }
 }
@@ -191,7 +187,7 @@ void get_histogram (bicycle_f *bicycle) {
     FILE *temp_file, *gnuplot;
     bicycle_log_f **temp_log;
     int min, max, count;
-    int higher_qtd, temp_qtd, exit_f = 1;
+    int higher_qtd, temp_qtd;
 
     temp_log = create_temp_distance_sorted_log (bicycle);
     if (! (temp_file = fopen ("data.temp", "w"))) {
@@ -255,11 +251,7 @@ void get_histogram (bicycle_f *bicycle) {
     fprintf (gnuplot, "plot 'data.temp' using 2:0:(0):2:($0-%f/2.):($0+%f/2.):($0+1):ytic(1) with boxxyerror linecolor 'black' title 'Atividades de %s'\n", 0.8, 0.8, bicycle->name);
     fflush (gnuplot);
     pclose (gnuplot);
-    free (temp_log);
-
-    fprintf (stdout, "Aperte 0 para sair: ");
-    while (exit_f != 0)
-        scanf ("%d", &exit_f);
+    free (temp_log);;
     remove ("data.temp");
 }
 

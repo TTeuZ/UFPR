@@ -12,10 +12,19 @@ void flush_stdin () {
         buf = getchar(); 
 }
 
+void wait_exit () {
+    int exit = 1;
+    fprintf (stdout, "\nAperte 0 para sair: ");
+    while (exit != 0) {
+        scanf ("%d", &exit);
+        flush_stdin ();
+    }
+}
+
 int main (int argc, char *argv[]) {
     bicycles_f *bicycles;
     directory_f *directory;
-    char *dir_name, bicycle_name[256];
+    char *dir_name, bicycle_name[BUFSIZ];
     int action, is_number, bicycle_pos;
 
     dir_name = parse_command_line (argv, argc);
@@ -53,33 +62,39 @@ int main (int argc, char *argv[]) {
             switch (action) {
                 case 1: {
                     list_bicycles (bicycles);
+                    wait_exit ();
                     break;
                 }
                 case 2: {
                     bicycle_pos = already_added (bicycles, bicycle_name);
-                    if (bicycle_pos != -1)
+                    if (bicycle_pos != -1) {
                         print_bicycle_resume (bicycles->bicycles[bicycle_pos]);
-                    else
+                        wait_exit ();
+                    } else
                         fprintf (stderr, "Bicicleta não encontrada!\n\n");
                     break;
                 }
                 case 3: {
                     printf_all_activities (bicycles, DATE_SORT);
+                    wait_exit ();
                     break;
                 }
                 case 4: {
                     printf_all_activities (bicycles, DISTANCE_SORT);
+                    wait_exit ();
                     break;
                 }
                 case 5: {
                     printf_all_activities (bicycles, ALTIMETRY_SORT);
+                    wait_exit ();
                     break;
                 }
                 case 6: {
                     bicycle_pos = already_added (bicycles, bicycle_name);
-                    if (bicycle_pos != -1)
+                    if (bicycle_pos != -1) {
                         get_histogram (bicycles->bicycles[bicycle_pos]);
-                    else
+                        wait_exit ();
+                    } else
                         fprintf (stderr, "Bicicleta não encontrada!\n\n");
                     break;
                 }
