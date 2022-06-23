@@ -22,6 +22,14 @@ typedef struct bicycle {
     bicycle_log_f **logs;
 } bicycle_f;
 
+typedef struct reg {
+    float distance;
+    float speed;
+    int hr;
+    int cadence;
+    float altimetry;
+} reg_f;
+
 /*
 * Função que aloca espaço para uma bicicleta e retorna seu ponteiro de acesso
 */

@@ -127,6 +127,36 @@ int get_timestamp_sec (char *timestamp) {
 
     return (atoi (hour) * 3600) + (atoi (min) * 60) + atoi (sec);
 }
+
+/*
+* Função que le o registro atual do log e retorna as suas informações
+*/
+void read_log_reg (FILE *log_file, reg_f *reg) {
+    char temp_string[BUFSIZ], *field, *value;
+
+    fgets (temp_string, sizeof (temp_string), log_file);
+    while (strlen (temp_string) != 1) {
+        field = strtok (temp_string, ":");
+
+        if (strcmp (field, "altitude") == 0) {
+            value = strtok (NULL, " ");
+            reg->altimetry = atof (value);
+        } else if (strcmp (field, "cadence") == 0) {
+            value = strtok (NULL, " ");
+            reg->cadence = atoi (value);
+        } else if (strcmp (field, "distance") == 0) {
+            value = strtok (NULL, " ");
+            reg->distance = atof (value);
+        } else if (strcmp (field, "heart_rate") == 0) {
+            value = strtok (NULL, " ");
+            reg->hr = atoi (value);
+        } else if (strcmp (field, "speed") == 0) {
+            value = strtok (NULL, " ");
+            reg->speed = atof (value);
+        }
+        fgets (temp_string, sizeof (temp_string), log_file);
+    }
+}
 /*---------------------------------------------- Funções internas ---------------------------------------------*/
 
 directory_f *inicialize_directory () {
@@ -166,12 +196,23 @@ void load_logs (directory_f *directory, char *dir_name, bicycles_f *bicycles) {
         strcat (file_path, "/");
         strcat (file_path, directory->files[count]->d_name);
         log = read_log (file_path, directory->files[count]->d_name);
-        verify_and_add_bicycle (bicycles, log);
+
+        // printf("%3d %s - ", count, directory->files[count]->d_name);
+        // printf("cad: %2d ", log->average_cadence);
+        // printf("hr: %3d ", log->average_hr);
+        // printf("hr_m: %3d ", log->max_hr);
+        // printf("s: %.2f ", log->average_speed);
+        // printf("s_m: %.2f ", log->max_speed);
+        // printf("dist: %3.2f ", log->distance / 1000);
+        // printf("elev: %4.2f\n", log->altimetry_gain);
+
+        // verify_and_add_bicycle (bicycles, log);
     }
 }
 
 bicycle_log_f *read_log (char *log_path, char *log_name) {
     FILE *log_file;
+    reg_f *reg;
     int count;
     char temp_string[BUFSIZ], *field, *value;
     /* contadores dos valores do log */
@@ -201,60 +242,67 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
     untreated_date = strtok (NULL, "\n");
     date = treat_date (untreated_date);
 
+    reg = malloc (sizeof (reg));
 
-    do {
-        fgets (temp_string, sizeof (temp_string), log_file);
-        if (strlen (temp_string) != 1) {
-            field = strtok (temp_string, ":");
+    fgets (temp_string, sizeof (temp_string), log_file);
+    read_log_reg (log_file, reg);
 
-            if (strcmp (field, "altitude") == 0) {
-                value = strtok (NULL, " ");
-                last_altitude = last_altitude == 0 ? atof (value) : actual_altitude;
-                actual_altitude = atof (value);
-                if (actual_altitude > last_altitude) 
-                    altimetry_gain += actual_altitude - last_altitude;
-            } else if (strcmp (field, "cadence") == 0) {
-                value = strtok (NULL, " ");
-                for (count = 0; count < timestamp_qtd; count++) {
-                    average_cadence += atoi (value);
-                    qtd_log_cadence++;
-                }
-            } else if (strcmp (field, "distance") == 0) {
-                value = strtok (NULL, " ");
-                distance = atof (value);
-            } else if (strcmp (field, "heart_rate") == 0) {
-                value = strtok (NULL, " ");
-                max_hr = max_hr < atoi (value) ? atoi (value) : max_hr;
-                for (count = 0; count < timestamp_qtd; count++) {
-                    average_hr += atoi (value);
-                    qtd_log_hr++;
-                }
-            } else if (strcmp (field, "speed") == 0) {
-                value = strtok (NULL, " ");
-                max_speed = max_speed < atof (value) ? atof (value) : max_speed;
-                average_speed += atof (value);
-                qtd_log_speed++;
-            }
-        } else {
-            timestamp = get_timestamp (log_file);
-            if (timestamp != NULL) {
-                temp_timestamp_sec = get_timestamp_sec (timestamp);
-                last_timestamp_sec = last_timestamp_sec == 0 ? temp_timestamp_sec : actual_timestamp_sec;
-                actual_timestamp_sec = temp_timestamp_sec;
-                timestamp_qtd = (actual_timestamp_sec - last_timestamp_sec) == 0 ? 1 :actual_timestamp_sec - last_timestamp_sec;
-                free (timestamp);
-            }
-        }
-    } while (! feof (log_file));
+    printf ("%f\n", reg->altimetry);  
+    return NULL;
 
-    if (qtd_log_speed != 0) average_speed = average_speed / qtd_log_speed;
-    average_speed = average_speed * 3.6f;
-    max_speed = max_speed * 3.6f;
-    if (qtd_log_hr != 0) average_hr = round (average_hr / qtd_log_hr);
-    if (qtd_log_cadence != 0) average_cadence = round (average_cadence / qtd_log_cadence);
+    // do {
+    //     fgets (temp_string, sizeof (temp_string), log_file);
+    //     if (strlen (temp_string) != 1) {
+    //         field = strtok (temp_string, ":");
 
-    fclose (log_file);
-    return create_log (bicycle_name, date, distance, average_speed, max_speed, average_hr, max_hr, average_cadence, altimetry_gain);
+    //         if (strcmp (field, "altitude") == 0) {
+    //             value = strtok (NULL, " ");
+    //             last_altitude = last_altitude == 0 ? atof (value) : actual_altitude;
+    //             actual_altitude = atof (value);
+    //             if (actual_altitude > last_altitude) 
+    //                 altimetry_gain += actual_altitude - last_altitude;
+    //         } else if (strcmp (field, "cadence") == 0) {
+    //             value = strtok (NULL, " ");
+    //             if (atoi (value) != 0) {
+    //                 average_cadence += atoi (value);
+    //                 qtd_log_cadence++;
+    //             }
+    //         } else if (strcmp (field, "distance") == 0) {
+    //             value = strtok (NULL, " ");
+    //             distance = atof (value);
+    //         } else if (strcmp (field, "heart_rate") == 0) {
+    //             value = strtok (NULL, " ");
+    //             max_hr = max_hr < atoi (value) ? atoi (value) : max_hr;
+    //             if (atoi (value) != 0) {
+    //                 average_hr += atoi (value);
+    //                 qtd_log_hr++;
+    //             }
+    //         } else if (strcmp (field, "speed") == 0) {
+    //             value = strtok (NULL, " ");
+    //             max_speed = max_speed < atof (value) ? atof (value) : max_speed;
+    //             average_speed += atof (value);
+    //             qtd_log_speed++;
+    //         }
+    //     } else {
+    //         timestamp = get_timestamp (log_file);
+    //         if (timestamp != NULL) {
+    //             temp_timestamp_sec = get_timestamp_sec (timestamp);
+    //             last_timestamp_sec = last_timestamp_sec == 0 ? temp_timestamp_sec : actual_timestamp_sec;
+    //             actual_timestamp_sec = temp_timestamp_sec;
+    //             timestamp_qtd = (actual_timestamp_sec - last_timestamp_sec) == 0 ? 1 :actual_timestamp_sec - last_timestamp_sec;
+    //             free (timestamp);
+    //         }
+    //     }
+    // } while (! feof (log_file));
+
+    // if (qtd_log_speed != 0) average_speed = average_speed / qtd_log_speed;
+    // average_speed = average_speed * 3.6f;
+    // max_speed = max_speed * 3.6f;
+    // if (qtd_log_hr != 0) average_hr = round (average_hr / qtd_log_hr);
+    // if (qtd_log_cadence != 0) average_cadence = round (average_cadence / qtd_log_cadence);
+
+    // fclose (log_file);
+    // return create_log (bicycle_name, date, distance, average_speed, max_speed, average_hr, max_hr, average_cadence, altimetry_gain);
 }
 
 void clean_directory (directory_f *directory) {
