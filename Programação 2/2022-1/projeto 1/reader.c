@@ -112,7 +112,6 @@ reg_f *inicializa_reg () {
         reg->hr = 0;
         reg->cadence = 0;
         reg->altimetry = 0.0;
-        reg->timestamp;
         return reg;
     }
 }
