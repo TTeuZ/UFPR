@@ -28,6 +28,7 @@ typedef struct reg {
     int hr;
     int cadence;
     float altimetry;
+    char timestamp[BUFSIZ];
 } reg_f;
 
 /*
