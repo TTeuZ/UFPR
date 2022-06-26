@@ -273,19 +273,19 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                 max_speed = max_speed < reg->speed ? reg->speed : max_speed;
                 last_speed = last_speed == 0 ? reg->speed : actual_speed;
                 actual_speed = reg->speed;
-                if (timestamp_qtd > 1) 
-                    printf ("s_a: %f, s_l: %f, timestamp: %d\n", reg->speed, last_speed, timestamp_qtd);
-                if (reg->speed == 0)
-                    printf ("s_a: %f, s_l: %f, timestamp: %d\n", reg->speed, last_speed, timestamp_qtd);
-                // if (timestamp_qtd > 1) {
-                    // for (count = 0; count < timestamp_qtd; count++) {
-                    //     average_speed += last_speed;
-                    //     qtd_log_speed++;
-                    // }
-                // } else {
+                if (timestamp_qtd > 1 && last_speed != 0) {
+                    for (count = 0; count < timestamp_qtd; count++) {
+                        average_speed += last_speed;
+                        qtd_log_speed++;
+                    }
+                } else if (actual_speed != 0) {
                     average_speed += reg->speed;
                     qtd_log_speed++;
-                // }
+                }
+                // if (timestamp_qtd > 1) 
+                //     printf ("s_a: %f, s_l: %f, timestamp: %d\n", reg->speed, last_speed, timestamp_qtd);
+                // if (reg->speed == 0)
+                //     printf ("s_a: %f, s_l: %f, timestamp: %d\n", reg->speed, last_speed, timestamp_qtd);
             }
 
             if (reg->hr != -1) {
@@ -293,15 +293,15 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                 last_hr = last_hr == 0 ? reg->hr : actual_hr;
                 actual_hr = reg->hr;
                 if (reg->hr != 0) {
-                    if (timestamp_qtd > 1) {
-                        // for (count = 0; count < timestamp_qtd; count++) {
-                        //     average_hr += last_hr;
-                        //     qtd_log_hr++;
-                        // }
-                    } else {
+                    // if (timestamp_qtd > 1) {
+                    //     for (count = 0; count < timestamp_qtd; count++) {
+                    //         average_hr += last_hr;
+                    //         qtd_log_hr++;
+                    //     }
+                    // } else {
                         average_hr += reg->hr;
                         qtd_log_hr++;
-                    }
+                    // }
                 }   
             }
 
@@ -309,15 +309,15 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                 last_cadence = last_cadence == 0 ? reg->cadence : actual_cadence;
                 actual_cadence = reg->cadence;
                 if (reg->cadence != 0) {
-                    if (timestamp_qtd > 1) {
-                        // for (count = 0; count < timestamp_qtd; count++) {
-                        //     average_cadence += last_cadence;
-                        //     qtd_log_cadence++;
-                        // }
-                    } else {
+                    // if (timestamp_qtd > 1) {
+                    //     for (count = 0; count < timestamp_qtd; count++) {
+                    //         average_cadence += last_cadence;
+                    //         qtd_log_cadence++;
+                    //     }
+                    // } else {
                         average_cadence += reg->cadence;
                         qtd_log_cadence++;
-                    }
+                    // }
                 }
             }
             // if (reg->cadence != 0) {
@@ -343,8 +343,8 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
     if (qtd_log_hr != 0) average_hr = round (average_hr / qtd_log_hr);
     if (qtd_log_cadence != 0) average_cadence = round (average_cadence / qtd_log_cadence);
 
-    printf("registros lidos: %d\n", count);
-    printf("Quantidade de speeds: %d\n", qtd_log_speed);
+    // printf("registros lidos: %d\n", count);
+    // printf("Quantidade de speeds: %d\n", qtd_log_speed);
 
     free (reg);
     free (untreated_date);
