@@ -212,16 +212,16 @@ void load_logs (directory_f *directory, char *dir_name, bicycles_f *bicycles) {
         strcat (file_path, directory->files[count]->d_name);
         log = read_log (file_path, directory->files[count]->d_name);
 
-        printf("%3d %s - ", count, directory->files[count]->d_name);
-        printf("cad: %2d ", log->average_cadence);
-        printf("hr: %3d ", log->average_hr);
-        printf("hr_m: %3d ", log->max_hr);
-        printf("s: %.2f ", log->average_speed);
-        printf("s_m: %.2f ", log->max_speed);
-        printf("dist: %3.2f ", log->distance / 1000);
-        printf("elev: %4.2f\n", log->altimetry_gain);
+        // printf("%3d %s - ", count, directory->files[count]->d_name);
+        // printf("cad: %2d ", log->average_cadence);
+        // printf("hr: %3d ", log->average_hr);
+        // printf("hr_m: %3d ", log->max_hr);
+        // printf("s: %.2f ", log->average_speed);
+        // printf("s_m: %.2f ", log->max_speed);
+        // printf("dist: %3.2f ", log->distance / 1000);
+        // printf("elev: %4.2f\n", log->altimetry_gain);
 
-        // verify_and_add_bicycle (bicycles, log);
+        verify_and_add_bicycle (bicycles, log);
     }
 }
 
@@ -232,8 +232,8 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
     char temp_string[BUFSIZ];
     /* contadores dos valores do log */
     int qtd_log_speed = 0, qtd_log_hr = 0, qtd_log_cadence = 0, timestamp_qtd = 1;
-    float last_altitude = 0, actual_altitude = 0, last_speed = 0, actual_speed;
-    int last_hr = 0, actual_hr = 0, last_cadence = 0, actual_cadence = 0;
+    float last_altitude = 0, actual_altitude = 0, last_speed = -1, actual_speed;
+    int last_hr = -1, actual_hr = 0, last_cadence = -1, actual_cadence = 0;
     /* timestamps */
     int last_timestamp_sec = 0, actual_timestamp_sec = 0, temp_timestamp_sec = 0;
     /* valores do log */
@@ -257,7 +257,8 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
             temp_timestamp_sec = get_timestamp_sec (reg->timestamp);
             last_timestamp_sec = last_timestamp_sec == 0 ? temp_timestamp_sec : actual_timestamp_sec;
             actual_timestamp_sec = temp_timestamp_sec;
-            timestamp_qtd = (actual_timestamp_sec - last_timestamp_sec) == 0 ? 1 :actual_timestamp_sec - last_timestamp_sec;
+            /* existe para a primeira iteração, onde o valor do actual e o last receberam a mesma variavel */
+            timestamp_qtd = (actual_timestamp_sec - last_timestamp_sec) == 0 ? 1 : actual_timestamp_sec - last_timestamp_sec;
 
             if (reg->distance != -1) 
                 distance = reg->distance;
@@ -271,7 +272,7 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
 
             if (reg->speed != -1) {
                 max_speed = max_speed < reg->speed ? reg->speed : max_speed;
-                last_speed = last_speed == 0 ? reg->speed : actual_speed;
+                last_speed = last_speed == -1 ? reg->speed : actual_speed;
                 actual_speed = reg->speed;
                 if (timestamp_qtd > 1 && last_speed != 0) {
                     for (count = 0; count < timestamp_qtd; count++) {
@@ -290,50 +291,36 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
 
             if (reg->hr != -1) {
                 max_hr = max_hr < reg->hr ? reg->hr : max_hr;
-                last_hr = last_hr == 0 ? reg->hr : actual_hr;
+                last_hr = last_hr == -1 ? reg->hr : actual_hr;
                 actual_hr = reg->hr;
                 if (reg->hr != 0) {
-                    // if (timestamp_qtd > 1) {
-                    //     for (count = 0; count < timestamp_qtd; count++) {
-                    //         average_hr += last_hr;
-                    //         qtd_log_hr++;
-                    //     }
-                    // } else {
+                    if (timestamp_qtd > 1 && last_hr != 0) {
+                        for (count = 0; count < timestamp_qtd; count++) {
+                            average_hr += last_hr;
+                            qtd_log_hr++;
+                        }
+                    } else {
                         average_hr += reg->hr;
                         qtd_log_hr++;
-                    // }
+                    }
                 }   
             }
 
             if (reg->cadence != -1) {
-                last_cadence = last_cadence == 0 ? reg->cadence : actual_cadence;
+                last_cadence = last_cadence == -1 ? reg->cadence : actual_cadence;
                 actual_cadence = reg->cadence;
                 if (reg->cadence != 0) {
-                    // if (timestamp_qtd > 1) {
-                    //     for (count = 0; count < timestamp_qtd; count++) {
-                    //         average_cadence += last_cadence;
-                    //         qtd_log_cadence++;
-                    //     }
-                    // } else {
+                    if (timestamp_qtd > 1 && last_cadence != 0) {
+                        for (count = 0; count < timestamp_qtd; count++) {
+                            average_cadence += last_cadence;
+                            qtd_log_cadence++;
+                        }
+                    } else {
                         average_cadence += reg->cadence;
                         qtd_log_cadence++;
-                    // }
+                    }
                 }
             }
-            // if (reg->cadence != 0) {
-            //     average_cadence += reg->cadence;
-            //     qtd_log_cadence++;
-            // }
-            // max_hr = max_hr < reg->hr ? reg->hr : max_hr;
-            // if (reg->hr != 0) {
-            //     average_hr += reg->hr;
-            //     qtd_log_hr++;
-            // }
-            // max_speed = max_speed < reg->speed ? reg->speed : max_speed;
-            // for (count = 0; count < timestamp_qtd;count++) {
-            //     average_speed += reg->speed;
-            //     qtd_log_speed++;
-            // }
         }
     }
 
