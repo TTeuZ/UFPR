@@ -68,7 +68,6 @@ char *treat_date (char *date) {
     month = get_month (strtok (date,", "));
     day = strtok (NULL, ",");
     year = strtok (NULL, ", ");
-
     if (! (temp_date =  malloc (sizeof (char) * (strlen (day) + strlen (month) + strlen (year) + 3)))) {
         fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria\n\n");
         fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
@@ -81,37 +80,7 @@ char *treat_date (char *date) {
     strcat (temp_date, month);
     strcat (temp_date, "/");
     strcat (temp_date, year);
-
     return temp_date;
-}
-
-/*
-* Função que recebe o arquivo de log é pega o timestamp do bloco atual
-* Utiliza o ponteiro atual do arquivo para buscar o timestamps
-* Retorna uma string com o valor do timestamp ou null caso não seja possivel computar a string
-*/
-char* get_timestamp (FILE *log_file) {
-    char temp_string[BUFSIZ], *timestamp = NULL, *string_iterator, iterator;
-    int qtd = 0, has_found = 0;
-
-    iterator = getc (log_file);
-    if (iterator != -1) {
-        fseek (log_file, -1, SEEK_CUR);
-        do {
-            fgets (temp_string, sizeof (temp_string), log_file);
-            qtd += strlen (temp_string);
-            string_iterator = strtok (temp_string, ":");
-
-            if (strcmp (string_iterator, "timestamp") == 0) {
-                string_iterator = strtok (NULL, "\n");
-                has_found = 1;
-            }
-        } while (has_found == 0);
-        fseek (log_file, (qtd * -1), SEEK_CUR);
-
-        timestamp = strdup (string_iterator);
-    }
-    return timestamp;
 }
 
 /*
@@ -129,33 +98,79 @@ int get_timestamp_sec (char *timestamp) {
 }
 
 /*
-* Função que le o registro atual do log e retorna as suas informações
+* Função que inicializa a estrutura de armazenamento das informações do bloco de informações do log
 */
-void read_log_reg (FILE *log_file, reg_f *reg) {
-    char temp_string[BUFSIZ], *field, *value;
+reg_f *inicializa_reg () {
+    reg_f *reg;
+    if (! (reg = malloc (sizeof (reg_f)))) {
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
+        exit (EXIT_FAILURE);
+    } else {
+        reg->distance = 0.0;
+        reg->speed = 0.0;
+        reg->hr = 0;
+        reg->cadence = 0;
+        reg->altimetry = 0.0;
+        return reg;
+    }
+}
+
+/*
+* Função que le o header do log
+*/
+void read_log_header (FILE *log_file, char **bicycle_name, char **untreated_date) {
+    char temp_string[BUFSIZ];
+    fgets (temp_string, sizeof (temp_string), log_file);
+    strtok (temp_string, " ");
+    *bicycle_name = strdup (strtok (NULL, "\n"));
 
     fgets (temp_string, sizeof (temp_string), log_file);
-    while (strlen (temp_string) != 1) {
+    strtok (temp_string, " ");
+    *untreated_date = strdup (strtok (NULL, "\n"));
+}
+
+/*
+* Função que le o registro atual do log e retorna as suas informações
+*/
+int read_log_reg (FILE *log_file, reg_f *reg) {
+    char temp_string[BUFSIZ], *field, *value;
+    int r_cadence = -1, r_hr = -1;
+    float r_altimetry = -1, r_distance = -1, r_speed = -1;
+    fgets (temp_string, sizeof (temp_string), log_file);
+    if (feof (log_file))
+        return 0;
+
+    while (strcmp (temp_string, "\n") != 0) {
         field = strtok (temp_string, ":");
 
         if (strcmp (field, "altitude") == 0) {
             value = strtok (NULL, " ");
-            reg->altimetry = atof (value);
+            r_altimetry = atof (value);
         } else if (strcmp (field, "cadence") == 0) {
             value = strtok (NULL, " ");
-            reg->cadence = atoi (value);
+            r_cadence = atoi (value);
         } else if (strcmp (field, "distance") == 0) {
             value = strtok (NULL, " ");
-            reg->distance = atof (value);
+            r_distance = atof (value);
         } else if (strcmp (field, "heart_rate") == 0) {
             value = strtok (NULL, " ");
-            reg->hr = atoi (value);
+            r_hr = atoi (value);
         } else if (strcmp (field, "speed") == 0) {
             value = strtok (NULL, " ");
-            reg->speed = atof (value);
+            r_speed = atof (value);
+        } else if (strcmp (field, "timestamp") == 0) {
+            value = strtok (NULL, "\n");
+            strcpy (reg->timestamp, value);
         }
         fgets (temp_string, sizeof (temp_string), log_file);
     }
+    reg->altimetry = r_altimetry;
+    reg->cadence = r_cadence;
+    reg->distance = r_distance;
+    reg->hr = r_hr;
+    reg->speed = r_speed;
+    return 1;
 }
 /*---------------------------------------------- Funções internas ---------------------------------------------*/
 
@@ -197,14 +212,14 @@ void load_logs (directory_f *directory, char *dir_name, bicycles_f *bicycles) {
         strcat (file_path, directory->files[count]->d_name);
         log = read_log (file_path, directory->files[count]->d_name);
 
-        // printf("%3d %s - ", count, directory->files[count]->d_name);
-        // printf("cad: %2d ", log->average_cadence);
-        // printf("hr: %3d ", log->average_hr);
-        // printf("hr_m: %3d ", log->max_hr);
-        // printf("s: %.2f ", log->average_speed);
-        // printf("s_m: %.2f ", log->max_speed);
-        // printf("dist: %3.2f ", log->distance / 1000);
-        // printf("elev: %4.2f\n", log->altimetry_gain);
+        printf("%3d %s - ", count, directory->files[count]->d_name);
+        printf("cad: %2d ", log->average_cadence);
+        printf("hr: %3d ", log->average_hr);
+        printf("hr_m: %3d ", log->max_hr);
+        printf("s: %.2f ", log->average_speed);
+        printf("s_m: %.2f ", log->max_speed);
+        printf("dist: %3.2f ", log->distance / 1000);
+        printf("elev: %4.2f\n", log->altimetry_gain);
 
         // verify_and_add_bicycle (bicycles, log);
     }
@@ -214,15 +229,15 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
     FILE *log_file;
     reg_f *reg;
     int count;
-    char temp_string[BUFSIZ], *field, *value;
+    char temp_string[BUFSIZ];
     /* contadores dos valores do log */
     int qtd_log_speed = 0, qtd_log_hr = 0, qtd_log_cadence = 0, timestamp_qtd = 1;
-    float last_altitude = 0, actual_altitude = 0;
+    float last_altitude = 0, actual_altitude = 0, last_speed = 0, actual_speed;
+    int last_hr = 0, actual_hr = 0, last_cadence = 0, actual_cadence = 0;
     /* timestamps */
-    char *timestamp = NULL;
     int last_timestamp_sec = 0, actual_timestamp_sec = 0, temp_timestamp_sec = 0;
     /* valores do log */
-    char *bicycle_name, *date, *untreated_date;
+    char *bicycle_name = NULL, *untreated_date = NULL, *date;
     float distance = 0, average_speed = 0, max_speed = 0, altimetry_gain = 0;
     int average_hr = 0, max_hr = 0, average_cadence = 0;
 
@@ -230,79 +245,111 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
         fprintf (stderr, RED "[ERROR] " NC "Erro ao ler o log %s\n\n", log_name);
         return NULL;
     }
+    reg = inicializa_reg ();
 
-    /* Buscando o nome da bicicleta*/
-    fgets (temp_string, sizeof (temp_string), log_file);
-    strtok (temp_string, " ");
-    bicycle_name = strdup (strtok (NULL, "\n"));
-
-    /* Buscando a data e a formatando para dd/mm/yyyy*/
-    fgets (temp_string, sizeof (temp_string), log_file);
-    strtok (temp_string, " ");
-    untreated_date = strtok (NULL, "\n");
+    read_log_header (log_file, &bicycle_name, &untreated_date);
     date = treat_date (untreated_date);
 
-    reg = malloc (sizeof (reg));
-
     fgets (temp_string, sizeof (temp_string), log_file);
-    read_log_reg (log_file, reg);
+    while (! feof (log_file)) {
+        if (read_log_reg (log_file, reg) != 0) {
+            count++;
+            temp_timestamp_sec = get_timestamp_sec (reg->timestamp);
+            last_timestamp_sec = last_timestamp_sec == 0 ? temp_timestamp_sec : actual_timestamp_sec;
+            actual_timestamp_sec = temp_timestamp_sec;
+            timestamp_qtd = (actual_timestamp_sec - last_timestamp_sec) == 0 ? 1 :actual_timestamp_sec - last_timestamp_sec;
 
-    printf ("%f\n", reg->altimetry);  
-    return NULL;
+            if (reg->distance != -1) 
+                distance = reg->distance;
 
-    // do {
-    //     fgets (temp_string, sizeof (temp_string), log_file);
-    //     if (strlen (temp_string) != 1) {
-    //         field = strtok (temp_string, ":");
+            if (reg->altimetry != -1) {
+                last_altitude = last_altitude == 0 ? reg->altimetry : actual_altitude;
+                actual_altitude = reg->altimetry;
+                if (actual_altitude > last_altitude) 
+                    altimetry_gain += actual_altitude - last_altitude;
+            }
 
-    //         if (strcmp (field, "altitude") == 0) {
-    //             value = strtok (NULL, " ");
-    //             last_altitude = last_altitude == 0 ? atof (value) : actual_altitude;
-    //             actual_altitude = atof (value);
-    //             if (actual_altitude > last_altitude) 
-    //                 altimetry_gain += actual_altitude - last_altitude;
-    //         } else if (strcmp (field, "cadence") == 0) {
-    //             value = strtok (NULL, " ");
-    //             if (atoi (value) != 0) {
-    //                 average_cadence += atoi (value);
-    //                 qtd_log_cadence++;
-    //             }
-    //         } else if (strcmp (field, "distance") == 0) {
-    //             value = strtok (NULL, " ");
-    //             distance = atof (value);
-    //         } else if (strcmp (field, "heart_rate") == 0) {
-    //             value = strtok (NULL, " ");
-    //             max_hr = max_hr < atoi (value) ? atoi (value) : max_hr;
-    //             if (atoi (value) != 0) {
-    //                 average_hr += atoi (value);
-    //                 qtd_log_hr++;
-    //             }
-    //         } else if (strcmp (field, "speed") == 0) {
-    //             value = strtok (NULL, " ");
-    //             max_speed = max_speed < atof (value) ? atof (value) : max_speed;
-    //             average_speed += atof (value);
-    //             qtd_log_speed++;
-    //         }
-    //     } else {
-    //         timestamp = get_timestamp (log_file);
-    //         if (timestamp != NULL) {
-    //             temp_timestamp_sec = get_timestamp_sec (timestamp);
-    //             last_timestamp_sec = last_timestamp_sec == 0 ? temp_timestamp_sec : actual_timestamp_sec;
-    //             actual_timestamp_sec = temp_timestamp_sec;
-    //             timestamp_qtd = (actual_timestamp_sec - last_timestamp_sec) == 0 ? 1 :actual_timestamp_sec - last_timestamp_sec;
-    //             free (timestamp);
-    //         }
-    //     }
-    // } while (! feof (log_file));
+            if (reg->speed != -1) {
+                max_speed = max_speed < reg->speed ? reg->speed : max_speed;
+                last_speed = last_speed == 0 ? reg->speed : actual_speed;
+                actual_speed = reg->speed;
+                if (timestamp_qtd > 1 && last_speed != 0) {
+                    for (count = 0; count < timestamp_qtd; count++) {
+                        average_speed += last_speed;
+                        qtd_log_speed++;
+                    }
+                } else if (actual_speed != 0) {
+                    average_speed += reg->speed;
+                    qtd_log_speed++;
+                }
+                // if (timestamp_qtd > 1) 
+                //     printf ("s_a: %f, s_l: %f, timestamp: %d\n", reg->speed, last_speed, timestamp_qtd);
+                // if (reg->speed == 0)
+                //     printf ("s_a: %f, s_l: %f, timestamp: %d\n", reg->speed, last_speed, timestamp_qtd);
+            }
 
-    // if (qtd_log_speed != 0) average_speed = average_speed / qtd_log_speed;
-    // average_speed = average_speed * 3.6f;
-    // max_speed = max_speed * 3.6f;
-    // if (qtd_log_hr != 0) average_hr = round (average_hr / qtd_log_hr);
-    // if (qtd_log_cadence != 0) average_cadence = round (average_cadence / qtd_log_cadence);
+            if (reg->hr != -1) {
+                max_hr = max_hr < reg->hr ? reg->hr : max_hr;
+                last_hr = last_hr == 0 ? reg->hr : actual_hr;
+                actual_hr = reg->hr;
+                if (reg->hr != 0) {
+                    // if (timestamp_qtd > 1) {
+                    //     for (count = 0; count < timestamp_qtd; count++) {
+                    //         average_hr += last_hr;
+                    //         qtd_log_hr++;
+                    //     }
+                    // } else {
+                        average_hr += reg->hr;
+                        qtd_log_hr++;
+                    // }
+                }   
+            }
 
-    // fclose (log_file);
-    // return create_log (bicycle_name, date, distance, average_speed, max_speed, average_hr, max_hr, average_cadence, altimetry_gain);
+            if (reg->cadence != -1) {
+                last_cadence = last_cadence == 0 ? reg->cadence : actual_cadence;
+                actual_cadence = reg->cadence;
+                if (reg->cadence != 0) {
+                    // if (timestamp_qtd > 1) {
+                    //     for (count = 0; count < timestamp_qtd; count++) {
+                    //         average_cadence += last_cadence;
+                    //         qtd_log_cadence++;
+                    //     }
+                    // } else {
+                        average_cadence += reg->cadence;
+                        qtd_log_cadence++;
+                    // }
+                }
+            }
+            // if (reg->cadence != 0) {
+            //     average_cadence += reg->cadence;
+            //     qtd_log_cadence++;
+            // }
+            // max_hr = max_hr < reg->hr ? reg->hr : max_hr;
+            // if (reg->hr != 0) {
+            //     average_hr += reg->hr;
+            //     qtd_log_hr++;
+            // }
+            // max_speed = max_speed < reg->speed ? reg->speed : max_speed;
+            // for (count = 0; count < timestamp_qtd;count++) {
+            //     average_speed += reg->speed;
+            //     qtd_log_speed++;
+            // }
+        }
+    }
+
+    if (qtd_log_speed != 0) average_speed = average_speed / qtd_log_speed;
+    average_speed = average_speed * 3.6f;
+    max_speed = max_speed * 3.6f;
+    if (qtd_log_hr != 0) average_hr = round (average_hr / qtd_log_hr);
+    if (qtd_log_cadence != 0) average_cadence = round (average_cadence / qtd_log_cadence);
+
+    // printf("registros lidos: %d\n", count);
+    // printf("Quantidade de speeds: %d\n", qtd_log_speed);
+
+    free (reg);
+    free (untreated_date);
+    fclose (log_file);
+    return create_log (bicycle_name, date, distance, average_speed, max_speed, average_hr, max_hr, average_cadence, altimetry_gain);
 }
 
 void clean_directory (directory_f *directory) {
