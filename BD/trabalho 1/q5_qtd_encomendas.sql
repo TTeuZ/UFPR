@@ -1,1 +1,6 @@
-select N_NAME, count(O_ORDERKEY) from ORDERS inner join CUSTOMER on ORDERS.O_CUSTKEY = CUSTOMER.C_CUSTKEY inner join NATION on CUSTOMER.C_NATIONKEY = NATION.N_NATIONKEY group by N_NAME order by count(O_ORDERKEY) desc;
+select   N_NAME, count(O_ORDERKEY) as ORDER_QTD
+from     ORDERS, CUSTOMER, NATION
+where    C_CUSTKEY = O_CUSTKEY and 
+         N_NATIONKEY = C_NATIONKEY
+group by N_NAME
+order by ORDER_QTD desc;

@@ -1,1 +1,7 @@
-select N_NAME, count(L_LINENUMBER) from LINEITEM inner join ORDERS on LINEITEM.L_ORDERKEY = ORDERS.O_ORDERKEY inner join CUSTOMER on ORDERS.O_CUSTKEY = CUSTOMER.C_CUSTKEY inner join NATION on CUSTOMER.C_NATIONKEY = NATION.N_NATIONKEY group by N_NAME order by count(L_LINENUMBER) desc limit 10;
+select   N_NAME, sum(L_QUANTITY) as ITENS_QTD
+from     ORDERS, CUSTOMER, NATION, LINEITEM
+where    O_ORDERKEY = L_ORDERKEY and
+         C_CUSTKEY = O_CUSTKEY and
+         N_NATIONKEY = C_NATIONKEY
+group by N_NAME
+order by ITENS_QTD desc limit 10;

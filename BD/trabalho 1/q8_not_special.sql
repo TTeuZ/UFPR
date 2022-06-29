@@ -1,1 +1,10 @@
-select count(distinct(C_CUSTKEY)) from ORDERS inner join CUSTOMER on ORDERS.O_CUSTKEY = CUSTOMER.C_CUSTKEY where O_COMMENT not like '%special request%';
+select count(distinct(C_CUSTKEY))
+from (
+    select      distinct(C_CUSTKEY)
+    from        CUSTOMER
+    except 
+    select      distinct(C_CUSTKEY)
+    from        ORDERS, CUSTOMER
+    where       O_CUSTKEY = C_CUSTKEY and 
+                O_COMMENT like "%special request%"
+);

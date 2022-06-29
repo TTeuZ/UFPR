@@ -1,1 +1,2 @@
-select distinct(r_name) from REGION;
+select distinct(r_name) 
+from REGION;
