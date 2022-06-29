@@ -8,9 +8,10 @@
 #include "bicycles.h"
 #include "bicycle.h"
 #include "reader.h"
+
 /*---------------------------------------------- Funções internas ---------------------------------------------*/
 /*
-* Função que retorna se o arquivo indicado possui '.log' em seu nome,
+*   Função que retorna se o arquivo indicado possui '.log' em seu nome,
 */
 int is_log_file (const char *file_name) {
     size_t len = strlen (file_name);
@@ -18,17 +19,81 @@ int is_log_file (const char *file_name) {
 }
 
 /*
-* Função de filtro dos arquivos no diretorio, para deixar passar na função apenas os arquivos .log
+*   Função que le o header do log
 */
-int filterFiles (const struct dirent *current_dir) {
-    if (current_dir->d_type == DT_REG && is_log_file (current_dir->d_name)) 
-        return 1;
-    else return 0;
+int read_log_header (FILE *log_file, char **bicycle_name, char **untreated_date) {
+    char temp_string[BUFSIZ];
+    char *name, *date;
+
+    fgets (temp_string, sizeof (temp_string), log_file);
+    strtok (temp_string, " ");
+    name = strtok (NULL, "\n");
+    if (! (*bicycle_name = malloc (sizeof (char) * BUFSIZ))) {
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        return ALOCATION_ERROR;
+    }
+    strcpy (*bicycle_name, name);
+
+    fgets (temp_string, sizeof (temp_string), log_file);
+    strtok (temp_string, " ");
+    date = strtok (NULL, "\n");
+    if (! (*untreated_date = malloc (sizeof (char) * BUFSIZ))) {
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        return ALOCATION_ERROR;
+    }
+    strcpy (*untreated_date, date);
+
+    return EXIT_SUCCESS;
 }
 
 /*
-* Função que recebe uma string com o nome do mes no formato indicado (3 letras em ingles)
-* Retorna a string correspondente no formado mm 
+*   Função que le o registro atual do log e retorna as suas informações
+*/
+int read_log_reg (FILE *log_file, reg_f *reg) {
+    char temp_string[BUFSIZ], *field, *value;
+    int r_cadence = -1, r_hr = -1;
+    float r_altimetry = -1, r_distance = -1, r_speed = -1;
+
+    fgets (temp_string, sizeof (temp_string), log_file);
+    if (feof (log_file))
+        return END_FILE;
+    
+    while (strcmp (temp_string, "\n") != 0) {
+        field = strtok (temp_string, ":");
+
+        if (strcmp (field, "altitude") == 0) {
+            value = strtok (NULL, " ");
+            r_altimetry = atof (value);
+        } else if (strcmp (field, "cadence") == 0) {
+            value = strtok (NULL, " ");
+            r_cadence = atoi (value);
+        } else if (strcmp (field, "distance") == 0) {
+            value = strtok (NULL, " ");
+            r_distance = atof (value);
+        } else if (strcmp (field, "heart_rate") == 0) {
+            value = strtok (NULL, " ");
+            r_hr = atoi (value);
+        } else if (strcmp (field, "speed") == 0) {
+            value = strtok (NULL, " ");
+            r_speed = atof (value);
+        } else if (strcmp (field, "timestamp") == 0) {
+            value = strtok (NULL, "\n");
+            strcpy (reg->timestamp, value);
+        }
+        fgets (temp_string, sizeof (temp_string), log_file);
+    }
+
+    reg->altimetry = r_altimetry;
+    reg->cadence = r_cadence;
+    reg->distance = r_distance;
+    reg->hr = r_hr;
+    reg->speed = r_speed;
+    return EXIT_SUCCESS;
+}
+
+/*
+*   Função que recebe uma string com o nome do mes no formato indicado (3 letras em ingles)
+*   Retorna a string correspondente no formado mm 
 */
 char *get_month (char *month) {
     if (strcmp (month, "Jan") == 0)
@@ -59,7 +124,7 @@ char *get_month (char *month) {
 }
 
 /*
-* Função que recebe a string de data e a formata para dd/mm/yyyy
+*   Função que recebe a string de data e a formata para dd/mm/yyyy
 */
 char *treat_date (char *date) {
     char *day, *month, *year;
@@ -70,8 +135,7 @@ char *treat_date (char *date) {
     year = strtok (NULL, ", ");
     if (! (temp_date =  malloc (sizeof (char) * (strlen (day) + strlen (month) + strlen (year) + 3)))) {
         fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
+        return NULL;
     } 
 
     temp_date[0] = '\0';
@@ -84,7 +148,7 @@ char *treat_date (char *date) {
 }
 
 /*
-* Função que recebe uma string de timestamp e retorna o valor das horas em segundos
+*   Função que recebe uma string de timestamp e retorna o valor das horas em segundos
 */
 int get_timestamp_sec (char *timestamp) {
     char *sec, *min, *hour;
@@ -95,134 +159,42 @@ int get_timestamp_sec (char *timestamp) {
     sec = strtok (NULL, " :");
 
     return (atoi (hour) * 3600) + (atoi (min) * 60) + atoi (sec);
+    return 0;
 }
 
-/*
-* Função que inicializa a estrutura de armazenamento das informações do bloco de informações do log
-*/
-reg_f *inicializa_reg () {
-    reg_f *reg;
-    if (! (reg = malloc (sizeof (reg_f)))) {
-        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
-    } else {
-        reg->distance = 0.0;
-        reg->speed = 0.0;
-        reg->hr = 0;
-        reg->cadence = 0;
-        reg->altimetry = 0.0;
-        return reg;
-    }
-}
-
-/*
-* Função que le o header do log
-*/
-void read_log_header (FILE *log_file, char **bicycle_name, char **untreated_date) {
-    char temp_string[BUFSIZ];
-    fgets (temp_string, sizeof (temp_string), log_file);
-    strtok (temp_string, " ");
-    *bicycle_name = strdup (strtok (NULL, "\n"));
-
-    fgets (temp_string, sizeof (temp_string), log_file);
-    strtok (temp_string, " ");
-    *untreated_date = strdup (strtok (NULL, "\n"));
-}
-
-/*
-* Função que le o registro atual do log e retorna as suas informações
-*/
-int read_log_reg (FILE *log_file, reg_f *reg) {
-    char temp_string[BUFSIZ], *field, *value;
-    int r_cadence = -1, r_hr = -1;
-    float r_altimetry = -1, r_distance = -1, r_speed = -1;
-    fgets (temp_string, sizeof (temp_string), log_file);
-    if (feof (log_file))
-        return 0;
-
-    while (strcmp (temp_string, "\n") != 0) {
-        field = strtok (temp_string, ":");
-
-        if (strcmp (field, "altitude") == 0) {
-            value = strtok (NULL, " ");
-            r_altimetry = atof (value);
-        } else if (strcmp (field, "cadence") == 0) {
-            value = strtok (NULL, " ");
-            r_cadence = atoi (value);
-        } else if (strcmp (field, "distance") == 0) {
-            value = strtok (NULL, " ");
-            r_distance = atof (value);
-        } else if (strcmp (field, "heart_rate") == 0) {
-            value = strtok (NULL, " ");
-            r_hr = atoi (value);
-        } else if (strcmp (field, "speed") == 0) {
-            value = strtok (NULL, " ");
-            r_speed = atof (value);
-        } else if (strcmp (field, "timestamp") == 0) {
-            value = strtok (NULL, "\n");
-            strcpy (reg->timestamp, value);
-        }
-        fgets (temp_string, sizeof (temp_string), log_file);
-    }
-    reg->altimetry = r_altimetry;
-    reg->cadence = r_cadence;
-    reg->distance = r_distance;
-    reg->hr = r_hr;
-    reg->speed = r_speed;
-    return 1;
-}
 /*---------------------------------------------- Funções internas ---------------------------------------------*/
-
-directory_f *inicialize_directory () {
-    directory_f *directory;
-    if (! (directory = malloc (sizeof (directory_f)))) {
-        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
-    } else {
-        directory->files_qtd = 0;
-        directory->files = NULL;
-        return directory;
-    }
-}
-
-directory_f *get_logs (char *dir_name) {
-    directory_f *directory;
-
-    directory = inicialize_directory ();
-    directory->files_qtd = scandir (dir_name, &directory->files, filterFiles, alphasort);
-
-    if (directory->files_qtd == -1) {
-        fprintf (stderr, RED "[ERROR] " NC "Diretorio não encontrado\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
-    } else return directory;
-}
-
-void load_logs (directory_f *directory, char *dir_name, bicycles_f *bicycles) {
+int read_directory (char *dir_name, bicycles_f *bicycles) {
+    DIR *directory_stream;
     bicycle_log_f *log;
+    struct dirent *file;
     char file_path[BUFSIZ];
-    int count;
 
-    for (count = 0; count < directory->files_qtd; count++) {
-        file_path[0] = '\0';
-        strcat (file_path, dir_name);
-        strcat (file_path, "/");
-        strcat (file_path, directory->files[count]->d_name);
-        log = read_log (file_path, directory->files[count]->d_name);
-
-        // printf("%3d %s - ", count, directory->files[count]->d_name);
-        // printf("cad: %2d ", log->average_cadence);
-        // printf("hr: %3d ", log->average_hr);
-        // printf("hr_m: %3d ", log->max_hr);
-        // printf("s: %.2f ", log->average_speed);
-        // printf("s_m: %.2f ", log->max_speed);
-        // printf("dist: %3.2f ", log->distance / 1000);
-        // printf("elev: %4.2f\n", log->altimetry_gain);
-
-        verify_and_add_bicycle (bicycles, log);
+    if (! (directory_stream = opendir (dir_name))) {
+        fprintf (stderr, RED "[ERROR] " NC "Diretorio não encontrado\n\n");
+        return OPEN_DIR_ERROR;
     }
+    while ((file = readdir (directory_stream)) != NULL) {
+        if (file->d_type == REG_FILE && is_log_file (file->d_name)) {
+            file_path[0] = '\0';
+            strcat (file_path, dir_name);
+            strcat (file_path, "/");
+            strcat (file_path, file->d_name);
+            if ((log = read_log (file_path, file->d_name)) != NULL) {
+                printf("%s - ", file->d_name);
+                printf("cad: %2d ", log->average_cadence);
+                printf("hr: %3d ", log->average_hr);
+                printf("hr_m: %3d ", log->max_hr);
+                printf("s: %.2f ", log->average_speed);
+                printf("s_m: %.2f ", log->max_speed);
+                printf("dist: %3.2f ", log->distance / 1000);
+                printf("elev: %4.2f\n", log->altimetry_gain);
+                if (verify_and_add_bicycle (bicycles, log) != 0) 
+                    fprintf (stderr, RED "[ERROR] " NC "Falha no armazenamento do log %s\n\n", file->d_name);
+            }
+        }
+    }
+    closedir (directory_stream);
+    return EXIT_SUCCESS;
 }
 
 bicycle_log_f *read_log (char *log_path, char *log_name) {
@@ -242,23 +214,35 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
     int average_hr = 0, max_hr = 0, average_cadence = 0;
 
     if (! (log_file = fopen (log_path, "r"))) {
-        fprintf (stderr, RED "[ERROR] " NC "Erro ao ler o log %s\n\n", log_name);
+        fprintf (stderr, RED "[ERROR]file " NC "Erro ao ler o log %s\n", log_name);
         return NULL;
     }
-    reg = inicializa_reg ();
-
-    read_log_header (log_file, &bicycle_name, &untreated_date);
-    date = treat_date (untreated_date);
+    if (read_log_header (log_file, &bicycle_name, &untreated_date) != 0) {
+        fprintf (stderr, RED "[ERROR] " NC "Erro ao ler o log %s\n", log_name);
+        return NULL;
+    }
+    if (! (date = treat_date (untreated_date))) {
+        fprintf (stderr, RED "[ERROR] " NC "Erro ao ler o log %s\n", log_name);
+        free (bicycle_name);
+        free (date);
+        fclose (log_file);
+        return NULL;
+    }
+    if (! (reg = inicializa_reg ())) {
+        fprintf (stderr, RED "[ERROR] " NC "Erro ao ler o log %s\n", log_name);
+        free (bicycle_name);
+        free (date);
+        fclose (log_file);
+        return NULL;
+    }
 
     fgets (temp_string, sizeof (temp_string), log_file);
     while (! feof (log_file)) {
-        if (read_log_reg (log_file, reg) != 0) {
-            count++;
+        if (read_log_reg (log_file, reg) == 0) {
             temp_timestamp_sec = get_timestamp_sec (reg->timestamp);
             last_timestamp_sec = last_timestamp_sec == 0 ? temp_timestamp_sec : actual_timestamp_sec;
             actual_timestamp_sec = temp_timestamp_sec;
-            /* existe para a primeira iteração, onde o valor do actual e o last receberam a mesma variavel */
-            timestamp_qtd = (actual_timestamp_sec - last_timestamp_sec) == 0 ? 1 : actual_timestamp_sec - last_timestamp_sec;
+            timestamp_qtd = actual_timestamp_sec - last_timestamp_sec;
 
             if (reg->distance != -1) 
                 distance = reg->distance;
@@ -323,27 +307,14 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
             }
         }
     }
-
     if (qtd_log_speed != 0) average_speed = average_speed / qtd_log_speed;
     average_speed = average_speed * 3.6f;
     max_speed = max_speed * 3.6f;
-    if (qtd_log_hr != 0) average_hr = round (average_hr / qtd_log_hr);
-    if (qtd_log_cadence != 0) average_cadence = round (average_cadence / qtd_log_cadence);
-
-    // printf("registros lidos: %d\n", count);
-    // printf("Quantidade de speeds: %d\n", qtd_log_speed);
+    if (qtd_log_hr != 0) average_hr = average_hr / qtd_log_hr;
+    if (qtd_log_cadence != 0) average_cadence = average_cadence / qtd_log_cadence;
 
     free (reg);
     free (untreated_date);
     fclose (log_file);
     return create_log (bicycle_name, date, distance, average_speed, max_speed, average_hr, max_hr, average_cadence, altimetry_gain);
-}
-
-void clean_directory (directory_f *directory) {
-    int count; 
-    for (count = 0; count < directory->files_qtd; count++) {
-        free (directory->files[count]);
-    }
-    free (directory->files);
-    free (directory);
 }

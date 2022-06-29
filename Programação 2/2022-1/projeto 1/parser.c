@@ -12,8 +12,7 @@ char *parse_command_line (char *argv[], int argc) {
 
     if (argc < 3) {
         fprintf (stderr, RED "[ERROR] " NC "É necessário indicar um diretorio de logs!\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
+        return NULL;
     } else {
         for (count = 1; count < argc; count++) {
             if (! strcmp (argv[count], "-d")) {
@@ -21,11 +20,9 @@ char *parse_command_line (char *argv[], int argc) {
                 count++;
             } else {
                 fprintf (stderr, RED "[ERROR] " NC "Parametro invalido!\n\n");
-                fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-                exit (EXIT_FAILURE);
+                return NULL;
             }
         }
     }
-    
     return dir_name;
 }

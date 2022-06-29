@@ -8,43 +8,66 @@
 
 /*---------------------------------------------- Funções internas ---------------------------------------------*/
 /*
-* Função que recebe duas strings de data e as transforma em valores inteiros
-* os valores inteiros são comaparados retornando:
-* valores negativos se first > second
-* 0 se iguais
-* valores positivos se first < second
+*   Função que recebe duas strings de data e as transforma em valores inteiros
+*   os valores inteiros são comaparados retornando:
+*   valores negativos se first > second
+*   0 se iguais
+*   valores positivos se first < second
 */
 int compare_dates (char *first, char *second) {
     char *inside_first, *inside_second;
     int day, month, year, first_time, second_time;
-    inside_first = strdup (first);
-    inside_second = strdup (second);
+    if (! (inside_first = malloc (sizeof (char) * BUFSIZ)) || ! (inside_second = malloc (sizeof (char) * BUFSIZ))) {
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        return COMPARE_ERROR;
+    }
+
+    strcpy (inside_first, first);
+    strcpy (inside_second, second);
 
     day = atoi (strtok (inside_first, "/"));
     month = atoi (strtok (NULL, "/"));
     year = atoi (strtok (NULL, "/")) - 1900;
-    first_time = (year * 1000) + (month * 100) + (day * 10);
+    first_time = (year * 100000) + (month * 1000) + (day * 10);
 
     day = atoi (strtok (inside_second, "/"));
     month = atoi (strtok (NULL, "/"));
     year = atoi (strtok (NULL, "/")) - 1900;
-    second_time = (year * 10000) + (month * 1000) + (day * 10);
+    second_time = (year * 100000) + (month * 1000) + (day * 10);
 
     free (inside_first);
     free (inside_second);
-    return second_time - first_time;
+    return first_time - second_time;
 }
 /*---------------------------------------------- Funções internas ---------------------------------------------*/
+reg_f *inicializa_reg () {
+    reg_f *reg;
+    if (! (reg = malloc (sizeof (reg_f)))) {
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        return NULL;
+    } else {
+        reg->distance = 0.0;
+        reg->speed = 0.0;
+        reg->hr = 0;
+        reg->cadence = 0;
+        reg->altimetry = 0.0;
+        return reg;
+    }
+}
 
 bicycle_f *create_bicycle (char *name) {
     bicycle_f *bicycle;
 
     if (! (bicycle = malloc (sizeof (bicycle_f)))) {
         fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
+        return NULL;
     } else {
-        bicycle->name = strdup (name);
+        if (! (bicycle->name = malloc (sizeof (char) * BUFSIZ))) {
+            fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+            free (bicycle);
+            return NULL;
+        }
+        strcpy (bicycle->name, name);
         bicycle->activities_qtd = 0;
         bicycle->total_km = 0;
         bicycle->longest_ride = 0;
@@ -60,8 +83,7 @@ bicycle_log_f *create_log (char *bicycle_name, char *date, float distance, float
     
     if (! (log = malloc (sizeof (bicycle_log_f)))) {
         fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
+        return NULL;
     } else {
         log->bicycle_name = bicycle_name;
         log->date = date;
@@ -72,8 +94,8 @@ bicycle_log_f *create_log (char *bicycle_name, char *date, float distance, float
         log->max_hr = max_hr;
         log->average_cadence = average_cadence;
         log->altimetry_gain = altimetry_gain;
+        return log;
     }
-    return log;
 }
 
 bicycle_log_f **create_temp_distance_sorted_log (bicycle_f *bicycle) {
@@ -81,8 +103,7 @@ bicycle_log_f **create_temp_distance_sorted_log (bicycle_f *bicycle) {
     int count, iterator;
     if (! (temp_log = malloc (sizeof (bicycle_log_f) * bicycle->activities_qtd))) {
         fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
+        return NULL;
     } else {
         for (count = 0; count < bicycle->activities_qtd; count++) {
             if (count == 0) {
@@ -100,13 +121,12 @@ bicycle_log_f **create_temp_distance_sorted_log (bicycle_f *bicycle) {
     return temp_log;
 }
 
-void add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log) {
+int add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log) {
     int count;
     if (bicycle->activities_qtd == 0) {
         if (! (bicycle->logs = malloc (sizeof (bicycle_log_f)))) {
             fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
-            fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-            exit (EXIT_FAILURE);
+            return ALOCATION_ERROR;
         } else {
             bicycle->logs[bicycle->activities_qtd] = log;
             bicycle->activities_qtd = 1;
@@ -114,8 +134,7 @@ void add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log) {
     } else {
         if (! (bicycle->logs = realloc (bicycle->logs, (sizeof (bicycle_log_f) * (bicycle->activities_qtd + 1))))) {
             fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
-            fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-            exit (EXIT_FAILURE);
+            return ALOCATION_ERROR;
         } else {
             count = bicycle->activities_qtd;
             while (count != 0 && compare_dates (log->date, bicycle->logs[count-1]->date) <= 0) {
@@ -127,6 +146,7 @@ void add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log) {
         }
     }
     treat_bicycle_resume (bicycle, log);
+    return EXIT_SUCCESS;
 }
 
 void treat_bicycle_resume (bicycle_f *bicycle, bicycle_log_f *log) {
@@ -183,7 +203,7 @@ void print_logs_with_name (bicycle_log_f **logs, int qtd) {
     }
 }
 
-void get_histogram (bicycle_f *bicycle) {
+int get_histogram (bicycle_f *bicycle) {
     FILE *temp_file, *gnuplot;
     bicycle_log_f **temp_log;
     int min, max, count;
@@ -192,8 +212,7 @@ void get_histogram (bicycle_f *bicycle) {
     temp_log = create_temp_distance_sorted_log (bicycle);
     if (! (temp_file = fopen ("data.temp", "w"))) {
         fprintf (stderr, RED "[ERROR] " NC "Erro na abertura do arquivo de dados temporarios\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
+        return OPEN_FILE_ERROR;
     }
 
     min = (int) (bicycle->shorter_ride - ((int) bicycle->shorter_ride % 10000)) / 1000;
@@ -233,10 +252,9 @@ void get_histogram (bicycle_f *bicycle) {
 
     // print do grafico
 
-    if (! (gnuplot = popen ("gnuplot -persistent", "w"))) {
+    if (! (gnuplot = fopen ("gnuplot -persistent", "w"))) {
         fprintf (stderr, RED "[ERROR] " NC "Erro na abertura do gnuplot\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
+        return OPEN_FILE_ERROR;
     }
 
     // configurando o histograma
@@ -250,9 +268,10 @@ void get_histogram (bicycle_f *bicycle) {
     // plotando o histograma e o exibindo em tempo de execução
     fprintf (gnuplot, "plot 'data.temp' using 2:0:(0):2:($0-%f/2.):($0+%f/2.):($0+1):ytic(1) with boxxyerror linecolor 'black' title 'Atividades de %s'\n", 0.8, 0.8, bicycle->name);
     fflush (gnuplot);
-    pclose (gnuplot);
+    fclose (gnuplot);
     free (temp_log);;
     remove ("data.temp");
+    return EXIT_SUCCESS;
 }
 
 void clean_bicycle (bicycle_f *bicycle) {

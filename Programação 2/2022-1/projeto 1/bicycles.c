@@ -14,8 +14,7 @@ bicycle_log_f **join_all_logs_and_altimetry_sort (bicycles_f *bicycles, int *log
     
     if (! (temp_log = malloc (sizeof(bicycle_log_f) * *logs_qtd))) {
         fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
+        return NULL;
     } else {
         for (b_count = 0; b_count < bicycles->qtd; b_count++) {
             for (l_count = 0; l_count < bicycles->bicycles[b_count]->activities_qtd; l_count++) {
@@ -42,8 +41,7 @@ bicycles_f *inicialize_bicycles () {
     bicycles_f *bicycles;
     if (! (bicycles = malloc (sizeof (bicycles_f)))) {
         fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
-        fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-        exit (EXIT_FAILURE);
+        return NULL;
     } else {
         bicycles->qtd = 0;
         bicycles->bicycles = NULL;
@@ -60,26 +58,27 @@ int already_added (bicycles_f *bicycles, char *bicycle_name) {
     return -1;
 }
 
-void verify_and_add_bicycle (bicycles_f *bicycles, bicycle_log_f *log) {
+int verify_and_add_bicycle (bicycles_f *bicycles, bicycle_log_f *log) {
     bicycle_f *bicycle;
     int pos;
     pos = already_added (bicycles, log->bicycle_name);
     if (pos != -1) {
-        add_bicycle_log (bicycles->bicycles[pos], log);
+        return add_bicycle_log (bicycles->bicycles[pos], log);
     } else {
-        bicycle = create_bicycle (log->bicycle_name);
-        add_bicycle_log (bicycle, log);
-        add_bicycle_to_array (bicycles,  bicycle);
+        if (! (bicycle = create_bicycle (log->bicycle_name))) 
+            return ALOCATION_ERROR;
+        if (add_bicycle_log (bicycle, log) != 0)
+            return ALOCATION_ERROR;
+        return add_bicycle_to_array (bicycles,  bicycle);
     }
 }
 
-void add_bicycle_to_array (bicycles_f *bicycles, bicycle_f *bicycle) {
+int add_bicycle_to_array (bicycles_f *bicycles, bicycle_f *bicycle) {
     int count;
     if (bicycles->qtd == 0) {
         if (! (bicycles->bicycles = malloc (sizeof (bicycle_f)))) {
             fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
-            fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-            exit (EXIT_FAILURE);
+            return ALOCATION_ERROR;
         } else {
             bicycles->bicycles[bicycles->qtd] = bicycle;
             bicycles->qtd = 1;
@@ -87,8 +86,7 @@ void add_bicycle_to_array (bicycles_f *bicycles, bicycle_f *bicycle) {
     } else {
         if (! (bicycles->bicycles = realloc (bicycles->bicycles, (sizeof (bicycle_f) * (bicycles->qtd * 1))))) {
             fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
-            fprintf (stderr, RED "[ERROR] " NC "Encerrando...\n\n");
-            exit (EXIT_FAILURE);
+            return ALOCATION_ERROR;
         } else {
             count = bicycles->qtd;
             while (count != 0 && strcmp (bicycle->name, bicycles->bicycles[count-1]->name) <= 0) {
@@ -99,6 +97,7 @@ void add_bicycle_to_array (bicycles_f *bicycles, bicycle_f *bicycle) {
             bicycles->qtd++;
         }
     }
+    return EXIT_SUCCESS;
 }
 
 void list_bicycles (bicycles_f *bicycles) {
@@ -125,16 +124,18 @@ void printf_all_activities (bicycles_f *bicycles, int sort) {
         }
         case DISTANCE_SORT: {
             for (count = 0; count < bicycles->qtd; count++) {
-                temp_log = create_temp_distance_sorted_log (bicycles->bicycles[count]);
-                print_logs_with_name (temp_log, bicycles->bicycles[count]->activities_qtd);
-                free (temp_log);
+                if ((temp_log = create_temp_distance_sorted_log (bicycles->bicycles[count]))) {
+                    print_logs_with_name (temp_log, bicycles->bicycles[count]->activities_qtd);
+                    free (temp_log);
+                }
             }
             break;
         }
         case ALTIMETRY_SORT: {
-            temp_log = join_all_logs_and_altimetry_sort (bicycles, &logs_qtd);
-            print_logs_with_name (temp_log, logs_qtd);
-            free (temp_log);
+            if ((temp_log = join_all_logs_and_altimetry_sort (bicycles, &logs_qtd))) {
+                print_logs_with_name (temp_log, logs_qtd);
+                free (temp_log);
+            }
             break;
         }
     }

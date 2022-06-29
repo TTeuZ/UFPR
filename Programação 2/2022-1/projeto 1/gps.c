@@ -23,17 +23,19 @@ void wait_exit () {
 
 int main (int argc, char *argv[]) {
     bicycles_f *bicycles;
-    directory_f *directory;
     char *dir_name, bicycle_name[BUFSIZ];
     int action, is_number, bicycle_pos;
 
-    dir_name = parse_command_line (argv, argc);
-    bicycles = inicialize_bicycles ();
+    if (! (dir_name = parse_command_line (argv, argc)))
+        return EXIT_FAILURE;
+    if (! (bicycles = inicialize_bicycles ())) 
+        return EXIT_FAILURE;
 
     fprintf (stdout, YELLOW "[PROCESSANDO] " NC "Iniciando leitura dos logs...\n");
-    directory = get_logs (dir_name);
-    fprintf (stdout, YELLOW "[PROCESSANDO] " NC "Processando os logs carregados...\n");
-    load_logs (directory, dir_name, bicycles);
+    if ((read_directory (dir_name, bicycles)) == -1) {
+        clean_bicycles (bicycles);
+        return EXIT_FAILURE;
+    }
     fprintf (stdout, GREEN "[PROCESSADO] " NC "Leitura finalizada com sucesso\n\n");
 
     do {
@@ -92,8 +94,8 @@ int main (int argc, char *argv[]) {
                 case 6: {
                     bicycle_pos = already_added (bicycles, bicycle_name);
                     if (bicycle_pos != -1) {
-                        get_histogram (bicycles->bicycles[bicycle_pos]);
-                        wait_exit ();
+                        if ((get_histogram (bicycles->bicycles[bicycle_pos])) == 0)
+                             wait_exit ();
                     } else
                         fprintf (stderr, "Bicicleta não encontrada!\n\n");
                     break;
@@ -112,6 +114,5 @@ int main (int argc, char *argv[]) {
 
     /* limpa os espaços alocados durante a execução do programa */
     clean_bicycles (bicycles);
-    clean_directory (directory);
     exit (EXIT_SUCCESS);
 }
