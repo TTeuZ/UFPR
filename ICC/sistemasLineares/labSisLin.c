@@ -18,8 +18,8 @@ int main ()
   real_t *solVet, *solPont;
   SistLinear_t *s_vet, *s_pont;
   
-  // loop de execução dos testes
-  for (count = 0; count < 9; count++) {
+  // loop de execução dos testes para diagDominante
+  for (count = 0; count < 1; count++) {
     s_vet = alocaSisLin (sizes[count], pontVet);
     s_pont = alocaSisLin (sizes[count], pontPont);
 
@@ -35,7 +35,8 @@ int main ()
       } else {
         /* aplicação da eliminação de gauss */
         eliminacaoGauss (s_vet, solVet, &time_vet_egp);
-        
+        printf ("total de gauss para vet dominante: %f\n", time_vet_egp);
+
         liberaSisLin (s_vet);
       }
     }
@@ -48,14 +49,59 @@ int main ()
       /* verificação da alocação do vetor de resultados */
       if (! (solPont = malloc (sizeof (real_t) * sizes[count]))) {
         fprintf (stderr, "Erro de alocação para o vetor de resultados do tipo pontPont!\n");
-        liberaSisLin (s_vet);
+        liberaSisLin (s_pont);
       } else {
-
+        /* aplicação da eliminação de gauss */
+        eliminacaoGauss (s_pont, solPont, &time_pont_egp);
+        printf ("total de gauss para pont dominante: %f\n", time_pont_egp);
 
 
         liberaSisLin (s_pont);
       }
     }
   } 
+
+  // loop de execução dos testes para hilbert
+  for (count = 0; count < 1; count++) {
+    s_vet = alocaSisLin (sizes[count], pontVet);
+    s_pont = alocaSisLin (sizes[count], pontPont);
+
+    /* verificação se a alocação ocorreu certo */
+    if (s_vet == NULL) {
+      fprintf (stderr, "Erro de alocação para o tipo pontVet!\n");
+    } else {
+      iniSisLin (s_vet, hilbert, COEF_MAX);
+      /* verificação da alocação do vetor de resultados */
+      if (! (solVet = malloc (sizeof (real_t) * sizes[count]))) {
+        fprintf (stderr, "Erro de alocação para o vetor de resultados do tipo pontVet!\n");
+        liberaSisLin (s_vet);
+      } else {
+        /* aplicação da eliminação de gauss */
+        eliminacaoGauss (s_vet, solVet, &time_vet_egp);
+        printf ("total de gauss para vet hilbert: %f\n", time_vet_egp);
+
+        liberaSisLin (s_vet);
+      }
+    }
+
+    /* verificação se a alocação ocorreu certo */
+    if (s_pont == NULL) {
+      fprintf (stderr, "Eror de alocação para o tipo pontPont!\n");
+    } else {
+      iniSisLin (s_pont, hilbert, COEF_MAX);
+      /* verificação da alocação do vetor de resultados */
+      if (! (solPont = malloc (sizeof (real_t) * sizes[count]))) {
+        fprintf (stderr, "Erro de alocação para o vetor de resultados do tipo pontPont!\n");
+        liberaSisLin (s_pont);
+      } else {
+        /* aplicação da eliminação de gauss */
+        eliminacaoGauss (s_pont, solPont, &time_pont_egp);
+        printf ("total de gauss para pont hilbert: %f\n", time_pont_egp);
+
+
+        liberaSisLin (s_pont);
+      }
+    }
+  }
 }
 
