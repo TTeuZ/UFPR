@@ -204,7 +204,7 @@ void print_logs_with_name (bicycle_log_f **logs, int qtd) {
 }
 
 int get_histogram (bicycle_f *bicycle) {
-    FILE *temp_file, *gnuplot;
+    FILE *temp_file, *gnuConfig;
     bicycle_log_f **temp_log;
     int min, max, count;
     int higher_qtd, temp_qtd;
@@ -252,25 +252,29 @@ int get_histogram (bicycle_f *bicycle) {
 
     // print do grafico
 
-    if (! (gnuplot = fopen ("gnuplot -persistent", "w"))) {
+    if (! (gnuConfig = fopen ("gnuplot", "w"))) {
         fprintf (stderr, RED "[ERROR] " NC "Erro na abertura do gnuplot\n\n");
         return OPEN_FILE_ERROR;
     }
 
     // configurando o histograma
-    fprintf (gnuplot, "set xlabel 'Quantidade'\n");
-    fprintf (gnuplot, "set size 1.0, 1.0\n");
-    fprintf (gnuplot, "set xrange [0:*]\n");
-    fprintf (gnuplot, "set yrange [:] reverse\n");
-    fprintf (gnuplot, "set offsets 0,0,0.5,0.5\n");
-    fprintf (gnuplot, "set style fill solid\n");
+    fprintf (gnuConfig, "set xlabel 'Quantidade'\n");
+    fprintf (gnuConfig, "set size 1.0, 1.0\n");
+    fprintf (gnuConfig, "set xrange [0:*]\n");
+    fprintf (gnuConfig, "set yrange [:] reverse\n");
+    fprintf (gnuConfig, "set offsets 0,0,0.5,0.5\n");
+    fprintf (gnuConfig, "set style fill solid\n");
 
     // plotando o histograma e o exibindo em tempo de execução
-    fprintf (gnuplot, "plot 'data.temp' using 2:0:(0):2:($0-%f/2.):($0+%f/2.):($0+1):ytic(1) with boxxyerror linecolor 'black' title 'Atividades de %s'\n", 0.8, 0.8, bicycle->name);
-    fflush (gnuplot);
-    fclose (gnuplot);
-    free (temp_log);;
+    fprintf (gnuConfig, "plot 'data.temp' using 2:0:(0):2:($0-%f/2.):($0+%f/2.):($0+1):ytic(1) with boxxyerror linecolor 'black' title 'Atividades de %s'\n", 0.8, 0.8, bicycle->name);
+    fclose (gnuConfig);
+    
+    // plota o gráfico em tempo de execução
+    system ("gnuplot -p < gnuplot");
+
+    free (temp_log);
     remove ("data.temp");
+    remove ("gnuplot");
     return EXIT_SUCCESS;
 }
 
