@@ -8,7 +8,6 @@
 #define NC "\e[0m"
 
 /* Processamento */
-#define REG_FILE 8
 #define END_FILE -1
 #define NOT_INSERTED -1
 
