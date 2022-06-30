@@ -29,7 +29,7 @@ int read_log_header (FILE *log_file, char **bicycle_name, char **untreated_date)
     strtok (temp_string, " ");
     name = strtok (NULL, "\n");
     if (! (*bicycle_name = malloc (sizeof (char) * BUFSIZ))) {
-        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - header do log\n\n");
         return ALOCATION_ERROR;
     }
     strcpy (*bicycle_name, name);
@@ -38,7 +38,7 @@ int read_log_header (FILE *log_file, char **bicycle_name, char **untreated_date)
     strtok (temp_string, " ");
     date = strtok (NULL, "\n");
     if (! (*untreated_date = malloc (sizeof (char) * BUFSIZ))) {
-        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - data do log\n\n");
         return ALOCATION_ERROR;
     }
     strcpy (*untreated_date, date);
@@ -134,7 +134,7 @@ char *treat_date (char *date) {
     day = strtok (NULL, ",");
     year = strtok (NULL, ", ");
     if (! (temp_date =  malloc (sizeof (char) * (strlen (day) + strlen (month) + strlen (year) + 3)))) {
-        fprintf (stderr, RED "[ERROR] " NC "Erro de alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Erro de alocação - tratamento de data\n\n");
         return NULL;
     } 
 
@@ -180,14 +180,14 @@ int read_directory (char *dir_name, bicycles_f *bicycles) {
             strcat (file_path, "/");
             strcat (file_path, file->d_name);
             if ((log = read_log (file_path, file->d_name)) != NULL) {
-                printf("%s - ", file->d_name);
-                printf("cad: %2d ", log->average_cadence);
-                printf("hr: %3d ", log->average_hr);
-                printf("hr_m: %3d ", log->max_hr);
-                printf("s: %.2f ", log->average_speed);
-                printf("s_m: %.2f ", log->max_speed);
-                printf("dist: %3.2f ", log->distance / 1000);
-                printf("elev: %4.2f\n", log->altimetry_gain);
+                // printf("%s - ", file->d_name);
+                // printf("cad: %2d ", log->average_cadence);
+                // printf("hr: %3d ", log->average_hr);
+                // printf("hr_m: %3d ", log->max_hr);
+                // printf("s: %.2f ", log->average_speed);
+                // printf("s_m: %.2f ", log->max_speed);
+                // printf("dist: %3.2f ", log->distance / 1000);
+                // printf("elev: %4.2f\n", log->altimetry_gain);
                 if (verify_and_add_bicycle (bicycles, log) != 0) 
                     fprintf (stderr, RED "[ERROR] " NC "Falha no armazenamento do log %s\n\n", file->d_name);
             }
@@ -214,7 +214,7 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
     int average_hr = 0, max_hr = 0, average_cadence = 0;
 
     if (! (log_file = fopen (log_path, "r"))) {
-        fprintf (stderr, RED "[ERROR]file " NC "Erro ao ler o log %s\n", log_name);
+        fprintf (stderr, RED "[ERROR] " NC "Erro ao ler o log %s\n", log_name);
         return NULL;
     }
     if (read_log_header (log_file, &bicycle_name, &untreated_date) != 0) {

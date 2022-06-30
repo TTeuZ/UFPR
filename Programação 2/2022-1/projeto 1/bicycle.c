@@ -18,7 +18,7 @@ int compare_dates (char *first, char *second) {
     char *inside_first, *inside_second;
     int day, month, year, first_time, second_time;
     if (! (inside_first = malloc (sizeof (char) * BUFSIZ)) || ! (inside_second = malloc (sizeof (char) * BUFSIZ))) {
-        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - comparador de datas\n\n");
         return COMPARE_ERROR;
     }
 
@@ -43,7 +43,7 @@ int compare_dates (char *first, char *second) {
 reg_f *inicializa_reg () {
     reg_f *reg;
     if (! (reg = malloc (sizeof (reg_f)))) {
-        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - registro de leitura\n\n");
         return NULL;
     } else {
         reg->distance = 0.0;
@@ -59,11 +59,11 @@ bicycle_f *create_bicycle (char *name) {
     bicycle_f *bicycle;
 
     if (! (bicycle = malloc (sizeof (bicycle_f)))) {
-        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - criação de bicicleta\n\n");
         return NULL;
     } else {
         if (! (bicycle->name = malloc (sizeof (char) * BUFSIZ))) {
-            fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+            fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - criação de bicicleta\n\n");
             free (bicycle);
             return NULL;
         }
@@ -82,7 +82,7 @@ bicycle_log_f *create_log (char *bicycle_name, char *date, float distance, float
     bicycle_log_f *log;
     
     if (! (log = malloc (sizeof (bicycle_log_f)))) {
-        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - criação de log\n\n");
         return NULL;
     } else {
         log->bicycle_name = bicycle_name;
@@ -102,7 +102,7 @@ bicycle_log_f **create_temp_distance_sorted_log (bicycle_f *bicycle) {
     bicycle_log_f **temp_log;
     int count, iterator;
     if (! (temp_log = malloc (sizeof (bicycle_log_f) * bicycle->activities_qtd))) {
-        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - criação de log temporário\n\n");
         return NULL;
     } else {
         for (count = 0; count < bicycle->activities_qtd; count++) {
@@ -125,7 +125,7 @@ int add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log) {
     int count;
     if (bicycle->activities_qtd == 0) {
         if (! (bicycle->logs = malloc (sizeof (bicycle_log_f)))) {
-            fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+            fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - adição de bicileta\n\n");
             return ALOCATION_ERROR;
         } else {
             bicycle->logs[bicycle->activities_qtd] = log;
@@ -133,7 +133,7 @@ int add_bicycle_log (bicycle_f *bicycle, bicycle_log_f *log) {
         }
     } else {
         if (! (bicycle->logs = realloc (bicycle->logs, (sizeof (bicycle_log_f) * (bicycle->activities_qtd + 1))))) {
-            fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+            fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - adição de bicileta\n\n");
             return ALOCATION_ERROR;
         } else {
             count = bicycle->activities_qtd;

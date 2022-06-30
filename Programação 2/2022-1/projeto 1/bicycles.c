@@ -13,7 +13,7 @@ bicycle_log_f **join_all_logs_and_altimetry_sort (bicycles_f *bicycles, int *log
         *logs_qtd += bicycles->bicycles[b_count]->activities_qtd;
     
     if (! (temp_log = malloc (sizeof(bicycle_log_f) * *logs_qtd))) {
-        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - logs temporários\n\n");
         return NULL;
     } else {
         for (b_count = 0; b_count < bicycles->qtd; b_count++) {
@@ -40,7 +40,7 @@ bicycle_log_f **join_all_logs_and_altimetry_sort (bicycles_f *bicycles, int *log
 bicycles_f *inicialize_bicycles () {
     bicycles_f *bicycles;
     if (! (bicycles = malloc (sizeof (bicycles_f)))) {
-        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+        fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - conjunto de bicicletas\n\n");
         return NULL;
     } else {
         bicycles->qtd = 0;
@@ -51,11 +51,11 @@ bicycles_f *inicialize_bicycles () {
 
 int already_added (bicycles_f *bicycles, char *bicycle_name) {
     int count;
-    if (bicycles->qtd == 0) return -1;
+    if (bicycles->qtd == 0) return NOT_INSERTED;
     for (count = 0; count < bicycles->qtd; count++) 
         if (strcmp (bicycle_name, bicycles->bicycles[count]->name) == 0)
             return count;
-    return -1;
+    return NOT_INSERTED;
 }
 
 int verify_and_add_bicycle (bicycles_f *bicycles, bicycle_log_f *log) {
@@ -69,7 +69,7 @@ int verify_and_add_bicycle (bicycles_f *bicycles, bicycle_log_f *log) {
             return ALOCATION_ERROR;
         if (add_bicycle_log (bicycle, log) != 0)
             return ALOCATION_ERROR;
-        return add_bicycle_to_array (bicycles,  bicycle);
+        return add_bicycle_to_array (bicycles, bicycle);
     }
 }
 
@@ -77,7 +77,7 @@ int add_bicycle_to_array (bicycles_f *bicycles, bicycle_f *bicycle) {
     int count;
     if (bicycles->qtd == 0) {
         if (! (bicycles->bicycles = malloc (sizeof (bicycle_f)))) {
-            fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+            fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - adição de bicicleta no conjunto\n\n");
             return ALOCATION_ERROR;
         } else {
             bicycles->bicycles[bicycles->qtd] = bicycle;
@@ -85,7 +85,7 @@ int add_bicycle_to_array (bicycles_f *bicycles, bicycle_f *bicycle) {
         }
     } else {
         if (! (bicycles->bicycles = realloc (bicycles->bicycles, (sizeof (bicycle_f) * (bicycles->qtd * 1))))) {
-            fprintf (stderr, RED "[ERROR] " NC "Falha na alocação de memoria\n\n");
+            fprintf (stderr, RED "[ERROR] " NC "Falha na alocação - adição de bicicleta no conjunto\n\n");
             return ALOCATION_ERROR;
         } else {
             count = bicycles->qtd;

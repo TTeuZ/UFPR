@@ -10,6 +10,7 @@
 /* Processamento */
 #define REG_FILE 8
 #define END_FILE -1
+#define NOT_INSERTED -1
 
 /* Prints de resumo */
 #define DATE_SORT 1
