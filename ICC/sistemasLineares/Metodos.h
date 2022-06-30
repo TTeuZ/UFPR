@@ -4,6 +4,7 @@
 // Parâmetros para teste de convergência
 #define MAXIT 100     // número máximo de iterações para métodos iterativos
 #define ERRO 1.0e-6   // Tolerância para critérios de parada em métodos iterativos
+#define OPE_ERROR -1
 
 // Calcula a normaL2 do resíduo
 real_t normaL2Residuo(SistLinear_t *SL, real_t *x);
