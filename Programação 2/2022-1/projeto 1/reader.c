@@ -1,3 +1,4 @@
+#define _DEFAULT_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -52,7 +53,7 @@ int read_log_header (FILE *log_file, char **bicycle_name, char **untreated_date)
 int read_log_reg (FILE *log_file, reg_f *reg) {
     char temp_string[BUFSIZ], *field, *value;
     int r_cadence = -1, r_hr = -1;
-    float r_altimetry = -1, r_distance = -1, r_speed = -1;
+    double r_altimetry = -1, r_distance = -1, r_speed = -1;
 
     fgets (temp_string, sizeof (temp_string), log_file);
     if (feof (log_file))
@@ -174,20 +175,20 @@ int read_directory (char *dir_name, bicycles_f *bicycles) {
         return OPEN_DIR_ERROR;
     }
     while ((file = readdir (directory_stream)) != NULL) {
-        if (file->d_type == REG_FILE && is_log_file (file->d_name)) {
+        if (file->d_type == DT_REG && is_log_file (file->d_name)) {
             file_path[0] = '\0';
             strcat (file_path, dir_name);
             strcat (file_path, "/");
             strcat (file_path, file->d_name);
             if ((log = read_log (file_path, file->d_name)) != NULL) {
-                // printf("%s - ", file->d_name);
-                // printf("cad: %2d ", log->average_cadence);
-                // printf("hr: %3d ", log->average_hr);
-                // printf("hr_m: %3d ", log->max_hr);
-                // printf("s: %.2f ", log->average_speed);
-                // printf("s_m: %.2f ", log->max_speed);
-                // printf("dist: %3.2f ", log->distance / 1000);
-                // printf("elev: %4.2f\n", log->altimetry_gain);
+                        printf("%s - ", file->d_name);
+                        printf("cad: %2d ", log->average_cadence);
+                        printf("hr: %3d ", log->average_hr);
+                        printf("hr_m: %3d ", log->max_hr);
+                        printf("s: %.2f ", log->average_speed);
+                        printf("s_m: %.2f ", log->max_speed);
+                        printf("dist: %3.2f ", log->distance / 1000);
+                        printf("elev: %4.2f\n", log->altimetry_gain);
                 if (verify_and_add_bicycle (bicycles, log) != 0) 
                     fprintf (stderr, RED "[ERROR] " NC "Falha no armazenamento do log %s\n\n", file->d_name);
             }
@@ -204,13 +205,13 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
     char temp_string[BUFSIZ];
     /* contadores dos valores do log */
     int qtd_log_speed = 0, qtd_log_hr = 0, qtd_log_cadence = 0, timestamp_qtd = 1;
-    float last_altitude = 0, actual_altitude = 0, last_speed = -1, actual_speed;
+    double last_altitude = 0, actual_altitude = 0, last_speed = -1, actual_speed;
     int last_hr = -1, actual_hr = 0, last_cadence = -1, actual_cadence = 0;
     /* timestamps */
     int last_timestamp_sec = 0, actual_timestamp_sec = 0, temp_timestamp_sec = 0;
     /* valores do log */
     char *bicycle_name = NULL, *untreated_date = NULL, *date;
-    float distance = 0, average_speed = 0, max_speed = 0, altimetry_gain = 0;
+    double distance = 0, average_speed = 0, max_speed = 0, altimetry_gain = 0;
     int average_hr = 0, max_hr = 0, average_cadence = 0;
 
     if (! (log_file = fopen (log_path, "r"))) {

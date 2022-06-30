@@ -3,31 +3,31 @@
 typedef struct bicycle_log {
     char *bicycle_name;
     char *date;
-    float distance;
-    float average_speed;
-    float max_speed;
+    double distance;
+    double average_speed;
+    double max_speed;
     int average_hr;
     int max_hr;
     int average_cadence;
-    float altimetry_gain;
+    double altimetry_gain;
 } bicycle_log_f;
 
 typedef struct bicycle {
     char *name;
     int activities_qtd;
-    float total_km;
-    float longest_ride;
-    float shorter_ride;
-    float average_distance;
+    double total_km;
+    double longest_ride;
+    double shorter_ride;
+    double average_distance;
     bicycle_log_f **logs;
 } bicycle_f;
 
 typedef struct reg {
-    float distance;
-    float speed;
+    double distance;
+    double speed;
     int hr;
     int cadence;
-    float altimetry;
+    double altimetry;
     char timestamp[BUFSIZ];
 } reg_f;
 
@@ -45,7 +45,7 @@ bicycle_f *create_bicycle (char *name);
 *   unção que recebe como parametros os valores do log e cria uma instancia de log
 *   retorna o ponteiro de aceso ao log
 */
-bicycle_log_f *create_log (char *bicycle_name, char *date, float distance, float average_speed, float max_speed, int average_hr, int max_hr, int average_cadence, float altimetry_gain);
+bicycle_log_f *create_log (char *bicycle_name, char *date, double distance, double average_speed, double max_speed, int average_hr, int max_hr, int average_cadence, double altimetry_gain);
 
 /*
 *   Função que, apartir de um log ja existente, recria o conjunto de logs ordenados pela distância

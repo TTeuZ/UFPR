@@ -78,7 +78,7 @@ bicycle_f *create_bicycle (char *name) {
     }
 }
 
-bicycle_log_f *create_log (char *bicycle_name, char *date, float distance, float average_speed, float max_speed, int average_hr, int max_hr, int average_cadence, float altimetry_gain) {
+bicycle_log_f *create_log (char *bicycle_name, char *date, double distance, double average_speed, double max_speed, int average_hr, int max_hr, int average_cadence, double altimetry_gain) {
     bicycle_log_f *log;
     
     if (! (log = malloc (sizeof (bicycle_log_f)))) {
