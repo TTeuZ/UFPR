@@ -7,16 +7,16 @@
 #define OPE_ERROR -1
 
 // Calcula a normaL2 do resíduo
-real_t normaL2Residuo(SistLinear_t *SL, real_t *x);
+real_t normaL2Residuo(SistLinear_t *sisLin);
 
 // Método da Eliminação de Gauss
-int eliminacaoGauss (SistLinear_t *SL, real_t *x, double *tTotal);
+int eliminacaoGauss (SistLinear_t *sisLin, real_t *x, double *tTotal);
 
 // Método de Refinamento
-int refinamento (SistLinear_t *SL, real_t *x, real_t erro, double *tTotal);
+int refinamento (SistLinear_t *sisLin, real_t *x, real_t erro, double *tTotal);
 
 // Método de Gauss-Seidel
-int gaussSeidel (SistLinear_t *SL, real_t *x, real_t erro, double *tTotal);
+int gaussSeidel (SistLinear_t *sisLin, real_t *x, real_t erro, double *tTotal);
 
 #endif // __METODOS_H__
 

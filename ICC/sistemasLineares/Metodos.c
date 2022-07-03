@@ -43,8 +43,8 @@ int retros_subs (SistLinear_t *sisLin, real_t *x) {
     x[line] /= sisLin->A[line][line];
     if (isnan (x[line]) || isinf (x[line])) 
       return OPE_ERROR;
-    return EXIT_SUCCESS;
   }
+  return EXIT_SUCCESS;
 }
 
 /*!
@@ -89,8 +89,12 @@ int eliminacaoGauss (SistLinear_t *sisLin, real_t *x, double *tTotal) {
   \param SL Ponteiro para o sistema linear
   \param x Solução do sistema linear
 */
-real_t normaL2Residuo(SistLinear_t *SL, real_t *x) {
-  
+real_t normaL2Residuo (SistLinear_t *sisLin) {
+  int count;
+  real_t norma = 0.0;
+  for (count = 0; count < sisLin->n; count++) 
+    norma += pow (sisLin->b[count], 2);
+  return sqrt (norma);
 }
 
 
@@ -106,34 +110,34 @@ real_t normaL2Residuo(SistLinear_t *SL, real_t *x) {
           de iterações realizadas. Um nr. negativo indica um erro.
   */
 int gaussSeidel (SistLinear_t *sisLin, real_t *x, real_t erro, double *tTotal) {
-  real_t *actual_sol;
-  real_t stop, max = 0.0; 
+  real_t actual_sol;
+  real_t stop = 100.0, max; 
   int ite_count = 0;
   int line, col, count;
   *tTotal = timestamp ();
 
-  if (! (actual_sol = malloc (sizeof (real_t) * sisLin->n)))
-    return OPE_ERROR;
-
-  while (ite_count < 100 && ! isgreater (stop, erro)) {
+  while (ite_count < MAXIT && isgreater (stop, erro)) {
+    max = 0.0;
     for (line = 0; line < sisLin->n; line++) {
-      for (col = line + 1; col < sisLin->n; col++)
-        actual_sol[line] -= sisLin->A[line][col];
-    actual_sol[line] += sisLin->b[line];
-    actual_sol[line] /= sisLin->A[line][line];
-    if (isnan (actual_sol[line]) || isinf (actual_sol[line]))
-      return OPE_ERROR;
-    }
+      actual_sol = sisLin->b[line];
+      for (col = 0; col < sisLin->n; col++) 
+        if (col != line) 
+          actual_sol -= sisLin->A[line][col] * x[col];
 
-    for (count = 0; count < sisLin->n; count++) {
-      max = isgreater (abs (actual_sol[count] - x[count]), max) ? abs (actual_sol[count] - x[count]) : max;
-      x[count] = actual_sol[count];
+      actual_sol /= sisLin->A[line][line];
+      if (isnan (actual_sol) || isinf (actual_sol)) 
+        return OPE_ERROR;
+
+      max = isgreater (ABS (actual_sol - x[line]), max) ? ABS (actual_sol - x[line]) : max;
+      x[line] = actual_sol;
+      actual_sol = 0.0;
     }
     stop = max;
     ite_count++;
   }
+
   *tTotal = timestamp () - *tTotal;
-  return EXIT_SUCCESS;
+  return ite_count;
 }
 
 
@@ -148,7 +152,35 @@ int gaussSeidel (SistLinear_t *sisLin, real_t *x, real_t erro, double *tTotal) {
   \return código de erro. Um nr positivo indica sucesso e o nr
           de iterações realizadas. Um nr. negativo indica um erro.
   */
-int refinamento (SistLinear_t *SL, real_t *x, real_t erro, double *tTotal) {
+int refinamento (SistLinear_t *sisLin, real_t *x, real_t erro, double *tTotal) {
+  real_t gsTime, *temp_sol;
+  real_t norma = 100.0;
+  int ite_count = 0, line, col;
+  *tTotal = timestamp ();
 
+  if (!(temp_sol = malloc (sizeof (real_t) * sisLin->n)))
+    return OPE_ERROR;
+
+  for (int line = 0; line < 5; line++) {
+    temp_sol[line] = 0;
+    x[line] = 0;
+  }
+
+  while (ite_count < MAXIT && isgreater (norma, erro)) {
+    if (gaussSeidel (sisLin, temp_sol, ERRO, &gsTime) == OPE_ERROR)
+      return OPE_ERROR;
+    
+    for (line = 0; line < sisLin->n; line++) {
+      x[line] += temp_sol[line];
+      for (col = 0; col < sisLin->n; col++)
+        sisLin->b[line] -= sisLin->A[line][col] * temp_sol[col];
+    }
+
+    norma = normaL2Residuo (sisLin);
+    ite_count++;
+  }
+
+  *tTotal = timestamp () - *tTotal;
+  return ite_count;
 }
 
