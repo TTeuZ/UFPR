@@ -33,6 +33,7 @@ typedef enum {
 SistLinear_t* alocaSisLin (unsigned int n, tipoAloc_t tipo);
 void liberaSisLin (SistLinear_t *SL);
 void iniSisLin (SistLinear_t *SL, tipoSistLinear_t tipo, real_t coef_max);
+int CpySisLin (SistLinear_t *font, SistLinear_t *target);
 
 // Leitura e impressão de sistemas lineares
 SistLinear_t *lerSisLin ();
