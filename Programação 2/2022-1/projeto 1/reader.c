@@ -180,18 +180,9 @@ int read_directory (char *dir_name, bicycles_f *bicycles) {
             strcat (file_path, dir_name);
             strcat (file_path, "/");
             strcat (file_path, file->d_name);
-            if ((log = read_log (file_path, file->d_name)) != NULL) {
-                printf("%s - ", file->d_name);
-                printf("cad: %2d ", log->average_cadence);
-                printf("hr: %3d ", log->average_hr);
-                printf("hr_m: %3d ", log->max_hr);
-                printf("s: %.2f ", log->average_speed);
-                printf("s_m: %.2f ", log->max_speed);
-                printf("dist: %3.2f ", log->distance / 1000);
-                printf("elev: %4.2f\n", log->altimetry_gain);
+            if ((log = read_log (file_path, file->d_name)) != NULL) 
                 if (verify_and_add_bicycle (bicycles, log) != 0) 
                     fprintf (stderr, RED "[ERROR] " NC "Falha no armazenamento do log %s\n\n", file->d_name);
-            }
         }
     }
     closedir (directory_stream);
@@ -205,7 +196,7 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
     char temp_string[BUFSIZ];
     /* contadores dos valores do log */
     int qtd_log_speed = 0, qtd_log_hr = 0, qtd_log_cadence = 0, timestamp_qtd = 1;
-    double last_altitude = 0, actual_altitude = 0, last_speed = -1, actual_speed;
+    double last_altitude = -1, actual_altitude = 0, last_speed = -1, actual_speed;
     int last_hr = -1, actual_hr = 0, last_cadence = -1, actual_cadence = 0;
     /* timestamps */
     int last_timestamp_sec = 0, actual_timestamp_sec = 0, temp_timestamp_sec = 0;
@@ -249,10 +240,10 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                 distance = reg->distance;
 
             if (reg->altimetry != -1) {
-                last_altitude = last_altitude == 0 ? reg->altimetry : actual_altitude;
+                last_altitude = last_altitude == -1 ? reg->altimetry : actual_altitude;
                 actual_altitude = reg->altimetry;
                 if (actual_altitude > last_altitude) 
-                    altimetry_gain += actual_altitude - last_altitude;
+                    altimetry_gain += (actual_altitude - last_altitude);
             }
 
             if (reg->speed != -1) {
@@ -268,10 +259,6 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                     average_speed += reg->speed;
                     qtd_log_speed++;
                 }
-                // if (timestamp_qtd > 1) 
-                //     printf ("s_a: %f, s_l: %f, timestamp: %d\n", reg->speed, last_speed, timestamp_qtd);
-                // if (reg->speed == 0)
-                //     printf ("s_a: %f, s_l: %f, timestamp: %d\n", reg->speed, last_speed, timestamp_qtd);
             }
 
             if (reg->hr != -1) {
