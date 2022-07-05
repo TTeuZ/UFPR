@@ -58,8 +58,8 @@ int read_log_reg (FILE *log_file, reg_f *reg) {
     fgets (temp_string, sizeof (temp_string), log_file);
     if (feof (log_file))
         return END_FILE;
-    
-    while (strcmp (temp_string, "\n") != 0) {
+
+    while (strcmp (temp_string, "\n") != 0 && ! feof (log_file)) {
         field = strtok (temp_string, ":");
 
         if (strcmp (field, "altitude") == 0) {
@@ -181,14 +181,14 @@ int read_directory (char *dir_name, bicycles_f *bicycles) {
             strcat (file_path, "/");
             strcat (file_path, file->d_name);
             if ((log = read_log (file_path, file->d_name)) != NULL) {
-                        printf("%s - ", file->d_name);
-                        printf("cad: %2d ", log->average_cadence);
-                        printf("hr: %3d ", log->average_hr);
-                        printf("hr_m: %3d ", log->max_hr);
-                        printf("s: %.2f ", log->average_speed);
-                        printf("s_m: %.2f ", log->max_speed);
-                        printf("dist: %3.2f ", log->distance / 1000);
-                        printf("elev: %4.2f\n", log->altimetry_gain);
+                printf("%s - ", file->d_name);
+                printf("cad: %2d ", log->average_cadence);
+                printf("hr: %3d ", log->average_hr);
+                printf("hr_m: %3d ", log->max_hr);
+                printf("s: %.2f ", log->average_speed);
+                printf("s_m: %.2f ", log->max_speed);
+                printf("dist: %3.2f ", log->distance / 1000);
+                printf("elev: %4.2f\n", log->altimetry_gain);
                 if (verify_and_add_bicycle (bicycles, log) != 0) 
                     fprintf (stderr, RED "[ERROR] " NC "Falha no armazenamento do log %s\n\n", file->d_name);
             }
