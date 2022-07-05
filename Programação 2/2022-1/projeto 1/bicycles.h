@@ -3,7 +3,7 @@
 #ifndef BICYCLES
 #define BICYCLES
 typedef struct bicycles {
-    bicycle_f **bicycles;
+    bicycle_f **list;
     int qtd;
 } bicycles_f;
 

@@ -56,7 +56,7 @@ int main (int argc, char *argv[]) {
                 case 2: {
                     bicycle_pos = already_added (bicycles, bicycle_name);
                     if (bicycle_pos != -1) {
-                        print_bicycle_resume (bicycles->bicycles[bicycle_pos]);
+                        print_bicycle_resume (bicycles->list[bicycle_pos]);
                         wait_exit ();
                     } else
                         fprintf (stderr, "Bicicleta não encontrada!\n\n");
@@ -80,7 +80,7 @@ int main (int argc, char *argv[]) {
                 case 6: {
                     bicycle_pos = already_added (bicycles, bicycle_name);
                     if (bicycle_pos != -1) {
-                        if ((get_histogram (bicycles->bicycles[bicycle_pos])) == 0)
+                        if ((get_histogram (bicycles->list[bicycle_pos])) == 0)
                              wait_exit ();
                     } else
                         fprintf (stderr, "Bicicleta não encontrada!\n\n");
