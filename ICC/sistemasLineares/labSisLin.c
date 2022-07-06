@@ -188,10 +188,10 @@ int main () {
 
       fprintf(stdout, "=============================================================================================================================\n\n");
     } 
+    liberaSisLin (vet_d);
+    liberaSisLin (pont_d);
+    liberaSisLin (vet_h);
+    liberaSisLin (pont_h);
+    free (sol);
   }
-  liberaSisLin (vet_d);
-  liberaSisLin (pont_d);
-  liberaSisLin (vet_h);
-  liberaSisLin (pont_h);
-  free (sol);
 }

@@ -110,9 +110,9 @@ real_t normaL2Residuo (SistLinear_t *sisLin) {
           de iterações realizadas. Um nr. negativo indica um erro.
   */
 int gaussSeidel (SistLinear_t *sisLin, real_t *x, real_t erro, double *tTotal) {
-  real_t actual_sol;
-  real_t stop = 100.0, max; 
-  int ite_count = 0;
+  real_t actual_sol = 0.0;
+  real_t stop = 100.0, max = 0.0; 
+  int ite_count = 0.0;
   int line, col, count;
   *tTotal = timestamp ();
 
@@ -158,10 +158,10 @@ int refinamento (SistLinear_t *sisLin, real_t *x, real_t erro, double *tTotal) {
   int ite_count = 0, line, col;
   *tTotal = timestamp ();
 
-  if (!(temp_sol = malloc (sizeof (real_t) * sisLin->n)))
+  if (! (temp_sol = malloc (sizeof (real_t) * sisLin->n)))
     return OPE_ERROR;
 
-  for (int line = 0; line < 5; line++) {
+  for (int line = 0; line < sisLin->n; line++) {
     temp_sol[line] = 0;
     x[line] = 0;
   }
@@ -181,6 +181,7 @@ int refinamento (SistLinear_t *sisLin, real_t *x, real_t erro, double *tTotal) {
   }
 
   *tTotal = timestamp () - *tTotal;
+  free (temp_sol);
   return ite_count;
 }
 
