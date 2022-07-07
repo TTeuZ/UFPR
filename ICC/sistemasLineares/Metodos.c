@@ -140,7 +140,7 @@ int gaussSeidel (SistLinear_t *sisLin, real_t *x, real_t erro, double *tTotal) {
   return ite_count;
 }
 
-
+// ta errado por enquanto
 /*!
   \brief Método de Refinamento
 
@@ -153,35 +153,73 @@ int gaussSeidel (SistLinear_t *sisLin, real_t *x, real_t erro, double *tTotal) {
           de iterações realizadas. Um nr. negativo indica um erro.
   */
 int refinamento (SistLinear_t *sisLin, real_t *x, real_t erro, double *tTotal) {
-  real_t gsTime, *temp_sol;
-  real_t norma = 100.0;
-  int ite_count = 0, line, col;
+  real_t *temp_sol, *temp_b;
+  real_t norma = 1.0;
+  double gs_time;
+  int ite_count, line, col;
+
   *tTotal = timestamp ();
 
   if (! (temp_sol = malloc (sizeof (real_t) * sisLin->n)))
     return OPE_ERROR;
+  if (! (temp_b = malloc (sizeof (real_t) * sisLin->n)))
+    return OPE_ERROR;
 
-  for (int line = 0; line < sisLin->n; line++) {
+  for (line = 0; line < sisLin->n; line++) {
     temp_sol[line] = 0;
     x[line] = 0;
+    temp_b[line]= sisLin->b[line];
   }
+
+  if (gaussSeidel (sisLin, temp_sol, ERRO, &gs_time) == OPE_ERROR)
+    return OPE_ERROR;
 
   while (ite_count < MAXIT && isgreater (norma, erro)) {
-    if (gaussSeidel (sisLin, temp_sol, ERRO, &gsTime) == OPE_ERROR)
-      return OPE_ERROR;
-    
-    for (line = 0; line < sisLin->n; line++) {
+    for (line = 0; line < sisLin->n; line++) 
       x[line] += temp_sol[line];
-      for (col = 0; col < sisLin->n; col++)
-        sisLin->b[line] -= sisLin->A[line][col] * temp_sol[col];
-    }
-
-    norma = normaL2Residuo (sisLin);
-    ite_count++;
   }
+
+  // inicial um while para as iterações do refinamento
+    // soma no vetor X o resultado oo temp_sol
+    // aplicar o gaussSeidel a primeira vez e obter o primeiro X
+    // calcular o residuo deste X
+    // aplicar a norma ls para o resiodo e encerra
 
   *tTotal = timestamp () - *tTotal;
   free (temp_sol);
+  free (temp_b);
   return ite_count;
 }
 
+// int refinamento (SistLinear_t *sisLin, real_t *x, real_t erro, double *tTotal) {
+//   real_t gsTime, *temp_sol;
+//   real_t norma = 100.0;
+//   int ite_count = 0, line, col;
+//   *tTotal = timestamp ();
+
+//   if (! (temp_sol = malloc (sizeof (real_t) * sisLin->n)))
+//     return OPE_ERROR;
+
+//   for (int line = 0; line < sisLin->n; line++) {
+//     temp_sol[line] = 0;
+//     x[line] = 0;
+//   }
+
+//   while (ite_count < MAXIT && isgreater (norma, erro)) {
+//     if (gaussSeidel (sisLin, temp_sol, ERRO, &gsTime) == OPE_ERROR)
+//       return OPE_ERROR;
+    
+//     for (line = 0; line < sisLin->n; line++) {
+//       x[line] += temp_sol[line];
+//       for (col = 0; col < sisLin->n; col++)
+//         sisLin->b[line] -= sisLin->A[line][col] * temp_sol[col];
+//     }
+
+//     norma = normaL2Residuo (sisLin);
+//     ite_count++;
+//   }
+
+//   *tTotal = timestamp () - *tTotal;
+//   free (temp_sol);
+  // return ite_count;
+// }
