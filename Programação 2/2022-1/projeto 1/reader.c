@@ -180,7 +180,7 @@ int read_directory (char *dir_name, bicycles_f *bicycles) {
             strcat (file_path, dir_name);
             strcat (file_path, "/");
             strcat (file_path, file->d_name);
-            if ((log = read_log (file_path, file->d_name)) != NULL) 
+            if ((log = read_log (file_path, file->d_name)) != NULL)  
                 if (verify_and_add_bicycle (bicycles, log) != 0) 
                     fprintf (stderr, RED "[ERROR] " NC "Falha no armazenamento do log %s\n\n", file->d_name);
         }
@@ -192,7 +192,6 @@ int read_directory (char *dir_name, bicycles_f *bicycles) {
 bicycle_log_f *read_log (char *log_path, char *log_name) {
     FILE *log_file;
     reg_f *reg;
-    int count;
     char temp_string[BUFSIZ];
     /* contadores dos valores do log */
     int qtd_log_speed = 0, qtd_log_hr = 0, qtd_log_cadence = 0, timestamp_qtd = 1;
@@ -250,13 +249,12 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                 max_speed = max_speed < reg->speed ? reg->speed : max_speed;
                 last_speed = last_speed == -1 ? reg->speed : actual_speed;
                 actual_speed = reg->speed;
+                
                 if (timestamp_qtd > 1 && last_speed != 0) {
-                    for (count = 0; count < timestamp_qtd; count++) {
-                        average_speed += last_speed;
-                        qtd_log_speed++;
-                    }
+                    average_speed += last_speed * timestamp_qtd;
+                    qtd_log_speed += timestamp_qtd;
                 } else if (actual_speed != 0) {
-                    average_speed += reg->speed;
+                    average_speed += actual_speed;
                     qtd_log_speed++;
                 }
             }
@@ -265,32 +263,26 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                 max_hr = max_hr < reg->hr ? reg->hr : max_hr;
                 last_hr = last_hr == -1 ? reg->hr : actual_hr;
                 actual_hr = reg->hr;
-                if (reg->hr != 0) {
-                    if (timestamp_qtd > 1 && last_hr != 0) {
-                        for (count = 0; count < timestamp_qtd; count++) {
-                            average_hr += last_hr;
-                            qtd_log_hr++;
-                        }
-                    } else {
-                        average_hr += reg->hr;
-                        qtd_log_hr++;
-                    }
-                }   
+
+                if (timestamp_qtd > 1 && last_hr != 0) {
+                    average_hr += last_hr * timestamp_qtd;
+                    qtd_log_hr += timestamp_qtd;
+                } else if (actual_hr != 0) {
+                    average_hr += reg->hr;
+                    qtd_log_hr++;
+                }
             }
 
             if (reg->cadence != -1) {
                 last_cadence = last_cadence == -1 ? reg->cadence : actual_cadence;
                 actual_cadence = reg->cadence;
-                if (reg->cadence != 0) {
-                    if (timestamp_qtd > 1 && last_cadence != 0) {
-                        for (count = 0; count < timestamp_qtd; count++) {
-                            average_cadence += last_cadence;
-                            qtd_log_cadence++;
-                        }
-                    } else {
-                        average_cadence += reg->cadence;
-                        qtd_log_cadence++;
-                    }
+
+                if (timestamp_qtd > 1 && last_cadence != 0) {
+                    average_cadence += last_cadence * timestamp_qtd;
+                    qtd_log_cadence += timestamp_qtd;
+                } else if (actual_cadence != 0) {
+                    average_cadence += reg->cadence;
+                    qtd_log_cadence++;
                 }
             }
         }
