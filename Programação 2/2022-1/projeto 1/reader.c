@@ -180,7 +180,7 @@ int read_directory (char *dir_name, bicycles_f *bicycles) {
             strcat (file_path, dir_name);
             strcat (file_path, "/");
             strcat (file_path, file->d_name);
-            if ((log = read_log (file_path, file->d_name)) != NULL)  
+            if ((log = read_log (file_path, file->d_name)) != NULL)
                 if (verify_and_add_bicycle (bicycles, log) != 0) 
                     fprintf (stderr, RED "[ERROR] " NC "Falha no armazenamento do log %s\n\n", file->d_name);
         }
@@ -202,7 +202,7 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
     /* valores do log */
     char *bicycle_name = NULL, *untreated_date = NULL, *date;
     double distance = 0, average_speed = 0, max_speed = 0, altimetry_gain = 0;
-    int average_hr = 0, max_hr = 0, average_cadence = 0;
+    double average_hr = 0, max_hr = 0, average_cadence = 0;
 
     if (! (log_file = fopen (log_path, "r"))) {
         fprintf (stderr, RED "[ERROR] " NC "Erro ao ler o log %s\n", log_name);
@@ -251,9 +251,10 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                 actual_speed = reg->speed;
                 
                 if (timestamp_qtd > 1 && last_speed != 0) {
-                    average_speed += last_speed * timestamp_qtd;
-                    qtd_log_speed += timestamp_qtd;
-                } else if (actual_speed != 0) {
+                    average_speed += last_speed * (timestamp_qtd - 1);
+                    qtd_log_speed += (timestamp_qtd - 1);
+                }
+                if (actual_speed != 0) {
                     average_speed += actual_speed;
                     qtd_log_speed++;
                 }
@@ -265,9 +266,10 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                 actual_hr = reg->hr;
 
                 if (timestamp_qtd > 1 && last_hr != 0) {
-                    average_hr += last_hr * timestamp_qtd;
-                    qtd_log_hr += timestamp_qtd;
-                } else if (actual_hr != 0) {
+                    average_hr += last_hr * (timestamp_qtd - 1);
+                    qtd_log_hr += (timestamp_qtd - 1);
+                } 
+                if (actual_hr != 0) {
                     average_hr += reg->hr;
                     qtd_log_hr++;
                 }
@@ -278,9 +280,10 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
                 actual_cadence = reg->cadence;
 
                 if (timestamp_qtd > 1 && last_cadence != 0) {
-                    average_cadence += last_cadence * timestamp_qtd;
-                    qtd_log_cadence += timestamp_qtd;
-                } else if (actual_cadence != 0) {
+                    average_cadence += last_cadence * (timestamp_qtd - 1);
+                    qtd_log_cadence += (timestamp_qtd - 1);
+                } 
+                if (actual_cadence != 0) {
                     average_cadence += reg->cadence;
                     qtd_log_cadence++;
                 }
@@ -290,11 +293,11 @@ bicycle_log_f *read_log (char *log_path, char *log_name) {
     if (qtd_log_speed != 0) average_speed = average_speed / qtd_log_speed;
     average_speed = average_speed * 3.6f;
     max_speed = max_speed * 3.6f;
-    if (qtd_log_hr != 0) average_hr = average_hr / qtd_log_hr;
-    if (qtd_log_cadence != 0) average_cadence = average_cadence / qtd_log_cadence;
+    if (qtd_log_hr != 0) average_hr = round (average_hr / qtd_log_hr);
+    if (qtd_log_cadence != 0) average_cadence = round (average_cadence / qtd_log_cadence);
 
     free (reg);
     free (untreated_date);
     fclose (log_file);
-    return create_log (bicycle_name, date, distance, average_speed, max_speed, average_hr, max_hr, average_cadence, altimetry_gain);
+    return create_log (bicycle_name, date, distance, average_speed, max_speed, (int) average_hr, max_hr, (int) average_cadence, altimetry_gain);
 }
