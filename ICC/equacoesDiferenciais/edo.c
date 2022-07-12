@@ -5,19 +5,24 @@
 
 edo_h *aloc_edo () {
     edo_h *edo;
-    if (! (edo = malloc (sizeof (edo_h)))) 
-        return NULL;
-    else return edo;
+    if ((edo = malloc (sizeof (edo_h)))) 
+        return edo;
+    else return NULL;
 }
 
-edo_h *init_edo (double s_interval, double f_interval, double y_s_interval, double y_f_interval, int n) {
-    edo_h *edo;
-    if ((edo = malloc (sizeof (edo_h)))) {
-        edo->n = n;
-        edo->s_interval = s_interval;
-        edo->f_interval = f_interval;
-        edo->y_s_interval = y_s_interval;
-        edo->y_f_interval = y_f_interval;
-        return edo;
-    } else return NULL;
+void set_edo_conditions (edo_h *edo, double a, double b, double ya, double yb) {
+    edo->a = a;
+    edo->b = b;
+    edo->ya = ya;
+    edo->yb = yb;
+}
+
+void set_edo_coefficients (edo_h *edo, double (*p) (double), double (*q) (double), double (*r) (double)) {
+    edo->p = p;
+    edo->q = q;
+    edo->r = r;
+}
+
+void set_edo_mesh (edo_h *edo, int n) {
+    edo->n = n;
 }
