@@ -1,5 +1,12 @@
-select      count(distinct(C_CUSTKEY)) 
-from        ORDERS 
-inner join  CUSTOMER on ORDERS.O_CUSTKEY = CUSTOMER.C_CUSTKEY 
-where       O_COMMENT like '%special request%' and 
-            O_COMMENT not like '%unusual package%';
+select      count(distinct(C_CUSTKEY))
+from (
+    select      distinct(C_CUSTKEY)
+    from        ORDERS
+    inner join  CUSTOMER on O_CUSTKEY = C_CUSTKEY 
+    where       O_COMMENT like '%special request%'
+    except
+    select      distinct(C_CUSTKEY)
+    from        ORDERS
+    inner join  CUSTOMER on O_CUSTKEY = C_CUSTKEY 
+    where       O_COMMENT like '%unusual package%'
+);
