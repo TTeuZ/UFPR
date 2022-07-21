@@ -24,7 +24,7 @@ int main () {
 
     for (count = 0; count < TEST_SIZE; count++) {
         // primeira equação diferencial y'' = 6x - 0.5^2 x E (0,12), y(0) = 0, y(12) = 0;
-        set_edo_conditions (edo, 1, 12, 0, 0);
+        set_edo_conditions (edo, 0, 12, 0, 0);
         set_edo_coefficients (edo, p1, q1, r1);
 
         fprintf (stdout, "Aplicando para n = %d na primeira equação\n\n", tests[count]);
