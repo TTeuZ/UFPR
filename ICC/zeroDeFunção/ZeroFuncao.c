@@ -6,11 +6,28 @@
 
 Polinomio *aloc_polinomio (int n) {
 	Polinomio *p;
-	if (! (p = malloc (sizeof (Polinomio) * n))) {
+	if ((p = malloc (sizeof (Polinomio) * n))) {
 		p->p = NULL;
 		p->n = n;
 		return p;
 	} else return NULL;
+}
+
+Polinomio *read_polinomio (){
+	Polinomio *p;
+	int n, count;
+
+	fprintf (stdout, "Informe o grau do polinomio: \n");
+	scanf ("%d", &n);
+
+	if (! (p = aloc_polinomio (n))) 
+		return NULL;
+
+	fprintf (stdout, "Informe os coeficientes do polinomio: \n");
+	for (count = 0; count <= n; count++)
+		scanf ("%lg", &p->p[count]);
+
+	return p;
 }
 
 void free_polinomio (Polinomio *p) {
@@ -18,15 +35,53 @@ void free_polinomio (Polinomio *p) {
 	free (p);
 }
 
-double bisseccao (Polinomio *p, double a, double b, double eps, int *it, double *raiz) {
+double bisseccao (Polinomio *p, double a, double b, double eps, int *it, double *raiz, int type) {
+	double root, actual_xm, old_xm, error;
+	double fa, fxm, trash;
+	int count;
+
+	actual_xm = (a + b) / 2;
+
+	if (type) {
+		calcPolinomio_rapido (p, a, &fa, &trash);
+		calcPolinomio_rapido (p, actual_xm, &fxm, &trash);
+	} else {
+		calcPolinomio_lento (p, a, &fa, &trash);
+		calcPolinomio_lento (p, actual_xm, &fxm, &trash);
+	}
+
+	if (fa * fxm < 0) b = actual_xm;
+	else a = actual_xm;
+
+	do {
+		old_xm = actual_xm;
+		actual_xm = (a + b) / 2;
+
+		if (type) {
+			calcPolinomio_rapido (p, a, &fa, &trash);
+			calcPolinomio_rapido (p, a, &fxm, &trash);
+		} else {
+			calcPolinomio_lento (p, actual_xm, &fa, &trash);
+			calcPolinomio_lento (p, actual_xm, &fxm, &trash);
+		}
+
+		if (fa * fxm < 0) b = actual_xm;
+		else a = actual_xm;
+
+		error = fabs ((actual_xm - old_xm) / actual_xm);
+		count++;
+	} while ( count < MAXIT && error > EPS);
+
+	*raiz = actual_xm;
+	*it = count;
+	return error;
+}
+
+double newtonRaphson (Polinomio *p, double x0, double eps, int *it, double *raiz, int type) {
 
 }
 
-double newtonRaphson (Polinomio *p, double x0, double eps, int *it, double *raiz) {
-
-}
-
-double secante (Polinomio *p, double x0, double x1, double eps, int *it, double *raiz) {
+double secante (Polinomio *p, double x0, double x1, double eps, int *it, double *raiz, int type) {
 
 }
 
