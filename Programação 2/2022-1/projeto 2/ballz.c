@@ -3,6 +3,8 @@
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_primitives.h>
 
 // Objetos
 #include "./src/objects/addBall/addBall.h"
@@ -24,7 +26,9 @@ int main () {
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_TIMER *timer;
     ALLEGRO_EVENT_QUEUE *queue;
-    ALLEGRO_FONT *font;
+    ALLEGRO_FONT *title_font;
+    ALLEGRO_FONT *buttons_font;
+    ALLEGRO_FONT *points_font;
     ALLEGRO_EVENT event;
 
     // Estruturas do jogo
@@ -39,9 +43,16 @@ int main () {
     if (! al_init ()) game_cond.all_init = INIT_ERROR;
     else if (create_display (&display)) game_cond.all_init = INIT_ERROR;
     else if (! al_install_keyboard ()) game_cond.all_init = INIT_ERROR;
+    else if (! (al_init_font_addon ())) game_cond.all_init = INIT_ERROR;
+    else if (! (al_init_ttf_addon ())) game_cond.all_init = INIT_ERROR;
+    else if (! (al_init_primitives_addon ())) game_cond.all_init = INIT_ERROR;
     else if (! (timer = al_create_timer (1.0 / 60.0))) game_cond.all_init = INIT_ERROR;
     else if (! (queue = al_create_event_queue ())) game_cond.all_init = INIT_ERROR;
-    else if (! (font = al_create_builtin_font ())) game_cond.all_init = INIT_ERROR;
+
+    // fontes
+    if (! (title_font = al_load_ttf_font ("./resources/fonts/Poppins-Regular.ttf", 90, 0)))
+    if (! (buttons_font = al_load_ttf_font ("./resources/fonts/Poppins-Regular.ttf", 20, 0)))
+    if (! (points_font = al_load_ttf_font ("./resources/fonts/Poppins-Regular.ttf", 20, 0)))
 
     if (! game_cond.all_init) {
         emit_error (game_cond.all_init);
@@ -72,10 +83,10 @@ int main () {
         
         if (game_cond.redraw && al_is_event_queue_empty (queue)) {
             if (game_cond.in_home_page)
-                draw_home_page (p_points, font);
+                draw_home_page (p_points, title_font);
             else {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
-                al_draw_text(font, al_map_rgb(255, 255, 255), (DISPLAY_WIDTH/2 - 12), DISPLAY_HEIGHT/2, 0, "Hello world!");
+                al_draw_text(title_font, al_map_rgb(255, 255, 255), (DISPLAY_WIDTH/2 - 12), DISPLAY_HEIGHT/2, 0, "Hello world!");
                 al_flip_display();
             }
             game_cond.redraw = false;
@@ -86,6 +97,8 @@ int main () {
     al_destroy_timer (timer);
     al_destroy_event_queue (queue);
     al_destroy_display (display);
-    al_destroy_font (font);
+    al_destroy_font (title_font);
+    // al_destroy_font (buttons_font);
+    // al_destroy_font (points_font);
     return EXIT_SUCCESS;
 }

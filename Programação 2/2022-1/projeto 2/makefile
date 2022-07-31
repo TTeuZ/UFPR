@@ -3,6 +3,7 @@ SHELL = /bin/sh
 FLAGS = -std=c99 -g -Wall
 ALLEGRO = `pkg-config allegro-5\
 				allegro_font-5\
+				allegro_ttf-5\
 				allegro_primitives-5\
 				--libs --cflags`
 
