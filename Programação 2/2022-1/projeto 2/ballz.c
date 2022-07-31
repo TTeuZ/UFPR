@@ -27,7 +27,7 @@ int main () {
     ALLEGRO_TIMER *timer;
     ALLEGRO_EVENT_QUEUE *queue;
     ALLEGRO_FONT *title_font;
-    ALLEGRO_FONT *buttons_font;
+    ALLEGRO_FONT *button_font;
     ALLEGRO_FONT *points_font;
     ALLEGRO_EVENT event;
 
@@ -50,9 +50,9 @@ int main () {
     else if (! (queue = al_create_event_queue ())) game_cond.all_init = INIT_ERROR;
 
     // fontes
-    if (! (title_font = al_load_ttf_font ("./resources/fonts/Poppins-Regular.ttf", 90, 0)))
-    if (! (buttons_font = al_load_ttf_font ("./resources/fonts/Poppins-Regular.ttf", 20, 0)))
-    if (! (points_font = al_load_ttf_font ("./resources/fonts/Poppins-Regular.ttf", 20, 0)))
+    if (! (title_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 90, 0))) game_cond.all_init = INIT_ERROR;
+    if (! (button_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 25, 0))) game_cond.all_init = INIT_ERROR;
+    if (! (points_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 20, 0))) game_cond.all_init = INIT_ERROR;
 
     if (! game_cond.all_init) {
         emit_error (game_cond.all_init);
@@ -83,7 +83,7 @@ int main () {
         
         if (game_cond.redraw && al_is_event_queue_empty (queue)) {
             if (game_cond.in_home_page)
-                draw_home_page (p_points, title_font);
+                draw_home_page (p_points, title_font, button_font, points_font);
             else {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 al_draw_text(title_font, al_map_rgb(255, 255, 255), (DISPLAY_WIDTH/2 - 12), DISPLAY_HEIGHT/2, 0, "Hello world!");
@@ -98,7 +98,7 @@ int main () {
     al_destroy_event_queue (queue);
     al_destroy_display (display);
     al_destroy_font (title_font);
-    // al_destroy_font (buttons_font);
-    // al_destroy_font (points_font);
+    al_destroy_font (button_font);
+    al_destroy_font (points_font);
     return EXIT_SUCCESS;
 }
