@@ -2,6 +2,7 @@
 #define __DISPLAY_H__
 
 #include <allegro5/allegro5.h>
+
 #include "../../constants.h"
 
 /*!

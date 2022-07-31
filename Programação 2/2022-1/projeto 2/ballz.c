@@ -12,8 +12,12 @@
 
 // Funções
 #include "./src/functions/display/display.h"
-#include "./src/functions/game/game.h"
 #include "./src/functions/utils/utils.h"
+
+// Composição do jogo
+#include "./src/game/game/game.h"
+#include "./src/game/home/home.h"
+#include "./src/game/player/player.h"
 
 int main () {
     // Estruturas da Allegro
@@ -25,7 +29,11 @@ int main () {
 
     // Estruturas do jogo
     game_cond_t game_cond;
+    player_points_t p_points;
+
+    // inicialização dos dados do jogo
     start_game_conditions (&game_cond);
+    read_player_points (&p_points);
 
     // Inicializações
     if (! al_init ()) game_cond.all_init = INIT_ERROR;
@@ -40,7 +48,6 @@ int main () {
         return EXIT_FAILURE;
     }
 
-
     // Registros de Eventos
     al_register_event_source (queue, al_get_keyboard_event_source ());
     al_register_event_source (queue, al_get_display_event_source (display));
@@ -52,11 +59,11 @@ int main () {
         al_wait_for_event (queue, &event);
 
         switch (event.type) {
-            case ALLEGRO_EVENT_DISPLAY_CLOSE:
-                game_cond.end_game = true;
-                break;
             case ALLEGRO_EVENT_TIMER: 
                 game_cond.redraw = true;
+                break;
+            case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                game_cond.end_game = true;
                 break;
         }
 
@@ -64,10 +71,13 @@ int main () {
             break;
         
         if (game_cond.redraw && al_is_event_queue_empty (queue)) {
-            al_clear_to_color(al_map_rgb(0, 0, 0));
-            al_draw_text(font, al_map_rgb(255, 255, 255), 0, 0, 0, "Hello world!");
-            al_flip_display();
-
+            if (game_cond.in_home_page)
+                draw_home_page (p_points, font);
+            else {
+                al_clear_to_color(al_map_rgb(0, 0, 0));
+                al_draw_text(font, al_map_rgb(255, 255, 255), (DISPLAY_WIDTH/2 - 12), DISPLAY_HEIGHT/2, 0, "Hello world!");
+                al_flip_display();
+            }
             game_cond.redraw = false;
         }
     }

@@ -6,7 +6,7 @@ ALLEGRO = `pkg-config allegro-5\
 				allegro_primitives-5\
 				--libs --cflags`
 
-OBJECTS = ballz.o display.o game.o utils.o addBall.o ball.o coin.o square.o
+OBJECTS = ballz.o display.o game.o home.o player.o utils.o addBall.o ball.o coin.o square.o
 
 # Funções gerais
 all: ballz
@@ -28,11 +28,17 @@ ballz.o: ballz.c
 display.o: ./src/functions/display/display.c
 		$(CC) -c ./src/functions/display/display.c $(FLAGS)
 
-game.o: ./src/functions/game/game.c
-		$(CC) -c ./src/functions/game/game.c $(FLAGS)
-
 utils.o: ./src/functions/utils/utils.c
 		$(CC) -c ./src/functions/utils/utils.c $(FLAGS)
+
+game.o: ./src/game/game/game.c
+		$(CC) -c ./src/game/game/game.c $(FLAGS)
+
+home.o: ./src/game/home/home.c
+		$(CC) -c ./src/game/home/home.c $(FLAGS)
+
+player.o: ./src/game/player/player.c
+		$(CC) -c ./src/game/player/player.c $(FLAGS)
 
 addBall.o: ./src/objects/addBall/addBall.c
 		$(CC) -c ./src/objects/addBall/addBall.c $(FLAGS)
