@@ -6,6 +6,8 @@ ALLEGRO = `pkg-config allegro-5\
 				allegro_primitives-5\
 				--libs --cflags`
 
+OBJECTS = ballz.o addBall.o ball.o coin.o square.o
+
 # Funções gerais
 all: ballz
 
@@ -16,9 +18,21 @@ purge: clean
 		-rm -f ballz
 
 # Construção do executavel
-ballz: ballz.o 
-		$(CC) ballz.o -o ballz $(FLAGS) $(ALLEGRO)
+ballz: $(OBJECTS)
+		$(CC) $(OBJECTS) -o ballz $(FLAGS) $(ALLEGRO)
 
 # Construção dos Objetos
 ballz.o: ballz.c
 		$(CC) -c ballz.c $(FLAGS)
+
+addBall.o: ./src/objects/addBall/addBall.c
+		$(CC) -c ./src/objects/addBall/addBall.c $(FLAGS)
+
+ball.o: ./src/objects/ball/ball.c
+		$(CC) -c ./src/objects/ball/ball.c $(FLAGS)
+
+coin.o: ./src/objects/coin/coin.c
+		$(CC) -c ./src/objects/coin/coin.c $(FLAGS)
+
+square.o: ./src/objects/square/square.c
+		$(CC) -c ./src/objects/square/square.c $(FLAGS)
