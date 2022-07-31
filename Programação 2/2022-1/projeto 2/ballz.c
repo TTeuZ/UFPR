@@ -4,43 +4,42 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 
+// Objetos
+#include "./src/objects/addBall/addBall.h"
+#include "./src/objects/ball/ball.h"
+#include "./src/objects/coin/coin.h"
+#include "./src/objects/square/square.h"
+
+// Funções
+#include "./src/functions/display/display.h"
+#include "./src/functions/game/game.h"
+#include "./src/functions/utils/utils.h"
 
 int main () {
     // Estruturas da Allegro
+    ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_TIMER *timer;
     ALLEGRO_EVENT_QUEUE *queue;
-    ALLEGRO_DISPLAY *display;
     ALLEGRO_FONT *font;
     ALLEGRO_EVENT event;
 
-    // Variaveis
-    int end_game, redraw;
+    // Estruturas do jogo
+    game_cond_t game_cond;
+    start_game_conditions (&game_cond);
 
     // Inicializações
-    if (! al_init ()) {
-        fprintf (stderr, "Erro ao inicializar a Allegro!\n");
+    if (! al_init ()) game_cond.all_init = INIT_ERROR;
+    else if (create_display (&display)) game_cond.all_init = INIT_ERROR;
+    else if (! al_install_keyboard ()) game_cond.all_init = INIT_ERROR;
+    else if (! (timer = al_create_timer (1.0 / 60.0))) game_cond.all_init = INIT_ERROR;
+    else if (! (queue = al_create_event_queue ())) game_cond.all_init = INIT_ERROR;
+    else if (! (font = al_create_builtin_font ())) game_cond.all_init = INIT_ERROR;
+
+    if (! game_cond.all_init) {
+        emit_error (game_cond.all_init);
         return EXIT_FAILURE;
     }
-    if (! al_install_keyboard ()) {
-        fprintf (stderr, "Erro ao inicializar o teclado\n");
-        return EXIT_FAILURE;
-    }
-    if (! (timer = al_create_timer (1.0 / 60.0))) {
-        fprintf (stderr, "Erro ao inicializar o timer\n");
-        return EXIT_FAILURE;
-    }
-    if (! (queue = al_create_event_queue ())) {
-        fprintf (stderr, "Erro ao inicializar a queue\n");
-        return EXIT_FAILURE;
-    }
-    if (! (display = al_create_display (480, 720))) {
-        fprintf (stderr, "Erro ao inicializar o display!\n");
-        return EXIT_FAILURE;
-    }
-    if (! (font = al_create_builtin_font ())) {
-        fprintf (stderr, "Erro ao inicializar a fonte!\n");
-        return EXIT_FAILURE;
-    }
+
 
     // Registros de Eventos
     al_register_event_source (queue, al_get_keyboard_event_source ());
@@ -49,29 +48,27 @@ int main () {
 
     // Loop do jogo
     al_start_timer (timer);
-    end_game = false;
-    redraw = true;
     while (true) {
         al_wait_for_event (queue, &event);
 
         switch (event.type) {
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
-                end_game = true;
+                game_cond.end_game = true;
                 break;
             case ALLEGRO_EVENT_TIMER: 
-                redraw = true;
+                game_cond.redraw = true;
                 break;
         }
 
-        if (end_game)
+        if (game_cond.end_game)
             break;
         
-        if (redraw && al_is_event_queue_empty (queue)) {
+        if (game_cond.redraw && al_is_event_queue_empty (queue)) {
             al_clear_to_color(al_map_rgb(0, 0, 0));
             al_draw_text(font, al_map_rgb(255, 255, 255), 0, 0, 0, "Hello world!");
             al_flip_display();
 
-            redraw = false;
+            game_cond.redraw = false;
         }
     }
 
