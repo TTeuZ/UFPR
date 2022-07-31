@@ -5,9 +5,10 @@
 #include <stdlib.h>
 
 typedef struct game_cond {
-    int redraw;
-    int end_game;
     int all_init;
+    int redraw;
+    int in_home_page;
+    int end_game;
 } game_cond_t;
 
 /*!
