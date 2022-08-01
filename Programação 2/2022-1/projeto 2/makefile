@@ -8,7 +8,7 @@ ALLEGRO = `pkg-config allegro-5\
 				allegro_image-5\
 				--libs --cflags`
 
-OBJECTS = ballz.o display.o game.o home.o player.o utils.o addBall.o ball.o coin.o square.o
+OBJECTS = ballz.o display.o mouse.o game.o home.o player.o utils.o addBall.o ball.o coin.o square.o
 
 # Funções gerais
 all: ballz
@@ -29,6 +29,9 @@ ballz.o: ballz.c
 
 display.o: ./src/functions/display/display.c
 		$(CC) -c ./src/functions/display/display.c $(FLAGS)
+
+mouse.o: ./src/functions/mouse/mouse.c
+		$(CC) -c ./src/functions/mouse/mouse.c $(FLAGS)
 
 utils.o: ./src/functions/utils/utils.c
 		$(CC) -c ./src/functions/utils/utils.c $(FLAGS)

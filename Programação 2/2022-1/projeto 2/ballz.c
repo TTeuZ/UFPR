@@ -15,6 +15,7 @@
 
 // Funções
 #include "./src/functions/display/display.h"
+#include "./src/functions/mouse/mouse.h"
 #include "./src/functions/utils/utils.h"
 
 // Composição do jogo
@@ -23,43 +24,50 @@
 #include "./src/game/player/player.h"
 
 int main () {
-    // Estruturas da Allegro
-    ALLEGRO_DISPLAY *display = NULL;
-    ALLEGRO_BITMAP *buffer = NULL;
-    ALLEGRO_TIMER *timer;
-    ALLEGRO_EVENT_QUEUE *queue;
-    ALLEGRO_FONT *title_font;
-    ALLEGRO_FONT *button_font;
-    ALLEGRO_FONT *points_font;
-    ALLEGRO_BITMAP *sound;
-    ALLEGRO_EVENT event;
-
-    // Estruturas do jogo
+    // inicialização dos dados do jogo
     game_cond_t game_cond;
     player_points_t p_points;
-
-    // inicialização dos dados do jogo
     start_game_conditions (&game_cond);
     read_player_points (&p_points);
 
-    // Inicializações
+    // Inicializações gerais
     if (! al_init ()) game_cond.all_init = INIT_ERROR;
-    else if (create_display (&display, &buffer)) game_cond.all_init = INIT_ERROR;
     else if (! al_install_keyboard ()) game_cond.all_init = INIT_ERROR;
-    else if (! (al_init_font_addon ())) game_cond.all_init = INIT_ERROR;
-    else if (! (al_init_ttf_addon ())) game_cond.all_init = INIT_ERROR;
-    else if (! (al_init_image_addon ())) game_cond.all_init = INIT_ERROR;
     else if (! (al_init_primitives_addon ())) game_cond.all_init = INIT_ERROR;
-    else if (! (timer = al_create_timer (1.0 / 60.0))) game_cond.all_init = INIT_ERROR;
+
+    // FPS e eventos
+    ALLEGRO_TIMER *timer;
+    ALLEGRO_EVENT_QUEUE *queue;
+    if (! (timer = al_create_timer (1.0 / 60.0))) game_cond.all_init = INIT_ERROR;
     else if (! (queue = al_create_event_queue ())) game_cond.all_init = INIT_ERROR;
 
+    // Display
+    ALLEGRO_DISPLAY *display = NULL;
+    ALLEGRO_BITMAP *buffer = NULL;
+    ALLEGRO_EVENT event;
+    if (create_display (&display, &buffer)) game_cond.all_init = INIT_ERROR;
+
     // imagens
-    if (! (sound = al_load_bitmap ("./resources/images/music.png"))) game_cond.all_init = INIT_ERROR;
+    ALLEGRO_BITMAP *sound;
+    if (! (al_init_image_addon ())) game_cond.all_init = INIT_ERROR;
+    else if (! (sound = al_load_bitmap ("./resources/images/music.png"))) game_cond.all_init = INIT_ERROR;
+
+    // mouse
+    mouse_t mouse;
+    ALLEGRO_MOUSE_CURSOR *cursor = NULL;
+    if (! al_install_mouse ()) game_cond.all_init = INIT_ERROR;
+    else if (start_mouse (&mouse)) game_cond.all_init = INIT_ERROR;
+    else if (set_mouse_display (cursor, display, mouse)) game_cond.all_init = INIT_ERROR;
 
     // fontes
-    if (! (title_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 90, 0))) game_cond.all_init = INIT_ERROR;
-    if (! (button_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 25, 0))) game_cond.all_init = INIT_ERROR;
-    if (! (points_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 20, 0))) game_cond.all_init = INIT_ERROR;
+    ALLEGRO_FONT *title_font;
+    ALLEGRO_FONT *button_font;
+    ALLEGRO_FONT *points_font;
+    if (! (al_init_font_addon ())) game_cond.all_init = INIT_ERROR;
+    else if (! (al_init_ttf_addon ())) game_cond.all_init = INIT_ERROR;
+    else if (! (title_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 90, 0))) game_cond.all_init = INIT_ERROR;
+    else if (! (button_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 25, 0))) game_cond.all_init = INIT_ERROR;
+    else if (! (points_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 20, 0))) game_cond.all_init = INIT_ERROR;
 
     if (! game_cond.all_init) {
         emit_error (game_cond.all_init);
@@ -68,6 +76,7 @@ int main () {
 
     // Registros de Eventos
     al_register_event_source (queue, al_get_keyboard_event_source ());
+    al_register_event_source (queue, al_get_mouse_event_source ());
     al_register_event_source (queue, al_get_display_event_source (display));
     al_register_event_source (queue, al_get_timer_event_source (timer));
 
@@ -79,6 +88,11 @@ int main () {
         switch (event.type) {
             case ALLEGRO_EVENT_TIMER: 
                 game_cond.redraw = true;
+                break;
+            case ALLEGRO_EVENT_MOUSE_AXES:
+                mouse.x = event.mouse.x;
+                mouse.y = event.mouse.y;
+                al_set_mouse_xy (display, mouse.x, mouse.y);
                 break;
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
                 game_cond.end_game = true;
@@ -112,6 +126,8 @@ int main () {
     al_destroy_font (title_font);
     al_destroy_font (button_font);
     al_destroy_font (points_font);
+    al_destroy_mouse_cursor (cursor);
+    al_destroy_bitmap (mouse.cursor);
     al_destroy_bitmap (sound);
     return EXIT_SUCCESS;
 }
