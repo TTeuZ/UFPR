@@ -6,12 +6,14 @@
 #define NC "\e[0m"
 
 // Dimensões
-#define BUFFER_HEIGHT 720
-#define BUFFER_WIDTH 480
+#define BUFFER_HEIGHT 780
+#define BUFFER_WIDTH 420
 
 #define BUFFER_SCALE 1
 #define DISPLAY_HEIGHT (BUFFER_HEIGHT * BUFFER_SCALE)
 #define DISPLAY_WIDTH (BUFFER_WIDTH * BUFFER_SCALE)
+
+#define SQUARE_SIZE 60
 
 // Erros
 #define INIT_ERROR 0
