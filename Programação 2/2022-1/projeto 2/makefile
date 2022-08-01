@@ -5,6 +5,7 @@ ALLEGRO = `pkg-config allegro-5\
 				allegro_font-5\
 				allegro_ttf-5\
 				allegro_primitives-5\
+				allegro_image-5\
 				--libs --cflags`
 
 OBJECTS = ballz.o display.o game.o home.o player.o utils.o addBall.o ball.o coin.o square.o
