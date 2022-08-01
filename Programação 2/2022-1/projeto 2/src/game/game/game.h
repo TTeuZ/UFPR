@@ -8,6 +8,7 @@ typedef struct game_cond {
     int all_init;
     int redraw;
     int in_home_page;
+    int sound_on;
     int end_game;
 } game_cond_t;
 

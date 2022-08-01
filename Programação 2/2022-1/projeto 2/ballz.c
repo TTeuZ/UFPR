@@ -92,7 +92,7 @@ int main () {
             al_set_target_bitmap (buffer);
 
             if (game_cond.in_home_page)
-                draw_home_page (p_points, title_font, button_font, points_font, sound);
+                draw_home_page (p_points, title_font, button_font, points_font, game_cond, sound);
             else {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 al_draw_text(title_font, al_map_rgb(255, 255, 255), (DISPLAY_WIDTH/2 - 12), DISPLAY_HEIGHT/2, 0, "Hello world!");

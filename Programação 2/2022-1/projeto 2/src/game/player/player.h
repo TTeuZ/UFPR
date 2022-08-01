@@ -9,8 +9,6 @@ typedef struct player_points {
     int record;
 } player_points_t;
 
-// estrutura do jogo atua..
-
 /*!
     \brief Função que realiza a leitura dos dados salvos do usuario caso existam.
     Se for a primeira vez abrindo o jogo inicia os dados salvos como 0

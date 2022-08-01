@@ -1,6 +1,6 @@
 #include "home.h"
 
-void draw_home_page (player_points_t p_points, ALLEGRO_FONT *font, ALLEGRO_FONT *button_font, ALLEGRO_FONT *points_font, ALLEGRO_BITMAP *sound) {
+void draw_home_page (player_points_t p_points, ALLEGRO_FONT *font, ALLEGRO_FONT *button_font, ALLEGRO_FONT *points_font, game_cond_t game_cond, ALLEGRO_BITMAP *sound) {
     int intern_coins = p_points.coins;
     int decimal_cases = 0;
     while ((intern_coins = intern_coins / 10) > 0) decimal_cases++;
@@ -27,6 +27,9 @@ void draw_home_page (player_points_t p_points, ALLEGRO_FONT *font, ALLEGRO_FONT 
     al_draw_textf (button_font, al_map_rgb(255, 255, 255), 210, 386, 0, "PLAY");
 
     // icone de som
-    al_draw_circle (240, 550, 30, al_map_rgb(204, 0, 102), 2);
+    if (game_cond.sound_on) 
+        al_draw_circle (240, 550, 30, al_map_rgb(204, 0, 102), 2);
+    else 
+        al_draw_circle (240, 550, 30, al_map_rgb(160, 160, 160), 2);
     al_draw_bitmap (sound, 222, 535, 0);
 }
