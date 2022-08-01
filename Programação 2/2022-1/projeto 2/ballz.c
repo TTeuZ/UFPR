@@ -4,6 +4,7 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 
 // Objetos
@@ -24,11 +25,13 @@
 int main () {
     // Estruturas da Allegro
     ALLEGRO_DISPLAY *display = NULL;
+    ALLEGRO_BITMAP *buffer = NULL;
     ALLEGRO_TIMER *timer;
     ALLEGRO_EVENT_QUEUE *queue;
     ALLEGRO_FONT *title_font;
     ALLEGRO_FONT *button_font;
     ALLEGRO_FONT *points_font;
+    ALLEGRO_BITMAP *sound;
     ALLEGRO_EVENT event;
 
     // Estruturas do jogo
@@ -41,13 +44,17 @@ int main () {
 
     // Inicializações
     if (! al_init ()) game_cond.all_init = INIT_ERROR;
-    else if (create_display (&display)) game_cond.all_init = INIT_ERROR;
+    else if (create_display (&display, &buffer)) game_cond.all_init = INIT_ERROR;
     else if (! al_install_keyboard ()) game_cond.all_init = INIT_ERROR;
     else if (! (al_init_font_addon ())) game_cond.all_init = INIT_ERROR;
     else if (! (al_init_ttf_addon ())) game_cond.all_init = INIT_ERROR;
+    else if (! (al_init_image_addon ())) game_cond.all_init = INIT_ERROR;
     else if (! (al_init_primitives_addon ())) game_cond.all_init = INIT_ERROR;
     else if (! (timer = al_create_timer (1.0 / 60.0))) game_cond.all_init = INIT_ERROR;
     else if (! (queue = al_create_event_queue ())) game_cond.all_init = INIT_ERROR;
+
+    // imagens
+    if (! (sound = al_load_bitmap ("./resources/images/music.png"))) game_cond.all_init = INIT_ERROR;
 
     // fontes
     if (! (title_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 90, 0))) game_cond.all_init = INIT_ERROR;
@@ -82,13 +89,17 @@ int main () {
             break;
         
         if (game_cond.redraw && al_is_event_queue_empty (queue)) {
+            al_set_target_bitmap (buffer);
+
             if (game_cond.in_home_page)
-                draw_home_page (p_points, title_font, button_font, points_font);
+                draw_home_page (p_points, title_font, button_font, points_font, sound);
             else {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
                 al_draw_text(title_font, al_map_rgb(255, 255, 255), (DISPLAY_WIDTH/2 - 12), DISPLAY_HEIGHT/2, 0, "Hello world!");
                 al_flip_display();
             }
+
+            flip_buffer_display (display, buffer);
             game_cond.redraw = false;
         }
     }
@@ -97,8 +108,10 @@ int main () {
     al_destroy_timer (timer);
     al_destroy_event_queue (queue);
     al_destroy_display (display);
+    al_destroy_bitmap (buffer);
     al_destroy_font (title_font);
     al_destroy_font (button_font);
     al_destroy_font (points_font);
+    al_destroy_bitmap (sound);
     return EXIT_SUCCESS;
 }
