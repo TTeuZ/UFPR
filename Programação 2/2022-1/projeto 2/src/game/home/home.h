@@ -13,6 +13,6 @@
 /*!
     \brief Função responsavel por construir a tela inicial (Home) do jogo
 */
-void draw_home_page (player_points_t p_points, ALLEGRO_FONT *font, ALLEGRO_FONT *button_font, ALLEGRO_FONT *points_font);
+void draw_home_page (player_points_t p_points, ALLEGRO_FONT *font, ALLEGRO_FONT *button_font, ALLEGRO_FONT *points_font, ALLEGRO_BITMAP *sound);
 
 #endif
