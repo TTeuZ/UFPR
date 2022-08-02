@@ -1,4 +1,4 @@
-#include "home.h"
+#include "pages.h"
 
 void draw_home_page (player_points_t p_points, ALLEGRO_FONT *font, ALLEGRO_FONT *button_font, ALLEGRO_FONT *points_font, game_cond_t game_cond, ALLEGRO_BITMAP *sound) {
     int intern_coins = p_points.coins;

@@ -21,7 +21,7 @@
 
 // Composição do jogo
 #include "./src/game/game/game.h"
-#include "./src/game/home/home.h"
+#include "./src/game/pages/pages.h"
 #include "./src/game/player/player.h"
 
 int main () {
@@ -103,8 +103,7 @@ int main () {
                 break;
         }
 
-        if (game_cond.end_game)
-            break;
+        if (game_cond.end_game) break;
         
         if (game_cond.redraw && al_is_event_queue_empty (queue)) {
             al_set_target_bitmap (buffer);
@@ -127,11 +126,11 @@ int main () {
     al_destroy_event_queue (queue);
     al_destroy_display (display);
     al_destroy_bitmap (buffer);
+    al_destroy_bitmap (sound);
+    al_destroy_bitmap (mouse.cursor);
+    al_destroy_mouse_cursor (cursor);
     al_destroy_font (title_font);
     al_destroy_font (button_font);
     al_destroy_font (points_font);
-    al_destroy_mouse_cursor (cursor);
-    al_destroy_bitmap (mouse.cursor);
-    al_destroy_bitmap (sound);
     return EXIT_SUCCESS;
 }
