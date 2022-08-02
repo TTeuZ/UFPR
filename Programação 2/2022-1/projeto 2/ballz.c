@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Allegro
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
@@ -38,13 +39,13 @@ int main () {
     // FPS e eventos
     ALLEGRO_TIMER *timer;
     ALLEGRO_EVENT_QUEUE *queue;
-    if (! (timer = al_create_timer (1.0 / 60.0))) game_cond.all_init = INIT_ERROR;
+    ALLEGRO_EVENT event;
+    if (! (timer = al_create_timer (FPS))) game_cond.all_init = INIT_ERROR;
     else if (! (queue = al_create_event_queue ())) game_cond.all_init = INIT_ERROR;
 
     // Display
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_BITMAP *buffer = NULL;
-    ALLEGRO_EVENT event;
     if (create_display (&display, &buffer)) game_cond.all_init = INIT_ERROR;
 
     // imagens
@@ -90,9 +91,12 @@ int main () {
                 game_cond.redraw = true;
                 break;
             case ALLEGRO_EVENT_MOUSE_AXES:
-                mouse.x = event.mouse.x;
-                mouse.y = event.mouse.y;
-                al_set_mouse_xy (display, mouse.x, mouse.y);
+                treat_mouse_move (display, &mouse, event);
+                break;
+            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+                if (game_cond.in_home_page) treat_mouse_click_in_home (&mouse, &game_cond, event);
+                else treat_mouse_click_in_game (&mouse, &game_cond, event);
+                game_cond.redraw = true;
                 break;
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
                 game_cond.end_game = true;
