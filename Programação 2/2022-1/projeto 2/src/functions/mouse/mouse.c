@@ -1,5 +1,5 @@
-#include "mouse.h"
 #include <stdio.h>
+#include "mouse.h"
 
 int start_mouse (mouse_t *mouse) {
     mouse->x = 0;

@@ -1,12 +1,15 @@
 #ifndef __CONSTANTS_H__
 #define __CONSTANTS_H__
 
-// Definições
-#define FPS 1.0 / 60.0
-
 // Coloração de outputs
 #define RED "\e[0;31m"
 #define NC "\e[0m"
+
+// Definições
+#define FPS 1.0 / 60.0
+
+// Audio
+#define AUDIO_QTD 2
 
 // Dimensões
 #define BUFFER_HEIGHT 780

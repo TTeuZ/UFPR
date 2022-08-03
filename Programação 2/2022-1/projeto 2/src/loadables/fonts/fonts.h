@@ -1,0 +1,29 @@
+#ifndef __FONTS_H__
+#define __FONTS_H__
+
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+
+#include "../../constants.h"
+
+typedef struct fonts {
+    ALLEGRO_FONT *title_home;
+    ALLEGRO_FONT *button_home;
+    ALLEGRO_FONT *points_home;
+    ALLEGRO_FONT *title_help;
+    ALLEGRO_FONT *text_help;
+} fonts_t;
+
+/*!
+    \brief Função que inicializa a estrutura de armazenamento das fontes do jogo
+    \param fonts Ponteiro de acesso para a estrutura de fontes
+*/
+int load_fonts (fonts_t *fonts);
+
+/*!
+    \brief Função que destroi as estruturas de fontes alocadas
+    \param fonts Ponteiro de acesso para a estrutura de fontes
+*/
+void destroy_fonts (fonts_t *fonts);
+#endif

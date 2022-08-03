@@ -1,0 +1,26 @@
+#ifndef __AUDIO_H__
+#define __AUDIO_H__
+
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+
+#include "../../constants.h"
+
+typedef struct audios {
+    ALLEGRO_SAMPLE *hit;
+    ALLEGRO_SAMPLE *click;
+} audios_t;
+
+/*!
+    \brief Função que inicializa a estrutura de armazenamento dos sons do jogo
+    \param audios Ponteiro de acesso para a estrutura de sons
+*/
+int load_audios (audios_t *audios);
+
+/*!
+    \brief Função que destroi as estruturas de sons alocadas
+    \param audios Ponteiro de acesso para a estrutura de sons
+*/
+void destroy_audios (audios_t *audios);
+#endif
