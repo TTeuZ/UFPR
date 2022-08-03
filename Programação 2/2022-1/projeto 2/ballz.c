@@ -77,10 +77,9 @@ int main () {
 
     // mouse
     mouse_t mouse;
-    ALLEGRO_MOUSE_CURSOR *cursor = NULL;
     if (! al_install_mouse ()) game_cond.all_init = INIT_ERROR;
     else if (start_mouse (&mouse)) game_cond.all_init = INIT_ERROR;
-    else if (set_mouse_display (cursor, display, mouse)) game_cond.all_init = INIT_ERROR;
+    else if (set_mouse_display (display, mouse)) game_cond.all_init = INIT_ERROR;
 
     if (! game_cond.all_init) {
         emit_error (game_cond.all_init);
@@ -139,12 +138,10 @@ int main () {
     // Limpesa de memória
     al_destroy_timer (timer);
     al_destroy_event_queue (queue);
-    al_destroy_display (display);
-    al_destroy_bitmap (buffer);
+    destroy_display (display, buffer);
     destroy_images (&images);
-    al_destroy_bitmap (mouse.cursor);
-    al_destroy_mouse_cursor (cursor);
     destroy_audios (&audios);
     destroy_fonts (&fonts);
+    destroy_mouse (&mouse);
     return EXIT_SUCCESS;
 }

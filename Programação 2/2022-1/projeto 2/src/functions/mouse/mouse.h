@@ -2,12 +2,14 @@
 #define __MOUSE_H__
 
 #include <allegro5/allegro5.h>
+#include <allegro5/allegro_image.h>
 
 #include "../../game/game/game.h"
 #include "../../constants.h"
 
 typedef struct mouse {
-    ALLEGRO_BITMAP *cursor;
+    ALLEGRO_MOUSE_CURSOR *cursor;
+    ALLEGRO_BITMAP *arrow;
     int x;
     int y;
 } mouse_t;
@@ -20,12 +22,18 @@ typedef struct mouse {
 int start_mouse (mouse_t *mouse);
 
 /*!
+    \brief Função que apaga as estruturas alocadas para o mouse
+    \param mouse Ponteiro de acesso para a estrutura do mouse
+*/
+void destroy_mouse (mouse_t *mouse);
+
+/*!
     \brief Função que seta o mouse para o display do jogo
     \param cursor Ponteiro para um ALLEGRO_MOUSE_CURSOR
     \param display Ponteiro apra um ALLEGRO_DISPLAY
     \param mouse Ponteiro para a estrutura de dados do mouse
 */
-int set_mouse_display (ALLEGRO_MOUSE_CURSOR *cursor, ALLEGRO_DISPLAY *display, mouse_t mouse);
+int set_mouse_display (ALLEGRO_DISPLAY *display, mouse_t mouse);
 
 /*!
     \brief Função que seta a posição atual do mouse no display do jogo

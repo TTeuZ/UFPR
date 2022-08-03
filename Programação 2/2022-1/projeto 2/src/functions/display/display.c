@@ -8,6 +8,11 @@ int create_display (ALLEGRO_DISPLAY **display, ALLEGRO_BITMAP **buffer) {
     return EXIT_SUCCESS;
 }
 
+void destroy_display (ALLEGRO_DISPLAY *display, ALLEGRO_BITMAP *buffer) {
+    al_destroy_display (display);
+    al_destroy_bitmap (buffer);
+}
+
 void flip_buffer_display (ALLEGRO_DISPLAY *display, ALLEGRO_BITMAP *buffer) {
     al_set_target_backbuffer (display);
     al_draw_scaled_bitmap (buffer, 0, 0, BUFFER_WIDTH, BUFFER_HEIGHT, 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT, 0);

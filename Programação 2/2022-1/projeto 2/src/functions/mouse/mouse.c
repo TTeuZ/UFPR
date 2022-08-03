@@ -4,15 +4,20 @@
 int start_mouse (mouse_t *mouse) {
     mouse->x = 0;
     mouse->y = 0;
-    if (! (mouse->cursor = al_load_bitmap ("./resources/images/cursor.png")))
+    if (! (mouse->arrow = al_load_bitmap ("./resources/images/cursor.png")))
+        return EXIT_FAILURE;
+    if (! (mouse->cursor = al_create_mouse_cursor (mouse->arrow, 0, 0)))
         return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
 
-int set_mouse_display (ALLEGRO_MOUSE_CURSOR *cursor, ALLEGRO_DISPLAY *display, mouse_t mouse) {
-    if (! (cursor = al_create_mouse_cursor (mouse.cursor, 0, 0)))
-        return EXIT_FAILURE;
-    if (! al_set_mouse_cursor (display, cursor))
+void destroy_mouse (mouse_t *mouse) {
+    al_destroy_bitmap (mouse->arrow);
+    al_destroy_mouse_cursor (mouse->cursor);
+}
+
+int set_mouse_display (ALLEGRO_DISPLAY *display, mouse_t mouse) {
+    if (! al_set_mouse_cursor (display, mouse.cursor))
         return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
