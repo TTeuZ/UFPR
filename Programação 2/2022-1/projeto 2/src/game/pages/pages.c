@@ -16,7 +16,7 @@ void draw_home_page (player_points_t p_points, fonts_t fonts, game_cond_t game_c
     al_draw_circle (400, 24, 7, al_map_rgb(255, 178, 102), 2);
 
     // titulo
-    al_draw_textf (fonts.title_home, al_map_rgb(255, 255, 255), 110, 100, 0, "B");
+    al_draw_textf (fonts.title_home, al_map_rgb (204, 0, 102), 110, 100, 0, "B");
     al_draw_textf (fonts.title_home, al_map_rgb(255, 178, 102), 163, 100, 0, "a");
     al_draw_textf (fonts.title_home, al_map_rgb(0, 102, 204), 220, 100, 0, "l");
     al_draw_textf (fonts.title_home, al_map_rgb(0, 153, 76), 240, 100, 0, "l");
