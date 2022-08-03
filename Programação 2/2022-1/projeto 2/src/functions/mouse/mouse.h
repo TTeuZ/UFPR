@@ -44,6 +44,14 @@ void treat_mouse_move (ALLEGRO_DISPLAY *display, mouse_t *mouse, ALLEGRO_EVENT e
 void treat_mouse_click_in_home (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_EVENT event);
 
 /*!
+    \brief Função de tratamendo do click do mouse no caso de estar na tela de help do jogo
+    \param mouse Ponteiro de acesso para a estrutura do mouse
+    \param game_cond Ponteiro de acesso para a estrutura da condiççoes atuais do jogo
+    \param event Ponteiro de acesso para a estrutura de eventos da Allegro
+*/
+void treat_mouse_click_in_help (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_EVENT event);
+
+/*!
     \brief Função de tratamendo do click do mouse no caso de estar na tela de execução do jogo
     \param mouse Ponteiro de acesso para a estrutura do mouse
     \param game_cond Ponteiro de acesso para a estrutura da condiççoes atuais do jogo

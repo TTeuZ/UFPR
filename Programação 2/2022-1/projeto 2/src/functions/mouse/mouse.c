@@ -28,7 +28,7 @@ void treat_mouse_click_in_home (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_
 
     play_click = event.mouse.x >= 88 && event.mouse.x <= 328 && event.mouse.y >= 378 && event.mouse.y <= 429;
     sound_click = event.mouse.x >= 176 && event.mouse.x <= 238 && event.mouse.y >= 516 && event.mouse.y <= 577;
-    help_click = event.mouse.x >= 2 && event.mouse.x <= 35 && event.mouse.y >= 9 && event.mouse.y <= 39;
+    help_click = event.mouse.x >= 12 && event.mouse.x <= 45 && event.mouse.y >= 9 && event.mouse.y <= 39;
 
     if (play_click) {
         game_cond->in_home_page = false;
@@ -41,8 +41,19 @@ void treat_mouse_click_in_home (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_
     if (sound_click) game_cond->sound_on = ! game_cond->sound_on;
 }
 
+void treat_mouse_click_in_help (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_EVENT event) {
+    int back_click;
+    
+    back_click = event.mouse.x >= 20 && event.mouse.x <= 37 && event.mouse.y >= 18 && event.mouse.y <= 42;
+
+    if (back_click) {
+        game_cond->in_home_page = true;
+        game_cond->in_help_page = false;
+    }
+}
+
 void treat_mouse_click_in_game (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_EVENT event) {
-        printf ("Posição x do click: %d\n", event.mouse.x);
-        printf ("Posição y do mouse: %d\n",event.mouse.y);
-        printf ("Botão apertado: %d\n", event.mouse.button);
+    printf ("Posição x do click: %d\n", event.mouse.x);
+    printf ("Posição y do mouse: %d\n",event.mouse.y);
+    printf ("Botão apertado: %d\n", event.mouse.button);
 }

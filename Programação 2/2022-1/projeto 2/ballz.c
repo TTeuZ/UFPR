@@ -50,8 +50,10 @@ int main () {
 
     // imagens
     ALLEGRO_BITMAP *sound;
+    ALLEGRO_BITMAP *back;
     if (! (al_init_image_addon ())) game_cond.all_init = INIT_ERROR;
     else if (! (sound = al_load_bitmap ("./resources/images/music.png"))) game_cond.all_init = INIT_ERROR;
+    else if (! (back = al_load_bitmap ("./resources/images/left-arrow.png"))) game_cond.all_init = INIT_ERROR;
 
     // mouse
     mouse_t mouse;
@@ -61,14 +63,18 @@ int main () {
     else if (set_mouse_display (cursor, display, mouse)) game_cond.all_init = INIT_ERROR;
 
     // fontes
-    ALLEGRO_FONT *title_font;
-    ALLEGRO_FONT *button_font;
-    ALLEGRO_FONT *points_font;
+    ALLEGRO_FONT *title_home;
+    ALLEGRO_FONT *button_home;
+    ALLEGRO_FONT *points_home;
+    ALLEGRO_FONT *title_help;
+    ALLEGRO_FONT *text_help;
     if (! (al_init_font_addon ())) game_cond.all_init = INIT_ERROR;
     else if (! (al_init_ttf_addon ())) game_cond.all_init = INIT_ERROR;
-    else if (! (title_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 90, 0))) game_cond.all_init = INIT_ERROR;
-    else if (! (button_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 25, 0))) game_cond.all_init = INIT_ERROR;
-    else if (! (points_font = al_load_ttf_font ("./resources/fonts/poppins.ttf", 20, 0))) game_cond.all_init = INIT_ERROR;
+    else if (! (title_home = al_load_ttf_font ("./resources/fonts/poppins.ttf", 90, 0))) game_cond.all_init = INIT_ERROR;
+    else if (! (button_home = al_load_ttf_font ("./resources/fonts/poppins.ttf", 25, 0))) game_cond.all_init = INIT_ERROR;
+    else if (! (points_home = al_load_ttf_font ("./resources/fonts/poppins.ttf", 20, 0))) game_cond.all_init = INIT_ERROR;
+    else if (! (title_help = al_load_ttf_font ("./resources/fonts/poppins.ttf", 45, 0))) game_cond.all_init = INIT_ERROR;
+    else if (! (text_help = al_load_ttf_font ("./resources/fonts/poppins.ttf", 20, 0))) game_cond.all_init = INIT_ERROR;
 
     if (! game_cond.all_init) {
         emit_error (game_cond.all_init);
@@ -95,6 +101,7 @@ int main () {
                 break;
             case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
                 if (game_cond.in_home_page) treat_mouse_click_in_home (&mouse, &game_cond, event);
+                else if (game_cond.in_help_page) treat_mouse_click_in_help (&mouse, &game_cond, event);
                 else treat_mouse_click_in_game (&mouse, &game_cond, event);
                 game_cond.redraw = true;
                 break;
@@ -109,10 +116,12 @@ int main () {
             al_set_target_bitmap (buffer);
 
             if (game_cond.in_home_page)
-                draw_home_page (p_points, title_font, button_font, points_font, game_cond, sound);
+                draw_home_page (p_points, title_home, button_home, points_home, game_cond, sound);
+            else if (game_cond.in_help_page)
+                draw_help_page (title_help, text_help, back);
             else {
                 al_clear_to_color(al_map_rgb(0, 0, 0));
-                al_draw_text(title_font, al_map_rgb(255, 255, 255), (DISPLAY_WIDTH/2 - 12), DISPLAY_HEIGHT/2, 0, "Hello world!");
+                al_draw_text(title_home, al_map_rgb(255, 255, 255), (DISPLAY_WIDTH/2 - 12), DISPLAY_HEIGHT/2, 0, "Hello world!");
                 al_flip_display();
             }
 
@@ -127,10 +136,13 @@ int main () {
     al_destroy_display (display);
     al_destroy_bitmap (buffer);
     al_destroy_bitmap (sound);
+    al_destroy_bitmap (back);
     al_destroy_bitmap (mouse.cursor);
     al_destroy_mouse_cursor (cursor);
-    al_destroy_font (title_font);
-    al_destroy_font (button_font);
-    al_destroy_font (points_font);
+    al_destroy_font (title_home);
+    al_destroy_font (button_home);
+    al_destroy_font (points_home);
+    al_destroy_font (title_help);
+    al_destroy_font (text_help);
     return EXIT_SUCCESS;
 }
