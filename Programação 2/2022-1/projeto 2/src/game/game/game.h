@@ -5,10 +5,10 @@
 #include <stdlib.h>
 
 typedef struct game_cond {
-    // INicializações e escrita
+    // Inicializações e escrita
     int all_init;
     int redraw;
-    // COndições de jogo
+    // Condições de jogo
     int sound_on;
     // Draw de telas
     int in_home_page;
