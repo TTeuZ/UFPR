@@ -35,8 +35,11 @@ int main () {
     // inicialização dos dados do jogo
     game_cond_t game_cond;
     player_points_t p_points;
+    player_game_t g_player;
     start_game_conditions (&game_cond);
     read_player_points (&p_points);
+    if (read_player_game (&g_player)) 
+        emit_error (READ_GAME_ERROR);
 
     // Inicializações gerais
     if (! al_init ()) game_cond.all_init = INIT_ERROR;
@@ -126,9 +129,8 @@ int main () {
             else if (game_cond.in_help_page)
                 draw_help_page (fonts, images);
             else {
-                al_clear_to_color(al_map_rgb(0, 0, 0));
-                al_draw_text(fonts.title_home, al_map_rgb(255, 255, 255), (DISPLAY_WIDTH/2 - 12), DISPLAY_HEIGHT/2, 0, "Hello world!");
-                al_flip_display();
+                printf ("batata\n");
+                // draw_game_page ();
             }
 
             flip_buffer_display (display, buffer);

@@ -33,5 +33,6 @@
 
 // Erros
 #define INIT_ERROR 0
+#define READ_GAME_ERROR -1
 
 #endif

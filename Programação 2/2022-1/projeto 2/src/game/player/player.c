@@ -16,3 +16,20 @@ void read_player_points (player_points_t *p_points) {
         p_points->coins = 0;
     }
 }
+
+int read_player_game (player_game_t *g_player) {
+    FILE *game_file;
+    char temp_string[BUFSIZ];
+    game_file = fopen ("./resources/data/game.txt", "r");
+
+    if (game_file) {
+        fgets (temp_string, BUFSIZ, game_file);
+        g_player->points = atoi (temp_string);
+        // ...
+    } else {
+        g_player->points = 0;
+        // ...
+        return READ_GAME_ERROR;
+    }
+    return EXIT_SUCCESS;
+}
