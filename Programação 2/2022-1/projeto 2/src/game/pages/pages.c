@@ -9,10 +9,10 @@ void draw_home_page (player_points_t p_points, fonts_t fonts, game_cond_t game_c
 
     // Icone de duvida
     al_draw_filled_circle (30, 26, 15, al_map_rgb (255, 255, 255));
-    al_draw_textf (fonts.button_home, al_map_rgb (0, 0, 0), 27, 9, 0, "I");
+    al_draw_textf (fonts.button, al_map_rgb (0, 0, 0), 27, 9, 0, "I");
 
     // moedas
-    al_draw_textf (fonts.points_home, al_map_rgb (255, 255, 255), 375 - ((6 + decimal_cases)  * decimal_cases), 10, 0, "%d", p_points.coins);
+    al_draw_textf (fonts.coins, al_map_rgb (255, 255, 255), 375 - ((6 + decimal_cases)  * decimal_cases), 10, 0, "%d", p_points.coins);
     al_draw_circle (400, 24, 7, al_map_rgb (255, 178, 102), 2);
 
     // titulo
@@ -24,7 +24,7 @@ void draw_home_page (player_points_t p_points, fonts_t fonts, game_cond_t game_c
 
     // botão de play
     al_draw_filled_rounded_rectangle (90, 380, 330, 430, 25, 25, al_map_rgb (204, 0, 102));
-    al_draw_textf (fonts.button_home, al_map_rgb (255, 255, 255), 180, 386, 0, "PLAY");
+    al_draw_textf (fonts.button, al_map_rgb (255, 255, 255), 180, 386, 0, "PLAY");
 
     // icone de som
     if (game_cond.sound_on) 

@@ -9,10 +9,11 @@
 
 typedef struct fonts {
     ALLEGRO_FONT *title_home;
-    ALLEGRO_FONT *button_home;
-    ALLEGRO_FONT *points_home;
     ALLEGRO_FONT *title_help;
     ALLEGRO_FONT *text_help;
+    ALLEGRO_FONT *button;
+    ALLEGRO_FONT *points;
+    ALLEGRO_FONT *coins;
 } fonts_t;
 
 /*!
