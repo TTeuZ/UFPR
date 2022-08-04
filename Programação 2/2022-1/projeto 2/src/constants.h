@@ -11,6 +11,9 @@
 // Audio
 #define AUDIO_QTD 2
 
+#define CLICK_GAIN 3
+#define CLICK_SPEED 12
+
 // Fontes
 #define TITLE_HOME 90
 #define BUTTON_HOME 25

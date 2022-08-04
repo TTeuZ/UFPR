@@ -12,3 +12,7 @@ void destroy_audios (audios_t *audios) {
     al_destroy_sample (audios->hit);
     al_destroy_sample (audios->click);
 }
+
+void play_audio (ALLEGRO_SAMPLE *audio, int gain, int speed) {
+    al_play_sample (audio, gain, 0.0, speed, ALLEGRO_PLAYMODE_ONCE, NULL);
+}

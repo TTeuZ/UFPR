@@ -23,4 +23,12 @@ int load_audios (audios_t *audios);
     \param audios Ponteiro de acesso para a estrutura de sons
 */
 void destroy_audios (audios_t *audios);
+
+/*!
+    \brief Função responsavel por emitir o audio especificado por parametro
+    \param audio Ponteiro de acesso para uma ALLEGRO_SAMPLE
+    \param gain Volume do son
+    \param speed Velocidade de reprodução
+*/
+void play_audio (ALLEGRO_SAMPLE *audio, int gain, int speed) ;
 #endif

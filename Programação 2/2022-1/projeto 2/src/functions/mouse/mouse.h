@@ -5,6 +5,7 @@
 #include <allegro5/allegro_image.h>
 
 #include "../../game/game/game.h"
+#include "../../loadables/audio/audio.h"
 #include "../../constants.h"
 
 typedef struct mouse {
@@ -47,9 +48,10 @@ void treat_mouse_move (ALLEGRO_DISPLAY *display, mouse_t *mouse, ALLEGRO_EVENT e
     \brief Função de tratamendo do click do mouse no caso de estar na tela de home do jogo
     \param mouse Ponteiro de acesso para a estrutura do mouse
     \param game_cond Ponteiro de acesso para a estrutura da condiççoes atuais do jogo
+    \param audios Ponteiro de aceso para a estrutura de sons do jogo
     \param event Ponteiro de acesso para a estrutura de eventos da Allegro
 */
-void treat_mouse_click_in_home (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_EVENT event);
+void treat_mouse_click_in_home (mouse_t *mouse, game_cond_t *game_cond, audios_t audios, ALLEGRO_EVENT event);
 
 /*!
     \brief Função de tratamendo do click do mouse no caso de estar na tela de help do jogo

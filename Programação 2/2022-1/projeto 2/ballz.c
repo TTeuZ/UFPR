@@ -105,7 +105,7 @@ int main () {
                 treat_mouse_move (display, &mouse, event);
                 break;
             case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-                if (game_cond.in_home_page) treat_mouse_click_in_home (&mouse, &game_cond, event);
+                if (game_cond.in_home_page) treat_mouse_click_in_home (&mouse, &game_cond, audios, event);
                 else if (game_cond.in_help_page) treat_mouse_click_in_help (&mouse, &game_cond, event);
                 else treat_mouse_click_in_game (&mouse, &game_cond, event);
                 

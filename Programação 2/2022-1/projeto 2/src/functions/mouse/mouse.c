@@ -28,7 +28,7 @@ void treat_mouse_move (ALLEGRO_DISPLAY *display, mouse_t *mouse, ALLEGRO_EVENT e
     al_set_mouse_xy (display, mouse->x, mouse->y);
 }
 
-void treat_mouse_click_in_home (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_EVENT event) {
+void treat_mouse_click_in_home (mouse_t *mouse, game_cond_t *game_cond, audios_t audios, ALLEGRO_EVENT event) {
     int play_click, sound_click, help_click;
 
     play_click = event.mouse.x >= 88 && event.mouse.x <= 328 && event.mouse.y >= 378 && event.mouse.y <= 429;
@@ -38,12 +38,16 @@ void treat_mouse_click_in_home (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_
     if (play_click) {
         game_cond->in_home_page = false;
         game_cond->in_help_page = false;
+        if (game_cond->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
     }
     if (help_click) {
         game_cond->in_home_page = false;
         game_cond->in_help_page = true;
     }
-    if (sound_click) game_cond->sound_on = ! game_cond->sound_on;
+    if (sound_click) {
+        game_cond->sound_on = ! game_cond->sound_on;
+        if (game_cond->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
+    }
 }
 
 void treat_mouse_click_in_help (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_EVENT event) {
