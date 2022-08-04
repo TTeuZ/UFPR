@@ -128,10 +128,8 @@ int main () {
                 draw_home_page (p_points, fonts, game_cond, images);
             else if (game_cond.in_help_page)
                 draw_help_page (fonts, images);
-            else {
-                printf ("batata\n");
-                // draw_game_page ();
-            }
+            else 
+                draw_game_page (g_player, p_points, fonts, game_cond, images);
 
             flip_buffer_display (display, buffer);
             game_cond.redraw = false;

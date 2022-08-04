@@ -5,10 +5,13 @@ int load_images (images_t *images) {
         return EXIT_FAILURE;
     if (! (images->back = al_load_bitmap ("./resources/images/left-arrow.png")))
         return EXIT_FAILURE;
+    if (! (images->pause = al_load_bitmap ("./resources/images/pause.png")))
+        return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
 
 void destroy_images (images_t *images) {
     al_destroy_bitmap (images->sound);
     al_destroy_bitmap (images->back);
+    al_destroy_bitmap (images->pause);
 }

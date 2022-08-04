@@ -16,9 +16,7 @@
 /*!
     \brief Função responsavel por construir a tela inicial (Home) do jogo
     \param p_points Ponteiro de acesso para a estrutura de pontos do jogador
-    \param title_font Ponteiro para a fonte do titulo da home
-    \param button_font Ponteiro para a fonte dos botões da home
-    \param points_font Ponteiro para a fonte das pontuações da home
+    \param fonts Ponteiro para a estrutura de fonts
     \param game_cound Ponteiro de acesso para as condições atuais do jogo
     \param images Ponteiro para a estrutura de imagens
 */
@@ -26,10 +24,19 @@ void draw_home_page (player_points_t p_points, fonts_t fonts, game_cond_t game_c
 
 /*!
     \brief Função responsavel por construir a tela de ajuda (Help) do jogo
-    \param title_font Ponteiro para a fonte do titulo da tela help
-    \param text_font Ponteiro para a fonte dos botões da tela help
+    \param fonts Ponteiro para a estrutura de fonts
     \param images Ponteiro para a estrutura de imagens
 */
 void draw_help_page (fonts_t fonts, images_t images);
+
+/*!
+    \brief Função responsável por construir a estrutura 'geral' da tela de jogo
+    \param g_player Ponteiro para a estrutura de jogo atual
+    \param p_points Ponteiro de acesso para a estrutura de pontos do jogado
+    \param fonts Ponteiro para a estrutura de fonts
+    \param game_cound Ponteiro de acesso para as condições atuais do jogo
+    \param images Ponteiro para a estrutura de imagens
+*/
+void draw_game_page (player_game_t g_player, player_points_t p_points, fonts_t fonts, game_cond_t game_cond, images_t images);
 
 #endif

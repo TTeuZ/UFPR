@@ -59,3 +59,13 @@ void draw_help_page (fonts_t fonts, images_t images) {
     al_draw_filled_rectangle (50, 550, 100, 600, al_map_rgb (255, 255, 255));
     al_draw_textf (fonts.text_help, al_map_rgb (255, 255, 255), 125, 560, 0, "+ 1  moeda!");
 }
+
+void draw_game_page (player_game_t g_player, player_points_t p_points, fonts_t fonts, game_cond_t game_cond, images_t images) {
+    al_clear_to_color (al_map_rgb (32, 32, 32));
+    
+    // Icone de pausa
+    al_draw_bitmap (images.pause, 20, 20, ALLEGRO_ALIGN_CENTER);
+
+    // Pontuação atual
+    al_draw_textf (fonts.points, al_map_rgb (255, 255, 255), BUFFER_WIDTH/2, 13, ALLEGRO_ALIGN_CENTER, "%d", g_player.points);
+}

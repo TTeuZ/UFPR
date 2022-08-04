@@ -9,6 +9,7 @@
 typedef struct images {
     ALLEGRO_BITMAP *sound;
     ALLEGRO_BITMAP *back;
+    ALLEGRO_BITMAP *pause;
 } images_t;
 
 /*!
