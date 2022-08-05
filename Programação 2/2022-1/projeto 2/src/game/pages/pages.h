@@ -30,6 +30,13 @@ void draw_home_page (player_points_t p_points, fonts_t fonts, game_cond_t game_c
 void draw_help_page (fonts_t fonts, images_t images);
 
 /*!
+    \brief Função responsável por construir a tela de pause do jogo
+    \param fonts Ponteiro para a estrutura de fonts
+    \param images Ponteiro para a estrutura de imagens
+*/
+void draw_pause_page (fonts_t fonts, images_t images);
+
+/*!
     \brief Função responsável por construir a estrutura 'geral' da tela de jogo
     \param g_player Ponteiro para a estrutura de jogo atual
     \param p_points Ponteiro de acesso para a estrutura de pontos do jogado

@@ -8,8 +8,8 @@
 #include "../../constants.h"
 
 typedef struct fonts {
-    ALLEGRO_FONT *title_home;
-    ALLEGRO_FONT *title_help;
+    ALLEGRO_FONT *title_h1;
+    ALLEGRO_FONT *title_h2;
     ALLEGRO_FONT *text_help;
     ALLEGRO_FONT *text_record;
     ALLEGRO_FONT *button;

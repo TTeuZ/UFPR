@@ -15,8 +15,8 @@
 #define CLICK_SPEED 12
 
 // Fontes
-#define TITLE_HOME 90
-#define TITLE_HELP 45
+#define TITLE_H1 90
+#define TITLE_H2 45
 #define TEXT_HELP 20
 #define TEXT_RECORD 15
 #define BUTTON 25

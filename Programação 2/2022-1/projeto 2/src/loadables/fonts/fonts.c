@@ -1,9 +1,9 @@
 #include "fonts.h"
 
 int load_fonts (fonts_t *fonts) {
-    if (! (fonts->title_home = al_load_ttf_font ("./resources/fonts/poppins.ttf", TITLE_HOME, 0)))
+    if (! (fonts->title_h1 = al_load_ttf_font ("./resources/fonts/poppins.ttf", TITLE_H1, 0)))
         return EXIT_FAILURE;
-    if (! (fonts->title_help = al_load_ttf_font ("./resources/fonts/poppins.ttf", TITLE_HELP, 0)))
+    if (! (fonts->title_h2 = al_load_ttf_font ("./resources/fonts/poppins.ttf", TITLE_H2, 0)))
         return EXIT_FAILURE;
     if (! (fonts->text_help = al_load_ttf_font ("./resources/fonts/poppins.ttf", TEXT_HELP, 0)))
         return EXIT_FAILURE;
@@ -19,8 +19,8 @@ int load_fonts (fonts_t *fonts) {
 }
 
 void destroy_fonts (fonts_t *fonts) {
-    al_destroy_font (fonts->title_home);
-    al_destroy_font (fonts->title_help);
+    al_destroy_font (fonts->title_h1);
+    al_destroy_font (fonts->title_h2);
     al_destroy_font (fonts->text_help);
     al_destroy_font (fonts->text_record);
     al_destroy_font (fonts->button);

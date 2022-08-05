@@ -128,7 +128,9 @@ int main () {
                 draw_home_page (p_points, fonts, game_cond, images);
             else if (game_cond.in_help_page)
                 draw_help_page (fonts, images);
-            else 
+            else if (game_cond.in_pause_page)
+                draw_pause_page (fonts, images);
+            else
                 draw_game_page (g_player, p_points, fonts, game_cond, images);
 
             flip_buffer_display (display, buffer);

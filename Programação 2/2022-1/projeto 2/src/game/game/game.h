@@ -8,11 +8,12 @@ typedef struct game_cond {
     // Inicializações e escrita
     int all_init;
     int redraw;
-    // Condições de jogo
-    int sound_on;
     // Draw de telas
     int in_home_page;
     int in_help_page;
+    int in_pause_page;
+    // Condições de jogo
+    int sound_on;
     int end_game;
 } game_cond_t;
 

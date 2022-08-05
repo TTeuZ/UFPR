@@ -62,7 +62,16 @@ void treat_mouse_click_in_help (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_
 }
 
 void treat_mouse_click_in_game (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_EVENT event) {
-    printf ("Posição x do click: %d\n", event.mouse.x);
-    printf ("Posição y do mouse: %d\n",event.mouse.y);
-    printf ("Botão apertado: %d\n", event.mouse.button);
+    int hud_click, pause_click;
+
+    hud_click = event.mouse.y <= SQUARE_SIZE;
+    pause_click = hud_click && (event.mouse.x >= 20 && event.mouse.x <= 40 && event.mouse.y >=20 && event.mouse.y <= 43);
+    
+    if (pause_click) 
+        game_cond->in_pause_page = true;
+    if (! hud_click) {
+        printf ("Posição x do click: %d\n", event.mouse.x);
+        printf ("Posição y do mouse: %d\n",event.mouse.y);
+        printf ("Botão apertado: %d\n", event.mouse.button);
+    }
 }

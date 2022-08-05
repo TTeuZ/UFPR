@@ -16,11 +16,11 @@ void draw_home_page (player_points_t p_points, fonts_t fonts, game_cond_t game_c
     al_draw_circle (400, 24, 7, al_map_rgb (255, 178, 102), 2);
 
     // titulo
-    al_draw_textf (fonts.title_home, al_map_rgb (204, 0, 102), 110, 100, 0, "B");
-    al_draw_textf (fonts.title_home, al_map_rgb (255, 178, 102), 163, 100, 0, "a");
-    al_draw_textf (fonts.title_home, al_map_rgb (0, 102, 204), 220, 100, 0, "l");
-    al_draw_textf (fonts.title_home, al_map_rgb (0, 153, 76), 240, 100, 0, "l");
-    al_draw_textf (fonts.title_home, al_map_rgb (153, 255, 51), 263, 100, 0, "z");
+    al_draw_textf (fonts.title_h1, al_map_rgb (204, 0, 102), 110, 100, 0, "B");
+    al_draw_textf (fonts.title_h1, al_map_rgb (255, 178, 102), 163, 100, 0, "a");
+    al_draw_textf (fonts.title_h1, al_map_rgb (0, 102, 204), 220, 100, 0, "l");
+    al_draw_textf (fonts.title_h1, al_map_rgb (0, 153, 76), 240, 100, 0, "l");
+    al_draw_textf (fonts.title_h1, al_map_rgb (153, 255, 51), 263, 100, 0, "z");
 
     // botão de play
     al_draw_filled_rounded_rectangle (90, 380, 330, 430, 25, 25, al_map_rgb (204, 0, 102));
@@ -41,7 +41,7 @@ void draw_help_page (fonts_t fonts, images_t images) {
     al_draw_bitmap (images.back, 20, 20, 0);
 
     // Titulo
-    al_draw_textf (fonts.title_help, al_map_rgb (255, 255, 255), BUFFER_WIDTH/2, 130, ALLEGRO_ALIGN_CENTER, "Como jogar");
+    al_draw_textf (fonts.title_h2, al_map_rgb (255, 255, 255), BUFFER_WIDTH/2, 130, ALLEGRO_ALIGN_CENTER, "Como jogar");
 
     // Mira
     al_draw_textf (fonts.text_help, al_map_rgb (255, 255, 255), BUFFER_WIDTH/2, 200, ALLEGRO_ALIGN_CENTER, "Pressione com o mouse para ajustar");
@@ -58,6 +58,10 @@ void draw_help_page (fonts_t fonts, images_t images) {
     // Moedas
     al_draw_filled_rectangle (50, 550, 100, 600, al_map_rgb (255, 255, 255));
     al_draw_textf (fonts.text_help, al_map_rgb (255, 255, 255), 125, 560, 0, "+ 1  moeda!");
+}
+
+void draw_pause_page (fonts_t fonts, images_t images) {
+    al_clear_to_color (al_map_rgb (32, 32, 32));
 }
 
 void draw_game_page (player_game_t g_player, player_points_t p_points, fonts_t fonts, game_cond_t game_cond, images_t images) {
