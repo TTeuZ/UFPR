@@ -11,6 +11,7 @@ typedef struct fonts {
     ALLEGRO_FONT *title_home;
     ALLEGRO_FONT *title_help;
     ALLEGRO_FONT *text_help;
+    ALLEGRO_FONT *text_record;
     ALLEGRO_FONT *button;
     ALLEGRO_FONT *points;
     ALLEGRO_FONT *coins;

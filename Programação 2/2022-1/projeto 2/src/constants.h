@@ -18,6 +18,7 @@
 #define TITLE_HOME 90
 #define TITLE_HELP 45
 #define TEXT_HELP 20
+#define TEXT_RECORD 15
 #define BUTTON 25
 #define POINTS 30
 #define COINS 20
