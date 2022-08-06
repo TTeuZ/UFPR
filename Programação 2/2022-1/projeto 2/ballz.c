@@ -125,7 +125,13 @@ int main () {
                 break;
         }
 
-        if (game_cond.end_game) break;
+        if (game_cond.end_game) {
+            if (save_player_points (p_points) == SAVE_POINTS_ERROR)
+                emit_error (SAVE_POINTS_ERROR);
+            if (save_player_game (g_player) == SAVE_GAME_ERROR)
+                emit_error (SAVE_GAME_ERROR);
+            break;
+        }
         
         if (game_cond.redraw && al_is_event_queue_empty (queue)) {
             al_set_target_bitmap (buffer);

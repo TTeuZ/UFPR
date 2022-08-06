@@ -31,4 +31,17 @@ void read_player_points (player_points_t *p_points);
 */
 int read_player_game (player_game_t *g_player);
 
+/*!
+    \brief Função que salva os pontos atuais do jogador em memória
+    \param p_points Ponteiro de acesso para a estrutura de dados de pontuação
+    \return erro SAVE_POINTS_ERROR em caso de não conseguir salvar
+*/
+int save_player_points (player_points_t p_points);
+
+/*!
+    \brief Função que salva o jogo atual do jogador
+    \param g_player Ponteiro de acesso para a estrutura de game
+    \return erro SAVE_GAME_ERROR em caso de não conseguir salvar
+*/
+int save_player_game (player_game_t g_player);
 #endif
