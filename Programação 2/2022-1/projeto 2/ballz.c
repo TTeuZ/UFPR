@@ -33,13 +33,17 @@
 #include "./src/game/player/player.h"
 
 int main () {
+    int error;
     // inicialização dos dados do jogo
     game_cond_t game_cond;
     player_points_t p_points;
     player_game_t p_game;
     start_game_conditions (&game_cond);
     read_player_points (&p_points);
-    if (read_player_game (&p_game)) emit_error (READ_GAME_ERROR);
+    error = read_player_game (&p_game);
+
+    if (error != 0) emit_error (error);
+    if (error == ADD_BALL_ERROR) return EXIT_FAILURE;
 
     // Inicializações gerais
     if (! al_init ()) game_cond.all_init = INIT_ERROR;
@@ -143,7 +147,7 @@ int main () {
                 draw_pause_page (fonts, images, game_cond);
             else {
                 draw_game_page (p_game, p_points, fonts, game_cond, images);
-                draw_game_section ();
+                draw_game_section (p_game);
             }
 
             flip_buffer_display (display, buffer);

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "../../constants.h"
+#include "../../objects/ball/ball.h"
 
 typedef struct player_points {
     int coins;
@@ -13,6 +14,8 @@ typedef struct player_points {
 
 typedef struct player_game {
     int points;
+    int balls_qtd;
+    ball_t **balls;
     // ...
 } player_game_t;
 

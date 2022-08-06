@@ -20,17 +20,27 @@ void read_player_points (player_points_t *p_points) {
 int read_player_game (player_game_t *p_game) {
     FILE *game_file;
     char temp_string[BUFSIZ];
+    int count;
     game_file = fopen ("./resources/data/game.txt", "r");
 
     if (game_file) {
         fgets (temp_string, BUFSIZ, game_file);
         p_game->points = atoi (temp_string);
-        // ...
+        
+        fgets (temp_string, BUFSIZ, game_file);
+        p_game->balls_qtd = atoi (temp_string);
     } else {
         p_game->points = 0;
-        // ...
-        return READ_GAME_ERROR;
+        p_game->balls_qtd = 1;
     }
+
+    if (! (p_game->balls = malloc (sizeof (ball_t)* p_game->balls_qtd))) {
+        for (count = 0; count < p_game->balls_qtd; count++) {
+            if (! (p_game->balls[count] = add_ball ())) return ADD_BALL_ERROR;
+        }
+    }
+
+    if (! game_file) return READ_GAME_ERROR;
     return EXIT_SUCCESS;
 }
 

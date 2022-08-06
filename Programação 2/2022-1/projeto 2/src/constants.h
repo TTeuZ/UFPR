@@ -38,5 +38,6 @@
 #define READ_GAME_ERROR -1
 #define SAVE_POINTS_ERROR -2
 #define SAVE_GAME_ERROR -3
+#define ADD_BALL_ERROR -4
 
 #endif
