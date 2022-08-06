@@ -4,7 +4,7 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_image.h>
 
-#include "../../game/game/game.h"
+#include "../utils/utils.h"
 #include "../../loadables/audio/audio.h"
 #include "../../constants.h"
 

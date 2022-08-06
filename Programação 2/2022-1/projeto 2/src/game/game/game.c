@@ -1,20 +1,6 @@
 #include "game.h"
 
-void start_game_conditions (game_cond_t *game_cond) {
-    game_cond->all_init = 1;
-    game_cond->redraw = 1;
-    game_cond->in_home_page = 1;
-    game_cond->in_help_page = 0;
-    game_cond->in_pause_page = 0;
-    game_cond->in_game_page = 0;
-    game_cond->sound_on = 1;
-    game_cond->restart = 0;
-    game_cond->end_game = 0;
-}
-
-void set_pages_to_false (game_cond_t *game_cond) {
-    game_cond->in_home_page = 0;
-    game_cond->in_help_page = 0;
-    game_cond->in_pause_page = 0;
-    game_cond->in_game_page = 0;
+void draw_game_section (player_game_t p_game) {
+    // Área do jogo
+    al_draw_filled_rectangle (0, SQUARE_SIZE, BUFFER_WIDTH, SQUARE_SIZE * 9, al_map_rgb (20, 20, 20));
 }

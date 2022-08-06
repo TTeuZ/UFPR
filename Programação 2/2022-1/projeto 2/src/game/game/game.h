@@ -4,31 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct game_cond {
-    // Inicializações e escrita
-    int all_init;
-    int redraw;
-    // Draw de telas
-    int in_home_page;
-    int in_help_page;
-    int in_pause_page;
-    int in_game_page;
-    // Condições de jogo
-    int sound_on;
-    int restart;
-    int end_game;
-} game_cond_t;
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_primitives.h>
+
+#include "../../constants.h"
+#include "../player/player.h"
 
 /*!
-    \brief Função de inicialização dos valores inicias para o jogo
-    \param game_cond ponteiro de acesso para a estrutura de consições de jogo
+    \brief Função resposável por escrever a tela do jogo
+    \param p_game Ponteiro de acesso para a estrutura de game
 */
-void start_game_conditions (game_cond_t *game_cond);
-
-/*!
-    \brief Função que seta todas as variaveis de telas para falso
-    \param game_cond ponteiro de acesso para a estrutura de consições de jogo
-*/
-void set_pages_to_false (game_cond_t *game_cond);
-
+void draw_game_section (player_game_t p_game);
 #endif

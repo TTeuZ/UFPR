@@ -4,7 +4,7 @@
 #include <allegro5/allegro5.h>
 
 #include "../../constants.h"
-#include "../../game/game/game.h"
+#include "../utils/utils.h"
 
 /*!
     \brief Função de tratamendo de teclas do teclado
