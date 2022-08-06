@@ -18,6 +18,7 @@
 
 // Funções
 #include "./src/functions/display/display.h"
+#include "./src/functions/keyboard/keyboard.h"
 #include "./src/functions/mouse/mouse.h"
 #include "./src/functions/utils/utils.h"
 
@@ -114,6 +115,10 @@ int main () {
                 else treat_mouse_click_in_game (&mouse, &game_cond, event);
                 
                 game_cond.redraw = true;
+                break;
+            
+            case ALLEGRO_EVENT_KEY_DOWN:
+                treat_key_down (&game_cond, event);
                 break;
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
                 game_cond.end_game = true;
