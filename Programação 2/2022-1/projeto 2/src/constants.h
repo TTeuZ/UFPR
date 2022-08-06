@@ -39,6 +39,7 @@
 
 // Dimensões
 #define SQUARE_SIZE 60
+#define BALL_RADIUS 8
 
 #define BUFFER_HEIGHT (SQUARE_SIZE * 12)
 #define BUFFER_WIDTH (SQUARE_SIZE * 7)

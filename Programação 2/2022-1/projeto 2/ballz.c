@@ -163,5 +163,6 @@ int main () {
     destroy_audios (&audios);
     destroy_fonts (&fonts);
     destroy_mouse (&mouse);
+    destroy_game (&p_game);
     return EXIT_SUCCESS;
 }

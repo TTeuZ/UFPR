@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_primitives.h>
+
 #include "../../constants.h"
 
 typedef struct ball {
@@ -17,4 +20,9 @@ typedef struct ball {
 */
 ball_t *add_ball ();
 
+/*!
+    \brief Função que desenha abolinha na tela do jogo
+    \param ball Ponteiro para a estrutura da bolinha
+*/
+void draw_ball (ball_t *ball);
 #endif
