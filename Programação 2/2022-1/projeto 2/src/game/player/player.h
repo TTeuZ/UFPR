@@ -26,10 +26,10 @@ void read_player_points (player_points_t *p_points);
 /*!
     \brief Função que realiza a leitura do antigo jogo em andamento do usuario.
     Caso seja o primeiro jogo, inicia as estruturas como 0.
-    \param g_player Ponteiro de acesso para a estrutura de game
+    \param p_game Ponteiro de acesso para a estrutura de game
     \return erro READ_GAME_ERROR em caso de não conseguir ler o antigo estado salvo
 */
-int read_player_game (player_game_t *g_player);
+int read_player_game (player_game_t *p_game);
 
 /*!
     \brief Função que salva os pontos atuais do jogador em memória
@@ -40,8 +40,8 @@ int save_player_points (player_points_t p_points);
 
 /*!
     \brief Função que salva o jogo atual do jogador
-    \param g_player Ponteiro de acesso para a estrutura de game
+    \param p_game Ponteiro de acesso para a estrutura de game
     \return erro SAVE_GAME_ERROR em caso de não conseguir salvar
 */
-int save_player_game (player_game_t g_player);
+int save_player_game (player_game_t p_game);
 #endif

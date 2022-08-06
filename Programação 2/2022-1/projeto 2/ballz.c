@@ -36,11 +36,10 @@ int main () {
     // inicialização dos dados do jogo
     game_cond_t game_cond;
     player_points_t p_points;
-    player_game_t g_player;
+    player_game_t p_game;
     start_game_conditions (&game_cond);
     read_player_points (&p_points);
-    if (read_player_game (&g_player)) 
-        emit_error (READ_GAME_ERROR);
+    if (read_player_game (&p_game)) emit_error (READ_GAME_ERROR);
 
     // Inicializações gerais
     if (! al_init ()) game_cond.all_init = INIT_ERROR;
@@ -128,7 +127,7 @@ int main () {
         if (game_cond.end_game) {
             if (save_player_points (p_points) == SAVE_POINTS_ERROR)
                 emit_error (SAVE_POINTS_ERROR);
-            if (save_player_game (g_player) == SAVE_GAME_ERROR)
+            if (save_player_game (p_game) == SAVE_GAME_ERROR)
                 emit_error (SAVE_GAME_ERROR);
             break;
         }
@@ -142,8 +141,10 @@ int main () {
                 draw_help_page (fonts, images);
             else if (game_cond.in_pause_page)
                 draw_pause_page (fonts, images, game_cond);
-            else
-                draw_game_page (g_player, p_points, fonts, game_cond, images);
+            else {
+                draw_game_page (p_game, p_points, fonts, game_cond, images);
+                draw_game_section ();
+            }
 
             flip_buffer_display (display, buffer);
             game_cond.redraw = false;

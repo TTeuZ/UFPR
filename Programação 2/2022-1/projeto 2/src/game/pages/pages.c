@@ -86,7 +86,7 @@ void draw_pause_page (fonts_t fonts, images_t images, game_cond_t game_cond) {
     al_draw_bitmap (images.sound, 192, 535, 0);
 }
 
-void draw_game_page (player_game_t g_player, player_points_t p_points, fonts_t fonts, game_cond_t game_cond, images_t images) {
+void draw_game_page (player_game_t p_game, player_points_t p_points, fonts_t fonts, game_cond_t game_cond, images_t images) {
     int intern_coins = p_points.coins;
     int decimal_cases = 0;
     while ((intern_coins = intern_coins / 10) > 0) decimal_cases++;
@@ -101,7 +101,7 @@ void draw_game_page (player_game_t g_player, player_points_t p_points, fonts_t f
     al_draw_textf (fonts.coins, al_map_rgb (255, 255, 255), (SQUARE_SIZE/2)*3, 27, ALLEGRO_ALIGN_CENTER, "%d", p_points.record);
 
     // Pontuação atual
-    al_draw_textf (fonts.points, al_map_rgb (255, 255, 255), BUFFER_WIDTH/2, 13, ALLEGRO_ALIGN_CENTER, "%d", g_player.points);
+    al_draw_textf (fonts.points, al_map_rgb (255, 255, 255), BUFFER_WIDTH/2, 13, ALLEGRO_ALIGN_CENTER, "%d", p_game.points);
 
     // moedas
     al_draw_textf (fonts.coins, al_map_rgb (255, 255, 255), 375 - ((6 + decimal_cases)  * decimal_cases), 18, 0, "%d", p_points.coins);

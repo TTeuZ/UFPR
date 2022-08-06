@@ -17,17 +17,17 @@ void read_player_points (player_points_t *p_points) {
     }
 }
 
-int read_player_game (player_game_t *g_player) {
+int read_player_game (player_game_t *p_game) {
     FILE *game_file;
     char temp_string[BUFSIZ];
     game_file = fopen ("./resources/data/game.txt", "r");
 
     if (game_file) {
         fgets (temp_string, BUFSIZ, game_file);
-        g_player->points = atoi (temp_string);
+        p_game->points = atoi (temp_string);
         // ...
     } else {
-        g_player->points = 0;
+        p_game->points = 0;
         // ...
         return READ_GAME_ERROR;
     }
@@ -45,12 +45,12 @@ int save_player_points (player_points_t p_points) {
     return EXIT_SUCCESS;
 }
 
-int save_player_game (player_game_t g_player) {
+int save_player_game (player_game_t p_game) {
     FILE *points_file;
     points_file = fopen ("./resources/data/game.txt", "w");
 
     if (points_file) {
-        fprintf (points_file, "%d", g_player.points);
+        fprintf (points_file, "%d", p_game.points);
         // ...
     } else return SAVE_GAME_ERROR;
     return EXIT_SUCCESS;

@@ -39,12 +39,12 @@ void draw_pause_page (fonts_t fonts, images_t images, game_cond_t game_cond);
 
 /*!
     \brief Função responsável por construir a estrutura 'geral' da tela de jogo
-    \param g_player Ponteiro para a estrutura de jogo atual
+    \param p_game Ponteiro para a estrutura de jogo atual
     \param p_points Ponteiro de acesso para a estrutura de pontos do jogado
     \param fonts Ponteiro para a estrutura de fonts
     \param game_cound Ponteiro de acesso para as condições atuais do jogo
     \param images Ponteiro para a estrutura de imagens
 */
-void draw_game_page (player_game_t g_player, player_points_t p_points, fonts_t fonts, game_cond_t game_cond, images_t images);
+void draw_game_page (player_game_t p_game, player_points_t p_points, fonts_t fonts, game_cond_t game_cond, images_t images);
 
 #endif
