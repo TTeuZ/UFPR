@@ -34,11 +34,11 @@ int read_player_game (player_game_t *p_game) {
         p_game->balls_qtd = 1;
     }
 
-    if (! (p_game->balls = malloc (sizeof (ball_t)* p_game->balls_qtd))) {
+    if ((p_game->balls = malloc (sizeof (ball_t)* p_game->balls_qtd))) {
         for (count = 0; count < p_game->balls_qtd; count++) {
             if (! (p_game->balls[count] = add_ball ())) return ADD_BALL_ERROR;
         }
-    }
+    } else return ADD_BALL_ERROR;
 
     if (! game_file) return READ_GAME_ERROR;
     return EXIT_SUCCESS;
@@ -60,8 +60,8 @@ int save_player_game (player_game_t p_game) {
     points_file = fopen ("./resources/data/game.txt", "w");
 
     if (points_file) {
-        fprintf (points_file, "%d", p_game.points);
-        // ...
+        fprintf (points_file, "%d\n", p_game.points);
+        fprintf (points_file, "%d", p_game.balls_qtd);
     } else return SAVE_GAME_ERROR;
     return EXIT_SUCCESS;
 }
