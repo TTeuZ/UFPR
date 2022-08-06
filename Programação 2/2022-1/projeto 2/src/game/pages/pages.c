@@ -24,7 +24,7 @@ void draw_home_page (player_points_t p_points, fonts_t fonts, game_cond_t game_c
 
     // botão de play
     al_draw_filled_rounded_rectangle (90, 380, 330, 430, 25, 25, al_map_rgb (204, 0, 102));
-    al_draw_textf (fonts.button, al_map_rgb (255, 255, 255), 180, 386, 0, "PLAY");
+    al_draw_textf (fonts.button, al_map_rgb (255, 255, 255), BUFFER_WIDTH/2, 386, ALLEGRO_ALIGN_CENTER, "PLAY");
 
     // icone de som
     if (game_cond.sound_on) 
@@ -60,8 +60,30 @@ void draw_help_page (fonts_t fonts, images_t images) {
     al_draw_textf (fonts.text_help, al_map_rgb (255, 255, 255), 125, 560, 0, "+ 1  moeda!");
 }
 
-void draw_pause_page (fonts_t fonts, images_t images) {
+void draw_pause_page (fonts_t fonts, images_t images, game_cond_t game_cond) {
     al_clear_to_color (al_map_rgb (32, 32, 32));
+
+    // Titulo
+    al_draw_textf (fonts.title_h2, al_map_rgb (255, 255, 255), BUFFER_WIDTH/2, 180, ALLEGRO_ALIGN_CENTER, "PAUSE");
+
+    // Botão de continue
+    al_draw_filled_rounded_rectangle (90, 262, 330, 312, 25, 25, al_map_rgb (204, 0, 102));
+    al_draw_textf (fonts.button, al_map_rgb (255, 255, 255), BUFFER_WIDTH/2, 270, ALLEGRO_ALIGN_CENTER, "CONTINUE");
+
+    // botão de restart
+    al_draw_filled_rounded_rectangle (90, 332, 330, 382, 25, 25, al_map_rgb (255, 185, 0));
+    al_draw_textf (fonts.button, al_map_rgb (255, 255, 255), BUFFER_WIDTH/2, 340, ALLEGRO_ALIGN_CENTER, "RESTART");
+
+    // botão de main menu
+    al_draw_filled_rounded_rectangle (90, 402, 330, 452, 25, 25, al_map_rgb (32, 178, 170));
+    al_draw_textf (fonts.button, al_map_rgb (255, 255, 255), BUFFER_WIDTH/2, 410, ALLEGRO_ALIGN_CENTER, " MAIN MENU");
+
+    // icone do som
+    if (game_cond.sound_on) 
+        al_draw_circle (210, 550, 30, al_map_rgb (204, 0, 102), 2);
+    else 
+        al_draw_circle (210, 550, 30, al_map_rgb (160, 160, 160), 2);
+    al_draw_bitmap (images.sound, 192, 535, 0);
 }
 
 void draw_game_page (player_game_t g_player, player_points_t p_points, fonts_t fonts, game_cond_t game_cond, images_t images) {

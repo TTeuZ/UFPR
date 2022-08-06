@@ -33,8 +33,9 @@ void draw_help_page (fonts_t fonts, images_t images);
     \brief Função responsável por construir a tela de pause do jogo
     \param fonts Ponteiro para a estrutura de fonts
     \param images Ponteiro para a estrutura de imagens
+    \param game_cound Ponteiro de acesso para as condições atuais do jogo
 */
-void draw_pause_page (fonts_t fonts, images_t images);
+void draw_pause_page (fonts_t fonts, images_t images, game_cond_t game_cond);
 
 /*!
     \brief Função responsável por construir a estrutura 'geral' da tela de jogo
