@@ -5,6 +5,20 @@
 #define RED "\e[0;31m"
 #define NC "\e[0m"
 
+// RGB
+#define WHITE 255, 255, 255
+#define BLACK 0, 0, 0
+#define DARK_GRAY 20, 20, 20
+#define NORMAL_GRAY 32, 32, 32
+#define LIGTH_GRAY 160, 160, 160
+#define GRAY 32, 32, 32
+#define GOLDEN 255, 178, 102
+#define PINK 204, 0, 102
+#define BLUE 0, 102, 204
+#define GREEN 0, 153, 76
+#define LIGHT_GREEN 153, 255, 51
+
+
 // Definições
 #define FPS 1.0 / 60.0
 
