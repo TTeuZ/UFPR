@@ -1,6 +1,10 @@
 #include "display.h"
 
 int create_display (ALLEGRO_DISPLAY **display, ALLEGRO_BITMAP **buffer) {
+    al_set_new_display_option (ALLEGRO_SAMPLE_BUFFERS, 1, ALLEGRO_SUGGEST);
+    al_set_new_display_option (ALLEGRO_SAMPLES, 1, ALLEGRO_SUGGEST);
+    al_set_new_bitmap_flags (ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);
+    
     if (! (*display = al_create_display (DISPLAY_WIDTH, DISPLAY_HEIGHT))) 
         return EXIT_FAILURE;
     if (! (*buffer = al_create_bitmap (BUFFER_WIDTH, BUFFER_HEIGHT))) 
