@@ -38,10 +38,12 @@ void treat_mouse_click_in_home (mouse_t *mouse, game_cond_t *game_cond, audios_t
     if (play_click) {
         game_cond->in_home_page = false;
         game_cond->in_help_page = false;
+        game_cond->in_game_page = true;
         if (game_cond->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
     }
     if (help_click) {
         game_cond->in_home_page = false;
+        game_cond->in_game_page = false;
         game_cond->in_help_page = true;
     }
     if (sound_click) {
@@ -71,15 +73,18 @@ void treat_mouse_click_in_pause (mouse_t *mouse, game_cond_t *game_cond, audios_
 
     if (continue_click) {
         game_cond->in_pause_page = false;
+        game_cond->in_game_page = true;
         if (game_cond->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
     }
     if (restart_click) {
         game_cond->in_pause_page = false;
+        game_cond->in_game_page = true;
         game_cond->restart = true;
         if (game_cond->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
     }
     if (menu_click) {
         game_cond->in_pause_page = false;
+        game_cond->in_game_page = false;
         game_cond->in_home_page = true;
     }
     if (sound_click) {
@@ -94,8 +99,10 @@ void treat_mouse_click_in_game (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_
     hud_click = event.mouse.y <= SQUARE_SIZE;
     pause_click = hud_click && (event.mouse.x >= 20 && event.mouse.x <= 40 && event.mouse.y >=20 && event.mouse.y <= 43);
     
-    if (pause_click) 
+    if (pause_click) {
         game_cond->in_pause_page = true;
+        game_cond->in_game_page = false;
+    }
     if (! hud_click) {
         printf ("Posição x do click: %d\n", event.mouse.x);
         printf ("Posição y do mouse: %d\n",event.mouse.y);

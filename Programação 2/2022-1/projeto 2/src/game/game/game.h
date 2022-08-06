@@ -12,6 +12,7 @@ typedef struct game_cond {
     int in_home_page;
     int in_help_page;
     int in_pause_page;
+    int in_game_page;
     // Condições de jogo
     int sound_on;
     int restart;
@@ -23,5 +24,11 @@ typedef struct game_cond {
     \param game_cond ponteiro de acesso para a estrutura de consições de jogo
 */
 void start_game_conditions (game_cond_t *game_cond);
+
+/*!
+    \brief Função que seta todas as variaveis de telas para falso
+    \param game_cond ponteiro de acesso para a estrutura de consições de jogo
+*/
+void set_pages_to_false (game_cond_t *game_cond);
 
 #endif
