@@ -1,13 +1,5 @@
 #include "game.h"
 
-void destroy_game (player_game_t *p_game) {
-    int count;
-    
-    for (count = 0; count < p_game->balls_qtd; count++)
-        free (p_game->balls[count]);
-    free (p_game->balls);
-}
-
 void draw_game_section (player_game_t p_game) {
     int count;
     // Área do jogo
@@ -16,4 +8,12 @@ void draw_game_section (player_game_t p_game) {
     // draws das bolinhas
     for (count = 0; count < p_game.balls_qtd; count++) 
         draw_ball (p_game.balls[count]);
+}
+
+void destroy_game (player_game_t *p_game) {
+    int count;
+    
+    for (count = 0; count < p_game->balls_qtd; count++)
+        free (p_game->balls[count]);
+    free (p_game->balls);
 }
