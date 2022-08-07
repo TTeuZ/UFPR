@@ -157,7 +157,7 @@ int main () {
                 draw_pause_page (fonts, images, game_cond);
             else {
                 draw_game_page (p_game, p_points, fonts, game_cond, images);
-                draw_game_section (p_game);
+                draw_game_section (p_game, fonts);
                 if (mouse.pressed) draw_game_aim (aim, p_game);
             }
 

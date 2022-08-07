@@ -15,6 +15,8 @@ int load_fonts (fonts_t *fonts) {
         return EXIT_FAILURE;
     if (! (fonts->coins = al_load_ttf_font ("./resources/fonts/poppins.ttf", COINS, 0)))
         return EXIT_FAILURE;
+    if (! (fonts->balls = al_load_ttf_font ("./resources/fonts/poppins.ttf", BALLS, 0)))
+        return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
 
@@ -26,4 +28,5 @@ void destroy_fonts (fonts_t *fonts) {
     al_destroy_font (fonts->button);
     al_destroy_font (fonts->points);
     al_destroy_font (fonts->coins);
+    al_destroy_font (fonts->balls);
 }

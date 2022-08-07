@@ -36,6 +36,7 @@
 #define BUTTON 25
 #define POINTS 30
 #define COINS 20
+#define BALLS 16
 
 // Dimensões
 #define SQUARE_SIZE 60
