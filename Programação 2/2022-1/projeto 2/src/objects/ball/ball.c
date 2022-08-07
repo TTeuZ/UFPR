@@ -4,8 +4,8 @@ ball_t *add_ball () {
     ball_t *ball;
 
     if ((ball = malloc (sizeof (ball_t)))) {
-        ball->x = BUFFER_WIDTH/2;
-        ball->y = (SQUARE_SIZE * 9) - BALL_RADIUS;
+        ball->x = INITIAL_X_POSITION;
+        ball->y = INITIAL_Y_POSITION;
         ball->speed = 1;
         return ball;
     } else return NULL;
