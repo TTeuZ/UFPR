@@ -5,6 +5,10 @@ void set_aim (aim_t *aim) {
     aim->y = INITIAL_Y_POSITION - 20;
     aim->pressed_x = 0;
     aim->pressed_y = 0;
+    aim->move_x = 0;
+    aim->distance = 0;
+    aim->sin = 0;
+    aim->cos = 0;
 }
 
 /*!
@@ -37,6 +41,11 @@ void treat_aim_move (aim_t *aim, ALLEGRO_EVENT event) {
     cos = bc / ca;
     sin = ab / ca;
 
+    aim->sin = sin;
+    aim->cos = cos;
+    aim->move_x = event.mouse.x;
+    aim->distance = ca;
+
     if (event.mouse.y <= aim->pressed_y) {
         aim->x = 0;
         aim->y = 0;
@@ -48,7 +57,22 @@ void treat_aim_move (aim_t *aim, ALLEGRO_EVENT event) {
 }
 
 void draw_game_aim (aim_t aim) {
+    int count, x, y, distance;
+
     if (aim.x != 0 && aim.y != 0) {
-        al_draw_filled_circle (aim.x, aim.y, BALL_RADIUS, al_map_rgb (WHITE));
+        for (count = 0; count < AIM_SIZE; count++) {
+            if (aim.distance > 125) distance = 125;
+            else distance = aim.distance;
+
+
+            if (aim.move_x < aim.pressed_x) 
+                x = INITIAL_X_POSITION + ((((AIM_RADIUS + (distance * 0.08)) * count)) * aim.cos);
+            else 
+                x = INITIAL_X_POSITION - ((((AIM_RADIUS + (distance * 0.08)) * count)) * aim.cos);
+
+            y = INITIAL_Y_POSITION - ((((AIM_RADIUS + (distance * 0.08)) * count)) * aim.sin);
+
+            al_draw_filled_circle (x, y, 3 + (distance * 0.015), al_map_rgb (WHITE));
+        }
     }
 }

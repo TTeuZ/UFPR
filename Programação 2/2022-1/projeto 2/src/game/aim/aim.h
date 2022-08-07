@@ -13,6 +13,9 @@
 typedef struct aim {
     int x, y;
     int pressed_x, pressed_y;
+    int move_x;
+    int distance;
+    double sin, cos;
 } aim_t;
 
 /*!

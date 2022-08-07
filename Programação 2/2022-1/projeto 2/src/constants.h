@@ -20,6 +20,7 @@
 
 // Definições
 #define FPS 1.0 / 60.0
+#define AIM_SIZE 16
 
 // Audio
 #define AUDIO_QTD 2
