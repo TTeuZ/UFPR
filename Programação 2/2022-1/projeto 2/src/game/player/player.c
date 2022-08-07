@@ -42,7 +42,7 @@ int read_player_game (player_game_t *p_game) {
 
     if ((p_game->balls = malloc (sizeof (ball_t)* p_game->balls_qtd))) {
         for (count = 0; count < p_game->balls_qtd; count++) {
-            if (! (p_game->balls[count] = add_ball ())) return ADD_BALL_ERROR;
+            if (! (p_game->balls[count] = add_ball (p_game->initial_x))) return ADD_BALL_ERROR;
         }
     } else return ADD_BALL_ERROR;
 

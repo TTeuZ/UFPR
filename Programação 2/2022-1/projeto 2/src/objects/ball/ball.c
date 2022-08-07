@@ -1,12 +1,13 @@
 #include "ball.h"
 
-ball_t *add_ball () {
+ball_t *add_ball (int x) {
     ball_t *ball;
 
     if ((ball = malloc (sizeof (ball_t)))) {
-        ball->x = INITIAL_X_POSITION;
+        ball->x = x;
         ball->y = INITIAL_Y_POSITION;
-        ball->speed = 1;
+        ball->dx = 0;
+        ball->dy = 0;
         return ball;
     } else return NULL;
 }

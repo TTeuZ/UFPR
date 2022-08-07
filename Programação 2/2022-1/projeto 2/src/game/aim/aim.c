@@ -3,8 +3,8 @@
 void set_aim (aim_t *aim, player_game_t p_game) {
     aim->x = p_game.initial_x;
     aim->y = INITIAL_Y_POSITION - 20;
-    aim->pressed_x = 0;
-    aim->pressed_y = 0;
+    aim->pressed_x = BUFFER_HEIGHT;
+    aim->pressed_y = BUFFER_WIDTH;
     aim->move_x = 0;
     aim->distance = 0;
     aim->sin = 0;

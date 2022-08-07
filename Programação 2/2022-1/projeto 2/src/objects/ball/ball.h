@@ -10,15 +10,16 @@
 #include "../../constants.h"
 
 typedef struct ball {
-    float x, y;
-    float speed;
+    int x, y;
+    float dx, dy;
 } ball_t;
 
 /*!
     \brief Função que realiza a alocação de memória para a estrutura da bola e seta seus valores iniciais
+    \param x posição inicial da bolinha
     \return Ponteiro de acesso para a estrutura. Null em caso de erro
 */
-ball_t *add_ball ();
+ball_t *add_ball (int x);
 
 /*!
     \brief Função que desenha abolinha na tela do jogo
