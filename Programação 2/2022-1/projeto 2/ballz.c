@@ -134,11 +134,11 @@ int main () {
                 treat_key_down (&game_cond, event);
                 break;
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
-                game_cond.end_game = true;
+                game_cond.close_game = true;
                 break;
         }
 
-        if (game_cond.end_game) {
+        if (game_cond.close_game) {
             if (save_player_points (p_points) == SAVE_POINTS_ERROR)
                 emit_error (SAVE_POINTS_ERROR);
             if (save_player_game (p_game) == SAVE_GAME_ERROR)

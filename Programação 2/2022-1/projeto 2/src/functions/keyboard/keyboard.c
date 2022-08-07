@@ -17,5 +17,5 @@ void treat_key_down (game_cond_t *game_cond, ALLEGRO_EVENT event) {
     if (key == ALLEGRO_KEY_S)
         game_cond->sound_on = ! game_cond->sound_on;
     if (key == ALLEGRO_KEY_ESCAPE)
-        game_cond->end_game = true;
+        game_cond->close_game = true;
 }
