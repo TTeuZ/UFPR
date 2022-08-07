@@ -30,10 +30,14 @@ int read_player_game (player_game_t *p_game) {
         
         fgets (temp_string, BUFSIZ, game_file);
         p_game->balls_qtd = atoi (temp_string);
+
+        fgets (temp_string, BUFSIZ, game_file);
+        p_game->initial_x = atoi (temp_string);
         fclose (game_file);
     } else {
         p_game->points = 0;
         p_game->balls_qtd = 1;
+        p_game->initial_x = INITIAL_X_POSITION;
     }
 
     if ((p_game->balls = malloc (sizeof (ball_t)* p_game->balls_qtd))) {
@@ -64,7 +68,8 @@ int save_player_game (player_game_t p_game) {
 
     if (game_file) {
         fprintf (game_file, "%d\n", p_game.points);
-        fprintf (game_file, "%d", p_game.balls_qtd);
+        fprintf (game_file, "%d\n", p_game.balls_qtd);
+        fprintf (game_file, "%d", p_game.initial_x);
         fclose (game_file);
     } else return SAVE_GAME_ERROR;
     return EXIT_SUCCESS;

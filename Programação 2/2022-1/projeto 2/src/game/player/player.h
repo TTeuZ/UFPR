@@ -15,6 +15,7 @@ typedef struct player_points {
 typedef struct player_game {
     int points;
     int balls_qtd;
+    int initial_x;
     ball_t **balls;
 } player_game_t;
 
