@@ -1,6 +1,7 @@
 SHELL = /bin/sh
 
 FLAGS = -std=c99 -g -Wall
+LIBS = -lm
 ALLEGRO = `pkg-config allegro-5\
 				allegro_font-5\
 				allegro_ttf-5\
@@ -10,7 +11,7 @@ ALLEGRO = `pkg-config allegro-5\
 				allegro_acodec-5\
 				--libs --cflags`
 
-OBJECTS = ballz.o display.o keyboard.o mouse.o game.o pages.o player.o audio.o fonts.o images.o utils.o addBall.o ball.o coin.o square.o
+OBJECTS = ballz.o display.o keyboard.o mouse.o aim.o game.o pages.o player.o audio.o fonts.o images.o utils.o addBall.o ball.o coin.o square.o
 
 # Funções gerais
 all: ballz
@@ -23,7 +24,7 @@ purge: clean
 
 # Construção do executavel
 ballz: $(OBJECTS)
-		$(CC) $(OBJECTS) -o ballz $(FLAGS) $(ALLEGRO)
+		$(CC) $(OBJECTS) -o ballz $(FLAGS) $(LIBS) $(ALLEGRO)
 
 # Construção dos Objetos
 ballz.o: ballz.c
@@ -40,6 +41,9 @@ mouse.o: ./src/functions/mouse/mouse.c
 
 utils.o: ./src/functions/utils/utils.c
 		$(CC) -c ./src/functions/utils/utils.c $(FLAGS)
+
+aim.o: ./src/game/aim/aim.c
+		$(CC) -c ./src/game/aim/aim.c $(FLAGS)
 
 game.o: ./src/game/game/game.c
 		$(CC) -c ./src/game/game/game.c $(FLAGS)

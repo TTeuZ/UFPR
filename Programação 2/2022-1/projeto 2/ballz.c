@@ -28,6 +28,7 @@
 #include "./src/loadables/images/images.h"
 
 // Composição do jogo
+#include "./src/game/aim/aim.h"
 #include "./src/game/game/game.h"
 #include "./src/game/pages/pages.h"
 #include "./src/game/player/player.h"
@@ -38,6 +39,8 @@ int main () {
     game_cond_t game_cond;
     player_points_t p_points;
     player_game_t p_game;
+    aim_t aim;
+    set_aim (&aim);
     start_game_conditions (&game_cond);
     read_player_points (&p_points);
     error = read_player_game (&p_game);
@@ -110,16 +113,22 @@ int main () {
                 break;
             case ALLEGRO_EVENT_MOUSE_AXES:
                 treat_mouse_move (display, &mouse, event);
+                if (mouse.pressed) treat_aim_move (&aim, event);
                 break;
             case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
                 if (game_cond.in_home_page) treat_mouse_click_in_home (&mouse, &game_cond, audios, event);
                 else if (game_cond.in_help_page) treat_mouse_click_in_help (&mouse, &game_cond, event);
                 else if (game_cond.in_pause_page) treat_mouse_click_in_pause (&mouse, &game_cond, audios, event);
-                else treat_mouse_click_in_game (&mouse, &game_cond, event);
+                else treat_mouse_click_in_game (&mouse, &game_cond, &aim, event);
                 
                 game_cond.redraw = true;
                 break;
-            
+            case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+                if (game_cond.in_game_page) {
+                    mouse.pressed = 0;
+                    set_aim (&aim);
+                }
+                break;
             case ALLEGRO_EVENT_KEY_DOWN:
                 treat_key_down (&game_cond, event);
                 break;
@@ -148,6 +157,7 @@ int main () {
             else {
                 draw_game_page (p_game, p_points, fonts, game_cond, images);
                 draw_game_section (p_game);
+                if (mouse.pressed) draw_game_aim (aim);
             }
 
             flip_buffer_display (display, buffer);

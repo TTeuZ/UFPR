@@ -5,6 +5,7 @@
 #include <allegro5/allegro_image.h>
 
 #include "../utils/utils.h"
+#include "../../game/aim/aim.h"
 #include "../../loadables/audio/audio.h"
 #include "../../constants.h"
 
@@ -13,6 +14,7 @@ typedef struct mouse {
     ALLEGRO_BITMAP *arrow;
     int x;
     int y;
+    int pressed;
 } mouse_t;
 
 /*!
@@ -74,7 +76,8 @@ void treat_mouse_click_in_pause (mouse_t *mouse, game_cond_t *game_cond, audios_
     \brief Função de tratamendo do click do mouse no caso de estar na tela de execução do jogo
     \param mouse Ponteiro de acesso para a estrutura do mouse
     \param game_cond Ponteiro de acesso para a estrutura da condiççoes atuais do jogo
+    \param aim Ponteiro para a estrutura de mira
     \param event Ponteiro de acesso para a estrutura de eventos da Allegro
 */
-void treat_mouse_click_in_game (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_EVENT event);
+void treat_mouse_click_in_game (mouse_t *mouse, game_cond_t *game_cond, aim_t *aim, ALLEGRO_EVENT event);
 #endif

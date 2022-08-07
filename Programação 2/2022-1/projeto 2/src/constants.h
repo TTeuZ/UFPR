@@ -18,7 +18,6 @@
 #define GREEN 0, 153, 76
 #define LIGHT_GREEN 153, 255, 51
 
-
 // Definições
 #define FPS 1.0 / 60.0
 
@@ -40,6 +39,7 @@
 // Dimensões
 #define SQUARE_SIZE 60
 #define BALL_RADIUS 8
+#define AIM_RADIUS 20
 
 #define BUFFER_HEIGHT (SQUARE_SIZE * 12)
 #define BUFFER_WIDTH (SQUARE_SIZE * 7)
@@ -47,6 +47,10 @@
 #define BUFFER_SCALE 1
 #define DISPLAY_HEIGHT (BUFFER_HEIGHT * BUFFER_SCALE)
 #define DISPLAY_WIDTH (BUFFER_WIDTH * BUFFER_SCALE)
+
+// Bolinha
+#define INITIAL_X_POSITION BUFFER_WIDTH / 2
+#define INITIAL_Y_POSITION (SQUARE_SIZE * 9) - BALL_RADIUS
 
 // Erros
 #define INIT_ERROR 0
