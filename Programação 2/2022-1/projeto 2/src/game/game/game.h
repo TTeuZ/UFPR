@@ -10,6 +10,7 @@
 #include "../../constants.h"
 #include "../../loadables/fonts/fonts.h"
 #include "../player/player.h"
+#include "../aim/aim.h"
 
 /*!
     \brief Função resposável por escrever a tela do jogo
@@ -17,6 +18,13 @@
     \param fonts Ponteiro de acesso para a estrutura de fontes
 */
 void draw_game_section (player_game_t p_game, fonts_t fonts);
+
+/*!
+    \brief Função que inicializa a jogada das bolinhas no jogo
+    \param p_game Ponteiro de acesso para a estrutura de game
+    \param aim Ponteiro para a estrutura de mira
+*/
+void play_balls (player_game_t *p_game, aim_t aim);
 
 /*!
     \brief Função que realiza a limpesa de memória das estruturas alocadas do jogo

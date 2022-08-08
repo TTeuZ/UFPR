@@ -12,6 +12,15 @@ void draw_game_section (player_game_t p_game, fonts_t fonts) {
         draw_ball (p_game.balls[count]);
 }
 
+void play_balls (player_game_t *p_game, aim_t aim) {
+    int count;
+
+    for (count = 0; count < p_game->balls_qtd; count++) {
+        p_game->balls[count]->dx = -1 * aim.cos;
+        p_game->balls[count]->dy = -1 * aim.sin;
+    }
+}
+
 void destroy_game (player_game_t *p_game) {
     int count;
     

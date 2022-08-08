@@ -12,6 +12,14 @@ ball_t *add_ball (int x) {
     } else return NULL;
 }
 
+void update_balls (ball_t **balls, int qtd) {
+    int count;
+    for (count = 0; count < qtd; count++) {
+        balls[count]->x += balls[count]->dx;
+        balls[count]->y += balls[count]->dy;
+    }
+}
+
 void draw_ball (ball_t *ball) {
     al_draw_filled_circle (ball->x, ball->y, BALL_RADIUS, al_map_rgb (WHITE));
 }

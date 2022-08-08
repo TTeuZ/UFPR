@@ -110,6 +110,7 @@ int main () {
 
         switch (event.type) {
             case ALLEGRO_EVENT_TIMER: 
+                update_balls (p_game.balls, p_game.balls_qtd);
                 game_cond.redraw = true;
                 break;
             case ALLEGRO_EVENT_MOUSE_AXES:
@@ -122,10 +123,13 @@ int main () {
                 else if (game_cond.in_pause_page) treat_mouse_click_in_pause (&mouse, &game_cond, audios, event);
                 else treat_mouse_click_in_game (&mouse, &game_cond, &aim, event);
                 
-                game_cond.redraw = true;
                 break;
             case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
                 if (game_cond.in_game_page) {
+                    if (event.mouse.y > aim.pressed_y) {
+                        game_cond.in_game = true;
+                        play_balls (&p_game, aim);
+                    }
                     mouse.pressed = 0;
                     set_aim (&aim, p_game);
                 }
@@ -159,6 +163,10 @@ int main () {
                 draw_game_page (p_game, p_points, fonts, game_cond, images);
                 draw_game_section (p_game, fonts);
                 if (mouse.pressed) draw_game_aim (aim, p_game);
+                // if (game_cond.in_game) {
+                //     printf ("jogando\n");
+                //     game_cond.in_game = false;
+                // }
             }
 
             flip_buffer_display (display, buffer);

@@ -18,6 +18,7 @@ typedef struct game_cond {
     // Condições de jogo
     int sound_on;
     int restart;
+    int in_game;
     int close_game;
 } game_cond_t;
 

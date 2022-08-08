@@ -22,6 +22,13 @@ typedef struct ball {
 ball_t *add_ball (int x);
 
 /*!
+    \brief Função que atualiza a posição x e y das bolinhas
+    \param ball Ponteiro para a estrutura da bolinha
+    \param qtd quantidade de bolinhas
+*/
+void update_balls (ball_t **ball, int qtd);
+
+/*!
     \brief Função que desenha abolinha na tela do jogo
     \param ball Ponteiro para a estrutura da bolinha
 */
