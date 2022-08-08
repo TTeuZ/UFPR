@@ -35,6 +35,7 @@
 
 int main () {
     int error;
+
     // inicialização dos dados do jogo
     game_cond_t game_cond;
     player_points_t p_points;
@@ -110,22 +111,25 @@ int main () {
 
         switch (event.type) {
             case ALLEGRO_EVENT_TIMER: 
-                update_balls (p_game.balls, p_game.balls_qtd);
+                if (game_cond.in_game_page) 
+                    update_balls (p_game.balls, p_game.balls_qtd);
+                
                 game_cond.redraw = true;
                 break;
             case ALLEGRO_EVENT_MOUSE_AXES:
                 treat_mouse_move (display, &mouse, event);
-                if (mouse.pressed) treat_aim_move (&aim, p_game, event);
+                if (mouse.pressed && !game_cond.in_game) treat_aim_move (&aim, p_game, event);
+
                 break;
             case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
                 if (game_cond.in_home_page) treat_mouse_click_in_home (&mouse, &game_cond, audios, event);
                 else if (game_cond.in_help_page) treat_mouse_click_in_help (&mouse, &game_cond, event);
                 else if (game_cond.in_pause_page) treat_mouse_click_in_pause (&mouse, &game_cond, audios, event);
                 else treat_mouse_click_in_game (&mouse, &game_cond, &aim, event);
-                
+
                 break;
             case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-                if (game_cond.in_game_page) {
+                if (game_cond.in_game_page && !game_cond.in_game) {
                     if (event.mouse.y > aim.pressed_y) {
                         game_cond.in_game = true;
                         play_balls (&p_game, aim);
@@ -133,12 +137,15 @@ int main () {
                     mouse.pressed = 0;
                     set_aim (&aim, p_game);
                 }
+
                 break;
             case ALLEGRO_EVENT_KEY_DOWN:
                 treat_key_down (&game_cond, event);
+
                 break;
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
                 game_cond.close_game = true;
+
                 break;
         }
 
@@ -161,8 +168,8 @@ int main () {
                 draw_pause_page (fonts, images, game_cond);
             else {
                 draw_game_page (p_game, p_points, fonts, game_cond, images);
-                draw_game_section (p_game, fonts);
-                if (mouse.pressed) draw_game_aim (aim, p_game);
+                draw_game_section (p_game, fonts, game_cond);
+                if (mouse.pressed && !game_cond.in_game) draw_game_aim (aim, p_game);
                 // if (game_cond.in_game) {
                 //     printf ("jogando\n");
                 //     game_cond.in_game = false;
