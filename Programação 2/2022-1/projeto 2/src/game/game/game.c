@@ -17,12 +17,36 @@ void play_balls (player_game_t *p_game, aim_t aim) {
     int count;
     float dx, dy;
 
-    dx = -5 * aim.cos;
     dy = -5 * aim.sin;
+    if (aim.move_x < aim.pressed_x) dx = 5 * aim.cos;
+    else dx = -5 * aim.cos;
 
     for (count = 0; count < p_game->balls_qtd; count++) {
         p_game->balls[count]->dx = dx;
         p_game->balls[count]->dy = dy;
+    }
+}
+
+void check_wall_collision (player_game_t *p_game, game_cond_t *game_cond) {
+    int count;
+    float x, y;
+
+    for (count = 0; count < p_game->balls_qtd; count++) {
+        x = p_game->balls[count]->x;
+        y = p_game->balls[count]->y;
+
+        if ((x - BALL_RADIUS) <= 0)
+            p_game->balls[count]->dx *= -1;
+        else if ((y - BALL_RADIUS) <= 60) 
+            p_game->balls[count]->dy *= -1;
+        else if ((x + BALL_RADIUS) >= BUFFER_WIDTH)
+            p_game->balls[count]->dx *= -1;
+        else if ((y + BALL_RADIUS) >= 540) {
+            p_game->balls[count]->dy *= 0;
+            p_game->balls[count]->dx *= 0;
+            p_game->initial_x = x;
+            game_cond->in_game = 0;
+        }
     }
 }
 

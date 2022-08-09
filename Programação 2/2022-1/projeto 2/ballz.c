@@ -111,8 +111,10 @@ int main () {
 
         switch (event.type) {
             case ALLEGRO_EVENT_TIMER: 
-                if (game_cond.in_game_page) 
+                if (game_cond.in_game_page) {
                     update_balls (p_game.balls, p_game.balls_qtd);
+                    check_wall_collision (&p_game, &game_cond);   
+                }
                 
                 game_cond.redraw = true;
                 break;
