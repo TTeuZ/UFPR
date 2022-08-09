@@ -35,7 +35,7 @@ int read_player_game (player_game_t *p_game) {
         p_game->initial_x = atoi (temp_string);
         fclose (game_file);
     } else {
-        p_game->points = 0;
+        p_game->points = 1;
         p_game->balls_qtd = 1;
         p_game->initial_x = INITIAL_X_POSITION;
     }
