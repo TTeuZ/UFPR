@@ -15,18 +15,10 @@ void draw_game_section (player_game_t p_game, fonts_t fonts, game_cond_t game_co
 
 void play_balls (player_game_t *p_game, aim_t aim) {
     int count;
-    // int dx, dy;
     float dx, dy;
 
-    dx = (-1 * (p_game->balls[0]->x) * aim.cos) / 100;
-    dy = (-1 * (p_game->balls[0]->y) * aim.sin) / 100;
-
-    printf ("cosseno: %f\n", aim.cos);
-    printf ("seno: %f\n", aim.sin);
-    // printf ("dx: %d\n", dx);
-    // printf ("dy: %d\n", dy);
-    // printf ("dx: %f\n", dx);
-    // printf ("dy: %f\n", dy);
+    dx = -5 * aim.cos;
+    dy = -5 * aim.sin;
 
     for (count = 0; count < p_game->balls_qtd; count++) {
         p_game->balls[count]->dx = dx;
