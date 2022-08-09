@@ -8,7 +8,7 @@ void draw_game_section (player_game_t p_game, fonts_t fonts, game_cond_t game_co
     // draws das bolinhas
     if (! game_cond.in_game)
         al_draw_textf (fonts.balls, al_map_rgb (WHITE), p_game.initial_x - 10, INITIAL_Y_POSITION - 30, 0, "%dx", p_game.balls_qtd);
-    // al_draw_textf (fonts.points, al_map_rgb (WHITE), BUFFER_WIDTH/2, 13, ALLEGRO_ALIGN_CENTER, "%d", p_game.points);
+
     for (count = 0; count < p_game.balls_qtd; count++) 
         draw_ball (p_game.balls[count]);
 }
@@ -35,13 +35,13 @@ void check_wall_collision (player_game_t *p_game, game_cond_t *game_cond) {
         x = p_game->balls[count]->x;
         y = p_game->balls[count]->y;
 
-        if ((x - BALL_RADIUS) <= 0)
+        if ((x - BALL_RADIUS) <= START_X_AREA)
             p_game->balls[count]->dx *= -1;
-        else if ((y - BALL_RADIUS) <= 60) 
+        else if ((y - BALL_RADIUS) <= START_Y_AREA) 
             p_game->balls[count]->dy *= -1;
-        else if ((x + BALL_RADIUS) >= BUFFER_WIDTH)
+        else if ((x + BALL_RADIUS) >= END_X_AREA)
             p_game->balls[count]->dx *= -1;
-        else if ((y + BALL_RADIUS) >= 540) {
+        else if ((y + BALL_RADIUS) >= END_Y_AREA) {
             p_game->balls[count]->dy *= 0;
             p_game->balls[count]->dx *= 0;
 
