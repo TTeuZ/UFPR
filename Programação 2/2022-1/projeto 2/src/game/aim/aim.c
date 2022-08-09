@@ -64,7 +64,6 @@ void draw_game_aim (aim_t aim, player_game_t p_game) {
             if (aim.distance > 125) distance = 125;
             else distance = aim.distance;
 
-
             if (aim.move_x < aim.pressed_x) 
                 x = p_game.initial_x + ((((AIM_RADIUS + (distance * 0.08)) * count)) * aim.cos);
             else 
