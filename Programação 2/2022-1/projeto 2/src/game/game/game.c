@@ -35,7 +35,17 @@ void check_wall_collision (player_game_t *p_game, game_cond_t *game_cond) {
         x = p_game->balls[count]->x;
         y = p_game->balls[count]->y;
 
-        if ((x - BALL_RADIUS) <= START_X_AREA)
+        // Verifica os cantos superiores
+        if ((x - BALL_RADIUS) <= START_X_AREA && (y - BALL_RADIUS) <= START_Y_AREA) {
+            p_game->balls[count]->dx *= -1;
+            p_game->balls[count]->dy *= -1;
+        } else if ((x + BALL_RADIUS) >= END_X_AREA && (y - BALL_RADIUS) <= START_Y_AREA) {
+            p_game->balls[count]->dx *= -1;
+            p_game->balls[count]->dy *= -1;
+        }
+        
+        // Bounce normal da tela
+        else if ((x - BALL_RADIUS) <= START_X_AREA)
             p_game->balls[count]->dx *= -1;
         else if ((y - BALL_RADIUS) <= START_Y_AREA) 
             p_game->balls[count]->dy *= -1;
