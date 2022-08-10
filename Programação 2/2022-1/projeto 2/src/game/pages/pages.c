@@ -1,6 +1,6 @@
 #include "pages.h"
 
-void draw_home_page (player_points_t p_points, fonts_t fonts, game_cond_t game_cond, images_t images) {
+void draw_home_page (player_points_t p_points, fonts_t fonts, general_t general, images_t images) {
     int intern_coins = p_points.coins;
     int decimal_cases = 0;
     while ((intern_coins = intern_coins / 10) > 0) decimal_cases++;
@@ -27,7 +27,7 @@ void draw_home_page (player_points_t p_points, fonts_t fonts, game_cond_t game_c
     al_draw_textf (fonts.button, al_map_rgb (WHITE), BUFFER_WIDTH/2, 386, ALLEGRO_ALIGN_CENTER, "PLAY");
 
     // icone de som
-    if (game_cond.sound_on) 
+    if (general.sound_on) 
         al_draw_circle (210, 550, 30, al_map_rgb (PINK), 2);
     else 
         al_draw_circle (210, 550, 30, al_map_rgb (LIGTH_GRAY), 2);
@@ -60,7 +60,7 @@ void draw_help_page (fonts_t fonts, images_t images) {
     al_draw_textf (fonts.text_help, al_map_rgb (WHITE), 125, 560, 0, "+ 1  moeda!");
 }
 
-void draw_pause_page (fonts_t fonts, images_t images, game_cond_t game_cond) {
+void draw_pause_page (fonts_t fonts, images_t images, general_t general) {
     al_clear_to_color (al_map_rgb (NORMAL_GRAY));
 
     // Titulo
@@ -79,14 +79,14 @@ void draw_pause_page (fonts_t fonts, images_t images, game_cond_t game_cond) {
     al_draw_textf (fonts.button, al_map_rgb (WHITE), BUFFER_WIDTH/2, 410, ALLEGRO_ALIGN_CENTER, " MAIN MENU");
 
     // icone do som
-    if (game_cond.sound_on) 
+    if (general.sound_on) 
         al_draw_circle (210, 550, 30, al_map_rgb (PINK), 2);
     else 
         al_draw_circle (210, 550, 30, al_map_rgb (LIGTH_GRAY), 2);
     al_draw_bitmap (images.sound, 192, 535, 0);
 }
 
-void draw_game_page (player_game_t p_game, player_points_t p_points, fonts_t fonts, game_cond_t game_cond, images_t images) {
+void draw_game_page (player_game_t p_game, player_points_t p_points, fonts_t fonts, images_t images) {
     int intern_coins = p_points.coins;
     int decimal_cases = 0;
     while ((intern_coins = intern_coins / 10) > 0) decimal_cases++;

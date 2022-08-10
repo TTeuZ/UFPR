@@ -8,9 +8,10 @@
 
 /*!
     \brief Função de tratamendo de teclas do teclado
-    \param game_cond Ponteiro de acesso para a estrutura da condiççoes atuais do jogo
+    \param pages Ponteiro de acesso para a estrutura de condições das telas
+    \param general Ponteiro de acesso para a estrutura de condições gerais do jogo
     \param event Ponteiro de acesso para a estrutura de eventos da Allegro
 */
-void treat_key_down (game_cond_t *game_cond, ALLEGRO_EVENT event);
+void treat_key_down (pages_t *pages, general_t *general, ALLEGRO_EVENT event);
 
 #endif

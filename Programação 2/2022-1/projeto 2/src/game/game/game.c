@@ -1,12 +1,12 @@
 #include "game.h"
 
-void draw_game_section (player_game_t p_game, fonts_t fonts, game_cond_t game_cond) {
+void draw_game_section (player_game_t p_game, fonts_t fonts, stages_t stages) {
     int count;
     // Área do jogo
     al_draw_filled_rectangle (0, SQUARE_SIZE, BUFFER_WIDTH, SQUARE_SIZE * 9, al_map_rgb (DARK_GRAY));
 
     // draws das bolinhas
-    if (! game_cond.in_game)
+    if (! stages.in_game)
         al_draw_textf (fonts.balls, al_map_rgb (WHITE), p_game.initial_x - 10, INITIAL_Y_POSITION - 30, 0, "%dx", p_game.balls_qtd);
 
     for (count = 0; count < p_game.balls_qtd; count++) 
@@ -27,7 +27,7 @@ void play_balls (player_game_t *p_game, aim_t aim) {
     }
 }
 
-void check_wall_collision (player_game_t *p_game, game_cond_t *game_cond) {
+void check_wall_collision (player_game_t *p_game, stages_t *stages) {
     int count;
     float x, y;
 
@@ -57,7 +57,7 @@ void check_wall_collision (player_game_t *p_game, game_cond_t *game_cond) {
 
             p_game->initial_x = x;
             p_game->points++;
-            game_cond->in_game = 0;
+            stages->in_game = 0;
         }
     }
 }

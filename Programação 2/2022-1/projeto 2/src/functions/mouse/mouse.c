@@ -29,7 +29,7 @@ void treat_mouse_move (ALLEGRO_DISPLAY *display, mouse_t *mouse, ALLEGRO_EVENT e
     al_set_mouse_xy (display, mouse->x, mouse->y);
 }
 
-void treat_mouse_click_in_home (mouse_t *mouse, game_cond_t *game_cond, audios_t audios, ALLEGRO_EVENT event) {
+void treat_mouse_click_in_home (mouse_t *mouse, pages_t *pages, general_t *general, audios_t audios, ALLEGRO_EVENT event) {
     int play_click, sound_click, help_click;
 
     play_click = event.mouse.x >= 90 && event.mouse.x <= 330 && event.mouse.y >= 380 && event.mouse.y <= 430;
@@ -37,34 +37,34 @@ void treat_mouse_click_in_home (mouse_t *mouse, game_cond_t *game_cond, audios_t
     help_click = event.mouse.x >= 12 && event.mouse.x <= 45 && event.mouse.y >= 9 && event.mouse.y <= 39;
 
     if (play_click) {
-        game_cond->in_home_page = false;
-        game_cond->in_help_page = false;
-        game_cond->in_game_page = true;
-        if (game_cond->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
+        pages->in_home_page = false;
+        pages->in_help_page = false;
+        pages->in_game_page = true;
+        if (general->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
     }
     if (help_click) {
-        game_cond->in_home_page = false;
-        game_cond->in_game_page = false;
-        game_cond->in_help_page = true;
+        pages->in_home_page = false;
+        pages->in_game_page = false;
+        pages->in_help_page = true;
     }
     if (sound_click) {
-        game_cond->sound_on = ! game_cond->sound_on;
-        if (game_cond->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
+        general->sound_on = ! general->sound_on;
+        if (general->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
     }
 }
 
-void treat_mouse_click_in_help (mouse_t *mouse, game_cond_t *game_cond, ALLEGRO_EVENT event) {
+void treat_mouse_click_in_help (mouse_t *mouse, pages_t *pages, ALLEGRO_EVENT event) {
     int back_click;
     
     back_click = event.mouse.x >= 20 && event.mouse.x <= 37 && event.mouse.y >= 18 && event.mouse.y <= 42;
 
     if (back_click) {
-        game_cond->in_home_page = true;
-        game_cond->in_help_page = false;
+        pages->in_home_page = true;
+        pages->in_help_page = false;
     }
 }
 
-void treat_mouse_click_in_pause (mouse_t *mouse, game_cond_t *game_cond, audios_t audios, ALLEGRO_EVENT event) {
+void treat_mouse_click_in_pause (mouse_t *mouse, pages_t *pages, general_t *general, audios_t audios, ALLEGRO_EVENT event) {
     int continue_click, restart_click, menu_click, sound_click;
 
     continue_click = event.mouse.x >= 90 && event.mouse.x <= 330 && event.mouse.y >= 262 && event.mouse.y <= 312;
@@ -73,36 +73,36 @@ void treat_mouse_click_in_pause (mouse_t *mouse, game_cond_t *game_cond, audios_
     sound_click = event.mouse.x >= 176 && event.mouse.x <= 238 && event.mouse.y >= 516 && event.mouse.y <= 577;
 
     if (continue_click) {
-        game_cond->in_pause_page = false;
-        game_cond->in_game_page = true;
-        if (game_cond->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
+        pages->in_pause_page = false;
+        pages->in_game_page = true;
+        if (general->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
     }
     if (restart_click) {
-        game_cond->in_pause_page = false;
-        game_cond->in_game_page = true;
-        game_cond->restart = true;
-        if (game_cond->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
+        pages->in_pause_page = false;
+        pages->in_game_page = true;
+        general->restart = true;
+        if (general->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
     }
     if (menu_click) {
-        game_cond->in_pause_page = false;
-        game_cond->in_game_page = false;
-        game_cond->in_home_page = true;
+        pages->in_pause_page = false;
+        pages->in_game_page = false;
+        pages->in_home_page = true;
     }
     if (sound_click) {
-        game_cond->sound_on = ! game_cond->sound_on;
-        if (game_cond->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);;
+        general->sound_on = ! general->sound_on;
+        if (general->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);;
     }
 }
 
-void treat_mouse_click_in_game (mouse_t *mouse, game_cond_t *game_cond, aim_t *aim, ALLEGRO_EVENT event) {
+void treat_mouse_click_in_game (mouse_t *mouse, pages_t *pages, aim_t *aim, ALLEGRO_EVENT event) {
     int hud_click, pause_click;
 
     hud_click = event.mouse.y <= SQUARE_SIZE;
     pause_click = hud_click && (event.mouse.x >= 20 && event.mouse.x <= 40 && event.mouse.y >=20 && event.mouse.y <= 43);
 
     if (pause_click) {
-        game_cond->in_pause_page = true;
-        game_cond->in_game_page = false;
+        pages->in_pause_page = true;
+        pages->in_game_page = false;
     }
     if (! hud_click) {
         mouse->pressed = 1;
