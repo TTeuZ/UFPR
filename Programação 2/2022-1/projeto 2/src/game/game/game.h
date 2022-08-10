@@ -8,7 +8,7 @@
 #include <allegro5/allegro_primitives.h>
 
 #include "../../constants.h"
-#include "../../functions/utils/utils.h"
+#include "../../functions/conditions/conditions.h"
 #include "../../loadables/fonts/fonts.h"
 #include "../player/player.h"
 #include "../aim/aim.h"

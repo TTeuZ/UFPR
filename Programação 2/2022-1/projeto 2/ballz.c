@@ -17,10 +17,11 @@
 #include "./src/objects/square/square.h"
 
 // Funções
+#include "./src/functions/conditions/conditions.h"
 #include "./src/functions/display/display.h"
+#include "./src/functions/error/error.h"
 #include "./src/functions/keyboard/keyboard.h"
 #include "./src/functions/mouse/mouse.h"
-#include "./src/functions/utils/utils.h"
 
 // Carregaveis
 #include "./src/loadables/audio/audio.h"
@@ -134,6 +135,7 @@ int main () {
                 if (game_cond.in_game_page && !game_cond.in_game) {
                     if (event.mouse.y > aim.pressed_y) {
                         game_cond.in_game = true;
+                        game_cond.withdraw = true;
                         play_balls (&p_game, aim);
                     }
                     mouse.pressed = 0;
@@ -172,10 +174,6 @@ int main () {
                 draw_game_page (p_game, p_points, fonts, game_cond, images);
                 draw_game_section (p_game, fonts, game_cond);
                 if (mouse.pressed && !game_cond.in_game) draw_game_aim (aim, p_game);
-                // if (game_cond.in_game) {
-                //     printf ("jogando\n");
-                //     game_cond.in_game = false;
-                // }
             }
 
             flip_buffer_display (display, buffer);

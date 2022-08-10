@@ -11,7 +11,7 @@ ALLEGRO = `pkg-config allegro-5\
 				allegro_acodec-5\
 				--libs --cflags`
 
-OBJECTS = ballz.o display.o keyboard.o mouse.o aim.o game.o pages.o player.o audio.o fonts.o images.o utils.o addBall.o ball.o coin.o square.o
+OBJECTS = ballz.o conditions.o display.o error.o keyboard.o mouse.o aim.o game.o pages.o player.o audio.o fonts.o images.o  addBall.o ball.o coin.o square.o
 
 # Funções gerais
 all: ballz
@@ -30,8 +30,14 @@ ballz: $(OBJECTS)
 ballz.o: ballz.c
 		$(CC) -c ballz.c $(FLAGS)
 
+conditions.o: ./src/functions/conditions/conditions.c
+		$(CC) -c ./src/functions/conditions/conditions.c $(FLAGS)
+
 display.o: ./src/functions/display/display.c
 		$(CC) -c ./src/functions/display/display.c $(FLAGS)
+
+error.o: ./src/functions/error/error.c
+		$(CC) -c ./src/functions/error/error.c $(FLAGS)
 
 keyboard.o: ./src/functions/keyboard/keyboard.c
 		$(CC) -c ./src/functions/keyboard/keyboard.c $(FLAGS)
@@ -39,8 +45,6 @@ keyboard.o: ./src/functions/keyboard/keyboard.c
 mouse.o: ./src/functions/mouse/mouse.c
 		$(CC) -c ./src/functions/mouse/mouse.c $(FLAGS)
 
-utils.o: ./src/functions/utils/utils.c
-		$(CC) -c ./src/functions/utils/utils.c $(FLAGS)
 
 aim.o: ./src/game/aim/aim.c
 		$(CC) -c ./src/game/aim/aim.c $(FLAGS)

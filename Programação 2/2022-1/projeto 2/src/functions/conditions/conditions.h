@@ -1,5 +1,5 @@
-#ifndef __UTILS_H__
-#define __UTILS_H__
+#ifndef __CONDITIONS_H__
+#define __CONDITIONS_H__
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,6 +18,7 @@ typedef struct game_cond {
     // Condições de jogo
     int sound_on;
     int restart;
+    int withdraw;
     int in_game;
     int close_game;
 } game_cond_t;
@@ -34,11 +35,5 @@ void start_game_conditions (game_cond_t *game_cond);
 */
 void set_pages_to_false (game_cond_t *game_cond);
 
-/*!
-    \brief FUnção de lançamento de erro.
-    notifica algum erro na stderr
-    \param error_code Código de erro, utilizado para a exibição da mensagem
-*/
-void emit_error (int error_code);
 
 #endif
