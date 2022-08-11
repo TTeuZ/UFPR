@@ -157,7 +157,7 @@ int main () {
                         stages.end_phase = false;
                         play_balls (&p_game, aim);
                     }
-                    mouse.pressed = 0;
+                    mouse.pressed = false;
                     set_aim (&aim, p_game);
                 }
 
