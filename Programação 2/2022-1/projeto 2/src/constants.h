@@ -1,6 +1,9 @@
 #ifndef __CONSTANTS_H__
 #define __CONSTANTS_H__
 
+// Macro para ABS
+#define ABS(num) ((num) < 0.0 ? -(num) : (num))
+
 // Coloração de outputs
 #define RED "\e[0;31m"
 #define NC "\e[0m"
@@ -59,15 +62,15 @@
 // Bolinha
 #define INITIAL_X_POSITION BUFFER_WIDTH / 2
 #define INITIAL_Y_POSITION (SQUARE_SIZE * 9) - BALL_RADIUS
-#define BALL_SPEED 12
+#define BALL_SPEED 14
 
 // Timers
-#define WITHDRAW_TIME 7
-#define SPEEDER_TIME 60
+#define WITHDRAW_TIME 5
+#define SPEEDER_TIME 300
 
 // Bust
 #define NONE_BUST 1
-#define SPEEDER_BUST 1.5
+#define SPEEDER_BUST 2
 
 // Animações
 #define SPEEDER_ANIMATION 300

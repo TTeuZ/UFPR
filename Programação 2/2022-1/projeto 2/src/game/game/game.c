@@ -1,4 +1,5 @@
 #include "game.h"
+#include <stdio.h>
 
 void play_balls (player_game_t *p_game, aim_t aim) {
     int count;
@@ -36,27 +37,46 @@ void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw) {
         y = p_game->balls[count]->y;
 
         // Verifica os cantos superiores
-        if ((x - BALL_RADIUS) <= START_X_AREA && (y - BALL_RADIUS) <= START_Y_AREA) {
+        if ((x - BALL_RADIUS) < START_X_AREA && (y - BALL_RADIUS) < START_Y_AREA) {
             p_game->balls[count]->dx *= -1;
             p_game->balls[count]->dy *= -1;
+            p_game->balls[count]->y = START_Y_AREA + BALL_RADIUS;
+            p_game->balls[count]->x = START_X_AREA + BALL_RADIUS;
         } else if ((x + BALL_RADIUS) >= END_X_AREA && (y - BALL_RADIUS) <= START_Y_AREA) {
             p_game->balls[count]->dx *= -1;
             p_game->balls[count]->dy *= -1;
+            p_game->balls[count]->y = START_Y_AREA + BALL_RADIUS;
+            p_game->balls[count]->x = END_X_AREA - BALL_RADIUS;
         }
         
         // Bounce normal da tela
-        else if ((x - BALL_RADIUS) <= START_X_AREA)
+        else if ((x - BALL_RADIUS) < START_X_AREA) {
             p_game->balls[count]->dx *= -1;
-        else if ((y - BALL_RADIUS) <= START_Y_AREA) 
+            p_game->balls[count]->x = START_X_AREA + BALL_RADIUS;
+        }
+        else if ((y - BALL_RADIUS) < START_Y_AREA) {
             p_game->balls[count]->dy *= -1;
-        else if ((x + BALL_RADIUS) >= END_X_AREA)
+            p_game->balls[count]->y = START_Y_AREA + BALL_RADIUS;
+        }
+        else if ((x + BALL_RADIUS) > END_X_AREA){
             p_game->balls[count]->dx *= -1;
+            p_game->balls[count]->x = END_X_AREA - BALL_RADIUS;
+        }
         else if ((y + BALL_RADIUS) >= END_Y_AREA && p_game->balls[count]->playable) {
-            p_game->balls[count]->dy *= 0;
-            p_game->balls[count]->dx *= 0;
-            p_game->balls[count]->playable = false;
-            if (withdraw->w_ball == p_game->balls_qtd) p_game->initial_x = x;
-            withdraw->in_game_balls--;
+            p_game->balls[count]->y = INITIAL_Y_POSITION;
+            if (withdraw->w_ball == p_game->balls_qtd) {
+                p_game->balls[count]->dy *= 0;
+                p_game->balls[count]->dx *= 0;
+                p_game->balls[count]->playable = false;
+                p_game->initial_x = x;
+                withdraw->w_ball--;
+                withdraw->in_game_balls--;
+            } else {
+                if (ABS (x - p_game->initial_x) < __FLT_EPSILON__) {
+                    p_game->balls[count]->playable = false;
+                    withdraw->in_game_balls--;
+                }
+            }
         }
     }
 }

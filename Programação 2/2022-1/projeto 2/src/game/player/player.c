@@ -69,7 +69,7 @@ int save_player_game (player_game_t p_game) {
     if (game_file) {
         fprintf (game_file, "%d\n", p_game.points);
         fprintf (game_file, "%d\n", p_game.balls_qtd);
-        fprintf (game_file, "%d", p_game.initial_x);
+        fprintf (game_file, "%f", p_game.initial_x);
         fclose (game_file);
     } else return SAVE_GAME_ERROR;
     return EXIT_SUCCESS;
