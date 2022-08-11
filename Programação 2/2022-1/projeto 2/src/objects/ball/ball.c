@@ -4,6 +4,7 @@ ball_t *add_ball (int x) {
     ball_t *ball;
 
     if ((ball = malloc (sizeof (ball_t)))) {
+        ball->playable = false;
         ball->x = x;
         ball->y = INITIAL_Y_POSITION;
         ball->dx = 0;
@@ -15,8 +16,10 @@ ball_t *add_ball (int x) {
 void update_balls (ball_t **balls, int qtd) {
     int count;
     for (count = 0; count < qtd; count++) {
-        balls[count]->x += balls[count]->dx;
-        balls[count]->y += balls[count]->dy;
+        if (balls[count]->playable) {
+            balls[count]->x += balls[count]->dx;
+            balls[count]->y += balls[count]->dy;
+        }
     }
 }
 

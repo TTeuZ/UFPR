@@ -27,7 +27,20 @@ void play_balls (player_game_t *p_game, aim_t aim) {
     }
 }
 
-void check_wall_collision (player_game_t *p_game, stages_t *stages) {
+void treat_withdraw (player_game_t *p_game, withdraw_t *withdraw){
+    if (withdraw->w_ball == p_game->balls_qtd) 
+        withdraw->all_played = true;
+    else if (withdraw->w_count == WITHDRAW_TIME) {
+        p_game->balls[withdraw->w_ball]->playable = true;
+        withdraw->in_game_balls++;
+        withdraw->w_count = 0;
+        withdraw->w_ball++;
+    }
+
+    if (!withdraw->all_played) withdraw->w_count++;
+}
+
+void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw) {
     int count;
     float x, y;
 
@@ -51,14 +64,23 @@ void check_wall_collision (player_game_t *p_game, stages_t *stages) {
             p_game->balls[count]->dy *= -1;
         else if ((x + BALL_RADIUS) >= END_X_AREA)
             p_game->balls[count]->dx *= -1;
-        else if ((y + BALL_RADIUS) >= END_Y_AREA) {
+        else if ((y + BALL_RADIUS) >= END_Y_AREA && p_game->balls[count]->playable) {
             p_game->balls[count]->dy *= 0;
             p_game->balls[count]->dx *= 0;
-
-            p_game->initial_x = x;
-            p_game->points++;
-            stages->in_game = 0;
+            p_game->balls[count]->playable = false;
+            if (withdraw->w_ball == p_game->balls_qtd) p_game->initial_x = x;
+            withdraw->in_game_balls--;
         }
+    }
+}
+
+void treat_end_phase (player_game_t *p_game, stages_t *stages, withdraw_t *withdraw) {
+    if (withdraw->in_game_balls == 0) {
+        stages->in_game = 0;
+        withdraw->w_count = WITHDRAW_TIME;
+        withdraw->all_played = false;
+        withdraw->w_ball = 0;
+        p_game->points++;
     }
 }
 

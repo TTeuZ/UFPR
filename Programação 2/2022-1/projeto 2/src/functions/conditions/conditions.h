@@ -29,6 +29,7 @@ typedef struct stages {
 
 typedef struct withdraw {
     int w_ball;
+    int in_game_balls;
     int w_count;
     int all_played;
 } withdraw_t;

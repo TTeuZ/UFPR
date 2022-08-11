@@ -59,6 +59,9 @@
 #define INITIAL_X_POSITION BUFFER_WIDTH / 2
 #define INITIAL_Y_POSITION (SQUARE_SIZE * 9) - BALL_RADIUS
 
+// Saque
+#define WITHDRAW_TIME 10
+
 // Erros
 #define INIT_ERROR 0
 #define READ_GAME_ERROR -1

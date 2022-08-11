@@ -10,6 +10,7 @@
 #include "../../constants.h"
 
 typedef struct ball {
+    int playable;
     float x, y;
     float dx, dy;
 } ball_t;

@@ -23,7 +23,8 @@ void start_stages_conditions (stages_t *stages) {
 
 void start_withdraw_conditions (withdraw_t *withdraw) {
     withdraw->w_ball = 0;
-    withdraw->w_count = 30;
+    withdraw->in_game_balls = 0;
+    withdraw->w_count = WITHDRAW_TIME;
     withdraw->all_played = 0;
 }
 

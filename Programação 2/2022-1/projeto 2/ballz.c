@@ -121,9 +121,12 @@ int main () {
         switch (event.type) {
             case ALLEGRO_EVENT_TIMER: 
                 if (pages.in_game_page && stages.in_game) {
-                    // treat_withdraw (p_game.balls, p_game.balls_qtd, &p_game.withdraw_ball, &p_game.withdraw_count, &p_game.all_played);
+                    if (! withdraw.all_played) treat_withdraw (&p_game, &withdraw);
+
                     update_balls (p_game.balls, p_game.balls_qtd);
-                    check_wall_collision (&p_game, &stages);
+                    check_wall_collision (&p_game, &withdraw);
+
+                    if (withdraw.all_played) treat_end_phase (&p_game, &stages, &withdraw);
                 }
                 
                 general.redraw = true;
