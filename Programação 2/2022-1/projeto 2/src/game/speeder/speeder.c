@@ -5,7 +5,7 @@ int start_speeder (speeder_t *speeder) {
     speeder->is_enable = 0;
     speeder->frame = 0;
     speeder->color = 0;
-    speeder->bust = 1;
+    speeder->bust = NONE_BUST;
     if (! (speeder->icon = al_load_bitmap ("./resources/images/lightning.png")))
         return EXIT_FAILURE;
     return EXIT_SUCCESS;
@@ -26,7 +26,7 @@ void reset_speeder (speeder_t *speeder) {
     speeder->is_enable = 0;
     speeder->frame = 0;
     speeder->color = 0;
-    speeder->bust = 1;
+    speeder->bust = NONE_BUST;
 }
 
 void draw_speeder (fonts_t fonts, speeder_t speeder) {

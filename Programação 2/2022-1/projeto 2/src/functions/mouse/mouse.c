@@ -98,18 +98,18 @@ void treat_mouse_click_in_game (mouse_t *mouse, pages_t *pages, aim_t *aim, spee
     int hud_click, pause_click, speeder_click;
 
     hud_click = event.mouse.y <= SQUARE_SIZE;
-    pause_click = hud_click && (event.mouse.x >= 20 && event.mouse.x <= 40 && event.mouse.y >=20 && event.mouse.y <= 43);
-    // speeder_click = ;
-    printf ("x: %d", event.mouse.x);
-    printf ("y: %d", event.mouse.y);
+    pause_click = hud_click && (event.mouse.x >= 20 && event.mouse.x <= 40 && event.mouse.y >= 20 && event.mouse.y <= 43);
+    speeder_click = (event.mouse.x >= 258 && event.mouse.x <= 405 && event.mouse.y >= 70 && event.mouse.y <= 90);
 
     if (pause_click) {
         pages->in_pause_page = true;
         pages->in_game_page = false;
     }
+    if (speeder->is_enable && speeder_click) 
+        speeder->bust = SPEEDER_BUST;
     if (! hud_click) {
-        mouse->pressed = 1;
+        mouse->pressed = true;
         aim->pressed_x = event.mouse.x;
         aim->pressed_y = event.mouse.y;
     }
-}
+}   

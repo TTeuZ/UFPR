@@ -13,12 +13,12 @@ ball_t *add_ball (int x) {
     } else return NULL;
 }
 
-void update_balls (ball_t **balls, int qtd) {
+void update_balls (ball_t **balls, int qtd, speeder_t speeder) {
     int count;
     for (count = 0; count < qtd; count++) {
         if (balls[count]->playable) {
-            balls[count]->x += balls[count]->dx;
-            balls[count]->y += balls[count]->dy;
+            balls[count]->x += balls[count]->dx * speeder.bust;
+            balls[count]->y += balls[count]->dy * speeder.bust;
         }
     }
 }

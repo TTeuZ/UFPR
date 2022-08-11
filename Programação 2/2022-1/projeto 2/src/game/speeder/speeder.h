@@ -12,7 +12,7 @@ typedef struct speeder {
     int is_enable;
     int frame;
     int color;
-    int bust;
+    float bust;
     ALLEGRO_BITMAP *icon;
 } speeder_t;
 

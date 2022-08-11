@@ -128,7 +128,7 @@ int main () {
                 if (pages.in_game_page && stages.in_game) {
                     if (! withdraw.all_played) treat_withdraw (&p_game, &withdraw);
 
-                    update_balls (p_game.balls, p_game.balls_qtd);
+                    update_balls (p_game.balls, p_game.balls_qtd, speeder);
                     check_wall_collision (&p_game, &withdraw);
                     treat_speeder (&speeder);
 
@@ -157,10 +157,9 @@ int main () {
                         stages.end_phase = false;
                         play_balls (&p_game, aim);
                     }
-                    mouse.pressed = false;
                     set_aim (&aim, p_game);
                 }
-
+                mouse.pressed = false;
                 break;
             case ALLEGRO_EVENT_KEY_DOWN:
                 treat_key_down (&pages, &general, event);
