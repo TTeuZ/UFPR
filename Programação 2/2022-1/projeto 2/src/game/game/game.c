@@ -4,9 +4,9 @@ void play_balls (player_game_t *p_game, aim_t aim) {
     int count;
     float dx, dy;
 
-    dy = -8 * aim.sin;
-    if (aim.move_x < aim.pressed_x) dx = 8 * aim.cos;
-    else dx = -8 * aim.cos;
+    dy = -BALL_SPEED * aim.sin;
+    if (aim.move_x < aim.pressed_x) dx = BALL_SPEED * aim.cos;
+    else dx = -BALL_SPEED * aim.cos;
 
     for (count = 0; count < p_game->balls_qtd; count++) {
         p_game->balls[count]->dx = dx;
@@ -63,7 +63,8 @@ void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw) {
 
 void treat_end_phase (player_game_t *p_game, stages_t *stages, withdraw_t *withdraw) {
     if (withdraw->in_game_balls == 0) {
-        stages->in_game = 0;
+        stages->in_game = false;
+        stages->end_phase = true;
         withdraw->w_count = WITHDRAW_TIME;
         withdraw->all_played = false;
         withdraw->w_ball = 0;

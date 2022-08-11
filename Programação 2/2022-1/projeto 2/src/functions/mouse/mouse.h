@@ -6,6 +6,7 @@
 
 #include "../conditions/conditions.h"
 #include "../../game/aim/aim.h"
+#include "../../game/speeder/speeder.h"
 #include "../../loadables/audio/audio.h"
 #include "../../constants.h"
 
@@ -81,5 +82,5 @@ void treat_mouse_click_in_pause (mouse_t *mouse, pages_t *pages, general_t *gene
     \param aim Ponteiro para a estrutura de mira
     \param event Ponteiro de acesso para a estrutura de eventos da Allegro
 */
-void treat_mouse_click_in_game (mouse_t *mouse, pages_t *pages, aim_t *aim, ALLEGRO_EVENT event);
+void treat_mouse_click_in_game (mouse_t *mouse, pages_t *pages, aim_t *aim, speeder_t *speeder, ALLEGRO_EVENT event);
 #endif

@@ -37,6 +37,7 @@
 #define POINTS 30
 #define COINS 20
 #define BALLS 16
+#define SPEEDER 13
 
 // Dimensões
 #define SQUARE_SIZE 60
@@ -58,9 +59,14 @@
 // Bolinha
 #define INITIAL_X_POSITION BUFFER_WIDTH / 2
 #define INITIAL_Y_POSITION (SQUARE_SIZE * 9) - BALL_RADIUS
+#define BALL_SPEED 12
 
-// Saque
-#define WITHDRAW_TIME 10
+// Timers
+#define WITHDRAW_TIME 7
+#define SPEEDER_TIME 60
+
+// Animações
+#define SPEEDER_ANIMATION 300
 
 // Erros
 #define INIT_ERROR 0

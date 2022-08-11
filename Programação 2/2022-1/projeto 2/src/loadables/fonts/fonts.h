@@ -16,6 +16,7 @@ typedef struct fonts {
     ALLEGRO_FONT *points;
     ALLEGRO_FONT *coins;
     ALLEGRO_FONT *balls;
+    ALLEGRO_FONT *speeder;
 } fonts_t;
 
 /*!

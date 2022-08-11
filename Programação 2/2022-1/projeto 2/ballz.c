@@ -33,6 +33,7 @@
 #include "./src/game/game/game.h"
 #include "./src/game/pages/pages.h"
 #include "./src/game/player/player.h"
+#include "./src/game/speeder/speeder.h"
 
 int main () {
     int error;
@@ -83,6 +84,10 @@ int main () {
     if (! (al_init_image_addon ())) general.all_init = INIT_ERROR;
     else if (load_images (&images)) general.all_init = INIT_ERROR;
 
+    // Speeder
+    speeder_t speeder;
+    if (start_speeder (&speeder)) general.all_init = INIT_ERROR;
+
     // Audios
     audios_t audios;
     if (! al_install_audio ()) general.all_init = INIT_ERROR;
@@ -125,8 +130,10 @@ int main () {
 
                     update_balls (p_game.balls, p_game.balls_qtd);
                     check_wall_collision (&p_game, &withdraw);
+                    treat_speeder (&speeder);
 
                     if (withdraw.all_played) treat_end_phase (&p_game, &stages, &withdraw);
+                    if (stages.end_phase) reset_speeder (&speeder);
                 }
                 
                 general.redraw = true;
@@ -140,13 +147,14 @@ int main () {
                 if (pages.in_home_page) treat_mouse_click_in_home (&mouse, &pages, &general, audios, event);
                 else if (pages.in_help_page) treat_mouse_click_in_help (&mouse, &pages, event);
                 else if (pages.in_pause_page) treat_mouse_click_in_pause (&mouse, &pages, &general, audios, event);
-                else treat_mouse_click_in_game (&mouse, &pages, &aim, event);
+                else treat_mouse_click_in_game (&mouse, &pages, &aim, &speeder, event);
 
                 break;
             case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
                 if (pages.in_game_page && !stages.in_game) {
                     if (event.mouse.y > aim.pressed_y) {
                         stages.in_game = true;
+                        stages.end_phase = false;
                         play_balls (&p_game, aim);
                     }
                     mouse.pressed = 0;
@@ -184,6 +192,7 @@ int main () {
             else {
                 draw_game_page (p_game, p_points, fonts, images);
                 draw_game_section (p_game, fonts, stages);
+                if (speeder.is_enable && stages.in_game) draw_speeder (fonts, speeder);
                 if (mouse.pressed && !stages.in_game) draw_game_aim (aim, p_game);
             }
 
@@ -197,6 +206,7 @@ int main () {
     al_destroy_event_queue (queue);
     destroy_display (display, buffer);
     destroy_images (&images);
+    destroy_speeder (&speeder);
     destroy_audios (&audios);
     destroy_fonts (&fonts);
     destroy_mouse (&mouse);
