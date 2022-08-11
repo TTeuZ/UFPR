@@ -1,18 +1,5 @@
 #include "game.h"
 
-void draw_game_section (player_game_t p_game, fonts_t fonts, stages_t stages) {
-    int count;
-    // Área do jogo
-    al_draw_filled_rectangle (0, SQUARE_SIZE, BUFFER_WIDTH, SQUARE_SIZE * 9, al_map_rgb (DARK_GRAY));
-
-    // draws das bolinhas
-    if (! stages.in_game)
-        al_draw_textf (fonts.balls, al_map_rgb (WHITE), p_game.initial_x - 10, INITIAL_Y_POSITION - 30, 0, "%dx", p_game.balls_qtd);
-
-    for (count = 0; count < p_game.balls_qtd; count++) 
-        draw_ball (p_game.balls[count]);
-}
-
 void play_balls (player_game_t *p_game, aim_t aim) {
     int count;
     float dx, dy;
