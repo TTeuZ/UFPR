@@ -15,19 +15,6 @@ void play_balls (player_game_t *p_game, aim_t aim) {
     p_game->initial_x = -1;
 }
 
-void treat_withdraw (player_game_t *p_game, withdraw_t *withdraw){
-    if (withdraw->w_ball == p_game->balls_qtd) 
-        withdraw->all_played = true;
-    else if (withdraw->w_count == WITHDRAW_TIME) {
-        p_game->balls[withdraw->w_ball]->playable = true;
-        withdraw->in_game_balls++;
-        withdraw->w_count = 0;
-        withdraw->w_ball++;
-    }
-
-    if (!withdraw->all_played) withdraw->w_count++;
-}
-
 void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw) {
     int count;
     float x, y, diference;
@@ -87,6 +74,20 @@ void treat_end_phase (player_game_t *p_game, stages_t *stages, withdraw_t *withd
         withdraw->all_played = false;
         withdraw->w_ball = 0;
         p_game->points++;
+    }
+}
+
+void restart_game (player_game_t *p_game) {
+    int count;
+
+    p_game->initial_x = INITIAL_X_POSITION;
+    p_game->balls_qtd = 1;
+    p_game->points = 1; 
+
+    for (count = 0; count < p_game->balls_qtd; count++) {
+        p_game->balls[count]->x = INITIAL_X_POSITION;
+        p_game->balls[count]->y = INITIAL_Y_POSITION;
+        stop_ball (p_game->balls[count]);
     }
 }
 

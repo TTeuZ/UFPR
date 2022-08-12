@@ -33,7 +33,7 @@ void treat_speeder (speeder_t *speeder);
     \brief Função que reseta os valores do speeder para a proxima fase
     \param speeder Ponteiro para a estrutura do speeder
 */
-void reset_speeder (speeder_t *speeder);
+void restart_speeder (speeder_t *speeder);
 
 /*!
     \brief Função que desenha o speeder na tela

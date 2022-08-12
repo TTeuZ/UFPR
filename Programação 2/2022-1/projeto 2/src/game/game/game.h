@@ -6,8 +6,9 @@
 
 #include "../../constants.h"
 #include "../../functions/conditions/conditions.h"
-#include "../player/player.h"
 #include "../aim/aim.h"
+#include "../player/player.h"
+#include "../withdraw/withdraw.h"
 #include "../../loadables/fonts/fonts.h"
 #include "../../objects/ball/ball.h"
 
@@ -39,6 +40,12 @@ void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw);
     \param withdraw Ponteiro de acesso para a estrutura de saque do jogos
 */
 void treat_end_phase (player_game_t *p_game, stages_t *stages, withdraw_t *withdraw);
+
+/*!
+    \brief Função que reinicializa o jogo atual
+    \param p_game Ponteiro de acesso para a estrutura de game
+*/
+void restart_game (player_game_t *p_game);
 
 /*!
     \brief Função que realiza a limpesa de memória das estruturas alocadas do jogo

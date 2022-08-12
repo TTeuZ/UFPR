@@ -23,6 +23,7 @@
 #include "./src/game/pages/pages.h"
 #include "./src/game/player/player.h"
 #include "./src/game/speeder/speeder.h"
+#include "./src/game/withdraw/withdraw.h"
 
 // Carregaveis
 #include "./src/loadables/audio/audio.h"
@@ -42,23 +43,26 @@ int main () {
     general_t general;
     pages_t pages;
     stages_t stages;
-    withdraw_t withdraw;
     start_general_conditions (&general);
     start_pages_conditions (&pages);
     start_stages_conditions (&stages);
-    start_withdraw_conditions (&withdraw);
 
     // inicialização dos dados do jogo
     player_points_t p_points;
     player_game_t p_game;
-    aim_t aim;
     read_player_points (&p_points);
     error = read_player_game (&p_game);
 
     if (error != 0) emit_error (error);
     if (error == ADD_BALL_ERROR) return EXIT_FAILURE;
 
+    // Mira
+    aim_t aim;
     set_aim (&aim, p_game);
+
+    // Estrutura de saque
+    withdraw_t withdraw;
+    start_withdraw_conditions (&withdraw);
 
     // Inicializações gerais
     if (! al_init ()) general.all_init = INIT_ERROR;
@@ -125,6 +129,15 @@ int main () {
 
         switch (event.type) {
             case ALLEGRO_EVENT_TIMER: 
+                if (general.restart) {
+                    start_stages_conditions (&stages);
+                    restart_game (&p_game);
+                    restart_speeder (&speeder);
+                    start_withdraw_conditions (&withdraw);
+                    set_aim (&aim, p_game);
+                    general.restart = false;
+                }
+
                 if (pages.in_game_page && stages.in_game) {
                     if (! withdraw.all_played) treat_withdraw (&p_game, &withdraw);
 
@@ -133,7 +146,7 @@ int main () {
                     treat_speeder (&speeder);
 
                     if (withdraw.all_played) treat_end_phase (&p_game, &stages, &withdraw);
-                    if (stages.end_phase) reset_speeder (&speeder);
+                    if (stages.end_phase) restart_speeder (&speeder);
                 }
                 
                 general.redraw = true;

@@ -22,7 +22,7 @@ void treat_speeder (speeder_t *speeder) {
     speeder->frame++;
 }
 
-void reset_speeder (speeder_t *speeder) {
+void restart_speeder (speeder_t *speeder) {
     speeder->is_enable = 0;
     speeder->frame = 0;
     speeder->color = 0;
