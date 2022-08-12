@@ -19,17 +19,9 @@ typedef struct pages {
 } pages_t;
 
 typedef struct stages {
-    int withdraw;
     int in_game;
     int end_phase;
 } stages_t;
-
-typedef struct withdraw {
-    int w_ball;
-    int in_game_balls;
-    int w_count;
-    int all_played;
-} withdraw_t;
 
 /*!
     \brief Função de inicialização dos valores inicias para o jogo
@@ -50,14 +42,9 @@ void start_pages_conditions (pages_t *pages);
 void start_stages_conditions (stages_t *stages);
 
 /*!
-    \brief Função de inicialização dos valores inicias para o jogo
-    \param withdraw Ponteiro de acesso para a estrutura de saque do jogo
-*/
-void start_withdraw_conditions (withdraw_t *withdraw);
-
-/*!
     \brief Função que seta todas as variaveis de telas para falso
     \param game_cond ponteiro de acesso para a estrutura de consições de jogo
 */
 void set_pages_to_false (pages_t *pages);
+
 #endif

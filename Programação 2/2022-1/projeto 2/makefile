@@ -11,7 +11,7 @@ ALLEGRO = `pkg-config allegro-5\
 				allegro_acodec-5\
 				--libs --cflags`
 
-OBJECTS = ballz.o conditions.o display.o error.o keyboard.o mouse.o aim.o game.o pages.o player.o speeder.o audio.o fonts.o images.o addBall.o ball.o coin.o square.o
+OBJECTS = ballz.o conditions.o display.o error.o keyboard.o mouse.o aim.o game.o pages.o player.o speeder.o withdraw.o audio.o fonts.o images.o addBall.o ball.o coin.o square.o
 
 # Funções gerais
 all: ballz
@@ -59,6 +59,9 @@ player.o: ./src/game/player/player.c
 
 speeder.o: ./src/game/speeder/speeder.c
 		$(CC) -c ./src/game/speeder/speeder.c $(FLAGS)
+
+withdraw.o: ./src/game/withdraw/withdraw.c
+		$(CC) -c ./src/game/withdraw/withdraw.c $(FLAGS)
 
 audio.o: ./src/loadables/audio/audio.c
 		$(CC) -c ./src/loadables/audio/audio.c $(FLAGS)

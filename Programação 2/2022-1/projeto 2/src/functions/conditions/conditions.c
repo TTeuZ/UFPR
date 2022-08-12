@@ -16,16 +16,8 @@ void start_pages_conditions (pages_t *pages) {
 }
 
 void start_stages_conditions (stages_t *stages) {
-    stages->withdraw = 0;
     stages->in_game = 0;
     stages->end_phase = 0;
-}
-
-void start_withdraw_conditions (withdraw_t *withdraw) {
-    withdraw->w_ball = 0;
-    withdraw->in_game_balls = 0;
-    withdraw->w_count = WITHDRAW_TIME;
-    withdraw->all_played = 0;
 }
 
 void set_pages_to_false (pages_t *pages) {
