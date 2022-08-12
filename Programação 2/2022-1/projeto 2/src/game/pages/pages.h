@@ -7,11 +7,11 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_primitives.h>
 
-#include "../player/player.h"
+#include "../../constants.h"
 #include "../../functions/conditions/conditions.h"
+#include "../player/player.h"
 #include "../../loadables/images/images.h"
 #include "../../loadables/fonts/fonts.h"
-#include "../../constants.h"
 
 /*!
     \brief Função responsavel por construir a tela inicial (Home) do jogo

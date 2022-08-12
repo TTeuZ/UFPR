@@ -4,11 +4,11 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_image.h>
 
+#include "../../constants.h"
 #include "../conditions/conditions.h"
 #include "../../game/aim/aim.h"
 #include "../../game/speeder/speeder.h"
 #include "../../loadables/audio/audio.h"
-#include "../../constants.h"
 
 typedef struct mouse {
     ALLEGRO_MOUSE_CURSOR *cursor;

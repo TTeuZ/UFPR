@@ -66,11 +66,11 @@
 
 // Timers
 #define WITHDRAW_TIME 7
-#define SPEEDER_TIME 300
+#define SPEEDER_TIME 240
 
 // Bust
 #define NONE_BUST 1
-#define SPEEDER_BUST 2
+#define SPEEDER_BUST 2.5
 
 // Animações
 #define SPEEDER_ANIMATION 300

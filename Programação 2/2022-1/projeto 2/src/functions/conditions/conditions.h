@@ -1,9 +1,6 @@
 #ifndef __CONDITIONS_H__
 #define __CONDITIONS_H__
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "../../constants.h"
 
 typedef struct general {

@@ -6,10 +6,10 @@
 
 #include "../../constants.h"
 #include "../../functions/conditions/conditions.h"
-#include "../../loadables/fonts/fonts.h"
-#include "../../objects/ball/ball.h"
 #include "../player/player.h"
 #include "../aim/aim.h"
+#include "../../loadables/fonts/fonts.h"
+#include "../../objects/ball/ball.h"
 
 /*!
     \brief Função que inicializa a jogada das bolinhas no jogo

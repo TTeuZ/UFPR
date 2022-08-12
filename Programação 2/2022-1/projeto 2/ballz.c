@@ -10,12 +10,6 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_primitives.h>
 
-// Objetos
-#include "./src/objects/addBall/addBall.h"
-#include "./src/objects/ball/ball.h"
-#include "./src/objects/coin/coin.h"
-#include "./src/objects/square/square.h"
-
 // Funções
 #include "./src/functions/conditions/conditions.h"
 #include "./src/functions/display/display.h"
@@ -23,17 +17,23 @@
 #include "./src/functions/keyboard/keyboard.h"
 #include "./src/functions/mouse/mouse.h"
 
-// Carregaveis
-#include "./src/loadables/audio/audio.h"
-#include "./src/loadables/fonts/fonts.h"
-#include "./src/loadables/images/images.h"
-
 // Composição do jogo
 #include "./src/game/aim/aim.h"
 #include "./src/game/game/game.h"
 #include "./src/game/pages/pages.h"
 #include "./src/game/player/player.h"
 #include "./src/game/speeder/speeder.h"
+
+// Carregaveis
+#include "./src/loadables/audio/audio.h"
+#include "./src/loadables/fonts/fonts.h"
+#include "./src/loadables/images/images.h"
+
+// Objetos
+#include "./src/objects/addBall/addBall.h"
+#include "./src/objects/ball/ball.h"
+#include "./src/objects/coin/coin.h"
+#include "./src/objects/square/square.h"
 
 int main () {
     int error;

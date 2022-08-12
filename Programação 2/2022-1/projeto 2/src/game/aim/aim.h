@@ -1,8 +1,6 @@
 #ifndef __AIM_H__
 #define __AIM_H__
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 
 #include <allegro5/allegro5.h>
