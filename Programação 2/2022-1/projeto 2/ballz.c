@@ -138,18 +138,28 @@ int main () {
                     general.restart = false;
                 }
 
-                if (pages.in_game_page && stages.in_game) {
-                    if (! withdraw.all_played) treat_withdraw (&p_game, &withdraw);
+                if (pages.in_game_page) {
+                    if (stages.start_phase) {
+                        stages.start_phase = false;
+                    } 
 
-                    update_balls (p_game.balls, p_game.balls_qtd, speeder);
-                    check_wall_collision (&p_game, &withdraw);
-                    treat_speeder (&speeder);
+                    if (stages.in_game) {
+                        if (! withdraw.all_played) treat_withdraw (&p_game, &withdraw);
 
-                    if (withdraw.all_played) treat_end_phase (&p_game, &stages, &withdraw);
-                    if (stages.end_phase) restart_speeder (&speeder);
+                        update_balls (p_game.balls, p_game.balls_qtd, speeder);
+                        check_wall_collision (&p_game, &withdraw);
+                        treat_speeder (&speeder);
+
+                        if (withdraw.all_played) treat_end_phase (&p_game, &stages, &withdraw);
+                    } 
+
+                    if (stages.end_phase) {
+                        restart_speeder (&speeder);
+                        stages.end_phase = false;
+                    }
                 }
-                
                 general.redraw = true;
+                
                 break;
             case ALLEGRO_EVENT_MOUSE_AXES:
                 treat_mouse_move (display, &mouse, event);
@@ -167,12 +177,12 @@ int main () {
                 if (pages.in_game_page && !stages.in_game) {
                     if (event.mouse.y > aim.pressed_y) {
                         stages.in_game = true;
-                        stages.end_phase = false;
                         play_balls (&p_game, aim);
                     }
                     set_aim (&aim, p_game);
                 }
                 mouse.pressed = false;
+
                 break;
             case ALLEGRO_EVENT_KEY_DOWN:
                 treat_key_down (&pages, &general, event);
