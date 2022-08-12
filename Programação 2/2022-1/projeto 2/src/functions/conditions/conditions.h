@@ -1,6 +1,7 @@
 #ifndef __CONDITIONS_H__
 #define __CONDITIONS_H__
 
+#include <stdbool.h>
 #include "../../constants.h"
 
 typedef struct general {
@@ -19,8 +20,10 @@ typedef struct pages {
 } pages_t;
 
 typedef struct stages {
+    int start_phase;
     int in_game;
     int end_phase;
+    int end_game;
 } stages_t;
 
 /*!
