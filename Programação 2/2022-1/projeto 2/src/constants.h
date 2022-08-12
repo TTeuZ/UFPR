@@ -65,7 +65,7 @@
 #define BALL_SPEED 14
 
 // Timers
-#define WITHDRAW_TIME 5
+#define WITHDRAW_TIME 7
 #define SPEEDER_TIME 300
 
 // Bust

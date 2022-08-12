@@ -1,9 +1,6 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
 

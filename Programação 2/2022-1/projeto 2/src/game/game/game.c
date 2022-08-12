@@ -12,6 +12,7 @@ void play_balls (player_game_t *p_game, aim_t aim) {
         p_game->balls[count]->dx = dx;
         p_game->balls[count]->dy = dy;
     }
+    p_game->initial_x = -1;
 }
 
 void treat_withdraw (player_game_t *p_game, withdraw_t *withdraw){
@@ -29,7 +30,7 @@ void treat_withdraw (player_game_t *p_game, withdraw_t *withdraw){
 
 void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw) {
     int count;
-    float x, y;
+    float x, y, diference;
 
     for (count = 0; count < p_game->balls_qtd; count++) {
         x = p_game->balls[count]->x;
@@ -63,16 +64,16 @@ void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw) {
         }
         else if ((y + BALL_RADIUS) >= END_Y_AREA && p_game->balls[count]->playable) {
             p_game->balls[count]->y = INITIAL_Y_POSITION;
-            if (withdraw->w_ball == p_game->balls_qtd) {
+            if (p_game->initial_x == -1) {
                 stop_ball (p_game->balls[count]);
                 p_game->initial_x = x;
-                withdraw->w_ball--;
                 withdraw->in_game_balls--;
             } else {
-                if (ABS (x - p_game->initial_x) < __FLT_EPSILON__) {
+                diference = x - p_game->initial_x;
+                if (ABS (diference) < __FLT_EPSILON__ * 10000) {
                     stop_ball (p_game->balls[count]);
                     withdraw->in_game_balls--;
-                }
+                } else p_game->balls[count]->dx = -1 * (diference / 10.0f);
             }
         }
     }
