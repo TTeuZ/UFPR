@@ -159,7 +159,7 @@ int main () {
                     }
                 }
                 general.redraw = true;
-                
+
                 break;
             case ALLEGRO_EVENT_MOUSE_AXES:
                 treat_mouse_move (display, &mouse, event);
@@ -213,7 +213,7 @@ int main () {
                 draw_pause_page (fonts, images, general);
             else {
                 draw_game_page (p_game, p_points, fonts, images);
-                draw_game_section (p_game, fonts, stages);
+                draw_balls (p_game, fonts, stages);
                 if (speeder.is_enable && stages.in_game) draw_speeder (fonts, speeder);
                 if (mouse.pressed && !stages.in_game) draw_game_aim (aim, p_game);
             }

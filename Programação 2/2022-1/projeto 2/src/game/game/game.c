@@ -98,3 +98,14 @@ void destroy_game (player_game_t *p_game) {
         free (p_game->balls[count]);
     free (p_game->balls);
 }
+
+void draw_balls (player_game_t p_game, fonts_t fonts, stages_t stages) {
+    int count;
+
+    // draws das bolinhas
+    if (! stages.in_game)
+        al_draw_textf (fonts.balls, al_map_rgb (WHITE), p_game.initial_x - 10, INITIAL_Y_POSITION - 30, 0, "%dx", p_game.balls_qtd);
+
+    for (count = 0; count < p_game.balls_qtd; count++) 
+        draw_ball (p_game.balls[count]);
+}

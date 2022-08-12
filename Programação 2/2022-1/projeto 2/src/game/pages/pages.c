@@ -76,7 +76,7 @@ void draw_pause_page (fonts_t fonts, images_t images, general_t general) {
 
     // botão de main menu
     al_draw_filled_rounded_rectangle (90, 402, 330, 452, 25, 25, al_map_rgb (32, 178, 170));
-    al_draw_textf (fonts.button, al_map_rgb (WHITE), BUFFER_WIDTH/2, 410, ALLEGRO_ALIGN_CENTER, " MAIN MENU");
+    al_draw_textf (fonts.button, al_map_rgb (WHITE), BUFFER_WIDTH/2, 410, ALLEGRO_ALIGN_CENTER, "MAIN MENU");
 
     // icone do som
     if (general.sound_on) 
@@ -106,17 +106,7 @@ void draw_game_page (player_game_t p_game, player_points_t p_points, fonts_t fon
     // moedas
     al_draw_textf (fonts.coins, al_map_rgb (WHITE), 375 - ((6 + decimal_cases)  * decimal_cases), 18, 0, "%d", p_points.coins);
     al_draw_circle (400, 32, 7, al_map_rgb (GOLDEN), 2);
-}
 
-void draw_game_section (player_game_t p_game, fonts_t fonts, stages_t stages) {
-    int count;
     // Área do jogo
-    al_draw_filled_rectangle (0, SQUARE_SIZE, BUFFER_WIDTH, SQUARE_SIZE * 9, al_map_rgb (DARK_GRAY));
-
-    // draws das bolinhas
-    if (! stages.in_game)
-        al_draw_textf (fonts.balls, al_map_rgb (WHITE), p_game.initial_x - 10, INITIAL_Y_POSITION - 30, 0, "%dx", p_game.balls_qtd);
-
-    for (count = 0; count < p_game.balls_qtd; count++) 
-        draw_ball (p_game.balls[count]);
+    al_draw_filled_rectangle (START_X_AREA, START_Y_AREA, END_X_AREA, END_Y_AREA, al_map_rgb (DARK_GRAY));
 }

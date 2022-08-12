@@ -52,4 +52,12 @@ void restart_game (player_game_t *p_game);
     \param p_game Ponteiro de acesso para a estrutura de game
 */
 void destroy_game (player_game_t *p_game);
+
+/*!
+    \brief Função resposável por desenhar os bolinhas em jogo
+    \param p_game Ponteiro de acesso para a estrutura de game
+    \param fonts Ponteiro de acesso para a estrutura de fontes
+    \param stages Ponteiro de acesso para a estrutura de estágios do jogo
+*/
+void draw_balls (player_game_t p_game, fonts_t fonts, stages_t stages);
 #endif

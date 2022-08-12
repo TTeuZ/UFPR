@@ -46,12 +46,4 @@ void draw_pause_page (fonts_t fonts, images_t images, general_t general);
 */
 void draw_game_page (player_game_t p_game, player_points_t p_points, fonts_t fonts, images_t images);
 
-/*!
-    \brief Função resposável por escrever a tela do jogo
-    \param p_game Ponteiro de acesso para a estrutura de game
-    \param fonts Ponteiro de acesso para a estrutura de fontes
-    \param stages Ponteiro de acesso para a estrutura de estágios do jogo
-*/
-void draw_game_section (player_game_t p_game, fonts_t fonts, stages_t stages);
-
 #endif
