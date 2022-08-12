@@ -25,11 +25,17 @@ ball_t *add_ball (int x);
 
 /*!
     \brief Função que atualiza a posição x e y das bolinhas
-    \param balls Ponteiro para a estrutura da bolinha
+    \param balls Ponteiro para a estrutura do array de bolinahs
     \param qtd quantidade de bolinhas
     \param speeder Ponteiro para a estrutura do speeder
 */
 void update_balls (ball_t **balls, int qtd, speeder_t speeder);
+
+/*!
+    \brief Função que para os valores da bolonha
+    \param ball Ponteiro para a estrutura da bolinha
+*/
+void stop_ball (ball_t *ball);
 
 /*!
     \brief Função que desenha abolinha na tela do jogo

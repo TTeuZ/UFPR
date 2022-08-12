@@ -10,6 +10,7 @@
 #include "../../constants.h"
 #include "../../functions/conditions/conditions.h"
 #include "../../loadables/fonts/fonts.h"
+#include "../../objects/ball/ball.h"
 #include "../player/player.h"
 #include "../aim/aim.h"
 

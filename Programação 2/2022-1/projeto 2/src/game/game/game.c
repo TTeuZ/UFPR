@@ -1,5 +1,4 @@
 #include "game.h"
-#include <stdio.h>
 
 void play_balls (player_game_t *p_game, aim_t aim) {
     int count;
@@ -65,15 +64,13 @@ void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw) {
         else if ((y + BALL_RADIUS) >= END_Y_AREA && p_game->balls[count]->playable) {
             p_game->balls[count]->y = INITIAL_Y_POSITION;
             if (withdraw->w_ball == p_game->balls_qtd) {
-                p_game->balls[count]->dy *= 0;
-                p_game->balls[count]->dx *= 0;
-                p_game->balls[count]->playable = false;
+                stop_ball (p_game->balls[count]);
                 p_game->initial_x = x;
                 withdraw->w_ball--;
                 withdraw->in_game_balls--;
             } else {
                 if (ABS (x - p_game->initial_x) < __FLT_EPSILON__) {
-                    p_game->balls[count]->playable = false;
+                    stop_ball (p_game->balls[count]);
                     withdraw->in_game_balls--;
                 }
             }

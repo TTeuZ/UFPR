@@ -23,6 +23,12 @@ void update_balls (ball_t **balls, int qtd, speeder_t speeder) {
     }
 }
 
+void stop_ball (ball_t *ball) {
+    ball->dy *= 0;
+    ball->dx *= 0;
+    ball->playable = false;
+}
+
 void draw_ball (ball_t *ball) {
     al_draw_filled_circle (ball->x, ball->y, BALL_RADIUS, al_map_rgb (WHITE));
 }
