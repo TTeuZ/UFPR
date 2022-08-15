@@ -8,6 +8,10 @@
 #define RED "\e[0;31m"
 #define NC "\e[0m"
 
+// Definições
+#define FPS 1.0 / 60.0
+#define STOP_EPSILON __FLT_EPSILON__ * 10000
+
 // RGB
 #define WHITE 255, 255, 255
 #define BLACK 0, 0, 0
@@ -20,10 +24,6 @@
 #define BLUE 0, 102, 204
 #define GREEN 0, 153, 76
 #define LIGHT_GREEN 153, 255, 51
-
-// Definições
-#define FPS 1.0 / 60.0
-#define AIM_SIZE 16
 
 // Audio
 #define AUDIO_QTD 2
@@ -42,27 +42,35 @@
 #define BALLS 16
 #define SPEEDER 13
 
-// Dimensões
+// Área de jogo (mapa)
+#define MAP_COLS 7
+#define MAP_LINES 9
+
 #define SQUARE_SIZE 60
-#define BALL_RADIUS 8
-#define AIM_RADIUS 20
-
-#define BUFFER_HEIGHT (SQUARE_SIZE * 12)
-#define BUFFER_WIDTH (SQUARE_SIZE * 7)
-
-#define BUFFER_SCALE 1
-#define DISPLAY_HEIGHT (BUFFER_HEIGHT * BUFFER_SCALE)
-#define DISPLAY_WIDTH (BUFFER_WIDTH * BUFFER_SCALE)
-
 #define START_Y_AREA SQUARE_SIZE
 #define END_Y_AREA (SQUARE_SIZE * 9)
 #define START_X_AREA 0
 #define END_X_AREA (SQUARE_SIZE * 7)
 
+// Dimensões
+#define BUFFER_HEIGHT (SQUARE_SIZE * 12)
+#define BUFFER_WIDTH (SQUARE_SIZE * 7)
+#define BUFFER_SCALE 1
+
+#define DISPLAY_HEIGHT (BUFFER_HEIGHT * BUFFER_SCALE)
+#define DISPLAY_WIDTH (BUFFER_WIDTH * BUFFER_SCALE)
+
 // Bolinha
+#define BALL_RADIUS 8
 #define INITIAL_X_POSITION BUFFER_WIDTH / 2
 #define INITIAL_Y_POSITION (SQUARE_SIZE * 9) - BALL_RADIUS
 #define BALL_SPEED 14
+
+// Mira
+#define INITIAL_AIM_Y_POSITION INITIAL_Y_POSITION - 20
+#define AIM_RADIUS 20
+#define AIM_SIZE_LIMIT 125
+#define AIM_QTD 16
 
 // Timers
 #define WITHDRAW_TIME 7

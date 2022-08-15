@@ -57,7 +57,7 @@ void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw) {
                 withdraw->in_game_balls--;
             } else {
                 diference = x - p_game->initial_x;
-                if (ABS (diference) < __FLT_EPSILON__ * 10000) {
+                if (ABS (diference) < STOP_EPSILON) {
                     stop_ball (p_game->balls[count]);
                     withdraw->in_game_balls--;
                 } else p_game->balls[count]->dx = -1 * (diference / 10.0f);

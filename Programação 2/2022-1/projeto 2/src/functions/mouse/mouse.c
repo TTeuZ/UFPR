@@ -97,7 +97,7 @@ void treat_mouse_click_in_pause (mouse_t *mouse, pages_t *pages, general_t *gene
 void treat_mouse_click_in_game (mouse_t *mouse, pages_t *pages, aim_t *aim, speeder_t *speeder, ALLEGRO_EVENT event) {
     int hud_click, pause_click, speeder_click;
 
-    hud_click = event.mouse.y <= SQUARE_SIZE;
+    hud_click = event.mouse.y <= START_Y_AREA;
     pause_click = hud_click && (event.mouse.x >= 20 && event.mouse.x <= 40 && event.mouse.y >= 20 && event.mouse.y <= 43);
     speeder_click = (event.mouse.x >= 258 && event.mouse.x <= 405 && event.mouse.y >= 70 && event.mouse.y <= 90);
 

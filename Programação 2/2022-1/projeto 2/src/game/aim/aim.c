@@ -2,7 +2,7 @@
 
 void set_aim (aim_t *aim, player_game_t p_game) {
     aim->x = p_game.initial_x;
-    aim->y = INITIAL_Y_POSITION - 20;
+    aim->y = INITIAL_AIM_Y_POSITION;
     aim->pressed_x = BUFFER_HEIGHT;
     aim->pressed_y = BUFFER_WIDTH;
     aim->move_x = 0;
@@ -60,8 +60,8 @@ void draw_game_aim (aim_t aim, player_game_t p_game) {
     int count, x, y, distance;
 
     if (aim.x != 0 && aim.y != 0) {
-        for (count = 0; count < AIM_SIZE; count++) {
-            if (aim.distance > 125) distance = 125;
+        for (count = 0; count < AIM_QTD; count++) {
+            if (aim.distance > AIM_SIZE_LIMIT) distance = AIM_SIZE_LIMIT;
             else distance = aim.distance;
 
             if (aim.move_x < aim.pressed_x) 

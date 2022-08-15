@@ -12,8 +12,8 @@ void treat_withdraw (player_game_t *p_game, withdraw_t *withdraw){
         withdraw->all_played = true;
     else if (withdraw->w_count == WITHDRAW_TIME) {
         p_game->balls[withdraw->w_ball]->playable = true;
-        withdraw->in_game_balls++;
         withdraw->w_count = 0;
+        withdraw->in_game_balls++;
         withdraw->w_ball++;
     }
 
