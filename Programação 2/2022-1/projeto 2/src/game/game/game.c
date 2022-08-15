@@ -50,11 +50,11 @@ void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw) {
 
             if (! withdraw->first_reach) {
                 stop_ball (p_game->balls[count]);
-                p_game->initial_x = x;
+                p_game->temp_init_x = x;
                 withdraw->first_reach = true;
                 withdraw->in_game_balls--;
             } else {
-                diference = x - p_game->initial_x;
+                diference = x - p_game->temp_init_x;
                 if (ABS (diference) < STOP_EPSILON) {
                     stop_ball (p_game->balls[count]);
                     withdraw->in_game_balls--;
@@ -68,12 +68,13 @@ void treat_end_phase (player_game_t *p_game, stages_t *stages, withdraw_t *withd
     if (withdraw->in_game_balls == 0) {
         stages->in_game = false;
         stages->end_phase = true;
-    
+
         withdraw->w_count = WITHDRAW_TIME;
         withdraw->all_played = false;
         withdraw->first_reach = false;
         withdraw->w_ball = 0;
 
+        p_game->initial_x = p_game->temp_init_x;
         p_game->points++;
     }
 }
