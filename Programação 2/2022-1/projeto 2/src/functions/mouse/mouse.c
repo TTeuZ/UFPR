@@ -12,11 +12,6 @@ int start_mouse (mouse_t *mouse) {
     return EXIT_SUCCESS;
 }
 
-void destroy_mouse (mouse_t *mouse) {
-    al_destroy_bitmap (mouse->arrow);
-    al_destroy_mouse_cursor (mouse->cursor);
-}
-
 int set_mouse_display (ALLEGRO_DISPLAY *display, mouse_t mouse) {
     if (! al_set_mouse_cursor (display, mouse.cursor))
         return EXIT_FAILURE;
@@ -113,3 +108,8 @@ void treat_mouse_click_in_game (mouse_t *mouse, pages_t *pages, aim_t *aim, spee
         aim->pressed_y = event.mouse.y;
     }
 }   
+
+void destroy_mouse (mouse_t *mouse) {
+    al_destroy_bitmap (mouse->arrow);
+    al_destroy_mouse_cursor (mouse->cursor);
+}

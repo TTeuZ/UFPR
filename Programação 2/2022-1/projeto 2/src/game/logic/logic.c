@@ -78,11 +78,3 @@ void restart_game (player_game_t *p_game) {
     //     stop_ball (p_game->balls[count]);
     // }
 }
-
-void destroy_game (player_game_t *p_game) {
-    // int count;
-    
-    // for (count = 0; count < p_game->balls_qtd; count++)
-    //     free (p_game->balls[count]);
-    // free (p_game->balls);
-}

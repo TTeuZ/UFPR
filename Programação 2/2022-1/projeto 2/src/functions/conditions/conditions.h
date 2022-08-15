@@ -2,6 +2,7 @@
 #define __CONDITIONS_H__
 
 #include <stdbool.h>
+
 #include "../../constants.h"
 
 typedef struct general {
@@ -27,19 +28,19 @@ typedef struct stages {
 } stages_t;
 
 /*!
-    \brief Função de inicialização dos valores inicias para o jogo
+    \brief Função de inicialização das flags gerais do jogo
     \param general Ponteiro de acesso para a estrutura de condições gerais do jogo
 */
 void start_general_conditions (general_t *general);
 
 /*!
-    \brief Função de inicialização dos valores inicias para o jogo
+    \brief Função de inicialização das flags de telas do jogo
     \param pages Ponteiro de acesso para a estrutura de condições das telas
 */
 void start_pages_conditions (pages_t *pages);
 
 /*!
-    \brief Função de inicialização dos valores inicias para o jogo
+    \brief Função de inicialização das flags de estágios do jogo
     \param stages Ponteiro de acesso para a estrutura de estágios do jogo
 */
 void start_stages_conditions (stages_t *stages);

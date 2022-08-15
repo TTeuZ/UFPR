@@ -17,7 +17,7 @@ typedef struct aim {
 } aim_t;
 
 /*!
-    \brief Função que inicializa a estrutura de mira
+    \brief Função que seta valores iniciais para a mira
     \param aim Ponteiro para a estrutura de mira
     \param initial_x posição inicial atual do x das bolinhas
 */
@@ -26,15 +26,15 @@ void set_aim (aim_t *aim, int initial_x);
 /*!
     \brief Função que altera a posição da mira
     \param aim Ponteiro para a estrutura de mira
-    \param p_game Ponteiro de acesso para a estrutura de game
+    \param initial_x posição inicial atual do x das bolinhas
     \param event Ponteiro de acesso para a estrutura de eventos da Allegro
 */
 void treat_aim_move (aim_t *aim, int initial_x, ALLEGRO_EVENT event);
 
 /*!
-    \brief Função que faz a impressão da mira da bolinha
+    \brief Função que faz o desenho da mira da bolinha
     \param aim Ponteiro para a estrutura de mira
-    \param p_game Ponteiro de acesso para a estrutura de game
+    \param initial_x posição inicial atual do x das bolinhas
 */
 void draw_game_aim (aim_t aim, int initial_x);
 

@@ -23,7 +23,7 @@ typedef struct player_game {
 
 /*!
     \brief Função que realiza a leitura dos dados salvos do usuario caso existam.
-    Se for a primeira vez abrindo o jogo inicia os dados salvos como 0
+    Se for a primeira vez abrindo o jogo inicia um jogo novo
     \param p_points Ponteiro de acesso para a estrutura de dados de pontuação
     \return erro READ_POINTS_ERROR em caso de nao conseguir ler o estado salvo
 */
@@ -31,7 +31,7 @@ int read_player_points (player_points_t *p_points);
 
 /*!
     \brief Função que realiza a leitura do antigo jogo em andamento do usuario.
-    Caso seja o primeiro jogo, inicia as estruturas como 0.
+    Caso seja o primeiro jogo, inicia um novo jogo.
     \param p_game Ponteiro de acesso para a estrutura de game
     \return erro READ_GAME_ERROR em caso de não conseguir ler o antigo estado salvo
 */
@@ -46,8 +46,9 @@ int save_player_points (player_points_t p_points);
 
 /*!
     \brief Função que salva o jogo atual do jogador
-    \param p_game Ponteiro de acesso para a estrutura de game
+    \param p_game Ponteiro de acesso para a estrutura do jogo
     \return erro SAVE_GAME_ERROR em caso de não conseguir salvar
 */
 int save_player_game (player_game_t p_game);
+
 #endif

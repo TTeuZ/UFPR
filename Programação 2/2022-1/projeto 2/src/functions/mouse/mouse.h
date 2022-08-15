@@ -5,9 +5,12 @@
 #include <allegro5/allegro_image.h>
 
 #include "../../constants.h"
+
 #include "../conditions/conditions.h"
+
 #include "../../game/aim/aim.h"
 #include "../../game/speeder/speeder.h"
+
 #include "../../loadables/audio/audio.h"
 
 typedef struct mouse {
@@ -19,23 +22,16 @@ typedef struct mouse {
 } mouse_t;
 
 /*!
-    \brief Função que inicializa os valored de X e Y do mouse
+    \brief Função que inicializa os valor de X e Y do mouse
     \param mouse Ponteiro de acesso para a estrutura do mouse
-    \return 1 para erro, 0 para sucesso
+    \return EXIT_SUCCESS para sucesso, EXIT_FAILURE para erro
 */
 int start_mouse (mouse_t *mouse);
 
 /*!
-    \brief Função que apaga as estruturas alocadas para o mouse
-    \param mouse Ponteiro de acesso para a estrutura do mouse
-*/
-void destroy_mouse (mouse_t *mouse);
-
-/*!
     \brief Função que seta o mouse para o display do jogo
-    \param cursor Ponteiro para um ALLEGRO_MOUSE_CURSOR
     \param display Ponteiro apra um ALLEGRO_DISPLAY
-    \param mouse Ponteiro para a estrutura de dados do mouse
+    \param mouse Ponteiro para a estrutura do mouse
 */
 int set_mouse_display (ALLEGRO_DISPLAY *display, mouse_t mouse);
 
@@ -83,4 +79,11 @@ void treat_mouse_click_in_pause (mouse_t *mouse, pages_t *pages, general_t *gene
     \param event Ponteiro de acesso para a estrutura de eventos da Allegro
 */
 void treat_mouse_click_in_game (mouse_t *mouse, pages_t *pages, aim_t *aim, speeder_t *speeder, ALLEGRO_EVENT event);
+
+/*!
+    \brief Função que desaloca as estruturas alocadas para o mouse
+    \param mouse Ponteiro de acesso para a estrutura do mouse
+*/
+void destroy_mouse (mouse_t *mouse);
+
 #endif

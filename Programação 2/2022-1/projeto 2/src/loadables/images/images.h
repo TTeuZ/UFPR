@@ -23,4 +23,5 @@ int load_images (images_t *images);
     \param images Ponteiro de acesso para a estrutura de imagens
 */
 void destroy_images (images_t *images);
+
 #endif

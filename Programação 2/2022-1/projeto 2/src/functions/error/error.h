@@ -7,8 +7,7 @@
 #include "../../constants.h"
 
 /*!
-    \brief Função de lançamento de erro.
-    notifica algum erro na stderr
+    \brief Função de lançamento de erro. notifica algum erro na stderr
     \param error_code Código de erro, utilizado para a exibição da mensagem
 */
 void emit_error (int error_code);

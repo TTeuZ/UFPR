@@ -5,11 +5,15 @@
 #include <allegro5/allegro_primitives.h>
 
 #include "../../constants.h"
-#include "../../functions/conditions/conditions.h"
+
 #include "../aim/aim.h"
 #include "../player/player.h"
 #include "../withdraw/withdraw.h"
+
+#include "../../functions/conditions/conditions.h"
+
 #include "../../loadables/fonts/fonts.h"
+
 #include "../../objects/index/index.h"
 #include "../../objects/ball/ball.h"
 
@@ -34,11 +38,5 @@ void treat_end_phase (player_game_t *p_game, stages_t *stages, withdraw_t *withd
     \param p_game Ponteiro de acesso para a estrutura de game
 */
 void restart_game (player_game_t *p_game);
-
-/*!
-    \brief Função que realiza a limpesa de memória das estruturas alocadas do jogo
-    \param p_game Ponteiro de acesso para a estrutura de game
-*/
-void destroy_game (player_game_t *p_game);
 
 #endif

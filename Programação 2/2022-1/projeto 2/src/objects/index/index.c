@@ -18,3 +18,11 @@ int start_game_objects (player_game_t p_game, game_objects_t **g_obj) {
     *g_obj = temp;
     return EXIT_SUCCESS;
 }
+
+void destroy_game_objects (game_objects_t *g_obj) {
+    int count;
+    
+    for (count = 0; count < g_obj->balls_qtd; count++)
+        free (g_obj->balls[count]);
+    free (g_obj->balls);
+}

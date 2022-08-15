@@ -6,6 +6,7 @@
 #include <allegro5/allegro_primitives.h>
 
 #include "../../constants.h"
+
 #include "../../loadables/fonts/fonts.h"
 
 typedef struct speeder {
@@ -19,7 +20,7 @@ typedef struct speeder {
 /*!
     \brief Função que inicializa o speeder
     \param speeder Ponteiro para a estrutura do speeder
-    \return 0 em caso de sucesso. 1 em caso de erro
+    \return EXIT_SUCCESS em caso de sucesso. EXIT_FAILURE em caso de erro
 */
 int start_speeder (speeder_t *speeder);
 
@@ -30,7 +31,7 @@ int start_speeder (speeder_t *speeder);
 void treat_speeder (speeder_t *speeder);
 
 /*!
-    \brief Função que reseta os valores do speeder para a proxima fase
+    \brief Função que reseta os valores do speeder
     \param speeder Ponteiro para a estrutura do speeder
 */
 void restart_speeder (speeder_t *speeder);

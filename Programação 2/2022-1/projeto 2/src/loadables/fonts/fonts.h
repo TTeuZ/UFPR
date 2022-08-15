@@ -30,4 +30,5 @@ int load_fonts (fonts_t *fonts);
     \param fonts Ponteiro de acesso para a estrutura de fontes
 */
 void destroy_fonts (fonts_t *fonts);
+
 #endif

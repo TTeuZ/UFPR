@@ -2,7 +2,9 @@
 #define __WITHDRAW_H__
 
 #include "../../constants.h"
+
 #include "../player/player.h"
+
 #include "../../objects/index/index.h"
 
 typedef struct withdraw {
