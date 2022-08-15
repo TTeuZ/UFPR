@@ -5,6 +5,7 @@ void start_withdraw_conditions (withdraw_t *withdraw) {
     withdraw->in_game_balls = 0;
     withdraw->w_count = WITHDRAW_TIME;
     withdraw->all_played = false;
+    withdraw->first_reach = false;
 }
 
 void treat_withdraw (player_game_t *p_game, withdraw_t *withdraw){

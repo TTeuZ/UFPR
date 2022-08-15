@@ -9,6 +9,7 @@ typedef struct withdraw {
     int in_game_balls;
     int w_count;
     int all_played;
+    int first_reach;
 } withdraw_t;
 
 /*!

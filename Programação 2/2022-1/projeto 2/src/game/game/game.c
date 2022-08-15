@@ -12,7 +12,6 @@ void play_balls (player_game_t *p_game, aim_t aim) {
         p_game->balls[count]->dx = dx;
         p_game->balls[count]->dy = dy;
     }
-    p_game->initial_x = -1;
 }
 
 void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw) {
@@ -40,20 +39,19 @@ void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw) {
         else if ((x - BALL_RADIUS) < START_X_AREA) {
             p_game->balls[count]->dx *= -1;
             p_game->balls[count]->x = START_X_AREA + BALL_RADIUS;
-        }
-        else if ((y - BALL_RADIUS) < START_Y_AREA) {
+        } else if ((y - BALL_RADIUS) < START_Y_AREA) {
             p_game->balls[count]->dy *= -1;
             p_game->balls[count]->y = START_Y_AREA + BALL_RADIUS;
-        }
-        else if ((x + BALL_RADIUS) > END_X_AREA){
+        } else if ((x + BALL_RADIUS) > END_X_AREA){
             p_game->balls[count]->dx *= -1;
             p_game->balls[count]->x = END_X_AREA - BALL_RADIUS;
-        }
-        else if ((y + BALL_RADIUS) >= END_Y_AREA && p_game->balls[count]->playable) {
+        } else if ((y + BALL_RADIUS) >= END_Y_AREA && p_game->balls[count]->playable) {
             p_game->balls[count]->y = INITIAL_Y_POSITION;
-            if (p_game->initial_x == -1) {
+
+            if (! withdraw->first_reach) {
                 stop_ball (p_game->balls[count]);
                 p_game->initial_x = x;
+                withdraw->first_reach = true;
                 withdraw->in_game_balls--;
             } else {
                 diference = x - p_game->initial_x;
@@ -70,9 +68,12 @@ void treat_end_phase (player_game_t *p_game, stages_t *stages, withdraw_t *withd
     if (withdraw->in_game_balls == 0) {
         stages->in_game = false;
         stages->end_phase = true;
+    
         withdraw->w_count = WITHDRAW_TIME;
         withdraw->all_played = false;
+        withdraw->first_reach = false;
         withdraw->w_ball = 0;
+
         p_game->points++;
     }
 }
