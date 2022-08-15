@@ -17,6 +17,7 @@ typedef struct player_game {
     int balls_qtd;
     float initial_x;
     float temp_init_x;
+    int map[MAP_LINES][MAP_COLS];
     ball_t **balls;
 } player_game_t;
 

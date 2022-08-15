@@ -140,6 +140,11 @@ int main () {
 
                 if (pages.in_game_page) {
                     if (stages.start_phase) {
+                        for (int i = 0; i < MAP_LINES; i++) {
+                            for (int j = 0; j < MAP_COLS; j++)
+                                printf ("%d ", p_game.map[i][j]);
+                            printf ("\n");
+                        }
                         stages.start_phase = false;
                     } 
 
