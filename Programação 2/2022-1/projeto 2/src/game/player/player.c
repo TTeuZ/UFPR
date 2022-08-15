@@ -1,6 +1,6 @@
 #include "player.h"
 
-void read_player_points (player_points_t *p_points) {
+int read_player_points (player_points_t *p_points) {
     FILE *points_file;
     char temp_string[BUFSIZ];
     points_file = fopen ("./resources/data/playerPoints.txt", "r");
@@ -16,6 +16,9 @@ void read_player_points (player_points_t *p_points) {
         p_points->record = 0;
         p_points->coins = 0;
     }
+
+    if (! points_file) return READ_POINTS_ERROR;
+    return EXIT_SUCCESS;
 }
 
 int read_player_game (player_game_t *p_game) {

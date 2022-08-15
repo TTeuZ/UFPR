@@ -50,7 +50,7 @@ int main () {
     // inicialização dos dados do jogo
     player_points_t p_points;
     player_game_t p_game;
-    read_player_points (&p_points);
+    if (read_player_points (&p_points)) emit_error (READ_POINTS_ERROR);
     error = read_player_game (&p_game);
 
     if (error != 0) emit_error (error);
