@@ -11,7 +11,7 @@ ALLEGRO = `pkg-config allegro-5\
 				allegro_acodec-5\
 				--libs --cflags`
 
-OBJECTS = ballz.o conditions.o display.o error.o keyboard.o mouse.o aim.o game.o pages.o player.o speeder.o withdraw.o audio.o fonts.o images.o addBall.o ball.o coin.o square.o
+OBJECTS = ballz.o conditions.o display.o error.o keyboard.o mouse.o aim.o logic.o pages.o player.o speeder.o withdraw.o audio.o fonts.o images.o index.o addBall.o ball.o coin.o square.o
 
 # Funções gerais
 all: ballz
@@ -48,8 +48,8 @@ mouse.o: ./src/functions/mouse/mouse.c
 aim.o: ./src/game/aim/aim.c
 		$(CC) -c ./src/game/aim/aim.c $(FLAGS)
 
-game.o: ./src/game/game/game.c
-		$(CC) -c ./src/game/game/game.c $(FLAGS)
+logic.o: ./src/game/logic/logic.c
+		$(CC) -c ./src/game/logic/logic.c $(FLAGS)
 
 pages.o: ./src/game/pages/pages.c
 		$(CC) -c ./src/game/pages/pages.c $(FLAGS)
@@ -71,6 +71,9 @@ fonts.o: ./src/loadables/fonts/fonts.c
 
 images.o: ./src/loadables/images/images.c
 		$(CC) -c ./src/loadables/images/images.c $(FLAGS)
+
+index.o: ./src/objects/index/index.c
+		$(CC) -c ./src/objects/index/index.c $(FLAGS)
 
 addBall.o: ./src/objects/addBall/addBall.c
 		$(CC) -c ./src/objects/addBall/addBall.c $(FLAGS)

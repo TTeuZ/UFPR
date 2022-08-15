@@ -17,6 +17,9 @@ void emit_error (int error_code) {
         case SAVE_GAME_ERROR:
             fprintf (stderr, RED "[ERROR] " NC "Erro ao salvar o jogo atual!\n\n");
             break;
+        case GAME_OBJECTS_ERROR:
+            fprintf (stderr, RED "[ERROR] " NC "Erro ao iniciar os objetos do jogo!\n\n");
+            break;
         case ADD_BALL_ERROR:
             fprintf (stderr, RED "[ERROR] " NC "Erro ao iniciar as bolas do jogo!\n\n");
             break;

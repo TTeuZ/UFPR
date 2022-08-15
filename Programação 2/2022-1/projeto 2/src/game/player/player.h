@@ -14,11 +14,11 @@ typedef struct player_points {
 
 typedef struct player_game {
     int points;
-    int balls_qtd;
     float initial_x;
     float temp_init_x;
+    
+    int balls_qtd;
     int map[MAP_LINES][MAP_COLS];
-    ball_t **balls;
 } player_game_t;
 
 /*!
@@ -34,7 +34,6 @@ int read_player_points (player_points_t *p_points);
     Caso seja o primeiro jogo, inicia as estruturas como 0.
     \param p_game Ponteiro de acesso para a estrutura de game
     \return erro READ_GAME_ERROR em caso de não conseguir ler o antigo estado salvo
-            erro ADD_BALL_ERROR em caso de erro de alocação para as bolinhas
 */
 int read_player_game (player_game_t *p_game);
 

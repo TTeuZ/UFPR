@@ -1,5 +1,5 @@
-#ifndef __GAME_H__
-#define __GAME_H__
+#ifndef __LOGIC_H__
+#define __LOGIC_H__
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_primitives.h>
@@ -10,28 +10,16 @@
 #include "../player/player.h"
 #include "../withdraw/withdraw.h"
 #include "../../loadables/fonts/fonts.h"
+#include "../../objects/index/index.h"
 #include "../../objects/ball/ball.h"
-
-/*!
-    \brief Função que inicializa a jogada das bolinhas no jogo
-    \param p_game Ponteiro de acesso para a estrutura de game
-    \param aim Ponteiro para a estrutura de mira
-*/
-void play_balls (player_game_t *p_game, aim_t aim);
-
-/*!
-    \brief Função responsavel por atualizar o saque das bolinhas
-    \param p_game Ponteiro de acesso para a estrutura de game
-    \param withdraw Ponteiro de acesso para a estrutura de saque do jogoas
-*/
-void treat_withdraw (player_game_t *p_game, withdraw_t *withdraw);
 
 /*!
     \brief Função que verifica se a bolinha colidiu com alguma das paredes
     \param p_game Ponteiro de acesso para a estrutura de game
+    \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
     \param withdraw Ponteiro de acesso para a estrutura de saque do jogos
 */
-void check_wall_collision (player_game_t *p_game, withdraw_t *withdraw);
+void check_wall_collision (player_game_t *p_game, game_objects_t *g_obj, withdraw_t *withdraw);
 
 /*!
     \brief Função responsavel por verificar se a fase atual se encerrou.
@@ -53,11 +41,4 @@ void restart_game (player_game_t *p_game);
 */
 void destroy_game (player_game_t *p_game);
 
-/*!
-    \brief Função resposável por desenhar os bolinhas em jogo
-    \param p_game Ponteiro de acesso para a estrutura de game
-    \param fonts Ponteiro de acesso para a estrutura de fontes
-    \param stages Ponteiro de acesso para a estrutura de estágios do jogo
-*/
-void draw_balls (player_game_t p_game, fonts_t fonts, stages_t stages);
 #endif

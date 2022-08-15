@@ -9,6 +9,9 @@
 
 #include "../../constants.h"
 #include "../../game/speeder/speeder.h"
+#include "../../loadables/fonts/fonts.h"
+#include "../../functions/conditions/conditions.h"
+#include "../../game/aim/aim.h"
 
 typedef struct ball {
     int playable;
@@ -22,6 +25,14 @@ typedef struct ball {
     \return Ponteiro de acesso para a estrutura. Null em caso de erro
 */
 ball_t *add_ball (int x);
+
+/*!
+    \brief Função que inicializa a jogada das bolinhas no jogo
+    \param balls Ponteiro para a estrutura do array de bolinahs
+    \param qtd quantidade de bolinhas
+    \param aim Ponteiro para a estrutura de mira
+*/
+void play_balls (ball_t **balls, int qtd, aim_t aim);
 
 /*!
     \brief Função que atualiza a posição x e y das bolinhas
@@ -38,8 +49,11 @@ void update_balls (ball_t **balls, int qtd, speeder_t speeder);
 void stop_ball (ball_t *ball);
 
 /*!
-    \brief Função que desenha abolinha na tela do jogo
-    \param ball Ponteiro para a estrutura da bolinha
+    \brief Função resposável por desenhar os bolinhas em jogo
+    \param balls Ponteiro para a estrutura do array de bolinahs
+    \param qtd quantidade de bolinhas
+    \param fonts Ponteiro de acesso para a estrutura de fontes
+    \param stages Ponteiro de acesso para a estrutura de estágios do jogo
 */
-void draw_ball (ball_t *ball);
+void draw_balls (ball_t **balls, int qtd, int initial_x, fonts_t fonts, stages_t stages);
 #endif

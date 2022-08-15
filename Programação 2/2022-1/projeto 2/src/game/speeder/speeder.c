@@ -1,5 +1,4 @@
 #include "speeder.h"
-#include <stdio.h>
 
 int start_speeder (speeder_t *speeder) {
     speeder->is_enable = 0;
@@ -23,9 +22,9 @@ void treat_speeder (speeder_t *speeder) {
 }
 
 void restart_speeder (speeder_t *speeder) {
-    speeder->is_enable = 0;
+    speeder->is_enable = false;
     speeder->frame = 0;
-    speeder->color = 0;
+    speeder->color = false;
     speeder->bust = NONE_BUST;
 }
 

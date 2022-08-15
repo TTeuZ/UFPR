@@ -8,11 +8,11 @@ void start_withdraw_conditions (withdraw_t *withdraw) {
     withdraw->first_reach = false;
 }
 
-void treat_withdraw (player_game_t *p_game, withdraw_t *withdraw){
-    if (withdraw->w_ball == p_game->balls_qtd) 
+void treat_withdraw (game_objects_t *g_obj, withdraw_t *withdraw) {
+    if (withdraw->w_ball == g_obj->balls_qtd) 
         withdraw->all_played = true;
     else if (withdraw->w_count == WITHDRAW_TIME) {
-        p_game->balls[withdraw->w_ball]->playable = true;
+        g_obj->balls[withdraw->w_ball]->playable = true;
         withdraw->w_count = 0;
         withdraw->in_game_balls++;
         withdraw->w_ball++;

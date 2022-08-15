@@ -19,7 +19,7 @@
 
 // Composição do jogo
 #include "./src/game/aim/aim.h"
-#include "./src/game/game/game.h"
+#include "./src/game/logic/logic.h"
 #include "./src/game/pages/pages.h"
 #include "./src/game/player/player.h"
 #include "./src/game/speeder/speeder.h"
@@ -31,6 +31,7 @@
 #include "./src/loadables/images/images.h"
 
 // Objetos
+#include "./src/objects/index/index.h"
 #include "./src/objects/addBall/addBall.h"
 #include "./src/objects/ball/ball.h"
 #include "./src/objects/coin/coin.h"
@@ -51,14 +52,20 @@ int main () {
     player_points_t p_points;
     player_game_t p_game;
     if (read_player_points (&p_points)) emit_error (READ_POINTS_ERROR);
-    error = read_player_game (&p_game);
+    if (read_player_game (&p_game)) emit_error (READ_GAME_ERROR);
 
-    if (error != 0) emit_error (error);
-    if (error == ADD_BALL_ERROR) return EXIT_FAILURE;
+    // Objetos do jogo
+    game_objects_t *g_obj = NULL;
+    error = start_game_objects (p_game, &g_obj);
+
+    if (error) {
+        emit_error (error);
+        return EXIT_FAILURE;
+    }
 
     // Mira
     aim_t aim;
-    set_aim (&aim, p_game);
+    set_aim (&aim, p_game.initial_x);
 
     // Estrutura de saque
     withdraw_t withdraw;
@@ -129,30 +136,30 @@ int main () {
 
         switch (event.type) {
             case ALLEGRO_EVENT_TIMER: 
-                if (general.restart) {
-                    start_stages_conditions (&stages);
-                    restart_game (&p_game);
-                    restart_speeder (&speeder);
-                    start_withdraw_conditions (&withdraw);
-                    set_aim (&aim, p_game);
-                    general.restart = false;
-                }
+                // if (general.restart) {
+                //     start_stages_conditions (&stages);
+                //     restart_game (&p_game);
+                //     restart_speeder (&speeder);
+                //     start_withdraw_conditions (&withdraw);
+                //     set_aim (&aim, p_game.initial_x);
+                //     general.restart = false;
+                // }
 
                 if (pages.in_game_page) {
                     if (stages.start_phase) {
-                        for (int i = 0; i < MAP_LINES; i++) {
-                            for (int j = 0; j < MAP_COLS; j++)
-                                printf ("%d ", p_game.map[i][j]);
-                            printf ("\n");
-                        }
+                        // for (int i = 0; i < MAP_LINES; i++) {
+                        //     for (int j = 0; j < MAP_COLS; j++)
+                        //         printf ("%d ", p_game.map[i][j]);
+                        //     printf ("\n");
+                        // }
                         stages.start_phase = false;
                     } 
 
                     if (stages.in_game) {
-                        if (! withdraw.all_played) treat_withdraw (&p_game, &withdraw);
+                        if (! withdraw.all_played) treat_withdraw (g_obj, &withdraw);
 
-                        update_balls (p_game.balls, p_game.balls_qtd, speeder);
-                        check_wall_collision (&p_game, &withdraw);
+                        update_balls (g_obj->balls, g_obj->balls_qtd, speeder);
+                        check_wall_collision (&p_game, g_obj, &withdraw);
                         treat_speeder (&speeder);
 
                         if (withdraw.all_played) treat_end_phase (&p_game, &stages, &withdraw);
@@ -168,7 +175,7 @@ int main () {
                 break;
             case ALLEGRO_EVENT_MOUSE_AXES:
                 treat_mouse_move (display, &mouse, event);
-                if (mouse.pressed && !stages.in_game) treat_aim_move (&aim, p_game, event);
+                if (mouse.pressed && !stages.in_game) treat_aim_move (&aim, p_game.initial_x, event);
 
                 break;
             case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
@@ -182,9 +189,9 @@ int main () {
                 if (pages.in_game_page && !stages.in_game) {
                     if (event.mouse.y > aim.pressed_y) {
                         stages.in_game = true;
-                        play_balls (&p_game, aim);
+                        play_balls (g_obj->balls, g_obj->balls_qtd, aim);
                     }
-                    set_aim (&aim, p_game);
+                    set_aim (&aim, p_game.initial_x);
                 }
                 mouse.pressed = false;
 
@@ -218,9 +225,9 @@ int main () {
                 draw_pause_page (fonts, images, general);
             else {
                 draw_game_page (p_game, p_points, fonts, images);
-                draw_balls (p_game, fonts, stages);
+                draw_balls (g_obj->balls, g_obj->balls_qtd, p_game.initial_x, fonts, stages);
                 if (speeder.is_enable && stages.in_game) draw_speeder (fonts, speeder);
-                if (mouse.pressed && !stages.in_game) draw_game_aim (aim, p_game);
+                if (mouse.pressed && !stages.in_game) draw_game_aim (aim, p_game.initial_x);
             }
 
             flip_buffer_display (display, buffer);

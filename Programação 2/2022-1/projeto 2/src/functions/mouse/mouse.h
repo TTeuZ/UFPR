@@ -41,7 +41,7 @@ int set_mouse_display (ALLEGRO_DISPLAY *display, mouse_t mouse);
 
 /*!
     \brief Função que seta a posição atual do mouse no display do jogo
-    \param display POnteiro de acesso para a estrutura do display do jogo
+    \param display Ponteiro de acesso para a estrutura do display do jogo
     \param mouse Ponteiro de acesso para a estrutura do mouse
     \param event Ponteiro de acesso para a estrutura de eventos da Allegro
 */

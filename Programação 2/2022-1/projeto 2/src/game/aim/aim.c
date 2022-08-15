@@ -1,7 +1,7 @@
 #include "aim.h"
 
-void set_aim (aim_t *aim, player_game_t p_game) {
-    aim->x = p_game.initial_x;
+void set_aim (aim_t *aim, int initial_x) {
+    aim->x = initial_x;
     aim->y = INITIAL_AIM_Y_POSITION;
     aim->pressed_x = BUFFER_HEIGHT;
     aim->pressed_y = BUFFER_WIDTH;
@@ -30,7 +30,7 @@ void set_aim (aim_t *aim, player_game_t p_game) {
 
     OBS: o +- da posição x e para fazer o cortorno certo de 180 graus.
 */
-void treat_aim_move (aim_t *aim, player_game_t p_game, ALLEGRO_EVENT event) {
+void treat_aim_move (aim_t *aim, int initial_x, ALLEGRO_EVENT event) {
     double ca, ab, bc;
     double cos, sin;
 
@@ -50,13 +50,13 @@ void treat_aim_move (aim_t *aim, player_game_t p_game, ALLEGRO_EVENT event) {
         aim->x = 0;
         aim->y = 0;
     } else {
-        if (event.mouse.x < aim->pressed_x) aim->x = p_game.initial_x + (AIM_RADIUS * cos);
-        else aim->x = p_game.initial_x - (AIM_RADIUS * cos);
+        if (event.mouse.x < aim->pressed_x) aim->x = initial_x + (AIM_RADIUS * cos);
+        else aim->x = initial_x - (AIM_RADIUS * cos);
         aim->y = INITIAL_Y_POSITION - (AIM_RADIUS * sin);
     }
 }
 
-void draw_game_aim (aim_t aim, player_game_t p_game) {
+void draw_game_aim (aim_t aim, int initial_x) {
     int count, x, y, distance;
 
     if (aim.x != 0 && aim.y != 0) {
@@ -65,9 +65,9 @@ void draw_game_aim (aim_t aim, player_game_t p_game) {
             else distance = aim.distance;
 
             if (aim.move_x < aim.pressed_x) 
-                x = p_game.initial_x + ((((AIM_RADIUS + (distance * 0.08)) * count)) * aim.cos);
+                x = initial_x + ((((AIM_RADIUS + (distance * 0.08)) * count)) * aim.cos);
             else 
-                x = p_game.initial_x - ((((AIM_RADIUS + (distance * 0.08)) * count)) * aim.cos);
+                x = initial_x - ((((AIM_RADIUS + (distance * 0.08)) * count)) * aim.cos);
 
             y = INITIAL_Y_POSITION - ((((AIM_RADIUS + (distance * 0.08)) * count)) * aim.sin);
 

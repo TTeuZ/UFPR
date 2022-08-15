@@ -7,7 +7,6 @@
 #include <allegro5/allegro_primitives.h>
 
 #include "../../constants.h"
-#include "../player/player.h"
 
 typedef struct aim {
     int x, y;
@@ -20,9 +19,9 @@ typedef struct aim {
 /*!
     \brief Função que inicializa a estrutura de mira
     \param aim Ponteiro para a estrutura de mira
-    
+    \param initial_x posição inicial atual do x das bolinhas
 */
-void set_aim (aim_t *aim, player_game_t p_game);
+void set_aim (aim_t *aim, int initial_x);
 
 /*!
     \brief Função que altera a posição da mira
@@ -30,13 +29,13 @@ void set_aim (aim_t *aim, player_game_t p_game);
     \param p_game Ponteiro de acesso para a estrutura de game
     \param event Ponteiro de acesso para a estrutura de eventos da Allegro
 */
-void treat_aim_move (aim_t *aim, player_game_t p_game, ALLEGRO_EVENT event);
+void treat_aim_move (aim_t *aim, int initial_x, ALLEGRO_EVENT event);
 
 /*!
     \brief Função que faz a impressão da mira da bolinha
     \param aim Ponteiro para a estrutura de mira
     \param p_game Ponteiro de acesso para a estrutura de game
 */
-void draw_game_aim (aim_t aim, player_game_t p_game);
+void draw_game_aim (aim_t aim, int initial_x);
 
 #endif

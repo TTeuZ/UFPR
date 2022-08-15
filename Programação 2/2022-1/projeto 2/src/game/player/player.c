@@ -25,20 +25,20 @@ int read_player_points (player_points_t *p_points) {
 int read_player_game (player_game_t *p_game) {
     FILE *game_file;
     char temp_string[BUFSIZ];
-    int count, line, col;
+    int line, col;
 
     game_file = fopen ("./resources/data/game.txt", "r");
 
     if (game_file) {
         fgets (temp_string, BUFSIZ, game_file);
         p_game->points = atoi (temp_string);
-        
-        fgets (temp_string, BUFSIZ, game_file);
-        p_game->balls_qtd = atoi (temp_string);
 
         fgets (temp_string, BUFSIZ, game_file);
         p_game->initial_x = atoi (temp_string);
         p_game->temp_init_x = p_game->initial_x;
+
+        fgets (temp_string, BUFSIZ, game_file);
+        p_game->balls_qtd = atoi (temp_string);
 
         for (line = 0; line < MAP_LINES; line++)
             for (col = 0; col < MAP_COLS; col++)
@@ -55,12 +55,6 @@ int read_player_game (player_game_t *p_game) {
             for (col = 0; col < MAP_COLS; col++)
                 p_game->map[line][col] = 0;
     }
-
-    if ((p_game->balls = malloc (sizeof (ball_t)* p_game->balls_qtd))) {
-        for (count = 0; count < p_game->balls_qtd; count++) {
-            if (! (p_game->balls[count] = add_ball (p_game->initial_x))) return ADD_BALL_ERROR;
-        }
-    } else return ADD_BALL_ERROR;
 
     if (! game_file) return READ_GAME_ERROR;
     return EXIT_SUCCESS;
@@ -86,8 +80,8 @@ int save_player_game (player_game_t p_game) {
 
     if (game_file) {
         fprintf (game_file, "%d\n", p_game.points);
-        fprintf (game_file, "%d\n", p_game.balls_qtd);
         fprintf (game_file, "%f\n", p_game.initial_x);
+        fprintf (game_file, "%d\n", p_game.balls_qtd);
 
         for (line = 0; line < MAP_LINES; line++) {
             for (col = 0; col < MAP_COLS; col++)

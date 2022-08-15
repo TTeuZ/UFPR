@@ -13,6 +13,20 @@ ball_t *add_ball (int x) {
     } else return NULL;
 }
 
+void play_balls (ball_t **balls, int qtd, aim_t aim) {
+    int count;
+    float dx, dy;
+
+    dy = -BALL_SPEED * aim.sin;
+    if (aim.move_x < aim.pressed_x) dx = BALL_SPEED * aim.cos;
+    else dx = -BALL_SPEED * aim.cos;
+
+    for (count = 0; count < qtd; count++) {
+        balls[count]->dx = dx;
+        balls[count]->dy = dy;
+    }
+}
+
 void update_balls (ball_t **balls, int qtd, speeder_t speeder) {
     int count;
     for (count = 0; count < qtd; count++) {
@@ -31,4 +45,15 @@ void stop_ball (ball_t *ball) {
 
 void draw_ball (ball_t *ball) {
     al_draw_filled_circle (ball->x, ball->y, BALL_RADIUS, al_map_rgb (WHITE));
+}
+
+void draw_balls (ball_t **balls, int qtd, int initial_x, fonts_t fonts, stages_t stages) {
+    int count;
+
+    // draws das bolinhas
+    if (! stages.in_game)
+        al_draw_textf (fonts.balls, al_map_rgb (WHITE), initial_x - 10, INITIAL_Y_POSITION - 30, 0, "%dx", qtd);
+
+    for (count = 0; count < qtd; count++) 
+        al_draw_filled_circle (balls[count]->x, balls[count]->y, BALL_RADIUS, al_map_rgb (WHITE));
 }
