@@ -4,6 +4,8 @@
 #include <getopt.h>    /* getopt */
 #include <time.h>
 
+#include <likwid.h>
+
 #include "matriz.h"
 
 /**
@@ -82,19 +84,29 @@ int main (int argc, char *argv[])
     prnVetor (vet, n);
     printf ("=================================\n\n");
 #endif /* DEBUG */
+  LIKWID_MARKER_INIT;
 
+  LIKWID_MARKER_START("mPtr-ptrVet");
   multMatPtrVet (mPtr_1, vet, n, n, resPtr);
+  LIKWID_MARKER_STOP("mPtr-ptrVet");
 
-  multMatPtrVet (mPtrRow_1, vet, n, n, resPtrRow);
-    
+  // multMatPtrVet (mPtrRow_1, vet, n, n, resPtrRow);
+  
+  LIKWID_MARKER_START("mRow-ptrVet");
   multMatRowVet (mRow_1, vet, n, n, resRow);
-    
+  LIKWID_MARKER_STOP("mRow-ptrVet");
+  
+  LIKWID_MARKER_START("mPtr-mPtr");
   multMatMatPtr (mPtr_1, mPtr_2, n, resMatPtr);
+  LIKWID_MARKER_STOP("mPtr-mPtr");
 
-  multMatMatPtr (mPtrRow_1, mPtrRow_2, n, resMatPtrRow);
-    
+  // multMatMatPtr (mPtrRow_1, mPtrRow_2, n, resMatPtrRow);
+  
+  LIKWID_MARKER_START("mRow-mRow");
   multMatMatRow (mRow_1, mRow_2, n, resMatRow);
-    
+  LIKWID_MARKER_STOP("mRow-mRow");
+  
+  LIKWID_MARKER_CLOSE;
 #ifdef DEBUG
     prnVetor (resPtr, n);
     prnVetor (resPtrRow, n);
