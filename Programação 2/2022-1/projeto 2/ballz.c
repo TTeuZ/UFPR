@@ -148,11 +148,12 @@ int main () {
 
                 if (pages.in_game_page) {
                     if (stages.start_phase) {
-                        // for (int i = 0; i < MAP_LINES; i++) {
-                        //     for (int j = 0; j < MAP_COLS; j++)
-                        //         printf ("%d ", p_game.map[i][j]);
-                        //     printf ("\n");
-                        // }
+                        // printf ("%d ", g_obj->squares[1][3].points);
+                        for (int i = 0; i < MAP_LINES; i++) {
+                            for (int j = 0; j < MAP_COLS; j++)
+                                printf ("%d ", g_obj->squares[i][j].points);
+                            printf ("\n");
+                        }
                         stages.start_phase = false;
                     } 
 
@@ -169,6 +170,7 @@ int main () {
                     if (stages.end_phase) {
                         restart_speeder (&speeder);
                         stages.end_phase = false;
+                        stages.start_phase = true;
                     }
                 }
                 general.redraw = true;
@@ -228,6 +230,7 @@ int main () {
                 draw_pause_page (fonts, images, general);
             else {
                 draw_game_page (p_game, p_points, fonts, images);
+                draw_squares (g_obj->squares);
                 draw_balls (g_obj->balls, g_obj->balls_qtd, p_game.initial_x, fonts, stages);
                 if (speeder.is_enable && stages.in_game) draw_speeder (fonts, speeder);
                 if (mouse.pressed && !stages.in_game) draw_game_aim (aim, p_game.initial_x);
