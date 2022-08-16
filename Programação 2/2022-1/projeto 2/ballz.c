@@ -136,14 +136,15 @@ int main () {
 
         switch (event.type) {
             case ALLEGRO_EVENT_TIMER: 
-                // if (general.restart) {
-                //     start_stages_conditions (&stages);
-                //     restart_game (&p_game);
-                //     restart_speeder (&speeder);
-                //     start_withdraw_conditions (&withdraw);
-                //     set_aim (&aim, p_game.initial_x);
-                //     general.restart = false;
-                // }
+                if (general.restart) {
+                    start_stages_conditions (&stages);
+                    restart_game (&p_game);
+                    restart_game_objects (g_obj);
+                    restart_speeder (&speeder);
+                    start_withdraw_conditions (&withdraw);
+                    set_aim (&aim, p_game.initial_x);
+                    general.restart = false;
+                }
 
                 if (pages.in_game_page) {
                     if (stages.start_phase) {
@@ -207,6 +208,8 @@ int main () {
         }
 
         if (general.close_game) {
+            persist_objects_changes (&p_game, g_obj);
+
             if (save_player_points (p_points) == SAVE_POINTS_ERROR)
                 emit_error (SAVE_POINTS_ERROR);
             if (save_player_game (p_game) == SAVE_GAME_ERROR)

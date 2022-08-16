@@ -43,10 +43,6 @@ void stop_ball (ball_t *ball) {
     ball->playable = false;
 }
 
-void draw_ball (ball_t *ball) {
-    al_draw_filled_circle (ball->x, ball->y, BALL_RADIUS, al_map_rgb (WHITE));
-}
-
 void draw_balls (ball_t **balls, int qtd, int initial_x, fonts_t fonts, stages_t stages) {
     int count;
 

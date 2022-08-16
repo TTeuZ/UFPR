@@ -2,6 +2,7 @@
 #define __INDEX_H__
 
 #include "../../constants.h"
+
 #include "../../game/player/player.h"
 
 #include "../addBall/addBall.h"
@@ -23,6 +24,20 @@ typedef struct game_objects {
             ADD_BALL_ERROR em caso de falaha de alocação das bolinahs do jogo
 */
 int start_game_objects (player_game_t p_game, game_objects_t **g_obj);
+
+/*!
+    \brief Função que reinicializa os objetos do jogo
+    \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
+    \return ADD_BALL_ERROR em caso de falaha de alocação das bolinahs do jogo
+*/
+int restart_game_objects (game_objects_t *g_obj);
+
+/*!
+    \brief Função que salva as mudanças feitas nos objetos do jogo para o jogo atual para salvar em memória
+    \param p_game Ponteiro de acesso para a estrutura de game
+    \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
+*/
+void persist_objects_changes (player_game_t *p_game, game_objects_t *g_obj);
 
 /*!
     \brief Função que desaloca os objetos do jogo

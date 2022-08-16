@@ -66,15 +66,6 @@ void treat_end_phase (player_game_t *p_game, stages_t *stages, withdraw_t *withd
 }
 
 void restart_game (player_game_t *p_game) {
-    // int count;
-
-    // p_game->initial_x = INITIAL_X_POSITION;
-    // p_game->balls_qtd = 1;
-    // p_game->points = 1; 
-
-    // for (count = 0; count < p_game->balls_qtd; count++) {
-    //     p_game->balls[count]->x = INITIAL_X_POSITION;
-    //     p_game->balls[count]->y = INITIAL_Y_POSITION;
-    //     stop_ball (p_game->balls[count]);
-    // }
+    p_game->initial_x = INITIAL_X_POSITION;
+    p_game->points = 1; 
 }
