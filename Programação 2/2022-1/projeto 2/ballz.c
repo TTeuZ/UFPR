@@ -139,16 +139,20 @@ int main () {
                 if (general.restart) {
                     start_stages_conditions (&stages);
                     restart_game (&p_game);
-                    restart_game_objects (g_obj);
                     restart_speeder (&speeder);
                     start_withdraw_conditions (&withdraw);
                     set_aim (&aim, p_game.initial_x);
+                    error = restart_game_objects (g_obj);
+
+                    if (error) {
+                        emit_error (error);
+                        general.close_game = true;
+                    }
                     general.restart = false;
                 }
 
                 if (pages.in_game_page) {
                     if (stages.start_phase) {
-                        // printf ("%d ", g_obj->squares[1][3].points);
                         for (int i = 0; i < MAP_LINES; i++) {
                             for (int j = 0; j < MAP_COLS; j++)
                                 printf ("%d ", g_obj->squares[i][j].points);
