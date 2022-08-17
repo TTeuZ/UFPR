@@ -230,7 +230,7 @@ int main () {
                 draw_pause_page (fonts, images, general);
             else {
                 draw_game_page (p_game, p_points, fonts, images);
-                draw_squares (g_obj->squares);
+                draw_squares (g_obj->squares, fonts);
                 draw_balls (g_obj->balls, g_obj->balls_qtd, p_game.initial_x, fonts, stages);
                 if (speeder.is_enable && stages.in_game) draw_speeder (fonts, speeder);
                 if (mouse.pressed && !stages.in_game) draw_game_aim (aim, p_game.initial_x);

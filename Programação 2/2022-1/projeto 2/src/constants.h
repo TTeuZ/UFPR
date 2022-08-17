@@ -41,13 +41,14 @@
 #define COINS 20
 #define BALLS 16
 #define SPEEDER 13
+#define SQUARE 23
 
 // Área de jogo (mapa)
 #define MAP_COLS 7
 #define MAP_LINES 9
 
 #define SQUARE_SIZE 60
-#define SQUARE_PADDING 3
+#define SQUARE_MARGIN 3
 
 #define START_Y_AREA SQUARE_SIZE
 #define END_Y_AREA (SQUARE_SIZE * 10)
