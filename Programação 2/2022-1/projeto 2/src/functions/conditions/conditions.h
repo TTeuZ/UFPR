@@ -22,6 +22,7 @@ typedef struct pages {
 
 typedef struct stages {
     int start_phase;
+    int drawing_down;
     int in_game;
     int end_phase;
     int end_game;

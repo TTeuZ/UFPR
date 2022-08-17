@@ -153,12 +153,10 @@ int main () {
 
                 if (pages.in_game_page) {
                     if (stages.start_phase) {
-                        for (int i = 0; i < MAP_LINES; i++) {
-                            for (int j = 0; j < MAP_COLS; j++)
-                                printf ("%d ", g_obj->squares[i][j].points);
-                            printf ("\n");
-                        }
-                        stages.start_phase = false;
+                        stages.drawing_down = verify_first_line (g_obj);
+
+                        if (stages.drawing_down) drawing_down_objs (g_obj);
+                        else stages.start_phase = false;
                     } 
 
                     if (stages.in_game) {

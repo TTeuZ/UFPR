@@ -17,6 +17,7 @@ void start_pages_conditions (pages_t *pages) {
 
 void start_stages_conditions (stages_t *stages) {
     stages->start_phase = true;
+    stages->drawing_down = false;
     stages->in_game = false;
     stages->end_phase = false;
     stages->end_game = false;

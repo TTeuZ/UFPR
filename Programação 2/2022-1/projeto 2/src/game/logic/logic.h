@@ -26,6 +26,13 @@
 void check_wall_collision (player_game_t *p_game, game_objects_t *g_obj, withdraw_t *withdraw);
 
 /*!
+    \brief Função que verifica se existe algum objeto na primeira linha
+    \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
+    \return true caso tenha. False caso nao tenha
+*/
+int verify_first_line (game_objects_t *g_obj);
+
+/*!
     \brief Função responsavel por verificar se a fase atual se encerrou.
     \param p_game Ponteiro de acesso para a estrutura de game
     \param stages Ponteiro de acesso para a estrutura de estágios do jogo
