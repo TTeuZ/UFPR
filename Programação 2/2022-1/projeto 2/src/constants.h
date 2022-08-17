@@ -47,6 +47,8 @@
 #define MAP_LINES 9
 
 #define SQUARE_SIZE 60
+#define SQUARE_PADDING 3
+
 #define START_Y_AREA SQUARE_SIZE
 #define END_Y_AREA (SQUARE_SIZE * 10)
 #define START_X_AREA 0
