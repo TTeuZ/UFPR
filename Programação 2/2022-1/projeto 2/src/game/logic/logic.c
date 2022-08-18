@@ -58,6 +58,14 @@ int verify_first_line (game_objects_t *g_obj) {
     return false;
 }
 
+int verify_last_line (game_objects_t *g_obj) {
+    int col;
+    for (col = 0; col < MAP_COLS; col++) {
+        if (g_obj->squares[MAP_LINES - 2][col].points != 0) return true;
+    }
+    return false;
+}
+
 void treat_end_phase (player_game_t *p_game, stages_t *stages, withdraw_t *withdraw) {
     if (withdraw->in_game_balls == 0) {
         stages->in_game = false;

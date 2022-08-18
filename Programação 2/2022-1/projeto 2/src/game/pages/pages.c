@@ -71,11 +71,11 @@ void draw_pause_page (fonts_t fonts, images_t images, general_t general) {
     al_draw_textf (fonts.button, al_map_rgb (WHITE), BUFFER_WIDTH/2, 270, ALLEGRO_ALIGN_CENTER, "CONTINUE");
 
     // botão de restart
-    al_draw_filled_rounded_rectangle (90, 332, 330, 382, 25, 25, al_map_rgb (255, 185, 0));
+    al_draw_filled_rounded_rectangle (90, 332, 330, 382, 25, 25, al_map_rgb (YELLOW));
     al_draw_textf (fonts.button, al_map_rgb (WHITE), BUFFER_WIDTH/2, 340, ALLEGRO_ALIGN_CENTER, "RESTART");
 
     // botão de main menu
-    al_draw_filled_rounded_rectangle (90, 402, 330, 452, 25, 25, al_map_rgb (32, 178, 170));
+    al_draw_filled_rounded_rectangle (90, 402, 330, 452, 25, 25, al_map_rgb (CIANO));
     al_draw_textf (fonts.button, al_map_rgb (WHITE), BUFFER_WIDTH/2, 410, ALLEGRO_ALIGN_CENTER, "MAIN MENU");
 
     // icone do som
@@ -84,6 +84,21 @@ void draw_pause_page (fonts_t fonts, images_t images, general_t general) {
     else 
         al_draw_circle (210, 550, 30, al_map_rgb (LIGTH_GRAY), 2);
     al_draw_bitmap (images.sound, 192, 535, 0);
+}
+
+void draw_end_game_page (player_game_t p_game, player_points_t p_points, fonts_t fonts) {
+    al_clear_to_color (al_map_rgb (NORMAL_GRAY));
+
+    al_draw_textf (fonts.title_h1, al_map_rgb (WHITE), BUFFER_WIDTH/2, 150, ALLEGRO_ALIGN_CENTER, "%d", p_game.points);
+    al_draw_textf (fonts.title_h2, al_map_rgb (WHITE), BUFFER_WIDTH/2, 260, ALLEGRO_ALIGN_CENTER, "BEST %d", p_points.record);
+
+    // botão de restart
+    al_draw_filled_rounded_rectangle (90, 362, 330, 412, 25, 25, al_map_rgb (PINK));
+    al_draw_textf (fonts.button, al_map_rgb (WHITE), BUFFER_WIDTH/2, 370, ALLEGRO_ALIGN_CENTER, "RESTART");
+
+    // botão de main menu
+    al_draw_filled_rounded_rectangle (90, 442, 330, 492, 25, 25, al_map_rgb (CIANO));
+    al_draw_textf (fonts.button, al_map_rgb (WHITE), BUFFER_WIDTH/2, 450, ALLEGRO_ALIGN_CENTER, "MAIN MENU");
 }
 
 void draw_game_page (player_game_t p_game, player_points_t p_points, fonts_t fonts, images_t images) {

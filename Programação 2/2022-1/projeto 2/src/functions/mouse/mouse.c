@@ -59,7 +59,7 @@ void treat_mouse_click_in_help (mouse_t *mouse, pages_t *pages, ALLEGRO_EVENT ev
     }
 }
 
-void treat_mouse_click_in_pause (mouse_t *mouse, pages_t *pages, general_t *general, audios_t audios, ALLEGRO_EVENT event) {
+void treat_mouse_click_in_pause (pages_t *pages, general_t *general, audios_t audios, ALLEGRO_EVENT event) {
     int continue_click, restart_click, menu_click, sound_click;
 
     continue_click = event.mouse.x >= 90 && event.mouse.x <= 330 && event.mouse.y >= 262 && event.mouse.y <= 312;
@@ -87,6 +87,20 @@ void treat_mouse_click_in_pause (mouse_t *mouse, pages_t *pages, general_t *gene
         general->sound_on = ! general->sound_on;
         if (general->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);;
     }
+}
+
+void treat_mouse_click_in_end_game (pages_t *pages, general_t *general, ALLEGRO_EVENT event) {
+    int restart_click, menu_click;
+
+    restart_click = event.mouse.x >= 90 && event.mouse.x <= 362 && event.mouse.y >= 332 && event.mouse.y <= 412;
+    menu_click = event.mouse.x >= 90 && event.mouse.x <= 362 && event.mouse.y >= 442 && event.mouse.y <= 492;
+
+    general->restart = true;
+    pages->in_end_game_page = false;
+
+    if (restart_click) pages->in_game_page = true;
+    if (menu_click) pages->in_home_page = true;
+
 }
 
 void treat_mouse_click_in_game (mouse_t *mouse, pages_t *pages, aim_t *aim, speeder_t *speeder, ALLEGRO_EVENT event) {

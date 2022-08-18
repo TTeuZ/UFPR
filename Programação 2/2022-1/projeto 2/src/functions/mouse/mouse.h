@@ -63,13 +63,20 @@ void treat_mouse_click_in_help (mouse_t *mouse, pages_t *pages, ALLEGRO_EVENT ev
 
 /*!
     \brief Função de tratamendo do click do mouse no caso de estar na tela de home do jogo
-    \param mouse Ponteiro de acesso para a estrutura do mouse
     \param pages Ponteiro de acesso para a estrutura de condições das telas
     \param general Ponteiro de acesso para a estrutura de condições gerais do jogo
     \param audios Ponteiro de aceso para a estrutura de sons do jogo
     \param event Ponteiro de acesso para a estrutura de eventos da Allegro
 */
-void treat_mouse_click_in_pause (mouse_t *mouse, pages_t *pages, general_t *general, audios_t audios, ALLEGRO_EVENT event);
+void treat_mouse_click_in_pause (pages_t *pages, general_t *general, audios_t audios, ALLEGRO_EVENT event);
+
+/*!
+    \brief Função de tratamendo do click do mouse no caso de estar na tela de fim de jogo
+    \param pages Ponteiro de acesso para a estrutura de condições das telas
+    \param general Ponteiro de acesso para a estrutura de condições gerais do jogo
+    \param event Ponteiro de acesso para a estrutura de eventos da Allegro
+*/
+void treat_mouse_click_in_end_game (pages_t *pages, general_t *general, ALLEGRO_EVENT event);
 
 /*!
     \brief Função de tratamendo do click do mouse no caso de estar na tela de execução do jogo

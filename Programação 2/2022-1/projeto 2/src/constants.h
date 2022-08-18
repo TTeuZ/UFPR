@@ -21,6 +21,8 @@
 #define GRAY 32, 32, 32
 #define GOLDEN 255, 178, 102
 #define PINK 204, 0, 102
+#define YELLOW 255, 185, 0
+#define CIANO 32, 178, 170
 #define BLUE 0, 102, 204
 #define GREEN 0, 153, 76
 #define LIGHT_GREEN 153, 255, 51

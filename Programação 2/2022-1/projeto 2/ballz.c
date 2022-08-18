@@ -175,8 +175,14 @@ int main () {
                     if (stages.end_phase) {
                         generate_randow_objs (p_game, g_obj);
                         restart_speeder (&speeder);
-                        stages.end_phase = false;
-                        stages.start_phase = true;
+
+                        if ((stages.end_game = verify_last_line (g_obj))) {
+                            pages.in_end_game_page = true;
+                            pages.in_game_page = false;
+                        } else {
+                            stages.end_phase = false;
+                            stages.start_phase = true;
+                        }
                     }
                 }
                 general.redraw = true;
@@ -190,7 +196,8 @@ int main () {
             case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
                 if (pages.in_home_page) treat_mouse_click_in_home (&mouse, &pages, &general, audios, event);
                 else if (pages.in_help_page) treat_mouse_click_in_help (&mouse, &pages, event);
-                else if (pages.in_pause_page) treat_mouse_click_in_pause (&mouse, &pages, &general, audios, event);
+                else if (pages.in_pause_page) treat_mouse_click_in_pause (&pages, &general, audios, event);
+                else if (pages.in_end_game_page) treat_mouse_click_in_end_game (&pages, &general, event);
                 else treat_mouse_click_in_game (&mouse, &pages, &aim, &speeder, event);
 
                 break;
@@ -234,6 +241,8 @@ int main () {
                 draw_help_page (fonts, images);
             else if (pages.in_pause_page)
                 draw_pause_page (fonts, images, general);
+            else if (pages.in_end_game_page)
+                draw_end_game_page (p_game, p_points, fonts);
             else {
                 draw_game_page (p_game, p_points, fonts, images);
                 draw_squares (g_obj->squares, fonts);

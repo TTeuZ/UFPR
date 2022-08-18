@@ -13,6 +13,7 @@ void start_pages_conditions (pages_t *pages) {
     pages->in_help_page = false;
     pages->in_pause_page = false;
     pages->in_game_page = false;
+    pages->in_end_game_page = false;
 }
 
 void start_stages_conditions (stages_t *stages) {

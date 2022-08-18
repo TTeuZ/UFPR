@@ -18,6 +18,7 @@ typedef struct pages {
     int in_help_page;
     int in_pause_page;
     int in_game_page;
+    int in_end_game_page;
 } pages_t;
 
 typedef struct stages {

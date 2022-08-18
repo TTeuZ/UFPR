@@ -41,6 +41,14 @@ void draw_help_page (fonts_t fonts, images_t images);
 void draw_pause_page (fonts_t fonts, images_t images, general_t general);
 
 /*!
+    \brief Função responsável por construir a tela de fim de jogo
+    \param p_game Ponteiro para a estrutura do jogo
+    \param p_points Ponteiro de acesso para a estrutura de dados de pontuação
+    \param fonts Ponteiro para a estrutura de fonts
+*/
+void draw_end_game_page (player_game_t p_game, player_points_t p_points, fonts_t fonts);
+
+/*!
     \brief Função responsável por construir a estrutura 'geral' da tela de jogo
     \param p_game Ponteiro para a estrutura do jogo
     \param p_points Ponteiro de acesso para a estrutura de dados de pontuação
