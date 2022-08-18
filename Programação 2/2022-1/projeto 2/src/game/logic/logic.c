@@ -1,5 +1,9 @@
 #include "logic.h"
 
+void check_square_collision (player_game_t p_game, game_objects_t *g_obj) {
+    
+}
+
 void check_wall_collision (player_game_t *p_game, game_objects_t *g_obj, withdraw_t *withdraw) {
     int count;
     float x, y, diference;
