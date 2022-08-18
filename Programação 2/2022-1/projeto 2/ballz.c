@@ -223,6 +223,10 @@ int main () {
         }
 
         if (general.close_game) {
+            if (pages.in_end_game_page) {
+                restart_game (&p_game);
+                restart_game_objects (g_obj);
+            }
             persist_objects_changes (&p_game, g_obj);
 
             if (save_player_points (p_points) == SAVE_POINTS_ERROR)
