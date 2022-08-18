@@ -173,13 +173,14 @@ int main () {
                     } 
 
                     if (stages.end_phase) {
-                        generate_randow_objs (p_game, g_obj);
+                        if (p_game.points > p_points.record) p_points.record = p_game.points;
                         restart_speeder (&speeder);
 
                         if ((stages.end_game = verify_last_line (g_obj))) {
                             pages.in_end_game_page = true;
                             pages.in_game_page = false;
                         } else {
+                            generate_randow_objs (p_game, g_obj);
                             stages.end_phase = false;
                             stages.start_phase = true;
                         }

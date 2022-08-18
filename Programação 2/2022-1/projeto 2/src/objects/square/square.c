@@ -30,16 +30,20 @@ void set_initial_color (square_t *square) {
         square->b = 0;
     } else if (square->points <= 12) {
         square->r = 0;
-        square->g = 150;
+        square->g = 100;
         square->b = 0;
     } else if (square->points <= 30) {
         square->r = 255;
         square->g = 0;
         square->b = 100;
-    } else if (square->points > 30) {
+    } else if (square->points <= 60) {
         square->r = 170;
         square->g = 0;
         square->b = 110;
+    } else if (square->points > 60) {
+        square->r = 0;
+        square->g = 130;
+        square->b = 100; 
     }
 }
 

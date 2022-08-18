@@ -14,7 +14,7 @@ int read_player_points (player_points_t *p_points) {
         
         fclose (points_file);
     } else {
-        p_points->record = 0;
+        p_points->record = 1;
         p_points->coins = 0;
     }
 

@@ -95,7 +95,7 @@ void treat_mouse_click_in_end_game (pages_t *pages, general_t *general, ALLEGRO_
     restart_click = event.mouse.x >= 90 && event.mouse.x <= 362 && event.mouse.y >= 332 && event.mouse.y <= 412;
     menu_click = event.mouse.x >= 90 && event.mouse.x <= 362 && event.mouse.y >= 442 && event.mouse.y <= 492;
 
-
+    general->restart = true;
     if (restart_click) {
         pages->in_end_game_page = false;
         pages->in_game_page = true;
