@@ -43,6 +43,9 @@
 #define SPEEDER 13
 #define SQUARE 23
 
+// Randow
+#define MAX_SQUARES 4
+
 // Área de jogo (mapa)
 #define MAP_COLS 7
 #define MAP_LINES 9

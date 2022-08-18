@@ -40,6 +40,8 @@
 int main () {
     int error;
 
+    srand (time (NULL));
+
     // Condições do jogo
     general_t general;
     pages_t pages;
@@ -143,6 +145,7 @@ int main () {
                     start_withdraw_conditions (&withdraw);
                     set_aim (&aim, p_game.initial_x);
                     error = restart_game_objects (g_obj);
+                    generate_randow_objs (p_game, g_obj);
 
                     if (error) {
                         emit_error (error);
@@ -170,6 +173,7 @@ int main () {
                     } 
 
                     if (stages.end_phase) {
+                        generate_randow_objs (p_game, g_obj);
                         restart_speeder (&speeder);
                         stages.end_phase = false;
                         stages.start_phase = true;

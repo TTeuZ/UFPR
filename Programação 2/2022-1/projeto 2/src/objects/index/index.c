@@ -26,11 +26,15 @@ int start_game_objects (player_game_t p_game, game_objects_t **g_obj) {
         }
     }
 
+    if (temp->squares_qtd == 0)
+        generate_randow_objs (p_game, temp);
+
     *g_obj = temp;
     return EXIT_SUCCESS;
 }
 
 int restart_game_objects (game_objects_t *g_obj) {
+    int line, col;
     // Desaloca as estruturas alocadas anteriormente
     free (g_obj->balls);
 
@@ -40,7 +44,33 @@ int restart_game_objects (game_objects_t *g_obj) {
         if (! (g_obj->balls[0] = add_ball (INITIAL_X_POSITION))) return ADD_BALL_ERROR;
     } else return ADD_BALL_ERROR;
 
+    // Quadrados
+    for (line = 0; line < MAP_LINES; line++) {
+        for (col = 0; col < MAP_COLS; col++) {
+            g_obj->squares[line][col].points = 0;
+        }
+    }
+
     return EXIT_SUCCESS;
+}
+
+void generate_randow_objs (player_game_t p_game, game_objects_t *g_obj) {
+    int squares_qtd, add_ball_qtd, coin_qtd;
+    int objs_qtd, count = 0, pos;
+
+    squares_qtd = 2 + (rand () % MAX_SQUARES);
+    add_ball_qtd = rand () % 2;
+    coin_qtd = rand () % 2;
+
+    objs_qtd = squares_qtd + add_ball_qtd + coin_qtd;
+
+    while (count < squares_qtd) {
+        pos = rand () % 6;
+        if (g_obj->squares[0][pos].points == 0) {
+            add_square (&g_obj->squares[0][pos], p_game.points, 0, pos);
+            count++;
+        }
+    }
 }
 
 void drawing_down_objs (game_objects_t *g_obj) {

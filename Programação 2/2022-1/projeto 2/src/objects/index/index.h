@@ -36,6 +36,13 @@ int start_game_objects (player_game_t p_game, game_objects_t **g_obj);
 int restart_game_objects (game_objects_t *g_obj);
 
 /*!
+    \brief Função que gera de maneira aleatoria objetos para a primeira linha
+    \param p_game Ponteiro de acesso para a estrutura de game
+    \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
+*/
+void generate_randow_objs (player_game_t p_game, game_objects_t *g_obj);
+
+/*!
     \brief Função que vai descendo para baixo os objetos de todas as linhas ate a primeira ficar vazia
     \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
 */
