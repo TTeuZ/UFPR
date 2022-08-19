@@ -10,7 +10,7 @@
 
 // Definições
 #define FPS 1.0 / 60.0
-#define STOP_EPSILON __FLT_EPSILON__ * 10000
+#define STOP_EPSILON 0.1f
 
 // RGB
 #define WHITE 255, 255, 255

@@ -166,7 +166,7 @@ int main () {
                         if (! withdraw.all_played) treat_withdraw (g_obj, &withdraw);
 
                         update_balls (g_obj->balls, g_obj->balls_qtd, speeder);
-                        check_square_collision (p_game, g_obj);
+                        check_square_collision (g_obj, speeder);
                         check_wall_collision (&p_game, g_obj, &withdraw);
                         treat_speeder (&speeder);
 

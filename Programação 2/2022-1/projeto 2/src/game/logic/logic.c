@@ -1,7 +1,51 @@
 #include "logic.h"
 
-void check_square_collision (player_game_t p_game, game_objects_t *g_obj) {
-    
+void check_square_collision (game_objects_t *g_obj, speeder_t speeder) {
+    float last_x, last_y, next_x, next_y;
+    int count, last_l, last_c, next_l, next_c;
+    int x_direction, y_direction;
+
+    for (count = 0; count < g_obj->balls_qtd; count++) {
+        last_x = g_obj->balls[count]->x - (g_obj->balls[count]->dx * speeder.bust);
+        last_y = g_obj->balls[count]->y - (g_obj->balls[count]->dy * speeder.bust);
+        next_x = g_obj->balls[count]->x + (g_obj->balls[count]->dx * speeder.bust);
+        next_y = g_obj->balls[count]->y + (g_obj->balls[count]->dy * speeder.bust);
+
+        last_l = ((last_y - SQUARE_SIZE) / SQUARE_SIZE);
+        last_c = (last_x / SQUARE_SIZE);
+        next_l = ((next_y - SQUARE_SIZE) / SQUARE_SIZE);
+        next_c = (next_x / SQUARE_SIZE);
+        if (last_c == MAP_COLS) last_c = MAP_COLS - 1;
+        if (last_l == MAP_LINES) last_l = MAP_LINES - 1;
+        if (next_c == MAP_COLS) next_c = MAP_COLS - 1;
+        if (next_l == MAP_LINES) next_l = MAP_LINES - 1;
+
+        x_direction = next_c - last_c;
+        y_direction = next_l - last_l;
+
+        if (g_obj->squares[next_l][next_c].points != 0) {
+            if (x_direction == 1 && y_direction == 1) {
+                g_obj->balls[count]->dx *= -1;
+                g_obj->balls[count]->dy *= -1;
+            } else if (x_direction == -1 && y_direction == -1) {
+                g_obj->balls[count]->dx *= -1;
+                g_obj->balls[count]->dy *= -1;
+            } else if (x_direction == -1 && y_direction == 1) {
+                g_obj->balls[count]->dx *= -1;
+                g_obj->balls[count]->dy *= -1;
+            } else if (x_direction == 1 && y_direction == -1) {
+                g_obj->balls[count]->dx *= -1;
+                g_obj->balls[count]->dy *= -1;
+            }
+
+            else if (x_direction == 1 || x_direction == -1) {
+                g_obj->balls[count]->dx *= -1;
+            } else if (y_direction == 1 || y_direction == -1) {
+                g_obj->balls[count]->dy *= -1;
+            }
+            g_obj->squares[next_l][next_c].points--;
+        }
+    }
 }
 
 void check_wall_collision (player_game_t *p_game, game_objects_t *g_obj, withdraw_t *withdraw) {
