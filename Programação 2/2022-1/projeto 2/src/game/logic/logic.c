@@ -92,7 +92,7 @@ void check_wall_collision (player_game_t *p_game, game_objects_t *g_obj, withdra
                 if (ABS (diference) < STOP_EPSILON) {
                     stop_ball (g_obj->balls[count]);
                     withdraw->in_game_balls--;
-                } else g_obj->balls[count]->dx = -1 * (diference / 10.0f);
+                } else g_obj->balls[count]->dx = -1 * (diference / 5.0f);
             }
         }
     }
