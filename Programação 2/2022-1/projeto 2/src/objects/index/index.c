@@ -142,6 +142,10 @@ void drawing_down_objs (game_objects_t *g_obj) {
                 }
             }
         }
+        for (col = 0; col < MAP_COLS; col++) {
+            g_obj->add_balls[MAP_LINES - 1][col].show = false;
+            g_obj->coins[MAP_LINES - 1][col].show = false;
+        }
     }
 }
 
