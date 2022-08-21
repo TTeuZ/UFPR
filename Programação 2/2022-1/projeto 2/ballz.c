@@ -19,6 +19,7 @@
 
 // Composição do jogo
 #include "./src/game/aim/aim.h"
+#include "./src/game/collision/collision.h"
 #include "./src/game/logic/logic.h"
 #include "./src/game/pages/pages.h"
 #include "./src/game/player/player.h"
@@ -167,6 +168,7 @@ int main () {
 
                         update_balls (g_obj->balls, g_obj->balls_qtd, speeder);
                         check_square_collision (g_obj, speeder);
+                        check_coin_collision (&p_points, g_obj);
                         check_wall_collision (&p_game, g_obj, &withdraw);
                         treat_speeder (&speeder);
 
