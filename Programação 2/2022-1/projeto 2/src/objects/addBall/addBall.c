@@ -8,6 +8,28 @@ void add_add_ball (add_ball_t *add_ball, int line, int col) {
     add_ball->adder = 1;
 }
 
+void pre_add_ball (ball_t balls[MAP_COLS], int *qtd, int x, int y) {
+    balls[*qtd].x = x;
+    balls[*qtd].y = y;
+    *qtd  += 1;
+}
+
+void update_pre_add_balls (ball_t balls[MAP_COLS], int qtd) {
+    int count;
+
+    for (count = 0; count < qtd; count++) {
+        if (balls[count].y >= INITIAL_Y_POSITION) balls[count].y = INITIAL_Y_POSITION;
+        else balls[count].y += BALL_SPEED;
+    }
+}
+
+void draw_pre_add_balls (ball_t balls[MAP_COLS], int qtd) {
+    int count;
+
+    for (count = 0; count < qtd; count++) 
+        al_draw_filled_circle (balls[count].x, balls[count].y, BALL_RADIUS, al_map_rgb (GREEN));
+}
+
 void draw_add_balls (add_ball_t add_balls[MAP_LINES][MAP_COLS], int a_frame) {
     int line, col;
     int c_x, c_y;

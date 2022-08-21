@@ -29,6 +29,14 @@ int verify_first_line (game_objects_t *g_obj);
 int verify_last_line (game_objects_t *g_obj);
 
 /*!
+    \brief Adiciona as bolinahs obtidas na fasa nas bolinhas jogaveis
+    \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
+    \param withdraw Ponteiro de acesso para a estrutura de saque do jogos
+    \return ADD_BALL_ERROR em caso de falhah de alocacao
+*/
+int add_pre_added_balls (game_objects_t *g_obj, withdraw_t *withdraw);
+
+/*!
     \brief Função responsavel por verificar se a fase atual se encerrou.
     \param p_game Ponteiro de acesso para a estrutura de game
     \param stages Ponteiro de acesso para a estrutura de estágios do jogo

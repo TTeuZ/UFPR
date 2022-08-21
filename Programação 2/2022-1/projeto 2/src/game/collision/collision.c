@@ -75,6 +75,33 @@ void check_square_collision (game_objects_t *g_obj, speeder_t speeder) {
     }
 }
 
+void check_add_ball_collision (game_objects_t *g_obj) {
+    add_ball_t *add_ball;
+    float x, y;
+    int line, col, c_x, c_y; 
+    int count;
+
+    for (count = 0; count < g_obj->balls_qtd; count++) {
+        x = g_obj->balls[count]->x;
+        y = g_obj->balls[count]->y;
+
+        line = ((y - SQUARE_SIZE) / SQUARE_SIZE);
+        col = (x / SQUARE_SIZE);
+        if (col >= MAP_COLS) col = MAP_COLS - 1;
+        if (line >= MAP_LINES) line = MAP_LINES - 1;
+
+        add_ball = &g_obj->add_balls[line][col];
+
+        if (add_ball->show) {
+            c_x = add_ball->x + (SQUARE_SIZE / 2);
+            c_y = add_ball->y + (SQUARE_SIZE / 2);
+            if (x >= (c_x - ARC_LIMIT) && x <= (c_x + ARC_LIMIT) && y >= (c_y - ARC_LIMIT) && y <= (c_y + ARC_LIMIT)) {
+                pre_add_ball (g_obj->pre_add_balls, &g_obj->pre_add_qtd, c_x, c_y);
+                add_ball->show = false;
+            }
+        }
+    }
+}
 void check_coin_collision (player_points_t *p_points, game_objects_t *g_obj) {
     coin_t *coin;
     float x, y;

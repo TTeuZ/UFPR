@@ -9,6 +9,7 @@ int start_game_objects (player_game_t p_game, game_objects_t **g_obj) {
         return GAME_OBJECTS_ERROR;
 
     temp->balls_qtd = p_game.balls_qtd;
+    temp->pre_add_qtd = 0;
     squares_qtd = 0;
     add_ball_qtd = 0;
     coins_qtd = 0;
@@ -56,6 +57,7 @@ int restart_game_objects (game_objects_t *g_obj) {
 
     // bolinhas
     g_obj->balls_qtd = 1;
+    g_obj->pre_add_qtd = 0;
     if ((g_obj->balls = malloc (sizeof (ball_t)))) {
         if (! (g_obj->balls[0] = add_ball (INITIAL_X_POSITION))) return ADD_BALL_ERROR;
     } else return ADD_BALL_ERROR;

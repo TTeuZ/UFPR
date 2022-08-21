@@ -15,6 +15,7 @@
 #include "../../functions/conditions/conditions.h"
 
 #include "../../objects/index/index.h"
+#include "../../objects/addBall/addBall.h"
 #include "../../objects/ball/ball.h"
 
 /*!
@@ -25,9 +26,15 @@
 void check_square_collision (game_objects_t *g_obj, speeder_t speeder);
 
 /*!
-    \brief Função que verifica se a bolinha colidiu com alguma moeda
+    \brief Função que verifica se a bolinha colidiu com alguma add_ball
     \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
+*/
+void check_add_ball_collision (game_objects_t *g_obj);
+
+/*!
+    \brief Função que verifica se a bolinha colidiu com alguma moeda
     \param p_points Ponteiro de acesso para a estrutura de dados de pontuação
+    \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
 */
 void check_coin_collision (player_points_t *p_points, game_objects_t *g_obj);
 

@@ -167,11 +167,21 @@ int main () {
                         if (! withdraw.all_played) treat_withdraw (g_obj, &withdraw);
 
                         update_balls (g_obj->balls, g_obj->balls_qtd, speeder);
+                        update_pre_add_balls (g_obj->pre_add_balls, g_obj->pre_add_qtd);
                         check_square_collision (g_obj, speeder);
+                        check_add_ball_collision (g_obj);
                         check_coin_collision (&p_points, g_obj);
                         check_wall_collision (&p_game, g_obj, &withdraw);
                         treat_speeder (&speeder);
 
+                        if (withdraw.all_played && withdraw.in_game_balls == 0 && g_obj->pre_add_qtd != 0) {
+                            error = add_pre_added_balls (g_obj, &withdraw);
+                            
+                            if (error) {
+                                emit_error (error);
+                                general.close_game = true;
+                            }
+                        } 
                         if (withdraw.all_played) treat_end_phase (&p_game, &stages, &withdraw);
                     } 
 
@@ -258,6 +268,7 @@ int main () {
                 draw_add_balls (g_obj->add_balls, g_obj->a_frame);
                 draw_coins (g_obj->coins);
                 draw_balls (g_obj->balls, g_obj->balls_qtd, p_game.initial_x, fonts, stages);
+                draw_pre_add_balls (g_obj->pre_add_balls, g_obj->pre_add_qtd);
                 if (speeder.is_enable && stages.in_game) draw_speeder (fonts, speeder);
                 if (mouse.pressed && !stages.in_game) draw_game_aim (aim, p_game.initial_x);
             }
