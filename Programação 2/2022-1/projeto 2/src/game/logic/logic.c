@@ -5,7 +5,7 @@ void check_square_collision (game_objects_t *g_obj, speeder_t speeder) {
     float last_x, last_y, next_x, next_y;
     int last_l, last_c, next_l, next_c;
     int x_direction, y_direction;
-    int left_x, right_y;
+    int left_c, right_l;
     int count;
 
     double ca, co, h;
@@ -32,22 +32,22 @@ void check_square_collision (game_objects_t *g_obj, speeder_t speeder) {
 
         if (! (x_direction == 0 && y_direction == 0)) {
             if (x_direction != 0 && y_direction != 0) {
-                left_x = last_c + x_direction;
-                right_y = last_l + y_direction;
+                left_c = last_c + x_direction;
+                right_l = last_l + y_direction;
 
-                if (left_x >= MAP_COLS || left_x <= 0) left_x = last_c;
-                if (right_y >= MAP_LINES || right_y <= 0) right_y = last_l;
+                if (left_c >= MAP_COLS || left_c < 0) left_c = last_c;
+                if (right_l >= MAP_LINES || right_l < 0) right_l = last_l;
 
-                center = &g_obj->squares[right_y][left_x];
-                left = &g_obj->squares[right_y][last_c];
-                right = &g_obj->squares[last_l][left_x];
+                center = &g_obj->squares[right_l][left_c];
+                left = &g_obj->squares[right_l][last_c];
+                right = &g_obj->squares[last_l][left_c];
 
                 if (left->points != 0 && right->points != 0) {
                     g_obj->balls[count]->dy *= -1;
                     g_obj->balls[count]->dx *= -1;
                     right->points--;
                     left->points--;
-                } else if (center->points != 0) {
+                } else if (center->points != 0) {            
                     h = sqrt (pow ((next_x - last_x), 2) + pow ((next_y - last_y), 2));
                     co = sqrt (pow ((next_y - last_y), 2));
                     ca = sqrt (pow ((next_x - last_x), 2));
