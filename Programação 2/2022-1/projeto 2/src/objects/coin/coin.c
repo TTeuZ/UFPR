@@ -15,7 +15,7 @@ void draw_coins (coin_t coins[MAP_LINES][MAP_COLS]) {
             if (coins[line][col].show) {
                 c_x = coins[line][col].x + (SQUARE_SIZE / 2);
                 c_y = coins[line][col].y + (SQUARE_SIZE / 2);
-                al_draw_circle (c_x, c_y, 12, al_map_rgb (GOLDEN), 3);
+                al_draw_circle (c_x, c_y, COIN_IN_GAME_RADIUS, al_map_rgb (GOLDEN), 3);
             }
         }
 }
