@@ -16,6 +16,9 @@ typedef struct game_objects {
 
     int squares_qtd;
     square_t squares[MAP_LINES][MAP_COLS];
+
+    int coins_qtd;
+    coin_t coins[MAP_LINES][MAP_COLS];
     //...
 } game_objects_t;
 

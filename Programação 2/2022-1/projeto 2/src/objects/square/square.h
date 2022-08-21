@@ -27,8 +27,8 @@ typedef struct square {
 void add_square (square_t *square, int points, int line, int col);
 
 /*!
-    \brief Função que cria um quadrado com a quantidade de pontos indicada
-    \param squares POnteiro de acesso para a matriz de quadrados
+    \brief Função que desenha os quadrados na tela
+    \param squares Ponteiro de acesso para a matriz de quadrados
     \param fonts Ponteiro de acesso para a estrutura de fontes
 */
 void draw_squares (square_t squares[MAP_LINES][MAP_COLS], fonts_t fonts);
