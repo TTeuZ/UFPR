@@ -68,11 +68,20 @@
 #define DISPLAY_HEIGHT (BUFFER_HEIGHT * BUFFER_SCALE)
 #define DISPLAY_WIDTH (BUFFER_WIDTH * BUFFER_SCALE)
 
+// transcricao do mapa
+#define ADD_BALL -1
+#define COIN -2
+
 // Bolinha
 #define BALL_RADIUS 8
 #define INITIAL_X_POSITION BUFFER_WIDTH / 2
 #define INITIAL_Y_POSITION (SQUARE_SIZE * 10) - BALL_RADIUS
 #define BALL_SPEED 14
+
+// Add_ball
+#define ADD_BALL_RADIUS 8
+#define INITIAL_ARC_RADIUS 14
+#define ARC_LIMIT 16
 
 // Moeda
 #define COIN_IN_GAME_RADIUS 12
@@ -93,6 +102,7 @@
 
 // Animações
 #define SPEEDER_ANIMATION 300
+#define ADD_BALL_ARC_ANIMATION 5
 
 // Erros
 #define INIT_ERROR 0

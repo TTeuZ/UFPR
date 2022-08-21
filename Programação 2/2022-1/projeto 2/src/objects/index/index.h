@@ -14,12 +14,12 @@ typedef struct game_objects {
     int balls_qtd;
     ball_t **balls;
 
-    int squares_qtd;
     square_t squares[MAP_LINES][MAP_COLS];
-
-    int coins_qtd;
+    add_ball_t add_balls[MAP_LINES][MAP_COLS];
     coin_t coins[MAP_LINES][MAP_COLS];
-    //...
+    
+    // Animacao
+    int a_frame;
 } game_objects_t;
 
 /*!

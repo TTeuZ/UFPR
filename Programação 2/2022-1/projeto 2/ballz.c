@@ -189,6 +189,7 @@ int main () {
                         }
                     }
                 }
+                g_obj->a_frame++;
                 general.redraw = true;
 
                 break;
@@ -254,6 +255,7 @@ int main () {
             else {
                 draw_game_page (p_game, p_points, fonts, images);
                 draw_squares (g_obj->squares, fonts);
+                draw_add_balls (g_obj->add_balls, g_obj->a_frame);
                 draw_coins (g_obj->coins);
                 draw_balls (g_obj->balls, g_obj->balls_qtd, p_game.initial_x, fonts, stages);
                 if (speeder.is_enable && stages.in_game) draw_speeder (fonts, speeder);
