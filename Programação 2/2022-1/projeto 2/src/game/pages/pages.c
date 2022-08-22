@@ -52,11 +52,12 @@ void draw_help_page (fonts_t fonts, images_t images) {
     al_draw_textf (fonts.text_help, al_map_rgb (WHITE), 125, 290, 0, "linha você perde!");
 
     // Adicionar bolas
-    al_draw_filled_rectangle (50, 450, 100, 500, al_map_rgb (WHITE));
+    al_draw_filled_circle (75, 475, ADD_BALL_RADIUS, al_map_rgb (WHITE));
+    al_draw_circle (75, 475, ARC_LIMIT, al_map_rgb (WHITE), 3);
     al_draw_textf (fonts.text_help, al_map_rgb (WHITE), 125, 460, 0, "+ 1  bola no jogo!");
 
     // Moedas
-    al_draw_filled_rectangle (50, 550, 100, 600, al_map_rgb (WHITE));
+    al_draw_circle (75, 575, COIN_IN_GAME_RADIUS, al_map_rgb (GOLDEN), 3);
     al_draw_textf (fonts.text_help, al_map_rgb (WHITE), 125, 560, 0, "+ 1  moeda!");
 }
 
