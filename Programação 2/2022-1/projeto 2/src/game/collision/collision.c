@@ -48,6 +48,16 @@ void check_square_collision (game_objects_t *g_obj, speeder_t speeder, general_t
                     right->points--;
                     left->points--;
                     if (general.sound_on) play_audio (audios.hit, HIT_GAIN, HIT_SPEED);
+                } else if (right->points != 0 && center->points != 0) {
+                    right->points--;
+                    center->points--;
+                    g_obj->balls[count]->dx *= -1;
+                    if (general.sound_on) play_audio (audios.hit, HIT_GAIN, HIT_SPEED);
+                } else if (left->points != 0 && center->points != 0) {
+                    left->points--;
+                    center->points--;
+                    g_obj->balls[count]->dy *= -1;
+                    if (general.sound_on) play_audio (audios.hit, HIT_GAIN, HIT_SPEED);
                 } else if (center->points != 0) {            
                     h = sqrt (pow ((next_x - last_x), 2) + pow ((next_y - last_y), 2));
                     co = sqrt (pow ((next_y - last_y), 2));
