@@ -48,7 +48,7 @@
 #define SQUARE 23
 
 // Randow
-#define MAX_SQUARES 4
+#define MAX_SQUARES 3
 
 // Área de jogo (mapa)
 #define MAP_COLS 7
@@ -93,6 +93,7 @@
 #define AIM_RADIUS 20
 #define AIM_SIZE_LIMIT 125
 #define AIM_QTD 16
+#define AIM_LIMIT 8
 
 // Timers
 #define WITHDRAW_TIME 7

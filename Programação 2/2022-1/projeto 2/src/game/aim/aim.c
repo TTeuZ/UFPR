@@ -46,7 +46,7 @@ void treat_aim_move (aim_t *aim, int initial_x, ALLEGRO_EVENT event) {
     aim->move_x = event.mouse.x;
     aim->distance = ca;
 
-    if (event.mouse.y <= aim->pressed_y) {
+    if (event.mouse.y <= aim->pressed_y + AIM_LIMIT) {
         aim->x = 0;
         aim->y = 0;
     } else {

@@ -218,7 +218,7 @@ int main () {
                 break;
             case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
                 if (pages.in_game_page && !stages.in_game) {
-                    if (event.mouse.y > aim.pressed_y) {
+                    if (event.mouse.y > aim.pressed_y + AIM_LIMIT) {
                         stages.in_game = true;
                         play_balls (g_obj->balls, g_obj->balls_qtd, aim);
                     }
