@@ -107,6 +107,9 @@
 #define SPEEDER_ANIMATION 300
 #define ADD_BALL_ARC_ANIMATION 5
 
+// CheatCodes
+#define YUDI_CHEAT_SIZE 8
+
 // Erros
 #define INIT_ERROR 0
 #define READ_GAME_ERROR -1
@@ -115,5 +118,6 @@
 #define SAVE_GAME_ERROR -4
 #define GAME_OBJECTS_ERROR -5
 #define ADD_BALL_ERROR -6
+#define CHEAT_CODE_ERROR -7
 
 #endif

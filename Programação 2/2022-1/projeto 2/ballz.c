@@ -11,6 +11,7 @@
 #include <allegro5/allegro_primitives.h>
 
 // Funções
+#include "./src/functions/cheatCodes/cheatCodes.h"
 #include "./src/functions/conditions/conditions.h"
 #include "./src/functions/display/display.h"
 #include "./src/functions/error/error.h"
