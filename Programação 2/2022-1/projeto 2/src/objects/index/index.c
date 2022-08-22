@@ -76,18 +76,23 @@ int restart_game_objects (game_objects_t *g_obj) {
 }
 
 void generate_randow_objs (player_game_t p_game, game_objects_t *g_obj) {
-    int squares_qtd, add_ball_qtd, coin_qtd;
+    int squares_qtd, add_ball_qtd, coin_qtd, is_double;
     int pos, count = 0;
 
     g_obj->a_frame = 0;
     squares_qtd = 2 + (rand () % MAX_SQUARES);
+    is_double = rand () % 2;
     add_ball_qtd = rand () % 2;
     coin_qtd = rand () % 2;
 
     while (count < squares_qtd) {
         pos = rand () % 6;
         if (g_obj->squares[0][pos].points == 0) {
-            add_square (&g_obj->squares[0][pos], p_game.points, 0, pos);
+            if (is_double) {
+                add_square (&g_obj->squares[0][pos], p_game.points * 2, 0, pos);
+                is_double = false;
+            } else  
+                add_square (&g_obj->squares[0][pos], p_game.points, 0, pos);
             count++;
         }
     }
