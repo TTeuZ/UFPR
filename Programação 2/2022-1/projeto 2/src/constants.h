@@ -10,7 +10,7 @@
 
 // Definições
 #define FPS 1.0 / 60.0
-#define STOP_EPSILON 0.1f
+#define STOP_EPSILON 0.5f
 
 // RGB
 #define WHITE 255, 255, 255
@@ -33,6 +33,8 @@
 #define CLICK_GAIN 3
 #define CLICK_SPEED 12
 
+#define HIT_GAIN 1
+#define HIT_SPEED 1
 // Fontes
 #define TITLE_H1 90
 #define TITLE_H2 45

@@ -1,6 +1,6 @@
 #include "collision.h"
 
-void check_square_collision (game_objects_t *g_obj, speeder_t speeder) {
+void check_square_collision (game_objects_t *g_obj, speeder_t speeder, general_t general, audios_t audios) {
     square_t *center, *left, *right;
     float last_x, last_y, next_x, next_y;
     int last_l, last_c, next_l, next_c;
@@ -47,6 +47,7 @@ void check_square_collision (game_objects_t *g_obj, speeder_t speeder) {
                     g_obj->balls[count]->dx *= -1;
                     right->points--;
                     left->points--;
+                    if (general.sound_on) play_audio (audios.hit, HIT_GAIN, HIT_SPEED);
                 } else if (center->points != 0) {            
                     h = sqrt (pow ((next_x - last_x), 2) + pow ((next_y - last_y), 2));
                     co = sqrt (pow ((next_y - last_y), 2));
@@ -58,7 +59,9 @@ void check_square_collision (game_objects_t *g_obj, speeder_t speeder) {
                     g_obj->balls[count]->dy = BALL_SPEED * sin;
                     if (next_x < last_x) g_obj->balls[count]->dx = BALL_SPEED * cos;
                     else g_obj->balls[count]->dx = -BALL_SPEED * cos;
+
                     center->points--;
+                    if (general.sound_on) play_audio (audios.hit, HIT_GAIN, HIT_SPEED);
                 }
             } else {
                 center = &g_obj->squares[next_l][next_c];
@@ -69,6 +72,7 @@ void check_square_collision (game_objects_t *g_obj, speeder_t speeder) {
                         g_obj->balls[count]->dy *= -1;
                     }
                     center->points--;
+                    if (general.sound_on) play_audio (audios.hit, HIT_GAIN, HIT_SPEED);
                 }
             }
         }

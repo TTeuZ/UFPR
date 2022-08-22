@@ -14,6 +14,8 @@
 
 #include "../../functions/conditions/conditions.h"
 
+#include "../../loadables/audio/audio.h"
+
 #include "../../objects/index/index.h"
 #include "../../objects/addBall/addBall.h"
 #include "../../objects/ball/ball.h"
@@ -22,8 +24,10 @@
     \brief Função que verifica se a bolinha colidiu com algum dos quadrados
     \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
     \param speeder Ponteiro para a estrutura do speeder
+    \param general Ponteiro de acesso para a estrutura de condições gerais do jogo
+    \param audios Ponteiro de aceso para a estrutura de sons do jogo
 */
-void check_square_collision (game_objects_t *g_obj, speeder_t speeder);
+void check_square_collision (game_objects_t *g_obj, speeder_t speeder, general_t general, audios_t audios);
 
 /*!
     \brief Função que verifica se a bolinha colidiu com alguma add_ball

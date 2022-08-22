@@ -85,7 +85,7 @@ void treat_mouse_click_in_pause (pages_t *pages, general_t *general, audios_t au
     }
     if (sound_click) {
         general->sound_on = ! general->sound_on;
-        if (general->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);;
+        if (general->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
     }
 }
 
