@@ -17,6 +17,9 @@ typedef struct cheats {
     int yudi_used;
     int yudi_qtd;
     char yudi[YUDI_CHEAT_SIZE];
+
+    int rain_used;
+    int rain_clicks;
 } cheats_t;
 
 /*!
@@ -33,5 +36,13 @@ int start_cheats (cheats_t *cheats);
     \param event Ponteiro de acesso para a estrutura de eventos da Allegro
 */
 int treat_yudi_cheat (cheats_t *cheats, game_objects_t *g_obj, ALLEGRO_EVENT event);
+
+/*!
+    \brief Funcao que trata a execucao do cheat code da rain
+    \param cheats Ponteiro para a estrutura de cheats
+    \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
+    \param event Ponteiro de acesso para a estrutura de eventos da Allegro
+*/
+void treat_rain_cheat (cheats_t *cheats, game_objects_t *g_obj, ALLEGRO_EVENT event);
 
 #endif

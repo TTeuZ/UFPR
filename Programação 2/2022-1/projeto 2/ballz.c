@@ -219,7 +219,10 @@ int main () {
                 else if (pages.in_help_page) treat_mouse_click_in_help (&mouse, &pages, event);
                 else if (pages.in_pause_page) treat_mouse_click_in_pause (&pages, &general, audios, event);
                 else if (pages.in_end_game_page) treat_mouse_click_in_end_game (&pages, &general, event);
-                else treat_mouse_click_in_game (&mouse, &pages, &aim, &speeder, event);
+                else {
+                    treat_mouse_click_in_game (&mouse, &pages, &aim, &speeder, event);
+                    treat_rain_cheat (&cheats, g_obj, event);
+                }
 
                 break;
             case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
@@ -279,7 +282,7 @@ int main () {
                 draw_add_balls (g_obj->add_balls, g_obj->a_frame);
                 draw_coins (g_obj->coins);
                 draw_balls (g_obj->balls, g_obj->balls_qtd, p_game.initial_x, fonts, stages);
-                draw_pre_add_balls (g_obj->pre_add_balls, g_obj->pre_add_qtd);
+                if (stages.in_game) draw_pre_add_balls (g_obj->pre_add_balls, g_obj->pre_add_qtd);
                 if (speeder.is_enable && stages.in_game) draw_speeder (fonts, speeder);
                 if (mouse.pressed && !stages.in_game) draw_game_aim (aim, p_game.initial_x);
             }

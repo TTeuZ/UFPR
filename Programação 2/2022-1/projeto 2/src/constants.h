@@ -109,6 +109,7 @@
 
 // CheatCodes
 #define YUDI_CHEAT_SIZE 8
+#define RAIN_CHEAT_CLIKS_TO_ACTIVE 7
 
 // Erros
 #define INIT_ERROR 0

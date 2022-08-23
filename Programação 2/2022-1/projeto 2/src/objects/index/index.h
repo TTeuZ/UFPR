@@ -15,7 +15,7 @@ typedef struct game_objects {
     ball_t **balls;
 
     int pre_add_qtd;
-    ball_t pre_add_balls[MAP_COLS];
+    ball_t pre_add_balls[MAP_COLS * 2];
 
     square_t squares[MAP_LINES][MAP_COLS];
     add_ball_t add_balls[MAP_LINES][MAP_COLS];
