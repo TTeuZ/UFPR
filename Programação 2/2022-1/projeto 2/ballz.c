@@ -75,6 +75,10 @@ int main () {
     withdraw_t withdraw;
     start_withdraw_conditions (&withdraw);
 
+    // cheatCodes
+    cheats_t cheats;
+    start_cheats (&cheats);
+
     // Inicializações gerais
     if (! al_init ()) general.all_init = INIT_ERROR;
     else if (! (al_init_primitives_addon ())) general.all_init = INIT_ERROR;
@@ -141,6 +145,7 @@ int main () {
         switch (event.type) {
             case ALLEGRO_EVENT_TIMER: 
                 if (general.restart) {
+                    start_cheats (&cheats);
                     start_stages_conditions (&stages);
                     restart_game (&p_game);
                     restart_speeder (&speeder);
@@ -230,6 +235,11 @@ int main () {
                 break;
             case ALLEGRO_EVENT_KEY_DOWN:
                 treat_key_down (&pages, &general, event);
+                if (pages.in_game_page)
+                    if (treat_yudi_cheat (&cheats, g_obj, event)) {
+                        emit_error (ADD_BALL_ERROR);
+                        general.close_game = true;
+                    }
 
                 break;
             case ALLEGRO_EVENT_DISPLAY_CLOSE:

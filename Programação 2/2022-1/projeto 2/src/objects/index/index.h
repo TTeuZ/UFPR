@@ -30,14 +30,14 @@ typedef struct game_objects {
     \param p_game Ponteiro de acesso para a estrutura de game
     \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
     \return GAME_OBJECTS_ERROR em caso de falha de alocação para a estrutura de objetos de jogo
-            ADD_BALL_ERROR em caso de falaha de alocação das bolinahs do jogo
+            ADD_BALL_ERROR em caso de falaha de alocação das bolinhas do jogo
 */
 int start_game_objects (player_game_t p_game, game_objects_t **g_obj);
 
 /*!
     \brief Função que reinicializa os objetos do jogo
     \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
-    \return ADD_BALL_ERROR em caso de falha de alocação das bolinahs do jogo
+    \return ADD_BALL_ERROR em caso de falha de alocação das bolinhas do jogo
 */
 int restart_game_objects (game_objects_t *g_obj);
 
@@ -47,6 +47,13 @@ int restart_game_objects (game_objects_t *g_obj);
     \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
 */
 void generate_randow_objs (player_game_t p_game, game_objects_t *g_obj);
+
+/*!
+    \brief Função qque dobra as bolinas em jogo (relacionado ao yudi_cheat)
+    \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
+    \return ADD_BALL_ERROR em caso de falha de alocação das bolinhas do jogo
+*/
+int double_balls (game_objects_t *g_obj);
 
 /*!
     \brief Função que vai descendo para baixo os objetos de todas as linhas ate a primeira ficar vazia

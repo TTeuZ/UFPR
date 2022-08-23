@@ -114,6 +114,22 @@ void generate_randow_objs (player_game_t p_game, game_objects_t *g_obj) {
     }
 }
 
+int double_balls (game_objects_t *g_obj) {
+    int count, x, qtd, double_qtd;
+
+    x = g_obj->balls[0]->x;
+    qtd = g_obj->balls_qtd;
+    double_qtd = qtd * 2;
+
+    if ((g_obj->balls = realloc (g_obj->balls, sizeof (ball_t) * double_qtd))) {
+        for (count = qtd; count < double_qtd; count++) {
+            if (! (g_obj->balls[count] = add_ball (x))) return ADD_BALL_ERROR;
+        }
+        g_obj->balls_qtd = double_qtd;
+    } else return ADD_BALL_ERROR;
+    return EXIT_SUCCESS;
+}
+
 void drawing_down_objs (game_objects_t *g_obj) {
     int line, col;
     int has_reach = false;
