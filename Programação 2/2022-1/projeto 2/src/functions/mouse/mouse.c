@@ -56,7 +56,10 @@ void treat_mouse_click_in_home (mouse_t *mouse, pages_t *pages, general_t *gener
 void treat_mouse_click_in_shop (mouse_t *mouse, player_points_t *p_points, shop_item_t items[ITEMS_SIZE], pages_t *pages, general_t *general, ALLEGRO_EVENT event) {
     int back_click;
     int line, col, pos;
-    
+
+    line = col = -1;
+    pos = p_points->ball_in_use;
+
     back_click = event.mouse.x >= 20 && event.mouse.x <= 37 && event.mouse.y >= 18 && event.mouse.y <= 42;
 
     if (event.mouse.x >= 30 && event.mouse.x <= 130) col = 0;
@@ -67,14 +70,16 @@ void treat_mouse_click_in_shop (mouse_t *mouse, player_points_t *p_points, shop_
     if (event.mouse.y >= 320 && event.mouse.y <= 420) line = 1;
     if (event.mouse.y >= 459 && event.mouse.y <= 550) line = 2;
 
-    pos = (line * MAX_ITEM_COL) + col;
+    if (line != -1 && col != -1) pos = (line * MAX_ITEM_COL) + col;
 
-    if (items[pos].buyed) {
-        printf ("pos nova: %d - r: %d g: %d b: %d em uso? %d\n", pos, items[pos].r, items[pos].g, items[pos].b, items[pos].in_use);
-        printf ("pos antiga: %d - r: %d g: %d b: %d em uso? %d\n", p_points->ball_in_use, items[p_points->ball_in_use].r, items[p_points->ball_in_use].g, items[p_points->ball_in_use].b, items[p_points->ball_in_use].in_use);
-        // items[pos].in_uprintf ("pos nova: %d - r: %d g: %d b: %d\n", pos, items[pos].r, items[pos].g, items[pos].b);se = true;
-        // items[p_points->ball_in_use].in_use = false;
-        // p_points->ball_in_use = pos;
+    if (pos != p_points->ball_in_use) {
+        if (items[pos].buyed) {
+            items[pos].in_use = true;
+            items[p_points->ball_in_use].in_use = false;
+            p_points->ball_in_use = pos;
+        } else {
+            verify_and_buy (items, p_points, pos);
+        }
     }
 
     if (back_click) {
