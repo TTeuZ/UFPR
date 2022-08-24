@@ -10,6 +10,7 @@ void start_general_conditions (general_t *general) {
 
 void start_pages_conditions (pages_t *pages) {
     pages->in_home_page = true;
+    pages->in_shop_page = false;
     pages->in_help_page = false;
     pages->in_pause_page = false;
     pages->in_game_page = false;
@@ -26,6 +27,7 @@ void start_stages_conditions (stages_t *stages) {
 
 void set_pages_to_false (pages_t *pages) {
     pages->in_home_page = false;
+    pages->in_shop_page = false;
     pages->in_help_page = false;
     pages->in_pause_page = false;
     pages->in_game_page = false;

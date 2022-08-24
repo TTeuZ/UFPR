@@ -10,6 +10,8 @@ typedef struct images {
     ALLEGRO_BITMAP *sound;
     ALLEGRO_BITMAP *back;
     ALLEGRO_BITMAP *pause;
+    ALLEGRO_BITMAP *balls;
+    ALLEGRO_BITMAP *lock;
 } images_t;
 
 /*!

@@ -28,10 +28,64 @@ void draw_home_page (player_points_t p_points, fonts_t fonts, general_t general,
 
     // icone de som
     if (general.sound_on) 
-        al_draw_circle (210, 550, 30, al_map_rgb (PINK), 2);
+        al_draw_circle (175, 550, 30, al_map_rgb (PINK), 2);
     else 
-        al_draw_circle (210, 550, 30, al_map_rgb (LIGTH_GRAY), 2);
-    al_draw_bitmap (images.sound, 192, 535, 0);
+        al_draw_circle (175, 550, 30, al_map_rgb (LIGHT_GRAY), 2);
+    al_draw_bitmap (images.sound, 157, 535, 0);
+
+    // icone de loja
+    al_draw_circle (245, 550, 30, al_map_rgb (LIGHT_GREEN), 2);
+    al_draw_bitmap (images.balls, 229, 534, 0);
+}
+
+void draw_shop_page (player_points_t p_points, fonts_t fonts, images_t images, shop_item_t items[ITEMS_SIZE]){
+    int line, col, count;
+    int i_x, e_x, i_y, e_y;
+    int intern_coins = p_points.coins;
+    int decimal_cases = 0;
+    while ((intern_coins = intern_coins / 10) > 0) decimal_cases++;
+
+    al_clear_to_color (al_map_rgb (NORMAL_GRAY));
+
+    // Icone de retorno
+    al_draw_bitmap (images.back, 20, 20, 0);
+
+    // Moedas
+    al_draw_textf (fonts.coins, al_map_rgb (WHITE), 375 - ((6 + decimal_cases)  * decimal_cases), 18, 0, "%d", p_points.coins);
+    al_draw_circle (400, 32, 7, al_map_rgb (GOLDEN), 2);
+
+    // Titulo
+    al_draw_textf (fonts.title_h2, al_map_rgb (WHITE), BUFFER_WIDTH/2, 80, ALLEGRO_ALIGN_CENTER, "Shop");
+
+    // Linha de separacao
+    al_draw_filled_rectangle (START_X_AREA + 20, 160, END_X_AREA - 20, 165, al_map_rgb (DARK_GRAY));
+
+    for (line = 0; line < MAX_ITEM_LINE; line++) {
+        for (col = 0; col < MAX_ITEM_COL; col++) {
+            count = (line * MAX_ITEM_COL) + col;
+            i_x = (30 * (col + 1)) + (100 * col);
+            e_x = (30 * (col + 1)) + (100 * (col + 1));
+            i_y = 190 + (100 * line) + (30 * line);
+            e_y = 190 + (100 * (line + 1)) + (30 * line);
+
+            al_draw_filled_rectangle (i_x, i_y, e_x, e_y, al_map_rgb (DARK_GRAY));
+
+            if (items[count].buyed) {
+                al_draw_filled_circle ((i_x + e_x) / 2, (i_y + e_y) / 2, BALL_RADIUS + 5, al_map_rgb (items[count].r, items[count].g, items[count].b));
+                if (items[count].in_use) al_draw_rectangle (i_x, i_y, e_x, e_y, al_map_rgb (YELLOW), 2); 
+            } else {
+                al_draw_bitmap (images.lock, ((i_x + e_x) / 2) - 15, ((i_y + e_y) / 2) - 30, ALLEGRO_ALIGN_CENTER);
+
+                if (p_points.coins >= items[count].price) {
+                    al_draw_textf (fonts.coins, al_map_rgb (WHITE), ((i_x + e_x) / 2), ((i_y + e_y) / 2) + 10, ALLEGRO_ALIGN_CENTER, "%d", items[count].price);
+                    al_draw_circle (((i_x + e_x) / 2) + 30, ((i_y + e_y) / 2) + 25, 7, al_map_rgb (GOLDEN), 2);
+                } else {
+                    al_draw_textf (fonts.coins, al_map_rgb (LIGHT_GRAY), ((i_x + e_x) / 2), ((i_y + e_y) / 2) + 10, ALLEGRO_ALIGN_CENTER, "%d", items[count].price);
+                    al_draw_circle (((i_x + e_x) / 2) + 30, ((i_y + e_y) / 2) + 25, 7, al_map_rgb (LIGHT_GRAY), 2);
+                } 
+            }
+        }
+    }
 }
 
 void draw_help_page (fonts_t fonts, images_t images) {
@@ -83,7 +137,7 @@ void draw_pause_page (fonts_t fonts, images_t images, general_t general) {
     if (general.sound_on) 
         al_draw_circle (210, 550, 30, al_map_rgb (PINK), 2);
     else 
-        al_draw_circle (210, 550, 30, al_map_rgb (LIGTH_GRAY), 2);
+        al_draw_circle (210, 550, 30, al_map_rgb (LIGHT_GRAY), 2);
     al_draw_bitmap (images.sound, 192, 535, 0);
 }
 

@@ -17,7 +17,7 @@
 #define BLACK 0, 0, 0
 #define DARK_GRAY 20, 20, 20
 #define NORMAL_GRAY 32, 32, 32
-#define LIGTH_GRAY 160, 160, 160
+#define LIGHT_GRAY 160, 160, 160
 #define GRAY 32, 32, 32
 #define GOLDEN 255, 178, 102
 #define PINK 204, 0, 102
@@ -111,14 +111,21 @@
 #define YUDI_CHEAT_SIZE 8
 #define RAIN_CHEAT_CLIKS_TO_ACTIVE 7
 
+// Shop
+#define ITEMS_SIZE 9
+#define MAX_ITEM_LINE 3
+#define MAX_ITEM_COL 3
+
 // Erros
 #define INIT_ERROR 0
 #define READ_GAME_ERROR -1
 #define READ_POINTS_ERROR -2
-#define SAVE_POINTS_ERROR -3
-#define SAVE_GAME_ERROR -4
-#define GAME_OBJECTS_ERROR -5
-#define ADD_BALL_ERROR -6
-#define CHEAT_CODE_ERROR -7
+#define READ_SHOP_ERROR -3
+#define SAVE_POINTS_ERROR -4
+#define SAVE_GAME_ERROR -5
+#define SAVE_SHOP_ERROR -6
+#define GAME_OBJECTS_ERROR -7
+#define ADD_BALL_ERROR -8
+#define CHEAT_CODE_ERROR -9
 
 #endif

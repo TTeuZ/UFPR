@@ -32,7 +32,7 @@ void draw_speeder (fonts_t fonts, speeder_t speeder) {
     if (speeder.color)
         al_draw_textf (fonts.speeder, al_map_rgb (WHITE), END_X_AREA - 160, START_Y_AREA + 12, 0, "fast foward now  ->");
     else
-        al_draw_textf (fonts.speeder, al_map_rgb (LIGTH_GRAY), END_X_AREA - 160, START_Y_AREA + 12, 0, "fast foward now  ->");
+        al_draw_textf (fonts.speeder, al_map_rgb (LIGHT_GRAY), END_X_AREA - 160, START_Y_AREA + 12, 0, "fast foward now  ->");
     
     al_draw_bitmap (speeder.icon, END_X_AREA - 25, START_Y_AREA + 15, 0);
 }

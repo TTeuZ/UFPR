@@ -10,6 +10,7 @@
 typedef struct player_points {
     int coins;
     int record;
+    int ball_in_use;
 } player_points_t;
 
 typedef struct player_game {

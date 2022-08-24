@@ -25,11 +25,12 @@ void treat_mouse_move (ALLEGRO_DISPLAY *display, mouse_t *mouse, ALLEGRO_EVENT e
 }
 
 void treat_mouse_click_in_home (mouse_t *mouse, pages_t *pages, general_t *general, audios_t audios, ALLEGRO_EVENT event) {
-    int play_click, sound_click, help_click;
+    int play_click, help_click, sound_click, shop_click;
 
     play_click = event.mouse.x >= 90 && event.mouse.x <= 330 && event.mouse.y >= 380 && event.mouse.y <= 430;
-    sound_click = event.mouse.x >= 176 && event.mouse.x <= 238 && event.mouse.y >= 516 && event.mouse.y <= 577;
     help_click = event.mouse.x >= 12 && event.mouse.x <= 45 && event.mouse.y >= 9 && event.mouse.y <= 39;
+    sound_click = event.mouse.x >= 145 && event.mouse.x <= 205 && event.mouse.y >= 516 && event.mouse.y <= 577;
+    shop_click = event.mouse.x >= 215 && event.mouse.x <= 275 && event.mouse.y >= 516 && event.mouse.y <= 577;
 
     if (play_click) {
         pages->in_home_page = false;
@@ -45,6 +46,40 @@ void treat_mouse_click_in_home (mouse_t *mouse, pages_t *pages, general_t *gener
     if (sound_click) {
         general->sound_on = ! general->sound_on;
         if (general->sound_on) play_audio (audios.click, CLICK_GAIN, CLICK_SPEED);
+    }
+    if (shop_click) {
+        pages->in_home_page = false;
+        pages->in_shop_page = true;
+    }
+}
+
+void treat_mouse_click_in_shop (mouse_t *mouse, player_points_t *p_points, shop_item_t items[ITEMS_SIZE], pages_t *pages, general_t *general, ALLEGRO_EVENT event) {
+    int back_click;
+    int line, col, pos;
+    
+    back_click = event.mouse.x >= 20 && event.mouse.x <= 37 && event.mouse.y >= 18 && event.mouse.y <= 42;
+
+    if (event.mouse.x >= 30 && event.mouse.x <= 130) col = 0;
+    if (event.mouse.x >= 160 && event.mouse.x <= 260) col = 1;
+    if (event.mouse.x >= 290 && event.mouse.x <= 390) col = 2;
+
+    if (event.mouse.y >= 190 && event.mouse.y <= 290) line = 0;
+    if (event.mouse.y >= 320 && event.mouse.y <= 420) line = 1;
+    if (event.mouse.y >= 459 && event.mouse.y <= 550) line = 2;
+
+    pos = (line * MAX_ITEM_COL) + col;
+
+    if (items[pos].buyed) {
+        printf ("pos nova: %d - r: %d g: %d b: %d em uso? %d\n", pos, items[pos].r, items[pos].g, items[pos].b, items[pos].in_use);
+        printf ("pos antiga: %d - r: %d g: %d b: %d em uso? %d\n", p_points->ball_in_use, items[p_points->ball_in_use].r, items[p_points->ball_in_use].g, items[p_points->ball_in_use].b, items[p_points->ball_in_use].in_use);
+        // items[pos].in_uprintf ("pos nova: %d - r: %d g: %d b: %d\n", pos, items[pos].r, items[pos].g, items[pos].b);se = true;
+        // items[p_points->ball_in_use].in_use = false;
+        // p_points->ball_in_use = pos;
+    }
+
+    if (back_click) {
+        pages->in_home_page = true;
+        pages->in_shop_page = false;
     }
 }
 

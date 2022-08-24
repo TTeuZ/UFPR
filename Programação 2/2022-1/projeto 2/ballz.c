@@ -24,6 +24,7 @@
 #include "./src/game/logic/logic.h"
 #include "./src/game/pages/pages.h"
 #include "./src/game/player/player.h"
+#include "./src/game/shop/shop.h"
 #include "./src/game/speeder/speeder.h"
 #include "./src/game/withdraw/withdraw.h"
 
@@ -78,6 +79,13 @@ int main () {
     // cheatCodes
     cheats_t cheats;
     start_cheats (&cheats);
+
+    // Shop
+    shop_item_t items[ITEMS_SIZE];
+    if (read_shop_items (items)) {
+        emit_error (READ_SHOP_ERROR);
+        return EXIT_FAILURE;
+    }
 
     // Inicializações gerais
     if (! al_init ()) general.all_init = INIT_ERROR;
@@ -216,6 +224,7 @@ int main () {
                 break;
             case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
                 if (pages.in_home_page) treat_mouse_click_in_home (&mouse, &pages, &general, audios, event);
+                else if (pages.in_shop_page) treat_mouse_click_in_shop (&mouse,&p_points, items, &pages, &general, event);
                 else if (pages.in_help_page) treat_mouse_click_in_help (&mouse, &pages, event);
                 else if (pages.in_pause_page) treat_mouse_click_in_pause (&pages, &general, audios, event);
                 else if (pages.in_end_game_page) treat_mouse_click_in_end_game (&pages, &general, event);
@@ -262,6 +271,8 @@ int main () {
                 emit_error (SAVE_POINTS_ERROR);
             if (save_player_game (p_game) == SAVE_GAME_ERROR)
                 emit_error (SAVE_GAME_ERROR);
+            if (save_shop_items (items) == SAVE_SHOP_ERROR)
+                emit_error (SAVE_SHOP_ERROR);
             break;
         }
         
@@ -270,6 +281,8 @@ int main () {
 
             if (pages.in_home_page)
                 draw_home_page (p_points, fonts, general, images);
+            else if (pages.in_shop_page)
+                draw_shop_page (p_points, fonts, images, items);
             else if (pages.in_help_page)
                 draw_help_page (fonts, images);
             else if (pages.in_pause_page)
