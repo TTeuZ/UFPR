@@ -66,9 +66,11 @@ void check_square_collision (game_objects_t *g_obj, speeder_t speeder, general_t
                     cos = ca / h;
                     sin = co / h;
 
-                    g_obj->balls[count]->dx = BALL_SPEED * sin;
-                    if (next_x < last_x) g_obj->balls[count]->dy = BALL_SPEED * cos;
+                    if (next_y < last_y) g_obj->balls[count]->dy = BALL_SPEED * cos;
                     else g_obj->balls[count]->dy = -BALL_SPEED * cos;
+                    
+                    if (next_x < last_x) g_obj->balls[count]->dx = BALL_SPEED * sin;
+                    else g_obj->balls[count]->dx = -BALL_SPEED * sin;
 
                     center->points--;
                     if (general.sound_on) play_audio (audios.hit, HIT_GAIN, HIT_SPEED);
