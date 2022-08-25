@@ -294,7 +294,7 @@ int main () {
                 draw_squares (g_obj->squares, fonts);
                 draw_add_balls (g_obj->add_balls, g_obj->a_frame);
                 draw_coins (g_obj->coins);
-                draw_balls (g_obj->balls, g_obj->balls_qtd, p_game.initial_x, fonts, stages);
+                draw_balls (g_obj->balls, g_obj->balls_qtd, p_game.initial_x, items[p_points.ball_in_use].r, items[p_points.ball_in_use].g , items[p_points.ball_in_use].b, fonts, stages);
                 if (stages.in_game) draw_pre_add_balls (g_obj->pre_add_balls, g_obj->pre_add_qtd);
                 if (speeder.is_enable && stages.in_game) draw_speeder (fonts, speeder);
                 if (mouse.pressed && !stages.in_game) draw_game_aim (aim, p_game.initial_x);

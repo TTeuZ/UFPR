@@ -60,7 +60,7 @@ void draw_game_aim (aim_t aim, int initial_x) {
     int count, x, y, distance;
 
     if (aim.x != 0 && aim.y != 0) {
-        for (count = 0; count < AIM_QTD; count++) {
+        for (count = 1; count <= AIM_QTD; count++) {
             if (aim.distance > AIM_SIZE_LIMIT) distance = AIM_SIZE_LIMIT;
             else distance = aim.distance;
 

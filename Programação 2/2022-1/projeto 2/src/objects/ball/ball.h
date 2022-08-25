@@ -58,6 +58,6 @@ void stop_ball (ball_t *ball);
     \param fonts Ponteiro de acesso para a estrutura de fontes
     \param stages Ponteiro de acesso para a estrutura de estágios do jogo
 */
-void draw_balls (ball_t **balls, int qtd, int initial_x, fonts_t fonts, stages_t stages);
+void draw_balls (ball_t **balls, int qtd, int initial_x, int r, int g, int b, fonts_t fonts, stages_t stages);
 
 #endif

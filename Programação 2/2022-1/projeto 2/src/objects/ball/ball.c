@@ -43,7 +43,7 @@ void stop_ball (ball_t *ball) {
     ball->playable = false;
 }
 
-void draw_balls (ball_t **balls, int qtd, int initial_x, fonts_t fonts, stages_t stages) {
+void draw_balls (ball_t **balls, int qtd, int initial_x, int r, int g, int b, fonts_t fonts, stages_t stages) {
     int count;
 
     // draws das bolinhas
@@ -51,5 +51,5 @@ void draw_balls (ball_t **balls, int qtd, int initial_x, fonts_t fonts, stages_t
         al_draw_textf (fonts.balls, al_map_rgb (WHITE), initial_x - 10, INITIAL_Y_POSITION - 30, 0, "%dx", qtd);
 
     for (count = 0; count < qtd; count++) 
-        al_draw_filled_circle (balls[count]->x, balls[count]->y, BALL_RADIUS, al_map_rgb (WHITE));
+        al_draw_filled_circle (balls[count]->x, balls[count]->y, BALL_RADIUS, al_map_rgb (r, g, b));
 }
