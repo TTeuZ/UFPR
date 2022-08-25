@@ -82,7 +82,8 @@ void generate_randow_objs (player_game_t p_game, game_objects_t *g_obj) {
     g_obj->a_frame = 0;
     squares_qtd = 2 + (rand () % MAX_SQUARES);
     is_double = rand () % 2;
-    add_ball_qtd = rand () % 2;
+    if (p_game.points <= 2) add_ball_qtd = rand () % 2;
+    else add_ball_qtd = 1;
     coin_qtd = rand () % 2;
 
     while (count < squares_qtd) {
