@@ -2,7 +2,7 @@ SHELL = /bin/sh
 
 FLAGS = -g -Wall
 
-OBJECTS = escalona.o schedule.o
+OBJECTS = escalona.o escalation.o schedule.o
 
 all: escalona
 
@@ -20,3 +20,6 @@ escalona.o: escalona.c
 
 schedule.o: schedule.c
 		$(CC) -c schedule.c $(FLAGS)
+
+escalation.o: escalation.c
+		$(CC) -c escalation.c $(FLAGS)

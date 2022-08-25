@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "schedule.h"
 
@@ -24,4 +25,10 @@ escalations_t *alloc_escalations ();
     \return EXIT_SUCCESS em caso de sucesso. EXIT_FAILURE em caso de falha de alocação
 */
 int separete_schedule (schedule_t *schedule, escalations_t *escalations);
+
+/*!
+    \brief Funcao de limpeza de memoria alocada para os escalonamentos
+    \param escalations Ponteiro de acesso para a estrutura dos escalaonamentos
+*/
+void destroy_escalations (escalations_t *escalations);
 #endif

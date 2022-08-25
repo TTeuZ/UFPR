@@ -48,17 +48,17 @@ int read_input_schedule (schedule_t **schedule) {
     if (! (temp = alloc_schedule ()))
         return EXIT_FAILURE;
 
+    fscanf (stdin, "%d %d %c %c", &timestamp, &transaction_id, &op_type, &attribute);
     while (! feof (stdin)) {
-        fscanf (stdin, "%d %d %c %c", &timestamp, &transaction_id, &op_type, &attribute);
-
         if (temp->transactions_qtd < transaction_id) temp->transactions_qtd = transaction_id;
 
         if (! (operation = create_operation (timestamp, transaction_id, op_type, attribute)))
             return EXIT_FAILURE;
 
         add_schedule_operation (temp, operation);
+        fscanf (stdin, "%d %d %c %c", &timestamp, &transaction_id, &op_type, &attribute);
     }
-
+    temp->size++;
     *schedule = temp;
     return EXIT_SUCCESS;
 }

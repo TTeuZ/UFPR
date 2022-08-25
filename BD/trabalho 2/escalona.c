@@ -14,15 +14,23 @@ int main () {
     if (read_input_schedule (&schedule))
         return EXIT_FAILURE;
 
-    // operation_t *aux;
+    if (separete_schedule (schedule, escalations))
+        return EXIT_FAILURE;
 
-    // aux = schedule->start;
+    int count;
+    operation_t *aux;
 
-    // while (aux != NULL) {
-    //     printf ("%d %d %c %c\n", aux->timestamp, aux->transaction_id, aux->op_type, aux->attribute);
-    //     aux = aux->next;
-    // }
+    for (count = 0; count < escalations->qtd; count++) {
+        printf ("Escalonamento %d\n", count);
+        aux = escalations->list[count]->start;
+        while (aux != NULL) {
+            printf ("%d %d %c %c\n", aux->timestamp, aux->transaction_id, aux->op_type, aux->attribute);
+            aux = aux->next;
+        }
+        printf ("------------------------\n");
+    }
 
-    destroy_schedule (schedule);
+    destroy_escalations (escalations);
+    free (schedule);
     return EXIT_SUCCESS;
 }
