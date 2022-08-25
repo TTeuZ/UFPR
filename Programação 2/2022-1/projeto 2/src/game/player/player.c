@@ -11,11 +11,15 @@ int read_player_points (player_points_t *p_points) {
 
         fgets (temp_string, BUFSIZ, points_file);
         p_points->coins = atoi (temp_string);
+
+        fgets (temp_string, BUFSIZ, points_file);
+        p_points->ball_in_use = atoi (temp_string);
         
         fclose (points_file);
     } else {
         p_points->record = 1;
         p_points->coins = 0;
+        p_points->ball_in_use = 0;
     }
 
     if (! points_file) return READ_POINTS_ERROR;
@@ -66,7 +70,8 @@ int save_player_points (player_points_t p_points) {
 
     if (points_file) {
         fprintf (points_file, "%d\n", p_points.record);
-        fprintf (points_file, "%d", p_points.coins);
+        fprintf (points_file, "%d\n", p_points.coins);
+        fprintf (points_file, "%d", p_points.ball_in_use);
         fclose (points_file);
     } else return SAVE_POINTS_ERROR;
     return EXIT_SUCCESS;

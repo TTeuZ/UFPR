@@ -15,6 +15,7 @@ typedef struct general {
 
 typedef struct pages {
     int in_home_page;
+    int in_shop_page;
     int in_help_page;
     int in_pause_page;
     int in_game_page;

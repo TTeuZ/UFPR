@@ -9,6 +9,8 @@
 #include "../conditions/conditions.h"
 
 #include "../../game/aim/aim.h"
+#include "../../game/player/player.h"
+#include "../../game/shop/shop.h"
 #include "../../game/speeder/speeder.h"
 
 #include "../../loadables/audio/audio.h"
@@ -52,6 +54,17 @@ void treat_mouse_move (ALLEGRO_DISPLAY *display, mouse_t *mouse, ALLEGRO_EVENT e
     \param event Ponteiro de acesso para a estrutura de eventos da Allegro
 */
 void treat_mouse_click_in_home (mouse_t *mouse, pages_t *pages, general_t *general, audios_t audios, ALLEGRO_EVENT event);
+
+/*!
+    \brief Função de tratamendo do click do mouse no caso de estar na tela de shop do jogo
+    \param mouse Ponteiro de acesso para a estrutura do mouse
+    \param p_points Ponteiro de acesso para a estrutura de dados de pontuação
+    \param items Ponteiro de acesso para o arra de items
+    \param pages Ponteiro de acesso para a estrutura de condições das telas
+    \param general Ponteiro de acesso para a estrutura de condições gerais do jogo
+    \param event Ponteiro de acesso para a estrutura de eventos da Allegro
+*/
+void treat_mouse_click_in_shop (mouse_t *mouse, player_points_t *p_points, shop_item_t items[ITEMS_SIZE], pages_t *pages, general_t *general, ALLEGRO_EVENT event);
 
 /*!
     \brief Função de tratamendo do click do mouse no caso de estar na tela de help do jogo

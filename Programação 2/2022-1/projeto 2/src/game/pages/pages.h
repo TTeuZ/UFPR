@@ -10,6 +10,7 @@
 #include "../../constants.h"
 
 #include "../player/player.h"
+#include "../shop/shop.h"
 
 #include "../../functions/conditions/conditions.h"
 
@@ -24,6 +25,15 @@
     \param images Ponteiro para a estrutura de imagens
 */
 void draw_home_page (player_points_t p_points, fonts_t fonts, general_t general, images_t images);
+
+/*!
+    \brief Função responsavel por construir a tela de lojinha do jogo
+    \param p_points Ponteiro de acesso para a estrutura de pontos do jogador
+    \param fonts Ponteiro para a estrutura de fonts
+    \param images Ponteiro para a estrutura de imagens
+    \param items Ponteiro de acesso para o arra de items
+*/
+void draw_shop_page (player_points_t p_points, fonts_t fonts, images_t images, shop_item_t items[ITEMS_SIZE]);
 
 /*!
     \brief Função responsavel por construir a tela de ajuda (Help) do jogo
