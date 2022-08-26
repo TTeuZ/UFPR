@@ -48,6 +48,7 @@ int separete_schedule (schedule_t *schedule, escalations_t *escalations) {
             }
             next = aux->next;
             aux->next = NULL;
+            aux->prev = NULL;
             add_schedule_operation (escalations->list[escalations->qtd], aux);
             escalations->list[escalations->qtd]->size++;
 

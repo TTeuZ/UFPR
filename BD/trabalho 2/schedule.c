@@ -35,6 +35,7 @@ void add_schedule_operation (schedule_t *schedule, operation_t *operation) {
     }
 
     schedule->end->next = operation;
+    operation->prev = schedule->end;
     schedule->end = operation;
     schedule->size++;
 }
