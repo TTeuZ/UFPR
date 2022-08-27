@@ -3,6 +3,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#include "utils.h"
 
 typedef struct operation {
     int transaction_id;
@@ -16,6 +19,7 @@ typedef struct operation {
 typedef struct schedule {
     int size;
     int transactions_qtd;
+    int *transactions_ids;
     operation_t *start;
     operation_t *end;
 } schedule_t;
@@ -49,6 +53,13 @@ void add_schedule_operation (schedule_t *schedule, operation_t *operation);
     \param schedule Ponteiro de acesso para a estrutura do agendamento
 */
 int read_input_schedule (schedule_t **schedule);
+
+/*!
+    \brief Função que pega os ids das transações do agendamento
+    \param schedule Ponteiro de acesso para o agendamento 
+    \return EXIT_SUCCESS em caso de sucesso. EXIT_FAILURE em caso de falha de alocação
+*/
+int get_ids (schedule_t *schedule);
 
 /*!
     \brief Função que limpa a memoria alocada para as estruturas
