@@ -118,7 +118,7 @@ void check_add_ball_collision (game_objects_t *g_obj) {
         }
     }
 }
-void check_coin_collision (player_points_t *p_points, game_objects_t *g_obj) {
+void check_coin_collision (player_points_t *p_points, game_objects_t *g_obj, audios_t audios) {
     coin_t *coin;
     float x, y;
     int line, col, c_x, c_y; 
@@ -141,6 +141,7 @@ void check_coin_collision (player_points_t *p_points, game_objects_t *g_obj) {
             if (x >= (c_x - COIN_IN_GAME_RADIUS) && x <= (c_x + COIN_IN_GAME_RADIUS) && y >= (c_y - COIN_IN_GAME_RADIUS) && y <= (c_y + COIN_IN_GAME_RADIUS)) {
                 coin->show = false;
                 p_points->coins++;
+                play_audio (audios.coin, COIN_GAIN, COIN_SPEED);
             }
         }
     }

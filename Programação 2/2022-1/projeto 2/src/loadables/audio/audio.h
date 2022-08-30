@@ -11,6 +11,7 @@ typedef struct audios {
     ALLEGRO_SAMPLE *hit;
     ALLEGRO_SAMPLE *click;
     ALLEGRO_SAMPLE *buy;
+    ALLEGRO_SAMPLE *coin;
 } audios_t;
 
 /*!
@@ -25,7 +26,7 @@ int load_audios (audios_t *audios);
     \param gain Volume do son
     \param speed Velocidade de reprodução
 */
-void play_audio (ALLEGRO_SAMPLE *audio, int gain, int speed);
+void play_audio (ALLEGRO_SAMPLE *audio, float gain, float speed);
 
 /*!
     \brief Função que desaloca as estruturas de sons alocadas

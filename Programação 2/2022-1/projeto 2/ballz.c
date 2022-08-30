@@ -184,7 +184,7 @@ int main () {
                         update_pre_add_balls (g_obj->pre_add_balls, g_obj->pre_add_qtd);
                         check_square_collision (g_obj, speeder, general, audios);
                         check_add_ball_collision (g_obj);
-                        check_coin_collision (&p_points, g_obj);
+                        check_coin_collision (&p_points, g_obj, audios);
                         check_wall_collision (&p_game, g_obj, &withdraw);
                         treat_speeder (&speeder);
 
