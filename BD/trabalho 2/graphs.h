@@ -27,4 +27,10 @@ graph_t *alloc_graph (int vertices_qtd);
 */
 void insert_edge (graph_t *graph, int origin_v, int target_v);
 
+/*!
+    \brief Funcao responsavel por limpar a memoria armazenada para o grafo
+    \param graph Ponteiro para umg grafo
+*/
+void destroy_graph (graph_t *graph);
+
 #endif
