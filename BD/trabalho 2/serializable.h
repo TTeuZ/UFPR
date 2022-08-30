@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "schedule.h"
+#include "graphs.h"
 #include "utils.h"
 
 /*!
