@@ -32,9 +32,11 @@
 
 #define CLICK_GAIN 3
 #define CLICK_SPEED 12
-
 #define HIT_GAIN 1
 #define HIT_SPEED 1
+#define BUY_GAIN 1
+#define BUY_SPEED 1
+
 // Fontes
 #define TITLE_H1 90
 #define TITLE_H2 45

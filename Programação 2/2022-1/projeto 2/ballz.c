@@ -224,7 +224,7 @@ int main () {
                 break;
             case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
                 if (pages.in_home_page) treat_mouse_click_in_home (&mouse, &pages, &general, audios, event);
-                else if (pages.in_shop_page) treat_mouse_click_in_shop (&mouse,&p_points, items, &pages, &general, event);
+                else if (pages.in_shop_page) treat_mouse_click_in_shop (&mouse,&p_points, items, &pages, &general, audios, event);
                 else if (pages.in_help_page) treat_mouse_click_in_help (&mouse, &pages, event);
                 else if (pages.in_pause_page) treat_mouse_click_in_pause (&pages, &general, audios, event);
                 else if (pages.in_end_game_page) treat_mouse_click_in_end_game (&pages, &general, event);

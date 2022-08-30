@@ -31,8 +31,9 @@ int save_shop_items (shop_item_t items[ITEMS_SIZE]) {
     return EXIT_SUCCESS;
 }
 
-void verify_and_buy (shop_item_t items[ITEMS_SIZE], player_points_t *p_points, int pos) {
+int verify_and_buy (shop_item_t items[ITEMS_SIZE], player_points_t *p_points, int pos) {
     shop_item_t *item;
+    int buyed = false;
 
     item = &items[pos];
 
@@ -42,5 +43,7 @@ void verify_and_buy (shop_item_t items[ITEMS_SIZE], player_points_t *p_points, i
         items[p_points->ball_in_use].in_use = false;
         p_points->ball_in_use = pos;
         p_points->coins -= item->price;
+        buyed = true;
     }
+    return buyed;
 }

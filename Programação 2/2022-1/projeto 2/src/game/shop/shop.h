@@ -37,7 +37,8 @@ int save_shop_items (shop_item_t items[ITEMS_SIZE]);
     \param items Ponteiro de acesso para o array de items
     \param p_points Ponteiro de acesso para a estrutura de dados de pontuação
     \param pos posicao do item do array
+    \return true se foi comprado. Falso se não
 */
-void verify_and_buy (shop_item_t items[ITEMS_SIZE], player_points_t *p_points, int pos);
+int verify_and_buy (shop_item_t items[ITEMS_SIZE], player_points_t *p_points, int pos);
 
 #endif

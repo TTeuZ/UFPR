@@ -10,6 +10,7 @@
 typedef struct audios {
     ALLEGRO_SAMPLE *hit;
     ALLEGRO_SAMPLE *click;
+    ALLEGRO_SAMPLE *buy;
 } audios_t;
 
 /*!

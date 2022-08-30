@@ -53,7 +53,7 @@ void treat_mouse_click_in_home (mouse_t *mouse, pages_t *pages, general_t *gener
     }
 }
 
-void treat_mouse_click_in_shop (mouse_t *mouse, player_points_t *p_points, shop_item_t items[ITEMS_SIZE], pages_t *pages, general_t *general, ALLEGRO_EVENT event) {
+void treat_mouse_click_in_shop (mouse_t *mouse, player_points_t *p_points, shop_item_t items[ITEMS_SIZE], pages_t *pages, general_t *general, audios_t audios, ALLEGRO_EVENT event) {
     int back_click;
     int line, col, pos;
 
@@ -78,7 +78,8 @@ void treat_mouse_click_in_shop (mouse_t *mouse, player_points_t *p_points, shop_
             items[p_points->ball_in_use].in_use = false;
             p_points->ball_in_use = pos;
         } else {
-            verify_and_buy (items, p_points, pos);
+            if (verify_and_buy (items, p_points, pos))
+                play_audio (audios.buy, BUY_GAIN, BUY_SPEED);
         }
     }
 
