@@ -46,14 +46,21 @@ int separete_schedule (schedule_t *schedule, escalations_t *escalations) {
                 open_transactions[aux->transaction_id - 1] = 0;
                 open_qtd--;
             }
+
             next = aux->next;
             aux->next = NULL;
+            aux->prev = NULL;
             add_schedule_operation (escalations->list[escalations->qtd], aux);
-            escalations->list[escalations->qtd]->size++;
+            if (aux->op_type == 'C') escalations->list[escalations->qtd]->transactions_qtd++;
 
             aux = next;
             count++;
         } while (count < schedule->size && open_qtd != 0);
+
+        if (get_ids (escalations->list[escalations->qtd]))
+            return EXIT_FAILURE;
+
+        escalations->list[escalations->qtd]->size++;
         escalations->qtd++;
     }
     

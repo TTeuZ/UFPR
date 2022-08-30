@@ -8,6 +8,7 @@ schedule_t *alloc_schedule () {
     
     schedule->size = 0;
     schedule->transactions_qtd = 0;
+    schedule->transactions_ids = NULL;
     schedule->start = NULL;
     schedule->end = NULL;
     return schedule;
@@ -35,6 +36,7 @@ void add_schedule_operation (schedule_t *schedule, operation_t *operation) {
     }
 
     schedule->end->next = operation;
+    operation->prev = schedule->end;
     schedule->end = operation;
     schedule->size++;
 }
@@ -50,16 +52,34 @@ int read_input_schedule (schedule_t **schedule) {
 
     fscanf (stdin, "%d %d %c %c", &timestamp, &transaction_id, &op_type, &attribute);
     while (! feof (stdin)) {
-        if (temp->transactions_qtd < transaction_id) temp->transactions_qtd = transaction_id;
-
         if (! (operation = create_operation (timestamp, transaction_id, op_type, attribute)))
             return EXIT_FAILURE;
 
         add_schedule_operation (temp, operation);
+        if (operation->op_type == 'C') temp->transactions_qtd++;
+
         fscanf (stdin, "%d %d %c %c", &timestamp, &transaction_id, &op_type, &attribute);
     }
     temp->size++;
     *schedule = temp;
+    return EXIT_SUCCESS;
+}
+
+int get_ids (schedule_t *schedule) {
+    operation_t *aux = schedule->start;
+    int count = 0;
+
+    if (! (schedule->transactions_ids = malloc (sizeof (int) * schedule->transactions_qtd)))
+        return EXIT_FAILURE;
+    memset (schedule->transactions_ids, 0, sizeof (int) * schedule->transactions_qtd);
+
+    while (aux) {
+        if (! includes (aux->transaction_id, schedule->transactions_qtd, schedule->transactions_ids)) {
+            schedule->transactions_ids[count] = aux->transaction_id;
+            count++;
+        }
+        aux = aux->next;
+    }
     return EXIT_SUCCESS;
 }
 
@@ -72,5 +92,6 @@ void destroy_schedule (schedule_t *schedule) {
         free (temp);
         temp = schedule->start;
     }
+    free (schedule->transactions_ids);
     free (schedule);
 }
