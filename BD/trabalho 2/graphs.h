@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h> 
 
 // Representação de um grafo por meio de uma matriz de adjacencias 
 
@@ -26,6 +27,13 @@ graph_t *alloc_graph (int vertices_qtd);
     \param target_v vertice de chegada do arco
 */
 void insert_edge (graph_t *graph, int origin_v, int target_v);
+
+/*!
+    \brief Função que verifica se o grafo tem um ciclo
+    \param graph Ponteiro para a estrutura do grafo
+    \return true para caso tenha, falso para caso não tenha
+*/
+int has_cycle (graph_t *graph);
 
 /*!
     \brief Funcao responsavel por limpar a memoria armazenada para o grafo
