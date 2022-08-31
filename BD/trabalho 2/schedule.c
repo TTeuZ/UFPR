@@ -67,7 +67,7 @@ int read_input_schedule (schedule_t **schedule) {
 
 int get_ids (schedule_t *schedule) {
     operation_t *aux = schedule->start;
-    int count = 0;
+    int count = 0, i_count;
 
     if (! (schedule->transactions_ids = malloc (sizeof (int) * schedule->transactions_qtd)))
         return EXIT_FAILURE;
@@ -75,7 +75,15 @@ int get_ids (schedule_t *schedule) {
 
     while (aux) {
         if (! includes (aux->transaction_id, schedule->transactions_qtd, schedule->transactions_ids)) {
-            schedule->transactions_ids[count] = aux->transaction_id;
+            if (count == 0) schedule->transactions_ids[count] = aux->transaction_id;
+            else {
+                i_count = count;
+                while (i_count != 0 && aux->transaction_id < schedule->transactions_ids[i_count - 1]) {
+                    schedule->transactions_ids[i_count] = schedule->transactions_ids[i_count - 1];
+                    i_count--;
+                }
+                schedule->transactions_ids[i_count] = aux->transaction_id;
+            }
             count++;
         }
         aux = aux->next;

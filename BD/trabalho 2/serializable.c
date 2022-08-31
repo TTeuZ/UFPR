@@ -3,7 +3,7 @@
 int check_serializable (schedule_t *schedule) {
     operation_t *aux, *last;
     graph_t *graph;
-    int is_serializable;
+    int is_serializable, lower_id;
 
     is_serializable = true;
     aux = schedule->start;
@@ -11,19 +11,20 @@ int check_serializable (schedule_t *schedule) {
     if (! (graph = alloc_graph (schedule->transactions_qtd)))
         return -1;
     
+    lower_id = schedule->transactions_ids[0];
 
     while (aux) {
         last = aux->prev;
         while (last) {
             if (last->transaction_id != aux->transaction_id) {
                 if (aux->op_type == 'W' && last->op_type == 'R')
-                    insert_edge (graph, aux->transaction_id - 1, last->transaction_id - 1);
+                    insert_edge (graph, aux->transaction_id - lower_id, last->transaction_id - lower_id);
                     // printf ("W(X) depois de R(X) -- insere aresta de %d para %d\n", aux->transaction_id, last->transaction_id);
                 if (aux->op_type == 'R' && last->op_type == 'W') 
-                    insert_edge (graph, aux->transaction_id - 1, last->transaction_id - 1);
+                    insert_edge (graph, aux->transaction_id - lower_id, last->transaction_id - lower_id);
                     // printf ("R(X) depois de W(X) -- insere aresta de %d para %d\n", aux->transaction_id, last->transaction_id);
                 if (aux->op_type == 'W' && last->op_type == 'W') 
-                    insert_edge (graph, aux->transaction_id - 1, last->transaction_id - 1);
+                    insert_edge (graph, aux->transaction_id - lower_id, last->transaction_id - lower_id);
                     // printf ("W(X) depois de W(X) -- insere aresta de %d para %d\n", aux->transaction_id, last->transaction_id);
             }
             last = last->prev;
@@ -40,6 +41,8 @@ int check_serializable (schedule_t *schedule) {
         }
         printf ("\n");
     }
+
+    destroy_graph (graph);
 
     return is_serializable;
 }
