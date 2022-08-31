@@ -64,7 +64,7 @@ void treat_mouse_click_in_home (mouse_t *mouse, pages_t *pages, general_t *gener
     \param general Ponteiro de acesso para a estrutura de condições gerais do jogo
     \param event Ponteiro de acesso para a estrutura de eventos da Allegro
 */
-void treat_mouse_click_in_shop (mouse_t *mouse, player_points_t *p_points, shop_item_t items[ITEMS_SIZE], pages_t *pages, general_t *general, ALLEGRO_EVENT event);
+void treat_mouse_click_in_shop (mouse_t *mouse, player_points_t *p_points, shop_item_t items[ITEMS_SIZE], pages_t *pages, general_t *general, audios_t audios, ALLEGRO_EVENT event);
 
 /*!
     \brief Função de tratamendo do click do mouse no caso de estar na tela de help do jogo
