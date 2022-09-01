@@ -9,6 +9,10 @@ int load_audios (audios_t *audios) {
         return EXIT_FAILURE;
     if (! (audios->coin = al_load_sample ("./resources/audios/coin.ogg")))
         return EXIT_FAILURE;
+    if (! (audios->bubble = al_load_sample ("./resources/audios/bubble.wav")))
+        return EXIT_FAILURE;
+    if (! (audios->level_pass = al_load_sample ("./resources/audios/levelPass.wav")))
+        return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
 
@@ -21,4 +25,6 @@ void destroy_audios (audios_t *audios) {
     al_destroy_sample (audios->click);
     al_destroy_sample (audios->buy);
     al_destroy_sample (audios->coin);
+    al_destroy_sample (audios->bubble);
+    al_destroy_sample (audios->level_pass);
 }

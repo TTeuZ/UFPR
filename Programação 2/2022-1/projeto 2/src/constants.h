@@ -38,6 +38,10 @@
 #define BUY_SPEED 1
 #define COIN_GAIN 0.5
 #define COIN_SPEED 1
+#define BUBBLE_GAIN 2.5
+#define BUBBLE_SPEED 1
+#define LEVEL_GAIN 1.5
+#define LEVEL_SPEED 1
 
 // Fontes
 #define TITLE_H1 90

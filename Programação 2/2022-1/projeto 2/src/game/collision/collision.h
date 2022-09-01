@@ -32,8 +32,9 @@ void check_square_collision (game_objects_t *g_obj, speeder_t speeder, general_t
 /*!
     \brief Função que verifica se a bolinha colidiu com alguma add_ball
     \param g_obj Ponteiro de acesso para a estrutura de objetos do jogo
+    \param audios Ponteiro de aceso para a estrutura de sons do jogo
 */
-void check_add_ball_collision (game_objects_t *g_obj);
+void check_add_ball_collision (game_objects_t *g_obj, audios_t audios);
 
 /*!
     \brief Função que verifica se a bolinha colidiu com alguma moeda

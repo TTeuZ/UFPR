@@ -12,6 +12,8 @@ typedef struct audios {
     ALLEGRO_SAMPLE *click;
     ALLEGRO_SAMPLE *buy;
     ALLEGRO_SAMPLE *coin;
+    ALLEGRO_SAMPLE *bubble;
+    ALLEGRO_SAMPLE *level_pass;
 } audios_t;
 
 /*!
