@@ -41,7 +41,7 @@ int main () {
         if (is_equivalent) printf ("SV");
         else printf ("NV");
 
-        printf ("\n");
+        if (count + 1 != escalations->qtd) printf ("\n");
     }
 
     destroy_escalations (escalations);
