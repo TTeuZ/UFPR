@@ -8,14 +8,10 @@
 #include "schedule.h"
 #include "utils.h"
 
-/*!
-    \brief Função que gera a visão atual do escalonamento
-    \param schedule Ponteiro para um escalonamento (Agendamento)
-    \param vision Ponteiro para a visão resultante (retorno)
-    \param ids Array dos ids do escalonamento
-    \return EXIT_SUCCESS em caso de sucesso. EXIT_FAILURE em caso de falha de alocação
-*/
-int generate_vision (schedule_t *schedule, schedule_t **vision, int *ids);
+typedef struct reads {
+    int read_t;
+    int write_t;
+} reads_t;
 
 /*!
     \brief Função que checa se o escalonamento é equivalente

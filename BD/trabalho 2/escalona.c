@@ -28,15 +28,18 @@ int main () {
         aux = escalations->list[count];
         qtd = aux->transactions_qtd;
 
-        is_equivalent = check_equivalence (aux);
         is_serializable = check_serializable (aux);
+        is_equivalent = check_equivalence (aux);
 
         printf ("%d ", count + 1);
         for (i_count = 0; i_count < qtd; i_count++)
-            printf ("%d%c ", aux->transactions_ids[i_count], (i_count + 1) == qtd ? ' ' : ',');
+            printf ("%d%c", aux->transactions_ids[i_count], (i_count + 1) == qtd ? ' ' : ',');
 
         if (is_serializable) printf ("SS ");
         else printf ("NS ");
+
+        if (is_equivalent) printf ("SV");
+        else printf ("NV");
 
         printf ("\n");
     }
