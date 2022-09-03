@@ -248,7 +248,7 @@ int main () {
                 break;
             case ALLEGRO_EVENT_KEY_DOWN:
                 treat_key_down (&pages, &general, event);
-                if (pages.in_game_page)
+                if (pages.in_game_page && ! stages.in_game)
                     if (treat_yudi_cheat (&cheats, g_obj, event)) {
                         emit_error (ADD_BALL_ERROR);
                         general.close_game = true;
