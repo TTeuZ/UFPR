@@ -79,7 +79,7 @@ void treat_mouse_click_in_shop (mouse_t *mouse, player_points_t *p_points, shop_
             p_points->ball_in_use = pos;
         } else {
             if (verify_and_buy (items, p_points, pos))
-                play_audio (audios.buy, BUY_GAIN, BUY_SPEED);
+                if (general->sound_on) play_audio (audios.buy, BUY_GAIN, BUY_SPEED);
         }
     }
 
