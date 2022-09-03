@@ -183,8 +183,8 @@ int main () {
                         update_balls (g_obj->balls, g_obj->balls_qtd, speeder);
                         update_pre_add_balls (g_obj->pre_add_balls, g_obj->pre_add_qtd);
                         check_square_collision (g_obj, speeder, general, audios);
-                        check_add_ball_collision (g_obj, audios);
-                        check_coin_collision (&p_points, g_obj, audios);
+                        check_add_ball_collision (g_obj, general, audios);
+                        check_coin_collision (&p_points, g_obj, general, audios);
                         check_wall_collision (&p_game, g_obj, &withdraw);
                         treat_speeder (&speeder);
 
@@ -210,7 +210,7 @@ int main () {
                             generate_randow_objs (p_game, g_obj);
                             stages.end_phase = false;
                             stages.start_phase = true;
-                            play_audio (audios.level_pass, LEVEL_GAIN, LEVEL_SPEED);
+                            if (general.sound_on) play_audio (audios.level_pass, LEVEL_GAIN, LEVEL_SPEED);
                         }
                     }
                 }

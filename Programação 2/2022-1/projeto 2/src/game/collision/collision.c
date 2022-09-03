@@ -91,7 +91,7 @@ void check_square_collision (game_objects_t *g_obj, speeder_t speeder, general_t
     }
 }
 
-void check_add_ball_collision (game_objects_t *g_obj, audios_t audios) {
+void check_add_ball_collision (game_objects_t *g_obj, general_t general, audios_t audios) {
     add_ball_t *add_ball;
     float x, y;
     int line, col, c_x, c_y; 
@@ -114,12 +114,12 @@ void check_add_ball_collision (game_objects_t *g_obj, audios_t audios) {
             if (x >= (c_x - ARC_LIMIT) && x <= (c_x + ARC_LIMIT) && y >= (c_y - ARC_LIMIT) && y <= (c_y + ARC_LIMIT)) {
                 pre_add_ball (g_obj->pre_add_balls, &g_obj->pre_add_qtd, c_x, c_y);
                 add_ball->show = false;
-                play_audio (audios.bubble, BUBBLE_GAIN, BUBBLE_SPEED);
+                if (general.sound_on) play_audio (audios.bubble, BUBBLE_GAIN, BUBBLE_SPEED);
             }
         }
     }
 }
-void check_coin_collision (player_points_t *p_points, game_objects_t *g_obj, audios_t audios) {
+void check_coin_collision (player_points_t *p_points, game_objects_t *g_obj, general_t general, audios_t audios) {
     coin_t *coin;
     float x, y;
     int line, col, c_x, c_y; 
@@ -142,7 +142,7 @@ void check_coin_collision (player_points_t *p_points, game_objects_t *g_obj, aud
             if (x >= (c_x - COIN_IN_GAME_RADIUS) && x <= (c_x + COIN_IN_GAME_RADIUS) && y >= (c_y - COIN_IN_GAME_RADIUS) && y <= (c_y + COIN_IN_GAME_RADIUS)) {
                 coin->show = false;
                 p_points->coins++;
-                play_audio (audios.coin, COIN_GAIN, COIN_SPEED);
+                if (general.sound_on) play_audio (audios.coin, COIN_GAIN, COIN_SPEED);
             }
         }
     }
