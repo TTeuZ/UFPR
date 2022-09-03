@@ -47,6 +47,17 @@ Feito por: Paulo Mateus Luza Alves
 
 Aqui temos o código fonte do jogo, separado em `functions`, `game`, `loadables`, `objects` onde dentro de cada subpasta temos os .c e o .h equivalentes.
 
+- `functions`:
+  Aqui temos os programas relacionados a funções gerais do jogo, como controle do mouse, teclado, display dentre outros.
+- `game`:
+  Aqui temos a implementação das funcionalidades do jogo, ou seja, todas as logicas envolvidas na gameplay.
+- `loadables`:
+  Aqui temos os programas que lidam com os items que são 'carregados' pela Allegro, ou seja, fontes, imagens e sons.
+- `objects`:
+  Aqui temos a implementação das estruturas do jogo, ou seja, os quadrados, bolinhas e moedas, juntamente com suas respectivas funcionalidades.
+
+OBS: Além dos loadables, existem outras partes do código que executam o 'carregamento' de items, porem são casos específicos e isolados.
+
 ##### `resources`
 
 Aqui temos os audios, imagens e fontes, separados em suas respectivas pastas `audios`, `fontes`, `images`.
