@@ -6,13 +6,6 @@
 #include <stdbool.h> 
 
 /*!
-    \brief Função que calcula o fatorial do numero indicado
-    \param number Numero o qual vai ser calculado o fatorial
-    \return Valor do fatorial do numero
-*/
-int fat (int number);
-
-/*!
     \brief Função que verifica se o numero já foi inserido no array
     \param number Numero da verificação
     \param size tamanho do array
