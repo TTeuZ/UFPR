@@ -9,5 +9,7 @@ public class Exercicio6 {
         System.out.printf ("Nome: %s\n", name);
         System.out.printf ("Time: %s\n", soccerTeam);
         System.out.printf ("Bairro: %s\n", neighborhood);
+
+        input.close();
     }
 }

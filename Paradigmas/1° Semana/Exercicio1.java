@@ -10,5 +10,7 @@ public class Exercicio1 {
 
         if (num >= 0) System.out.println ("O número é positivo!");
         else System.out.println ("O número é negativo!");
+
+        input.close();
     }
 }

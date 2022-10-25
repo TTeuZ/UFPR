@@ -10,5 +10,7 @@ public class Exercicio2 {
 
         if (num % 2 == 0) System.out.println ("O número é par!");
         else System.out.println ("O número é impar!");
+
+        input.close();
     }
 }

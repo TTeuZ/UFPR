@@ -29,5 +29,7 @@ public class Exercicio5 {
             res = upperTenFx (x);
         
         System.out.println ("O resultado é: " + res);
+
+        input.close();
     }
 }

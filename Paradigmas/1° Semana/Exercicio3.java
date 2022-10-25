@@ -14,5 +14,7 @@ public class Exercicio3 {
             num = input.nextInt ();
         }
         System.out.println ("A soma é: " + sum);
+
+        input.close();
     }
 }

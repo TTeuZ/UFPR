@@ -21,5 +21,7 @@ public class Exercicio8 {
         } while (currentHeight != -1 && currentSize != -1);
 
         System.out.printf ("A quantidade de pessoas acima do peso é: %d\n", fatCount);
+
+        input.close();
     }
 }

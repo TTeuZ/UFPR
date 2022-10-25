@@ -7,5 +7,7 @@ public class Exercicio4 {
             sum += count * 3;
         
         System.out.println ("A soma dos 10 primeiro multiplos de 3 é: " + sum);
+
+        input.close();
     }
 }

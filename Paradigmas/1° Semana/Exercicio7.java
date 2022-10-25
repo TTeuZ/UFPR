@@ -26,6 +26,8 @@ public class Exercicio7 {
 
         for (studentCount = 0; studentCount < 30; studentCount++) 
             System.out.printf ("A maior nota do aluno %d é: %f\n", studentCount + 1, biggerGrades[studentCount]);
-        System.out.printf ("A maior nota da sala é: %f\n", biggerClassGrade);   
+        System.out.printf ("A maior nota da sala é: %f\n", biggerClassGrade);  
+
+        input.close(); 
     }
 }
