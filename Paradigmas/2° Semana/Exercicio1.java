@@ -36,5 +36,7 @@ public class Exercicio1 {
             System.out.printf("%d ", oddNumbers[count]);
         System.out.printf("\n");
         System.out.printf("A quantidade de numeros impares é: %d\n", oddPos);
+        
+        input.close();
     }
 }

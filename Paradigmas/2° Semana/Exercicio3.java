@@ -25,5 +25,7 @@ public class Exercicio3 {
             word = word.replace (vowels[count], replacement);
         
         System.out.printf ("%s\n", word);
+
+        input.close();
     }
 }

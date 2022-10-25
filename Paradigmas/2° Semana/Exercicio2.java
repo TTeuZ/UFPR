@@ -21,5 +21,7 @@ public class Exercicio2 {
             System.out.printf ("%d ", sum);
         }
         System.out.printf ("\n ");
+
+        input.close();
     }
 }
