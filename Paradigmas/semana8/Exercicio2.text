@@ -1,0 +1,21 @@
+Exercicio 2)
+
+Tipos de polimorfismo aplicado:
+
+# Tipos Ad Hoc
+
+Sobrecarga: Foi utilizado no código nas função de calcImmobileValue, onde a mesma função teve escritas diferentes,
+o que caracteriza a sobrecarga (??)
+
+Coerção: mesma parada do universal (??)
+
+# Tipos Universal
+
+inclusão: Tivemos o polimorfismo de inclusão, onde os objetos da classe NewImmobile e OldImmobile foram instanciados num
+array de immobiles, que é uma superclasse em relação a estas outras duas. Não foi necessário realizar o casting dos
+objetos instanciados no array pois as funções utilizadas tbm foram escritas na superClasse Immobile, por isso Não
+houve erro de execução.
+
+Parametrico: Não foi utilizado, poderia ter sido caso o generics fosse utilizado na construção do array, com a utilização
+de uma LinkedList por exemplo.
+
