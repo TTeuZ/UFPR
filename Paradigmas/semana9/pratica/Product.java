@@ -1,6 +1,6 @@
 package semana9.pratica;
 
-public class Product implements Shop{
+public abstract class Product implements Shop{
     private String name;
     private double size;
     private double price;
