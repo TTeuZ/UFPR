@@ -38,7 +38,7 @@ public abstract class Sector extends BoardPosition {
         return sides;
     }
 
-    // Methods
+    // ---------------------------- Public Methods ----------------------------
     // Função responsável por gerar os inimigos do setor como especificado
     public abstract void generateEnemies();
 

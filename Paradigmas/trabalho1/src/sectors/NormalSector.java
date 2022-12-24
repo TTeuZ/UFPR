@@ -10,7 +10,7 @@ public class NormalSector extends Sector {
         super(center, center, isSource, found, sides);
     }
 
-    // Methods
+    // ---------------------------- Public Methods ----------------------------
     @Override
     public void generateEnemies() {
         System.out.println("batata");

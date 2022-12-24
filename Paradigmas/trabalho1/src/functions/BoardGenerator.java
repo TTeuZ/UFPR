@@ -125,15 +125,3 @@ public class BoardGenerator implements Constants {
             }
     }
 }
-
-// if (board[x][y].getSides() == null) {
-// if (x == 0) {
-// board[x][y].setSides(generateSides(WALL, random.nextInt(2),
-// random.nextInt(2),
-// board[x - 1][y].getSides()[LEFT]));
-// } else if (y == 0) {
-
-// } else if (x == 1 && y == 2) {
-
-// }
-// }

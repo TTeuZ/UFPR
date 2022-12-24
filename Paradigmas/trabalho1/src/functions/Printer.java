@@ -1,5 +1,6 @@
 package src.functions;
 
+import src.characters.*;
 import src.constants.Constants;
 import src.sectors.*;
 
@@ -22,23 +23,36 @@ public class Printer implements Constants {
         return temp;
     }
 
-    public String verifyPlayer(Sector[][] board, int x, int y) {
+    public String verifyPlayer(Sector[][] board, SimplePlayer playerOne, SupportPlayer playerTwo, int x, int y) {
         int realX, realY;
         String temp;
 
         realX = X_BASE[x];
         realY = Y_BASE[y];
 
-        temp = "  ";
+        temp = "   ";
         if (board[realX][realY].isSource())
-            temp = " X";
+            temp = " X ";
+        else if (playerOne.getX() == realX && playerOne.getY() == realY && playerTwo.getX() == realX
+                && playerTwo.getY() == realY)
+            temp = "P12";
+        else if (playerOne.getX() == realX && playerOne.getY() == realY)
+            temp = "P1 ";
+        else if (playerTwo.getX() == realX && playerTwo.getY() == realY)
+            temp = "P2 ";
 
         return temp;
     }
 
     // ---------------------------- Public Methods ----------------------------
-    public void print(Sector[][] board) {
+    public void print(Sector[][] board, SimplePlayer playerOne, SupportPlayer playerTwo) {
         int x, y;
+
+        try {
+            Runtime.getRuntime().exec("clear");
+        } catch (final Exception e) {
+            System.out.printf("excessão?\n");
+        }
 
         System.out.println("----------------------------");
         System.out.println("|   Antivìrus por um dia   |");
@@ -51,7 +65,7 @@ public class Printer implements Constants {
                 else if (BOARD_BASE[x][y] == 'r')
                     System.out.printf("%c", verifyWall(board, x, y - 5, RIGHT));
                 else if (BOARD_BASE[x][y] == 'p')
-                    System.out.printf("%s", verifyPlayer(board, x, y - 5));
+                    System.out.printf("%s", verifyPlayer(board, playerOne, playerTwo, x, y - 5));
                 else
                     System.out.printf("%c", BOARD_BASE[x][y]);
             }
