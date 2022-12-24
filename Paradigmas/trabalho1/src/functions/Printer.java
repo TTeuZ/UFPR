@@ -48,12 +48,6 @@ public class Printer implements Constants {
     public void print(Sector[][] board, SimplePlayer playerOne, SupportPlayer playerTwo) {
         int x, y;
 
-        try {
-            Runtime.getRuntime().exec("clear");
-        } catch (final Exception e) {
-            System.out.printf("excessão?\n");
-        }
-
         System.out.println("----------------------------");
         System.out.println("|   Antivìrus por um dia   |");
         System.out.println("----------------------------");
