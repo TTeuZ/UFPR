@@ -48,12 +48,15 @@ public class Printer implements Constants {
     public void print(Sector[][] board, SimplePlayer playerOne, SupportPlayer playerTwo) {
         int x, y;
 
+        // verificar se o P1 e o P2 estão no mesmo setor
+        // armazenar os inimigos do setor, ou dos setores para o print
+
         System.out.println("----------------------------");
         System.out.println("|   Antivìrus por um dia   |");
         System.out.println("----------------------------");
         System.out.println("      1   2   3   4   5");
-        for (x = 0; x < 11; ++x) {
-            for (y = 0; y < 25; ++y) {
+        for (x = 0; x < BOARD_ROWS; ++x) {
+            for (y = 0; y < BOARD_COLS; ++y) {
                 if (BOARD_BASE[x][y] == 't')
                     System.out.printf("%c", verifyWall(board, x, y - 5, TOP));
                 else if (BOARD_BASE[x][y] == 'r')
@@ -63,6 +66,11 @@ public class Printer implements Constants {
                 else
                     System.out.printf("%c", BOARD_BASE[x][y]);
             }
+
+            for (y = 0; y < MENU_SAME_SECTOR_COLS; ++y) {
+                System.out.printf("%c", MENU_SAME_SECTOR_BASE[x][y]);
+            }
+
             System.out.printf("\n");
         }
     }
