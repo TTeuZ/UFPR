@@ -30,7 +30,7 @@ public abstract class Player extends Character {
     }
 
     // ---------------------------- Public Methods ----------------------------
-    public abstract void move();
+    public abstract boolean move();
 
     public abstract void search();
 }

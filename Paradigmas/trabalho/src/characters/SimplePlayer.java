@@ -8,7 +8,8 @@ public class SimplePlayer extends Player {
 
     // ---------------------------- Public Methods ----------------------------
     @Override
-    public void move() {
+    public boolean move() {
+        return true;
     }
 
     @Override

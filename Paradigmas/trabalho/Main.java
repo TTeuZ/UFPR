@@ -37,10 +37,13 @@ public class Main implements Constants {
 
         // Loop principal
         while (actualCycle <= MAX_CYCLES) {
-            System.out.printf("BATATA INPUT:\n");
+            if (playerOne.move())
+                printer.print(board, playerOne, playerTwo);
 
-            printer.print(board, playerOne, playerTwo);
-            actualCycle++;
+            if (playerTwo.move())
+                printer.print(board, playerOne, playerTwo);
+
+            actualCycle += 30;
         }
         input.close();
     }
