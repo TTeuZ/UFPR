@@ -27,22 +27,4 @@ public abstract class BoardPosition {
     public int getY() {
         return y;
     }
-
-    // Methods
-    // public void attPos(char move) {
-    // switch (move) {
-    // case 'U':
-    // this.setY(this.getY() + 1);
-    // break;
-    // case 'L':
-    // this.setX(this.getX() - 1);
-    // break;
-    // case 'R':
-    // this.setX(this.getX() + 1);
-    // break;
-    // case 'D':
-    // this.setY(this.getY() + 1);
-    // break;
-    // }
-    // }
 }

@@ -80,9 +80,9 @@ public class BoardGenerator implements Constants {
 
         // Gerando os lados de cada setor
         board[0][0].setSides(generateSides(WALL, random.nextInt(2), random.nextInt(2), WALL));
-        board[0][4].setSides(generateSides(WALL, WALL, random.nextInt(2), random.nextInt(2)));
-        board[4][0].setSides(generateSides(random.nextInt(2), random.nextInt(2), WALL, WALL));
-        board[4][4].setSides(generateSides(random.nextInt(2), WALL, WALL, random.nextInt(2)));
+        board[0][BOARD_SIZE - 1].setSides(generateSides(WALL, WALL, random.nextInt(2), random.nextInt(2)));
+        board[BOARD_SIZE - 1][0].setSides(generateSides(random.nextInt(2), random.nextInt(2), WALL, WALL));
+        board[BOARD_SIZE - 1][BOARD_SIZE - 1].setSides(generateSides(random.nextInt(2), WALL, WALL, random.nextInt(2)));
         for (x = 0; x < BOARD_SIZE; ++x)
             for (y = 0; y < BOARD_SIZE; ++y) {
                 if (board[x][y].getSides() == null) {

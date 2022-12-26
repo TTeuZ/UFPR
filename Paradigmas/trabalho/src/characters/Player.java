@@ -7,8 +7,8 @@ public abstract class Player extends Character {
     // Contructors
     public Player(int center, int attack, int defense, boolean canSearch, boolean canMove) {
         super(center, center, attack, defense);
-        this.canSearch = canSearch;
-        this.canMove = canMove;
+        this.setCanSearch(canSearch);
+        this.setCanMove(canMove);
     }
 
     // Setters
