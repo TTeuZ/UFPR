@@ -1,5 +1,7 @@
 package src.sectors;
 
+import src.characters.*;
+
 public class PrivateSector extends Sector {
     // Constructors
     public PrivateSector(int x, int y, boolean isSource, boolean found, int[] sides) {
@@ -9,12 +11,11 @@ public class PrivateSector extends Sector {
     // Methods
     @Override
     public void generateEnemies() {
-        System.out.println("batata");
+        System.out.println("batata private");
     }
 
-    @Override
-    public void reachSector() {
-        this.setFound(true);
-
+    public void reachSector(Player player) {
+        super.reachSector(player);
+        player.setCanSearch(false);
     }
 }

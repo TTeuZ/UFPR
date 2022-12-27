@@ -3,6 +3,7 @@ package src.sectors;
 import java.util.ArrayList;
 
 import src.BoardPosition;
+import src.characters.*;
 import src.constants.Constants;
 
 public abstract class Sector extends BoardPosition implements Constants {
@@ -62,5 +63,11 @@ public abstract class Sector extends BoardPosition implements Constants {
     public abstract void generateEnemies();
 
     // Função que realiza as verificações quando o jogador entra no setor
-    public abstract void reachSector();
+    public void reachSector(Player player) {
+        if (!this.found) {
+            this.setFound(true);
+            player.setCanMove(false);
+            this.generateEnemies();
+        }
+    }
 }

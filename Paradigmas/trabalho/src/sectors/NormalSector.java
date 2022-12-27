@@ -1,5 +1,7 @@
 package src.sectors;
 
+import src.characters.*;
+
 public class NormalSector extends Sector {
     // Constructors
     public NormalSector(int x, int y, boolean isSource, boolean found, int[] sides) {
@@ -13,11 +15,11 @@ public class NormalSector extends Sector {
     // ---------------------------- Public Methods ----------------------------
     @Override
     public void generateEnemies() {
-        System.out.println("batata");
+        System.out.println("batata Normal");
     }
 
-    @Override
-    public void reachSector() {
-        this.setFound(true);
+    public void reachSector(Player player) {
+        super.reachSector(player);
+        player.setCanSearch(true);
     }
 }
