@@ -46,7 +46,20 @@ public class Printer implements Constants {
 
     // ---------------------------- Public Methods ----------------------------
     public void print(Sector[][] board, SimplePlayer playerOne, SupportPlayer playerTwo) {
-        int x, y;
+        int x, y, count;
+        Player tempArray[];
+        boolean sameSector;
+
+        tempArray = new Player[2];
+        tempArray[0] = playerOne;
+        tempArray[1] = playerTwo;
+        count = 0;
+
+        if (playerOne.getX() == playerTwo.getX() && playerOne.getY() == playerTwo.getY())
+            sameSector = true;
+        else
+            sameSector = false;
+
 
         // verificar se o P1 e o P2 estão no mesmo setor
         // armazenar os inimigos do setor, ou dos setores para o print
@@ -67,8 +80,28 @@ public class Printer implements Constants {
                     System.out.printf("%c", BOARD_BASE[x][y]);
             }
 
-            for (y = 0; y < MENU_SAME_SECTOR_COLS; ++y) {
-                System.out.printf("%c", MENU_SAME_SECTOR_BASE[x][y]);
+            if (sameSector) {
+                for (y = 0; y < MENU_SAME_SECTOR_COLS; ++y) {
+                    if (MENU_SAME_SECTOR_BASE[x][y] == 'x')
+                        System.out.printf("%d", playerOne.getX());
+                    else if (MENU_SAME_SECTOR_BASE[x][y] == 'y')
+                        System.out.printf("%d", playerOne.getY());
+                    else if (MENU_SAME_SECTOR_BASE[x][y] == 'p') {
+                        System.out.printf("P%d", count + 1);
+                        if (count == 1) count = 0;
+                        count++;
+                    } else if (MENU_SAME_SECTOR_BASE[x][y] == 'a') {
+                        System.out.printf("%d", tempArray[count].getAttack());
+                    } else if (MENU_SAME_SECTOR_BASE[x][y] == 'd') {
+                        System.out.printf("%d", tempArray[count].getDefense());
+                        if (count == 1) count = 0;
+                        count++;
+                    }
+                    else 
+                        System.out.printf("%c", MENU_SAME_SECTOR_BASE[x][y]);
+                }
+            } else {
+
             }
 
             System.out.printf("\n");
