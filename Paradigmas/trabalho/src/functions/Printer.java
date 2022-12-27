@@ -85,7 +85,7 @@ public class Printer implements Constants {
             }
 
             // Espaçamento
-            System.out.printf(" ");
+            System.out.printf("     ");
 
             // Print do menu de cada jogador
             if (sameSector) {
@@ -122,7 +122,7 @@ public class Printer implements Constants {
                             System.out.printf("%c", MENU_DIFF_SECTOR_BASE[x][y]);
                     }
                     // Espaçamento
-                    System.out.printf(" ");
+                    System.out.printf("   ");
                 }
             }
             System.out.printf("\n");
