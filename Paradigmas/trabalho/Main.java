@@ -17,6 +17,9 @@ public class Main implements Constants {
         SupportPlayer playerTwo;
         int actualCycle;
 
+        // Variaveis temporaveis
+        Sector tempSector;
+
         // Inicialização dos funcionais
         boardGenerator = new BoardGenerator();
         printer = new Printer();
@@ -34,11 +37,17 @@ public class Main implements Constants {
 
         // Loop principal
         while (actualCycle <= MAX_CYCLES) {
-            playerOne.move(board).reachSector();
-            printer.print(board, playerOne, playerTwo);
+            tempSector = playerOne.move(board);
+            if (tempSector != null) {
+                tempSector.reachSector(playerOne);
+                printer.print(board, playerOne, playerTwo);
+            }
 
-            playerTwo.move(board).reachSector();
-            printer.print(board, playerOne, playerTwo);
+            tempSector = playerTwo.move(board);
+            if (tempSector != null) {
+                tempSector.reachSector(playerTwo);
+                printer.print(board, playerOne, playerTwo);
+            }
 
             actualCycle++;
         }

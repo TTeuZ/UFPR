@@ -15,8 +15,13 @@ public class SimplePlayer extends Player {
         Scanner input;
         input = new Scanner(System.in);
 
-        System.out.printf("Where to go PLAYER 1 (P1)?\n");
-        return super.move(board, input);
+        if (this.canMove) {
+            System.out.printf("Where to go PLAYER 1 (P1)?\n");
+            return super.move(board, input);
+        } else {
+            input.close();
+            return null;
+        }
     }
 
     @Override
