@@ -39,9 +39,9 @@ public abstract class Player extends Character {
         ArrayList<String> possibleMoves;
         Sector actualSector;
         String selectedMove;
-        boolean moved;
+        boolean moved, validMove;
 
-        moved = false;
+        moved = validMove = false;
         actualSector = board[this.x][this.y];
         possibleMoves = actualSector.verifyMoves();
 
@@ -50,39 +50,28 @@ public abstract class Player extends Character {
 
         while (!moved) {
             selectedMove = input.next();
-            switch (selectedMove) {
-                case "U":
-                    if (possibleMoves.contains("Up")) {
+            for (String move : possibleMoves)
+                if (move.contains(selectedMove))
+                    validMove = true;
+
+            if (validMove) {
+                moved = true;
+                switch (selectedMove) {
+                    case "U":
                         this.setX(this.x - 1);
-                        moved = true;
-                    } else
-                        System.out.printf("Não é possivel ir para ai!\n");
-                    break;
-                case "R":
-                    if (possibleMoves.contains("Right")) {
+                        break;
+                    case "R":
                         this.setY(this.y + 1);
-                        moved = true;
-                    } else
-                        System.out.printf("Não é possivel ir para ai!\n");
-                    break;
-                case "D":
-                    if (possibleMoves.contains("Down")) {
+                        break;
+                    case "D":
                         this.setX(x + 1);
-                        moved = true;
-                    } else
-                        System.out.printf("Não é possivel ir para ai!\n");
-                    break;
-                case "L":
-                    if (possibleMoves.contains("Left")) {
+                        break;
+                    case "L":
                         this.setY(y - 1);
-                        moved = true;
-                    } else
-                        System.out.printf("Não é possivel ir para ai!\n");
-                    break;
-                default:
-                    System.out.printf("Movimento invalido!\n");
-                    break;
-            }
+                        break;
+                }
+            } else
+                System.out.printf("Não é possivel ir para ai!\n");
         }
         return board[this.x][this.y];
     }
