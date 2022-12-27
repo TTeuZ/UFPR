@@ -1,5 +1,9 @@
 package src.characters;
 
+import java.util.Scanner;
+
+import src.sectors.*;
+
 public class SupportPlayer extends Player {
     // Constructors
     public SupportPlayer(int center, int attack, int defense, boolean canSearch, boolean canMove) {
@@ -7,9 +11,12 @@ public class SupportPlayer extends Player {
     }
 
     // ---------------------------- Public Methods ----------------------------
-    @Override
-    public boolean move() {
-        return true;
+    public Sector move(Sector[][] board) {
+        Scanner input;
+        input = new Scanner(System.in);
+
+        System.out.printf("Where to go PLAYER 2 (P2)?\n");
+        return super.move(board, input);
     }
 
     @Override

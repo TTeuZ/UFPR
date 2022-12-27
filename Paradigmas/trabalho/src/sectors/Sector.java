@@ -1,8 +1,11 @@
 package src.sectors;
 
-import src.BoardPosition;
+import java.util.ArrayList;
 
-public abstract class Sector extends BoardPosition {
+import src.BoardPosition;
+import src.constants.Constants;
+
+public abstract class Sector extends BoardPosition implements Constants {
     protected boolean isSource;
     protected boolean found;
     protected int sides[];
@@ -39,6 +42,22 @@ public abstract class Sector extends BoardPosition {
     }
 
     // ---------------------------- Public Methods ----------------------------
+    public ArrayList<String> verifyMoves() {
+        ArrayList<String> temp;
+        temp = new ArrayList<String>();
+
+        if (this.sides[TOP] != WALL)
+            temp.add("Up");
+        if (this.sides[RIGHT] != WALL)
+            temp.add("Right");
+        if (this.sides[BOTTOM] != WALL)
+            temp.add("Down");
+        if (this.sides[LEFT] != WALL)
+            temp.add("Left");
+
+        return temp;
+    }
+
     // Função responsável por gerar os inimigos do setor como especificado
     public abstract void generateEnemies();
 

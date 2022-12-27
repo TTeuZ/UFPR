@@ -18,6 +18,6 @@ public class NormalSector extends Sector {
 
     @Override
     public void reachSector() {
-        System.out.println("batata");
+        this.setFound(true);
     }
 }

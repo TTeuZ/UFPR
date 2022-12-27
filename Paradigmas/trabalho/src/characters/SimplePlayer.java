@@ -1,5 +1,9 @@
 package src.characters;
 
+import java.util.Scanner;
+
+import src.sectors.*;
+
 public class SimplePlayer extends Player {
     // Constructors
     public SimplePlayer(int center, int attack, int defense, boolean canSearch, boolean canMove) {
@@ -7,9 +11,12 @@ public class SimplePlayer extends Player {
     }
 
     // ---------------------------- Public Methods ----------------------------
-    @Override
-    public boolean move() {
-        return true;
+    public Sector move(Sector[][] board) {
+        Scanner input;
+        input = new Scanner(System.in);
+
+        System.out.printf("Where to go PLAYER 1 (P1)?\n");
+        return super.move(board, input);
     }
 
     @Override

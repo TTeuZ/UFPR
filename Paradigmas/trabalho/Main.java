@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 import src.characters.*;
 import src.constants.*;
 import src.functions.*;
@@ -12,7 +10,6 @@ public class Main implements Constants {
         // Classes funcionais
         BoardGenerator boardGenerator;
         Printer printer;
-        Scanner input;
 
         // Atributos do jogo
         Sector[][] board;
@@ -23,7 +20,7 @@ public class Main implements Constants {
         // Inicialização dos funcionais
         boardGenerator = new BoardGenerator();
         printer = new Printer();
-        input = new Scanner(System.in);
+        // input = new Scanner(System.in);
 
         // Inicialização dos atributos
         board = new Sector[BOARD_SIZE][BOARD_SIZE];
@@ -37,14 +34,13 @@ public class Main implements Constants {
 
         // Loop principal
         while (actualCycle <= MAX_CYCLES) {
-            if (playerOne.move())
-                printer.print(board, playerOne, playerTwo);
+            playerOne.move(board).reachSector();
+            printer.print(board, playerOne, playerTwo);
 
-            if (playerTwo.move())
-                printer.print(board, playerOne, playerTwo);
+            playerTwo.move(board).reachSector();
+            printer.print(board, playerOne, playerTwo);
 
-            actualCycle += 30;
+            actualCycle++;
         }
-        input.close();
     }
 }
