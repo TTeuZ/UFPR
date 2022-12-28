@@ -6,7 +6,7 @@ import java.util.Scanner;
 import src.sectors.*;
 
 public class SimplePlayer extends Player {
-    // Constructors
+    // ---------------------------- Constructors ----------------------------
     public SimplePlayer(int center, int attack, int defense) {
         super(center, attack, defense);
     }

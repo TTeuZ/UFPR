@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import src.sectors.*;
 
 public class SupportPlayer extends Player {
-    // Constructors
+    // ---------------------------- Constructors ----------------------------
     public SupportPlayer(int center, int attack, int defense) {
         super(center, attack, defense);
     }

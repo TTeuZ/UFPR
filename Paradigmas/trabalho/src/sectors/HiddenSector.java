@@ -3,7 +3,7 @@ package src.sectors;
 import src.characters.*;
 
 public class HiddenSector extends Sector {
-    // Constructors
+    // ---------------------------- Constructors ----------------------------
     public HiddenSector(int x, int y, boolean isSource, boolean found, int[] sides) {
         super(x, y, isSource, found, sides);
     }
@@ -12,7 +12,7 @@ public class HiddenSector extends Sector {
         super(x, y, false, false, null);
     }
 
-    // Methods
+    // ---------------------------- Public Methods ----------------------------
     @Override
     public void generateEnemies() {
         System.out.println("batata Hidden");

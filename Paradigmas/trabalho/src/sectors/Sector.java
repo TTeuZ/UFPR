@@ -11,7 +11,7 @@ public abstract class Sector extends BoardPosition implements Constants {
     protected boolean found;
     protected int sides[];
 
-    // Constructors
+    // ---------------------------- Constructors ----------------------------
     public Sector(int x, int y, boolean isSource, boolean found, int[] sides) {
         super(x, y);
         this.isSource = isSource;
@@ -19,7 +19,7 @@ public abstract class Sector extends BoardPosition implements Constants {
         this.setFound(found);
     }
 
-    // Setters
+    // ---------------------------- Setters ----------------------------
     public void setFound(boolean found) {
         this.found = found;
     }
@@ -29,7 +29,7 @@ public abstract class Sector extends BoardPosition implements Constants {
             this.sides = sides;
     }
 
-    // Getters
+    // ---------------------------- Getters ----------------------------
     public boolean isSource() {
         return isSource;
     }

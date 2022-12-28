@@ -9,50 +9,49 @@ import src.sectors.*;
 
 public class Main implements Constants {
     public static void main(String[] args) throws InterruptedException {
-        // Classes funcionais
+        // ---------------------------- Classes Funcionais ----------------------------
         BoardGenerator boardGenerator;
         Printer printer;
         PlayerActionsHandler playerActionsHandler;
         Scanner input;
 
-        // Atributos do jogo
+        // ---------------------------- Atributos do jogo ----------------------------
         Sector[][] board;
         Player[] players;
         int actualCycle;
 
-        // Variaveis temporarias
+        // ---------------------------- temporarias ----------------------------
         Sector tempSector;
         int count;
 
-        // Inicialização dos funcionais
+        // ---------------------------- Inic. dos Func. ----------------------------
         boardGenerator = new BoardGenerator();
         printer = new Printer();
         playerActionsHandler = new PlayerActionsHandler();
         input = new Scanner(System.in);
 
-        // Inicialização dos atributos
+        // ---------------------------- Inic. dos Atrib. ----------------------------
         board = new Sector[BOARD_SIZE][BOARD_SIZE];
         players = new Player[2];
         players[SIMPLE] = new SimplePlayer(BOARD_CENTER, P1_ATTACK, P1_DEFENSE);
         players[SUPPORT] = new SupportPlayer(BOARD_CENTER, P2_ATTACK, P2_DEFENSE);
         actualCycle = 0;
 
-        // Gerando o mesa do jogo
+        // ---------------------------- Gerando mesa ----------------------------
         boardGenerator.generate(board);
         printer.print(board, players);
 
-        // Loop principal
+        // ---------------------------- Loop Principal ----------------------------
         while (actualCycle <= MAX_CYCLES) {
             // ---------------------------- Movimentação ----------------------------
-            tempSector = players[SIMPLE].move(board, input);
-            if (tempSector != null) {
-                tempSector.reachSector(players[SIMPLE]);
-                printer.print(board, players);
-            }
-            tempSector = players[SUPPORT].move(board, input);
-            if (tempSector != null) {
-                tempSector.reachSector(players[SUPPORT]);
-                printer.print(board, players);
+            for (count = 0; count < players.length; count++) {
+                if (players[count].isAlive()) {
+                    tempSector = players[count].move(board, input);
+                    if (tempSector != null) {
+                        tempSector.reachSector(players[count]);
+                        printer.print(board, players);
+                    }
+                }
             }
 
             // ---------------------------- Ações dos jogadores ---------------------------

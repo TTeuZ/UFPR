@@ -3,7 +3,7 @@ package src.sectors;
 import src.characters.*;
 
 public class NormalSector extends Sector {
-    // Constructors
+    // ---------------------------- Constructors ----------------------------
     public NormalSector(int x, int y, boolean isSource, boolean found, int[] sides) {
         super(x, y, isSource, found, sides);
     }

@@ -4,13 +4,13 @@ public abstract class BoardPosition {
     protected int x;
     protected int y;
 
-    // Constructors
+    // ---------------------------- Constructors ----------------------------s
     public BoardPosition(int x, int y) {
         this.setX(x);
         this.setY(y);
     }
 
-    // Setters
+    // ---------------------------- Setters ----------------------------
     public void setX(int x) {
         this.x = x;
     }
@@ -19,7 +19,7 @@ public abstract class BoardPosition {
         this.y = y;
     }
 
-    // Getters
+    // ---------------------------- Getters ----------------------------
     public int getX() {
         return x;
     }
