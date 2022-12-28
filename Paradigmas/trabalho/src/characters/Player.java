@@ -113,6 +113,7 @@ public abstract class Player extends Character {
     }
 
     public void search(Sector[][] board) throws InterruptedException {
+        Sector tempSector;
         Random random;
         random = new Random();
 
@@ -130,6 +131,9 @@ public abstract class Player extends Character {
                 break;
             case 5:
                 System.out.printf("Dano em area!\n");
+                tempSector = board[this.x][this.y];
+                for (Virus virus : tempSector.getEnemies())
+                    virus.reciveDamage(1);
                 break;
             default:
                 System.out.printf("Nada encontrado\n");
