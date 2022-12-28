@@ -37,6 +37,18 @@ public abstract class Player extends Character {
         return canMove;
     }
 
+    // ---------------------------- Private Methods ----------------------------
+    private void blindAttack(Virus virus) {
+        Random random;
+
+        random = new Random();
+        if ((random.nextInt(6) + 1) % 2 == 0) {
+            virus.reciveDamage(this.attack);
+            System.out.printf("Acertou o ataque!\n");
+        } else
+            System.out.printf("Errou o ataque!\n");
+    }
+
     // ---------------------------- Public Methods ----------------------------
     public abstract ArrayList<String> verifyActions();
 
@@ -67,7 +79,14 @@ public abstract class Player extends Character {
                     System.out.printf("Atacando...\n");
                     TimeUnit.SECONDS.sleep(WAIT_TIME);
 
-                    sector.getEnemies().get(selectedEnemy).reciveDamage(this.attack);
+                    if (sector.getEnemies().get(selectedEnemy).isCanAvoid())
+                        this.blindAttack(sector.getEnemies().get(selectedEnemy));
+                    else {
+                        sector.getEnemies().get(selectedEnemy).reciveDamage(this.attack);
+                        System.out.printf("Acertou o ataque!\n");
+                    }
+
+                    TimeUnit.SECONDS.sleep(WAIT_TIME);
                 } else
                     System.out.printf("Inimigo invalido!\n");
             } catch (InputMismatchException e) {
