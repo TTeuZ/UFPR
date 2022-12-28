@@ -1,12 +1,14 @@
 package src.functions;
 
+import java.util.ArrayList;
+
 import src.characters.*;
 import src.constants.Constants;
 import src.sectors.*;
 
 public class Printer implements Constants {
     // ---------------------------- Private Methods ----------------------------
-    public char verifyWall(Sector[][] board, int x, int y, int side) {
+    private char verifyWall(Sector[][] board, int x, int y, int side) {
         int realX, realY;
         boolean isFound, isDoor;
         char temp;
@@ -26,7 +28,7 @@ public class Printer implements Constants {
         return temp;
     }
 
-    public String verifyPlayer(Sector[][] board, Player[] players, int x, int y) {
+    private String verifyPlayer(Sector[][] board, Player[] players, int x, int y) {
         int realX, realY;
         String temp;
 
@@ -47,15 +49,41 @@ public class Printer implements Constants {
         return temp;
     }
 
+    private char verifyVirus(Sector sector, int count) {
+        ArrayList<Virus> enemies;
+        int atribute, index;
+        char temp;
+
+        temp = ' ';
+        atribute = count % 3;
+        index = (int) Math.floor(count / 3);
+        enemies = sector.getEnemies();
+
+        if (!enemies.isEmpty() && index < enemies.size()) {
+            switch (atribute) {
+                case 0:
+                    temp = (char) (enemies.get(index).getAttack() + '0');
+                    break;
+                case 1:
+                    temp = '/';
+                    break;
+                case 2:
+                    temp = (char) (enemies.get(index).getDefense() + '0');
+                    break;
+            }
+        }
+        return temp;
+    }
+
     // ---------------------------- Public Methods ----------------------------
     public void print(Sector[][] board, Player players[]) {
-        int playerCount, attackCount, defenseCount;
+        int playerCount, attackCount, defenseCount, virusCount;
         boolean sameSector;
         Sector tempSector;
         int x, y, count;
 
         playerCount = 1;
-        attackCount = defenseCount = 0;
+        attackCount = defenseCount = virusCount = 0;
 
         if (players[SIMPLE].getX() == players[SUPPORT].getX() && players[SIMPLE].getY() == players[SUPPORT].getY())
             sameSector = true;
@@ -96,13 +124,15 @@ public class Printer implements Constants {
                         System.out.printf("%d", players[attackCount++].getAttack());
                     else if (MENU_SAME_SECTOR_BASE[x][y] == 'd')
                         System.out.printf("%d", players[defenseCount++].getDefense());
+                    else if (MENU_SAME_SECTOR_BASE[x][y] == 'v')
+                        System.out.printf("%c", verifyVirus(tempSector, virusCount++));
                     else
                         System.out.printf("%c", MENU_SAME_SECTOR_BASE[x][y]);
                 }
             } else {
                 for (count = 0; count < players.length; ++count) {
+                    tempSector = board[players[count].getX()][players[count].getY()];
                     for (y = 0; y < MENU_COLS; ++y) {
-                        tempSector = board[players[count].getX()][players[count].getY()];
                         if (MENU_DIFF_SECTOR_BASE[x][y] == 'x')
                             System.out.printf("%d", players[count].getX());
                         else if (MENU_DIFF_SECTOR_BASE[x][y] == 'y')
@@ -113,9 +143,12 @@ public class Printer implements Constants {
                             System.out.printf("%d", players[count].getAttack());
                         else if (MENU_DIFF_SECTOR_BASE[x][y] == 'd')
                             System.out.printf("%d", players[count].getDefense());
+                        else if (MENU_SAME_SECTOR_BASE[x][y] == 'v')
+                            System.out.printf("%c", verifyVirus(tempSector, virusCount++));
                         else
                             System.out.printf("%c", MENU_DIFF_SECTOR_BASE[x][y]);
                     }
+                    virusCount = 0;
                     // Espaçamento
                     System.out.printf("   ");
                 }
