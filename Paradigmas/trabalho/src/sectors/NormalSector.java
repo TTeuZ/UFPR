@@ -29,8 +29,11 @@ public class NormalSector extends Sector {
         }
     }
 
-    public void reachSector(Player player) {
-        super.reachSector(player);
+    public boolean reachSector(Player player) {
+        boolean reachedSorce;
+        reachedSorce = super.reachSector(player);
         player.setCanSearch(true);
+
+        return reachedSorce;
     }
 }

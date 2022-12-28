@@ -80,11 +80,13 @@ public abstract class Sector extends BoardPosition implements Constants {
     public abstract void generateEnemies();
 
     // Função que realiza as verificações quando o jogador entra no setor
-    public void reachSector(Player player) {
+    public boolean reachSector(Player player) {
         if (!this.found) {
             this.setFound(true);
             this.generateEnemies();
         }
         player.setCanMove(!hasAliveEnemies());
+
+        return this.isSource;
     }
 }

@@ -18,7 +18,8 @@ public class Main implements Constants {
         // ---------------------------- Atributos do jogo ----------------------------
         Sector[][] board;
         Player[] players;
-        int actualCycle;
+        int actualCycle, deadQtd;
+        boolean winner;
 
         // ---------------------------- temporarias ----------------------------
         Sector tempSector;
@@ -35,25 +36,32 @@ public class Main implements Constants {
         players = new Player[2];
         players[SIMPLE] = new SimplePlayer(BOARD_CENTER, P1_ATTACK, P1_DEFENSE);
         players[SUPPORT] = new SupportPlayer(BOARD_CENTER, P2_ATTACK, P2_DEFENSE);
-        actualCycle = 0;
+        actualCycle = deadQtd = 0;
+        winner = false;
 
         // ---------------------------- Gerando mesa ----------------------------
         boardGenerator.generate(board);
         printer.print(board, players);
 
         // ---------------------------- Loop Principal ----------------------------
-        while (actualCycle <= MAX_CYCLES) {
+        while (actualCycle < MAX_CYCLES && !winner) {
             // ---------------------------- Movimentação ----------------------------
             for (count = 0; count < players.length; ++count) {
                 if (players[count].isAlive()) {
                     tempSector = players[count].move(board, input);
                     if (tempSector != null) {
-                        tempSector.reachSector(players[count]);
+                        winner = tempSector.reachSector(players[count]);
                         printer.print(board, players);
+                        if (winner) {
+                            actualCycle = END_GAME;
+                            break;
+                        }
                     }
                 }
             }
 
+            if (winner)
+                break;
             // ---------------------------- Ações dos jogadores ---------------------------
             for (count = 0; count < MAX_ACTIONS; ++count) {
                 playerActionsHandler.handle(board, players, SIMPLE, input);
@@ -75,8 +83,26 @@ public class Main implements Constants {
                 }
             }
 
-            actualCycle++;
+            // ---------------------------- Att. de Status ---------------------------
+            deadQtd = 0;
+            for (count = 0; count < players.length; ++count) {
+                if (players[count].isAlive()) {
+                    tempSector = players[count].sector(board);
+                    players[count].setCanMove(!tempSector.hasAliveEnemies());
+                } else
+                    deadQtd++;
+            }
+
+            if (deadQtd == 2)
+                actualCycle = END_GAME;
+            else
+                actualCycle++;
         }
+
+        if (winner)
+            printer.wonGame();
+        else
+            printer.loseGame();
         input.close();
     }
 }
