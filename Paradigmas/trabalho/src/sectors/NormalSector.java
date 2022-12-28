@@ -1,5 +1,7 @@
 package src.sectors;
 
+import java.util.Random;
+
 import src.characters.*;
 
 public class NormalSector extends Sector {
@@ -15,7 +17,16 @@ public class NormalSector extends Sector {
     // ---------------------------- Public Methods ----------------------------
     @Override
     public void generateEnemies() {
-        System.out.println("batata Normal");
+        int enemiesQtd, virusStatus, count;
+        Random random;
+
+        random = new Random();
+        enemiesQtd = random.nextInt(3) + 1;
+
+        for (count = 0; count < enemiesQtd; ++count) {
+            virusStatus = random.nextInt(3) + 1;
+            this.enemies.add(new Virus(this.x, this.y, virusStatus, false));
+        }
     }
 
     public void reachSector(Player player) {
