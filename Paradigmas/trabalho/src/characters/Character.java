@@ -23,6 +23,8 @@ public abstract class Character extends BoardPosition implements Constants {
 
     public void setDefense(int defense) {
         this.defense = defense;
+        if (defense <= 0)
+            this.setAlive(false);
     }
 
     public void setAlive(boolean alive) {
