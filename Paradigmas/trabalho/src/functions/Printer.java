@@ -115,9 +115,9 @@ public class Printer implements Constants {
                 tempSector = board[players[SIMPLE].getX()][players[SIMPLE].getY()];
                 for (y = 0; y < MENU_COLS; ++y) {
                     if (MENU_SAME_SECTOR_BASE[x][y] == 'x')
-                        System.out.printf("%d", players[SIMPLE].getX());
+                        System.out.printf("%d", players[SIMPLE].getX() + 1);
                     else if (MENU_SAME_SECTOR_BASE[x][y] == 'y')
-                        System.out.printf("%d", players[SIMPLE].getY());
+                        System.out.printf("%d", players[SIMPLE].getY() + 1);
                     else if (MENU_SAME_SECTOR_BASE[x][y] == 'p')
                         System.out.printf("P%d", playerCount++);
                     else if (MENU_SAME_SECTOR_BASE[x][y] == 'a')
@@ -134,9 +134,9 @@ public class Printer implements Constants {
                     tempSector = board[players[count].getX()][players[count].getY()];
                     for (y = 0; y < MENU_COLS; ++y) {
                         if (MENU_DIFF_SECTOR_BASE[x][y] == 'x')
-                            System.out.printf("%d", players[count].getX());
+                            System.out.printf("%d", players[count].getX() + 1);
                         else if (MENU_DIFF_SECTOR_BASE[x][y] == 'y')
-                            System.out.printf("%d", players[count].getY());
+                            System.out.printf("%d", players[count].getY() + 1);
                         else if (MENU_DIFF_SECTOR_BASE[x][y] == 'p')
                             System.out.printf("P%d", count + 1);
                         else if (MENU_DIFF_SECTOR_BASE[x][y] == 'a')
