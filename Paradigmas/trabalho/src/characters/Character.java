@@ -22,9 +22,11 @@ public abstract class Character extends BoardPosition implements Constants {
     }
 
     public void setDefense(int defense) {
-        this.defense = defense;
-        if (defense <= 0)
+        if (defense <= 0) {
+            this.defense = 0;
             this.setAlive(false);
+        } else
+            this.defense = defense;
     }
 
     public void setAlive(boolean alive) {
@@ -45,5 +47,10 @@ public abstract class Character extends BoardPosition implements Constants {
     }
 
     // ---------------------------- Public Methods ----------------------------
-    public abstract void attack();
+    public void reciveDamage(int damage) {
+        int newDefense;
+
+        newDefense = this.defense - damage;
+        this.setDefense(newDefense);
+    }
 }
