@@ -59,11 +59,10 @@ public abstract class Player extends Character {
                 if (selectedEnemy < sector.getEnemies().size())
                     attacked = true;
 
-                if (attacked) {
+                if (attacked)
                     sector.getEnemies().get(selectedEnemy).reciveDamage(this.attack);
-                } else {
+                else
                     System.out.printf("Inimigo invalido!\n");
-                }
             } catch (InputMismatchException e) {
                 System.out.printf("Inimigo invalido!\n");
                 input.nextLine();

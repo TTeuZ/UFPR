@@ -53,7 +53,7 @@ public abstract class Sector extends BoardPosition implements Constants {
         boolean temp;
 
         temp = false;
-        for (Virus virus : enemies)
+        for (Virus virus : this.enemies)
             if (virus.isAlive())
                 temp = true;
 
