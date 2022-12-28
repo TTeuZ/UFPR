@@ -8,8 +8,8 @@ import src.sectors.*;
 
 public class SupportPlayer extends Player {
     // Constructors
-    public SupportPlayer(int center, int attack, int defense, boolean canSearch, boolean canMove) {
-        super(center, attack, defense, canSearch, canMove);
+    public SupportPlayer(int center, int attack, int defense) {
+        super(center, attack, defense);
     }
 
     // ---------------------------- Public Methods ----------------------------

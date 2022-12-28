@@ -7,8 +7,8 @@ import src.sectors.*;
 
 public class SimplePlayer extends Player {
     // Constructors
-    public SimplePlayer(int center, int attack, int defense, boolean canSearch, boolean canMove) {
-        super(center, attack, defense, canSearch, canMove);
+    public SimplePlayer(int center, int attack, int defense) {
+        super(center, attack, defense);
     }
 
     // ---------------------------- Public Methods ----------------------------

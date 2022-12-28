@@ -10,12 +10,14 @@ import src.sectors.*;
 public abstract class Player extends Character {
     protected boolean canSearch;
     protected boolean canMove;
+    protected boolean alive;
 
     // Contructors
-    public Player(int center, int attack, int defense, boolean canSearch, boolean canMove) {
+    public Player(int center, int attack, int defense) {
         super(center, center, attack, defense);
-        this.setCanSearch(canSearch);
-        this.setCanMove(canMove);
+        this.setCanSearch(true);
+        this.setCanMove(true);
+        this.setAlive(true);
     }
 
     // Setters
@@ -27,6 +29,10 @@ public abstract class Player extends Character {
         this.canMove = canMove;
     }
 
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
     // Getters
     public boolean isCanSearch() {
         return canSearch;
@@ -34,6 +40,10 @@ public abstract class Player extends Character {
 
     public boolean isCanMove() {
         return canMove;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 
     // ---------------------------- Public Methods ----------------------------

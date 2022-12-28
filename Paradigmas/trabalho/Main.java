@@ -33,8 +33,8 @@ public class Main implements Constants {
         // Inicialização dos atributos
         board = new Sector[BOARD_SIZE][BOARD_SIZE];
         players = new Player[2];
-        players[SIMPLE] = new SimplePlayer(BOARD_CENTER, P1_ATTACK, P1_DEFENSE, true, true);
-        players[SUPPORT] = new SupportPlayer(BOARD_CENTER, P2_ATTACK, P2_DEFENSE, true, true);
+        players[SIMPLE] = new SimplePlayer(BOARD_CENTER, P1_ATTACK, P1_DEFENSE);
+        players[SUPPORT] = new SupportPlayer(BOARD_CENTER, P2_ATTACK, P2_DEFENSE);
         actualCycle = 0;
 
         // Gerando o mesa do jogo
