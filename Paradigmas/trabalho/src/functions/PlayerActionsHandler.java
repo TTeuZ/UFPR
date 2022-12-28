@@ -31,7 +31,7 @@ public class PlayerActionsHandler implements Constants {
             if (performed) {
                 switch (selectedAction) {
                     case "A":
-                        players[type].attack();
+                        players[type].attack(board, input);
                         break;
                     case "S":
                         players[type].search(board);

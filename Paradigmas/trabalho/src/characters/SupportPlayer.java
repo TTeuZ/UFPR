@@ -34,10 +34,6 @@ public class SupportPlayer extends Player {
             return null;
     }
 
-    @Override
-    public void attack() {
-    }
-
     public void recover(SimplePlayer playerOne, Scanner input) throws InterruptedException {
         boolean sameSector, recovered;
         String selectedPlayer;

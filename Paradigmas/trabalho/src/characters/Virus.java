@@ -20,7 +20,4 @@ public class Virus extends Character {
     }
 
     // ---------------------------- Public Methods ----------------------------
-    @Override
-    public void attack() {
-    }
 }

@@ -1,6 +1,7 @@
 package src.characters;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -38,6 +39,37 @@ public abstract class Player extends Character {
 
     // ---------------------------- Public Methods ----------------------------
     public abstract ArrayList<String> verifyActions();
+
+    public void attack(Sector[][] board, Scanner input) {
+        int count, selectedEnemy;
+        boolean attacked;
+        Sector sector;
+
+        sector = board[this.x][this.y];
+        attacked = false;
+        count = 0;
+
+        System.out.printf("Qual inimigo deseja atacar?\n");
+        for (Virus virus : sector.getEnemies())
+            System.out.printf("%d - %d/%d\n", count++, virus.getAttack(), virus.getDefense());
+
+        while (!attacked) {
+            try {
+                selectedEnemy = input.nextInt();
+                if (selectedEnemy < sector.getEnemies().size())
+                    attacked = true;
+
+                if (attacked) {
+                    sector.getEnemies().get(selectedEnemy).reciveDamage(this.attack);
+                } else {
+                    System.out.printf("Inimigo invalido!\n");
+                }
+            } catch (InputMismatchException e) {
+                System.out.printf("Inimigo invalido!\n");
+                input.nextLine();
+            }
+        }
+    }
 
     public Sector move(Sector[][] board, Scanner input) {
         ArrayList<String> possibleMoves;

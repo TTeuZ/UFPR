@@ -31,8 +31,4 @@ public class SimplePlayer extends Player {
         } else
             return null;
     }
-
-    @Override
-    public void attack() {
-    }
 }
