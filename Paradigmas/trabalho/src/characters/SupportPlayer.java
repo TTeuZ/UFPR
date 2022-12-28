@@ -14,11 +14,12 @@ public class SupportPlayer extends Player {
 
     // ---------------------------- Public Methods ----------------------------
     @Override
-    public ArrayList<String> verifyActions() {
+    public ArrayList<String> verifyActions(Sector[][] board) {
         ArrayList<String> temp;
         temp = new ArrayList<String>();
 
-        temp.add("Attack");
+        if (this.sector(board).hasAliveEnemies())
+            temp.add("Attack");
         if (this.canSearch)
             temp.add("Search");
         temp.add("Recover");

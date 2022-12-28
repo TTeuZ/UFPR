@@ -48,8 +48,8 @@ public abstract class Sector extends BoardPosition implements Constants {
         return enemies;
     }
 
-    // ---------------------------- Private Methods ----------------------------
-    private boolean hasAliveEnemies() {
+    // ---------------------------- Public Methods ----------------------------
+    public boolean hasAliveEnemies() {
         boolean temp;
 
         temp = false;
@@ -60,7 +60,6 @@ public abstract class Sector extends BoardPosition implements Constants {
         return temp;
     }
 
-    // ---------------------------- Public Methods ----------------------------
     public ArrayList<String> verifyMoves() {
         ArrayList<String> temp;
         temp = new ArrayList<String>();

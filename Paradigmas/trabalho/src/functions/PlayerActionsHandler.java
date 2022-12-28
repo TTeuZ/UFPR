@@ -16,7 +16,7 @@ public class PlayerActionsHandler implements Constants {
         boolean performed;
 
         performed = false;
-        possibleActions = players[type].verifyActions();
+        possibleActions = players[type].verifyActions(board);
 
         System.out.printf("Selecione uma ação PLAYER %d (P%d)\n", type + 1, type + 1);
         for (String action : possibleActions)

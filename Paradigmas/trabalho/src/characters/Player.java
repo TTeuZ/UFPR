@@ -50,13 +50,14 @@ public abstract class Player extends Character {
     }
 
     // ---------------------------- Public Methods ----------------------------
-    public abstract ArrayList<String> verifyActions();
+    public abstract ArrayList<String> verifyActions(Sector[][] board);
 
     public Sector sector(Sector[][] board) {
         return board[this.x][this.y];
     }
 
     public void attack(Sector[][] board, Scanner input) throws InterruptedException {
+        ArrayList<Virus> aliveVirus;
         int count, selectedEnemy;
         boolean attacked;
         Sector sector;
@@ -65,24 +66,29 @@ public abstract class Player extends Character {
         attacked = false;
         count = 0;
 
-        System.out.printf("Qual inimigo deseja atacar?\n");
+        aliveVirus = new ArrayList<Virus>();
         for (Virus virus : sector.getEnemies())
+            if (virus.isAlive())
+                aliveVirus.add(virus);
+
+        System.out.printf("Qual inimigo deseja atacar?\n");
+        for (Virus virus : aliveVirus)
             System.out.printf("%d - %d/%d\n", count++, virus.getAttack(), virus.getDefense());
 
         while (!attacked) {
             try {
                 selectedEnemy = input.nextInt();
-                if (selectedEnemy < sector.getEnemies().size())
+                if (selectedEnemy < aliveVirus.size())
                     attacked = true;
 
                 if (attacked) {
                     System.out.printf("Atacando...\n");
                     TimeUnit.SECONDS.sleep(WAIT_TIME);
 
-                    if (sector.getEnemies().get(selectedEnemy).isCanAvoid())
-                        this.blindAttack(sector.getEnemies().get(selectedEnemy));
+                    if (aliveVirus.get(selectedEnemy).isCanAvoid())
+                        this.blindAttack(aliveVirus.get(selectedEnemy));
                     else {
-                        sector.getEnemies().get(selectedEnemy).reciveDamage(this.attack);
+                        aliveVirus.get(selectedEnemy).reciveDamage(this.attack);
                         System.out.printf("Acertou o ataque!\n");
                     }
 
