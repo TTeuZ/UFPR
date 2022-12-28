@@ -8,6 +8,10 @@ public class HiddenSector extends Sector {
         super(x, y, isSource, found, sides);
     }
 
+    public HiddenSector(int x, int y) {
+        super(x, y, false, false, null);
+    }
+
     // Methods
     @Override
     public void generateEnemies() {

@@ -16,16 +16,16 @@ public class BoardGenerator implements Constants {
         sectorType = random.nextInt(3);
         switch (sectorType) {
             case NORMAL:
-                temp = new NormalSector(x, y, false, false, null);
+                temp = new NormalSector(x, y);
                 break;
             case HIDDEN:
-                temp = new HiddenSector(x, y, false, false, null);
+                temp = new HiddenSector(x, y);
                 break;
             case PRIVATE:
-                temp = new PrivateSector(x, y, false, false, null);
+                temp = new PrivateSector(x, y);
                 break;
             default:
-                temp = new NormalSector(x, y, false, false, null);
+                temp = new NormalSector(x, y);
                 break;
         }
         return temp;

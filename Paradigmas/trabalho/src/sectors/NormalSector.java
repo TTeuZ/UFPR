@@ -8,8 +8,8 @@ public class NormalSector extends Sector {
         super(x, y, isSource, found, sides);
     }
 
-    public NormalSector(int center, boolean isSource, boolean found, int[] sides) {
-        super(center, center, isSource, found, sides);
+    public NormalSector(int x, int y) {
+        super(x, y, false, false, null);
     }
 
     // ---------------------------- Public Methods ----------------------------
