@@ -1,5 +1,6 @@
 package src.characters;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import src.sectors.*;
@@ -11,21 +12,24 @@ public class SimplePlayer extends Player {
     }
 
     // ---------------------------- Public Methods ----------------------------
-    public Sector move(Sector[][] board) {
-        Scanner input;
-        input = new Scanner(System.in);
+    @Override
+    public ArrayList<String> verifyActions() {
+        ArrayList<String> temp;
+        temp = new ArrayList<String>();
 
-        if (this.canMove) {
-            System.out.printf("Where to go PLAYER 1 (P1)?\n");
-            return super.move(board, input);
-        } else {
-            input.close();
-            return null;
-        }
+        temp.add("Attack");
+        if (this.canSearch)
+            temp.add("Search");
+
+        return temp;
     }
 
-    @Override
-    public void search() {
+    public Sector move(Sector[][] board, Scanner input) {
+        if (this.canMove) {
+            System.out.printf("Movimentação PLAYER 1 (P1)?\n");
+            return super.move(board, input);
+        } else
+            return null;
     }
 
     @Override

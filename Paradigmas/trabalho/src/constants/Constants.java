@@ -3,6 +3,9 @@ package src.constants;
 public interface Constants {
         // Game Constants
         public static final int MAX_CYCLES = 25;
+        public static final int MAX_ACTIONS = 2;
+        public static final int SIMPLE = 0;
+        public static final int SUPPORT = 1;
 
         // Board Constants
         public static final int BOARD_SIZE = 5;

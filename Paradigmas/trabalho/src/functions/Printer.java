@@ -13,7 +13,7 @@ public class Printer implements Constants {
 
         realX = X_BASE[x];
         realY = Y_BASE[y];
-        isDoor = board[realX][realY].getSides()[side] == 1;
+        isDoor = board[realX][realY].getSides()[side] == DOOR;
         if (side == TOP)
             isFound = board[realX][realY].isFound() || board[realX - 1][realY].isFound();
         else
@@ -26,7 +26,7 @@ public class Printer implements Constants {
         return temp;
     }
 
-    public String verifyPlayer(Sector[][] board, SimplePlayer playerOne, SupportPlayer playerTwo, int x, int y) {
+    public String verifyPlayer(Sector[][] board, Player[] players, int x, int y) {
         int realX, realY;
         String temp;
 
@@ -36,33 +36,28 @@ public class Printer implements Constants {
         temp = "   ";
         if (board[realX][realY].isSource())
             temp = " X ";
-        else if (playerOne.getX() == realX && playerOne.getY() == realY && playerTwo.getX() == realX
-                && playerTwo.getY() == realY)
+        else if (players[SIMPLE].getX() == realX && players[SIMPLE].getY() == realY && players[SUPPORT].getX() == realX
+                && players[SUPPORT].getY() == realY)
             temp = "P12";
-        else if (playerOne.getX() == realX && playerOne.getY() == realY)
+        else if (players[SIMPLE].getX() == realX && players[SIMPLE].getY() == realY)
             temp = "P1 ";
-        else if (playerTwo.getX() == realX && playerTwo.getY() == realY)
+        else if (players[SUPPORT].getX() == realX && players[SUPPORT].getY() == realY)
             temp = "P2 ";
 
         return temp;
     }
 
     // ---------------------------- Public Methods ----------------------------
-    public void print(Sector[][] board, SimplePlayer playerOne, SupportPlayer playerTwo) {
+    public void print(Sector[][] board, Player players[]) {
         int playerCount, attackCount, defenseCount;
         boolean sameSector;
-        Player tempArray[];
         Sector tempSector;
         int x, y, count;
-
-        tempArray = new Player[2];
-        tempArray[0] = playerOne;
-        tempArray[1] = playerTwo;
 
         playerCount = 1;
         attackCount = defenseCount = 0;
 
-        if (playerOne.getX() == playerTwo.getX() && playerOne.getY() == playerTwo.getY())
+        if (players[SIMPLE].getX() == players[SUPPORT].getX() && players[SIMPLE].getY() == players[SUPPORT].getY())
             sameSector = true;
         else
             sameSector = false;
@@ -79,7 +74,7 @@ public class Printer implements Constants {
                 else if (BOARD_BASE[x][y] == 'r')
                     System.out.printf("%c", verifyWall(board, x, y - 5, RIGHT));
                 else if (BOARD_BASE[x][y] == 'p')
-                    System.out.printf("%s", verifyPlayer(board, playerOne, playerTwo, x, y - 5));
+                    System.out.printf("%s", verifyPlayer(board, players, x, y - 5));
                 else
                     System.out.printf("%c", BOARD_BASE[x][y]);
             }
@@ -89,35 +84,35 @@ public class Printer implements Constants {
 
             // Print do menu de cada jogador
             if (sameSector) {
-                tempSector = board[playerOne.getX()][playerOne.getY()];
+                tempSector = board[players[SIMPLE].getX()][players[SIMPLE].getY()];
                 for (y = 0; y < MENU_COLS; ++y) {
                     if (MENU_SAME_SECTOR_BASE[x][y] == 'x')
-                        System.out.printf("%d", playerOne.getX());
+                        System.out.printf("%d", players[SIMPLE].getX());
                     else if (MENU_SAME_SECTOR_BASE[x][y] == 'y')
-                        System.out.printf("%d", playerOne.getY());
+                        System.out.printf("%d", players[SIMPLE].getY());
                     else if (MENU_SAME_SECTOR_BASE[x][y] == 'p')
                         System.out.printf("P%d", playerCount++);
                     else if (MENU_SAME_SECTOR_BASE[x][y] == 'a')
-                        System.out.printf("%d", tempArray[attackCount++].getAttack());
+                        System.out.printf("%d", players[attackCount++].getAttack());
                     else if (MENU_SAME_SECTOR_BASE[x][y] == 'd')
-                        System.out.printf("%d", tempArray[defenseCount++].getDefense());
+                        System.out.printf("%d", players[defenseCount++].getDefense());
                     else
                         System.out.printf("%c", MENU_SAME_SECTOR_BASE[x][y]);
                 }
             } else {
-                for (count = 0; count < tempArray.length; ++count) {
+                for (count = 0; count < players.length; ++count) {
                     for (y = 0; y < MENU_COLS; ++y) {
-                        tempSector = board[tempArray[count].getX()][tempArray[count].getY()];
+                        tempSector = board[players[count].getX()][players[count].getY()];
                         if (MENU_DIFF_SECTOR_BASE[x][y] == 'x')
-                            System.out.printf("%d", tempArray[count].getX());
+                            System.out.printf("%d", players[count].getX());
                         else if (MENU_DIFF_SECTOR_BASE[x][y] == 'y')
-                            System.out.printf("%d", tempArray[count].getY());
+                            System.out.printf("%d", players[count].getY());
                         else if (MENU_DIFF_SECTOR_BASE[x][y] == 'p')
-                            System.out.printf("P1");
+                            System.out.printf("P%d", count + 1);
                         else if (MENU_DIFF_SECTOR_BASE[x][y] == 'a')
-                            System.out.printf("%d", tempArray[count].getAttack());
+                            System.out.printf("%d", players[count].getAttack());
                         else if (MENU_DIFF_SECTOR_BASE[x][y] == 'd')
-                            System.out.printf("%d", tempArray[count].getDefense());
+                            System.out.printf("%d", players[count].getDefense());
                         else
                             System.out.printf("%c", MENU_DIFF_SECTOR_BASE[x][y]);
                     }

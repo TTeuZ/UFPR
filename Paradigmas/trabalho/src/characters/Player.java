@@ -1,7 +1,9 @@
 package src.characters;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import src.sectors.*;
 
@@ -35,6 +37,8 @@ public abstract class Player extends Character {
     }
 
     // ---------------------------- Public Methods ----------------------------
+    public abstract ArrayList<String> verifyActions();
+
     public Sector move(Sector[][] board, Scanner input) {
         ArrayList<String> possibleMoves;
         Sector actualSector;
@@ -51,7 +55,7 @@ public abstract class Player extends Character {
         while (!moved) {
             selectedMove = input.next();
             for (String move : possibleMoves)
-                if (move.contains(selectedMove))
+                if (move.startsWith(selectedMove))
                     validMove = true;
 
             if (validMove) {
@@ -76,5 +80,30 @@ public abstract class Player extends Character {
         return board[this.x][this.y];
     }
 
-    public abstract void search();
+    public void search(Sector[][] board) throws InterruptedException {
+        Random random;
+        random = new Random();
+
+        System.out.printf("Procurando...\n");
+        TimeUnit.SECONDS.sleep(1);
+
+        switch (random.nextInt(6)) {
+            case 3:
+                System.out.printf("Bust de 1 DEF encontrado\n");
+                this.setDefense(this.defense + 1);
+                break;
+            case 4:
+                System.out.printf("Bust de 2 DEF encontrado\n");
+                this.setDefense(this.defense + 2);
+                break;
+            case 5:
+                System.out.printf("Dano em area!\n");
+                break;
+            default:
+                System.out.printf("Nada encontrado\n");
+                break;
+        }
+
+        TimeUnit.SECONDS.sleep(2);
+    }
 }
