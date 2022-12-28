@@ -33,7 +33,7 @@ public class Virus extends Character {
             type = 2;
 
         System.out.printf("Virus %d/%d atacando o PLAYER %d (P%d)\n", this.attack, this.defense, type, type);
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(WAIT_TIME);
 
         random = new Random();
         if ((random.nextInt(6) + 1) % 2 == 0) {
@@ -41,6 +41,6 @@ public class Virus extends Character {
             System.out.printf("Acertou o ataque!\n");
         } else
             System.out.printf("Errou o ataque!\n");
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(WAIT_TIME);
     }
 }

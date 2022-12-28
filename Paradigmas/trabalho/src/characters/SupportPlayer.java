@@ -51,7 +51,7 @@ public class SupportPlayer extends Player {
                     recovered = true;
                 if (recovered) {
                     System.out.printf("Recuperando...\n");
-                    TimeUnit.SECONDS.sleep(1);
+                    TimeUnit.SECONDS.sleep(WAIT_TIME);
 
                     switch (selectedPlayer) {
                         case "P1":
@@ -66,7 +66,7 @@ public class SupportPlayer extends Player {
             }
         } else {
             System.out.printf("Recuperando...\n");
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(WAIT_TIME);
             this.setDefense(this.defense + 2);
         }
     }

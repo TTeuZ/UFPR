@@ -6,6 +6,7 @@ public interface Constants {
         public static final int MAX_ACTIONS = 2;
         public static final int SIMPLE = 0;
         public static final int SUPPORT = 1;
+        public static final int WAIT_TIME = 2;
 
         // Board Constants
         public static final int BOARD_SIZE = 5;

@@ -44,7 +44,7 @@ public abstract class Player extends Character {
         return board[this.x][this.y];
     }
 
-    public void attack(Sector[][] board, Scanner input) {
+    public void attack(Sector[][] board, Scanner input) throws InterruptedException {
         int count, selectedEnemy;
         boolean attacked;
         Sector sector;
@@ -63,9 +63,12 @@ public abstract class Player extends Character {
                 if (selectedEnemy < sector.getEnemies().size())
                     attacked = true;
 
-                if (attacked)
+                if (attacked) {
+                    System.out.printf("Atacando...\n");
+                    TimeUnit.SECONDS.sleep(WAIT_TIME);
+
                     sector.getEnemies().get(selectedEnemy).reciveDamage(this.attack);
-                else
+                } else
                     System.out.printf("Inimigo invalido!\n");
             } catch (InputMismatchException e) {
                 System.out.printf("Inimigo invalido!\n");
@@ -121,7 +124,7 @@ public abstract class Player extends Character {
         random = new Random();
 
         System.out.printf("Procurando...\n");
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(WAIT_TIME);
 
         switch (random.nextInt(6)) {
             case 3:
@@ -143,6 +146,6 @@ public abstract class Player extends Character {
                 break;
         }
 
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(WAIT_TIME);
     }
 }
