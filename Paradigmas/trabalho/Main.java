@@ -44,7 +44,7 @@ public class Main implements Constants {
         // ---------------------------- Loop Principal ----------------------------
         while (actualCycle <= MAX_CYCLES) {
             // ---------------------------- Movimentação ----------------------------
-            for (count = 0; count < players.length; count++) {
+            for (count = 0; count < players.length; ++count) {
                 if (players[count].isAlive()) {
                     tempSector = players[count].move(board, input);
                     if (tempSector != null) {
@@ -62,6 +62,17 @@ public class Main implements Constants {
             for (count = 0; count < MAX_ACTIONS; ++count) {
                 playerActionsHandler.handle(board, players, SUPPORT, input);
                 printer.print(board, players);
+            }
+
+            // ---------------------------- Ataque dos virus ---------------------------
+            for (count = 0; count < players.length; ++count) {
+                tempSector = players[count].sector(board);
+                for (Virus virus : tempSector.getEnemies()) {
+                    if (virus.isAlive()) {
+                        virus.attack(players[count]);
+                        printer.print(board, players);
+                    }
+                }
             }
 
             actualCycle++;

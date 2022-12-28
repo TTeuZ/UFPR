@@ -40,12 +40,16 @@ public abstract class Player extends Character {
     // ---------------------------- Public Methods ----------------------------
     public abstract ArrayList<String> verifyActions();
 
+    public Sector sector(Sector[][] board) {
+        return board[this.x][this.y];
+    }
+
     public void attack(Sector[][] board, Scanner input) {
         int count, selectedEnemy;
         boolean attacked;
         Sector sector;
 
-        sector = board[this.x][this.y];
+        sector = this.sector(board);
         attacked = false;
         count = 0;
 
@@ -77,7 +81,7 @@ public abstract class Player extends Character {
         boolean moved, validMove;
 
         moved = validMove = false;
-        actualSector = board[this.x][this.y];
+        actualSector = this.sector(board);
         possibleMoves = actualSector.verifyMoves();
 
         for (String move : possibleMoves)
@@ -108,7 +112,7 @@ public abstract class Player extends Character {
             } else
                 System.out.printf("Não é possivel ir para ai!\n");
         }
-        return board[this.x][this.y];
+        return this.sector(board);
     }
 
     public void search(Sector[][] board) throws InterruptedException {
@@ -130,7 +134,7 @@ public abstract class Player extends Character {
                 break;
             case 5:
                 System.out.printf("Dano em area!\n");
-                tempSector = board[this.x][this.y];
+                tempSector = this.sector(board);
                 for (Virus virus : tempSector.getEnemies())
                     virus.reciveDamage(1);
                 break;
