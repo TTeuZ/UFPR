@@ -10,6 +10,7 @@ public abstract class Sector extends BoardPosition implements Constants {
     protected boolean isSource;
     protected boolean found;
     protected int sides[];
+    protected ArrayList<Virus> enemies;
 
     // ---------------------------- Constructors ----------------------------
     public Sector(int x, int y, boolean isSource, boolean found, int[] sides) {
@@ -17,6 +18,7 @@ public abstract class Sector extends BoardPosition implements Constants {
         this.isSource = isSource;
         this.setSides(sides);
         this.setFound(found);
+        this.enemies = new ArrayList<Virus>();
     }
 
     // ---------------------------- Setters ----------------------------
@@ -40,6 +42,22 @@ public abstract class Sector extends BoardPosition implements Constants {
 
     public int[] getSides() {
         return sides;
+    }
+
+    public ArrayList<Virus> getEnemies() {
+        return enemies;
+    }
+
+    // ---------------------------- Private Methods ----------------------------
+    private boolean hasAliveEnemies() {
+        boolean temp;
+
+        temp = false;
+        for (Virus virus : enemies)
+            if (virus.isAlive())
+                temp = true;
+
+        return temp;
     }
 
     // ---------------------------- Public Methods ----------------------------
@@ -66,8 +84,8 @@ public abstract class Sector extends BoardPosition implements Constants {
     public void reachSector(Player player) {
         if (!this.found) {
             this.setFound(true);
-            player.setCanMove(false);
             this.generateEnemies();
         }
+        player.setCanMove(!hasAliveEnemies());
     }
 }
