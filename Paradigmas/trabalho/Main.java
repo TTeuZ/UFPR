@@ -23,7 +23,7 @@ public class Main implements Constants {
 
         // ---------------------------- temporarias ----------------------------
         Sector tempSector;
-        int count;
+        int count, action;
 
         // ---------------------------- Inic. dos Func. ----------------------------
         boardGenerator = new BoardGenerator();
@@ -64,22 +64,24 @@ public class Main implements Constants {
                 break;
 
             // ---------------------------- Ações dos jogadores ---------------------------
-            for (count = 0; count < MAX_ACTIONS; ++count) {
-                playerActionsHandler.handle(board, players, SIMPLE, input);
-                printer.print(board, players);
-            }
-            for (count = 0; count < MAX_ACTIONS; ++count) {
-                playerActionsHandler.handle(board, players, SUPPORT, input);
-                printer.print(board, players);
+            for (count = 0; count < players.length; ++count) {
+                if (players[count].isAlive()) {
+                    for (action = 0; action < MAX_ACTIONS; ++action) {
+                        playerActionsHandler.handle(board, players, count, input);
+                        printer.print(board, players);
+                    }
+                }
             }
 
             // ---------------------------- Ataque dos virus ---------------------------
             for (count = 0; count < players.length; ++count) {
-                tempSector = players[count].sector(board);
-                for (Virus virus : tempSector.getEnemies()) {
-                    if (virus.isAlive()) {
-                        virus.attack(players[count]);
-                        printer.print(board, players);
+                if (players[count].isAlive()) {
+                    tempSector = players[count].sector(board);
+                    for (Virus virus : tempSector.getEnemies()) {
+                        if (virus.isAlive()) {
+                            virus.attack(players[count]);
+                            printer.print(board, players);
+                        }
                     }
                 }
             }

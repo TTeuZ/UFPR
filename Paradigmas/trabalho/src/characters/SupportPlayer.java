@@ -40,7 +40,7 @@ public class SupportPlayer extends Player {
         String selectedPlayer;
 
         sameSector = recovered = false;
-        if (this.x == playerOne.getX() && this.y == playerOne.getY())
+        if (this.x == playerOne.getX() && this.y == playerOne.getY() && playerOne.isAlive())
             sameSector = true;
 
         if (sameSector) {
