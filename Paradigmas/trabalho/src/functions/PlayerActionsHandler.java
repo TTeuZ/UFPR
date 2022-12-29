@@ -9,6 +9,10 @@ import src.sectors.*;
 
 public class PlayerActionsHandler implements Constants {
     // ---------------------------- Public Methods ----------------------------
+    /**
+     * Lida com as possiveis ações que o usuário indicodo no 'type' pode realizar
+     * De acordo com a ação selecionada chama a respectiva função no jogador.
+     */
     public void handle(Sector[][] board, Player[] players, int type, Scanner input) throws InterruptedException {
         ArrayList<String> possibleActions;
         SupportPlayer tempPlayer;

@@ -8,6 +8,10 @@ import src.sectors.*;
 
 public class Printer implements Constants {
     // ---------------------------- Private Methods ----------------------------
+    /**
+     * A partir da base de print do mapa, juntamente com a base para os eixos X e Y,
+     * verifica se o setor atual, na posição indicada possui uma porta ou uma parede
+     */
     private char verifyWall(Sector[][] board, int x, int y, int side) {
         int realX, realY;
         boolean isFound, isDoor;
@@ -28,6 +32,11 @@ public class Printer implements Constants {
         return temp;
     }
 
+    /**
+     * A partir da base de print do mapa, juntamente com a base para os eixos X e Y,
+     * verifica se o setor atual, na posição indicada existem um ou mais jogadores
+     * ou se o setor é a fonte
+     */
     private String verifyPlayer(Sector[][] board, Player[] players, int x, int y) {
         int realX, realY;
         String temp;
@@ -49,6 +58,14 @@ public class Printer implements Constants {
         return temp;
     }
 
+    /**
+     * A partir do virusCount enviado pela função print, verifica se, de acordo com
+     * o contador, no momento, no menu, existe ainda algum virus para ser printado,
+     * e se sim, qual dos virus do setor e se temos que printar seu ataque ou sua
+     * defesa. Como o contador vai de 0 a 8, utilizamos 0 / 3 para sabermos o index
+     * do virus dentro da lista (0 a 2) e o % 3 para sabermos se temos que printar,
+     * ataque, '/' ou defesa
+     */
     private char verifyVirus(Sector sector, int count) {
         ArrayList<Virus> enemies;
         int atribute, index;
@@ -76,6 +93,12 @@ public class Printer implements Constants {
     }
 
     // ---------------------------- Public Methods ----------------------------
+    /**
+     * Printa o mapa e o menu lateral no terminal.
+     * Utiliza Arrays de base para o print, os percurrendo durante os laçoes,
+     * e de acordo com as flags posicionadas nessa base, realiza as verificações
+     * necessariárias para realizar o print correto da situação do jogo
+     */
     public void print(Sector[][] board, Player players[]) {
         int playerCount, attackCount, defenseCount, virusCount;
         boolean sameSector;

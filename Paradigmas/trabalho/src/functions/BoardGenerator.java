@@ -7,6 +7,9 @@ import src.sectors.*;
 
 public class BoardGenerator implements Constants {
     // ---------------------------- Private Methods ----------------------------
+    /**
+     * Instancia um novo Sector de maneira randomica
+     */
     private Sector generateRandomSector(int x, int y) {
         Random random;
         int sectorType;
@@ -31,6 +34,10 @@ public class BoardGenerator implements Constants {
         return temp;
     }
 
+    /**
+     * Instancia um novo array de lados fazendo com que todos assumam o mesmo valor
+     * (DOOR ou WALL)
+     */
     private int[] generateSides(int type) {
         int[] temp;
 
@@ -40,6 +47,9 @@ public class BoardGenerator implements Constants {
         return temp;
     }
 
+    /**
+     * Instancia um novo array de lados, com cada lado podendo ter um tipo diferente
+     */
     private int[] generateSides(int top, int right, int bottom, int left) {
         int[] temp;
 
@@ -52,6 +62,22 @@ public class BoardGenerator implements Constants {
     }
 
     // ---------------------------- Public Methods ----------------------------
+    /**
+     * Responsável por gerar o mapa do jogo atual de maneira totalmente randomica.
+     * Garante que a fonte de infecção não seja no centre e nem nas mesma
+     * linha/coluna que o centro
+     * Garante que o centro tera as 4 portas
+     * Garante que todas as laterias serão paredes.
+     * Gera de forma sequencial cada setor do mapa 5 x 5, verificando os setores ja
+     * instanciados nas redondezas, para garantir que lados comparitlhados tenham o
+     * mesmo tipo.
+     * A verificação em sua maioria ocorre para a parede de cima e a para a parede
+     * da esquerda.
+     * Isso ocorre devido ao funcionamento do loop de costrução, onde sempre teremos
+     * os elementos
+     * acima e da esquerda instanciados antes, salvo exceções que são tradadas
+     * durante o loop.
+     */
     public void generate(Sector[][] board) {
         Random random;
         int x, y, sourceX, sourceY;
@@ -78,11 +104,13 @@ public class BoardGenerator implements Constants {
                 }
             }
 
-        // Gerando os lados de cada setor
+        // Gerando os lados das bordas do mapa
         board[0][0].setSides(generateSides(WALL, random.nextInt(2), random.nextInt(2), WALL));
         board[0][BOARD_SIZE - 1].setSides(generateSides(WALL, WALL, random.nextInt(2), random.nextInt(2)));
         board[BOARD_SIZE - 1][0].setSides(generateSides(random.nextInt(2), random.nextInt(2), WALL, WALL));
         board[BOARD_SIZE - 1][BOARD_SIZE - 1].setSides(generateSides(random.nextInt(2), WALL, WALL, random.nextInt(2)));
+
+        // Gerando os lados de cada setor
         for (x = 0; x < BOARD_SIZE; ++x)
             for (y = 0; y < BOARD_SIZE; ++y) {
                 if (board[x][y].getSides() == null) {

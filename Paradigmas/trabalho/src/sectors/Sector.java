@@ -76,10 +76,8 @@ public abstract class Sector extends BoardPosition implements Constants {
         return temp;
     }
 
-    // Função responsável por gerar os inimigos do setor como especificado
     public abstract void generateEnemies();
 
-    // Função que realiza as verificações quando o jogador entra no setor
     public boolean reachSector(Player player) {
         if (!this.found && !this.isSource) {
             this.setFound(true);
