@@ -13,7 +13,7 @@ public abstract class Character extends BoardPosition implements Constants {
         super(x, y);
         this.setAttack(attack);
         this.setDefense(defense);
-        this.setAlive(true);
+        this.alive = true;
     }
 
     // ---------------------------- Setters ----------------------------
@@ -24,13 +24,9 @@ public abstract class Character extends BoardPosition implements Constants {
     public void setDefense(int defense) {
         if (defense <= 0) {
             this.defense = 0;
-            this.setAlive(false);
+            this.alive = false;
         } else
             this.defense = defense;
-    }
-
-    public void setAlive(boolean alive) {
-        this.alive = alive;
     }
 
     // ---------------------------- Getters ----------------------------

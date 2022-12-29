@@ -62,6 +62,7 @@ public class Main implements Constants {
 
             if (winner)
                 break;
+
             // ---------------------------- Ações dos jogadores ---------------------------
             for (count = 0; count < MAX_ACTIONS; ++count) {
                 playerActionsHandler.handle(board, players, SIMPLE, input);

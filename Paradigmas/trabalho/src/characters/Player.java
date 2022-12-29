@@ -60,14 +60,12 @@ public abstract class Player extends Character {
         ArrayList<Virus> aliveVirus;
         int count, selectedEnemy;
         boolean attacked;
-        Sector sector;
 
-        sector = this.sector(board);
         attacked = false;
         count = 0;
 
         aliveVirus = new ArrayList<Virus>();
-        for (Virus virus : sector.getEnemies())
+        for (Virus virus : this.sector(board).getEnemies())
             if (virus.isAlive())
                 aliveVirus.add(virus);
 
@@ -104,13 +102,11 @@ public abstract class Player extends Character {
 
     public Sector move(Sector[][] board, Scanner input) {
         ArrayList<String> possibleMoves;
-        Sector actualSector;
         String selectedMove;
         boolean moved, validMove;
 
         moved = validMove = false;
-        actualSector = this.sector(board);
-        possibleMoves = actualSector.verifyMoves();
+        possibleMoves = this.sector(board).verifyMoves();
 
         for (String move : possibleMoves)
             System.out.printf("%s - %s\n", move.substring(0, 1), move);
@@ -144,7 +140,6 @@ public abstract class Player extends Character {
     }
 
     public void search(Sector[][] board) throws InterruptedException {
-        Sector tempSector;
         Random random;
         random = new Random();
 
@@ -162,8 +157,7 @@ public abstract class Player extends Character {
                 break;
             case 5:
                 System.out.printf("Dano em area!\n");
-                tempSector = this.sector(board);
-                for (Virus virus : tempSector.getEnemies())
+                for (Virus virus : this.sector(board).getEnemies())
                     virus.reciveDamage(1);
                 break;
             default:
