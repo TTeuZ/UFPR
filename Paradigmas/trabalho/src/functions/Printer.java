@@ -163,9 +163,9 @@ public class Printer implements Constants {
         System.out.println("----------------------------");
     }
 
-    public void wonGame() {
+    public void wonGame(int whoHasWon) {
         System.out.println("----------------------------");
-        System.out.println("|       Voce Ganhou!       |");
+        System.out.printf("|        P%d  Ganhou!       |\n", whoHasWon);
         System.out.println("----------------------------");
     }
 }

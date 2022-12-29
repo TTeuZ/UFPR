@@ -18,7 +18,7 @@ public class Main implements Constants {
         // ---------------------------- Atributos do jogo ----------------------------
         Sector[][] board;
         Player[] players;
-        int actualCycle, deadQtd;
+        int actualCycle, whoHasWon, deadQtd;
         boolean winner;
 
         // ---------------------------- temporarias ----------------------------
@@ -36,7 +36,7 @@ public class Main implements Constants {
         players = new Player[2];
         players[SIMPLE] = new SimplePlayer(BOARD_CENTER, P1_ATTACK, P1_DEFENSE);
         players[SUPPORT] = new SupportPlayer(BOARD_CENTER, P2_ATTACK, P2_DEFENSE);
-        actualCycle = deadQtd = 0;
+        actualCycle = deadQtd = whoHasWon = 0;
         winner = false;
 
         // ---------------------------- Gerando mesa ----------------------------
@@ -53,6 +53,7 @@ public class Main implements Constants {
                         winner = tempSector.reachSector(players[count]);
                         printer.print(board, players);
                         if (winner) {
+                            whoHasWon = count + 1;
                             actualCycle = END_GAME;
                             break;
                         }
@@ -103,7 +104,7 @@ public class Main implements Constants {
         }
 
         if (winner)
-            printer.wonGame();
+            printer.wonGame(whoHasWon);
         else
             printer.loseGame();
         input.close();
