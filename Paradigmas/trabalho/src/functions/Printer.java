@@ -90,6 +90,10 @@ public class Printer implements Constants {
         else
             sameSector = false;
 
+        // Limpando a tela antes de printar novamente
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+
         System.out.println("----------------------------");
         System.out.println("|   Antivìrus por um dia   |");
         System.out.println("----------------------------");
