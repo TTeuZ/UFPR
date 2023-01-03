@@ -25,21 +25,19 @@ void* alocaMen(int num_bytes) {
     temp = sbrk(0);
     freeSpace = NULL;
 
-    if (topoInicialHeap != temp) {
-        iterator = topoInicialHeap;
-        while (iterator < temp) {
-            if (*(int*)iterator == 0) {
+    iterator = topoInicialHeap;
+    while (iterator < temp) {
+        if (*(int*)iterator == 0) {
+            iterator = iterator + 8;
+            if (*(int*)iterator >= num_bytes) {
                 iterator = iterator + 8;
-                if (*(int*)iterator >= num_bytes) {
-                    iterator = iterator + 8;
-                    freeSpace = iterator;
-                    break;
-                } else iterator = iterator + 8;
-            } else iterator = iterator + 16;
+                freeSpace = iterator;
+                break;
+            } else iterator = iterator + 8;
+        } else iterator = iterator + 16;
 
-            printf("Esta alocado: %d - Quantidade de bytes alocados: %d\n", *(int*)(iterator - 16), *(int*)(iterator - 8));
-            iterator = iterator + *(int*)(iterator - 8);
-        }
+        printf("Esta alocado: %d - Quantidade de bytes alocados: %d\n", *(int*)(iterator - 16), *(int*)(iterator - 8));
+        iterator = iterator + *(int*)(iterator - 8);
     }
 
     if (freeSpace == NULL) {
