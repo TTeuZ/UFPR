@@ -4,34 +4,34 @@
 
 // Teve que usar o sbrk pq de acordo com o man, não da para fazer o que queremos com o brk
 
-void* topoInicialHeap;
-void* topoAtualHeap;
+void* heapStart;
+void* heapEnd;
 
-void iniciaAlocador() {
-    topoInicialHeap = topoAtualHeap = sbrk(0);
+void startAllocator() {
+    heapStart = heapEnd = sbrk(0);
 }
 
-void finalizarAlocador() {
-    brk(topoInicialHeap);
+void endAllocator() {
+    brk(heapStart);
 }
 
-int liberaMen(void* bloco) {
-    *(int*)(bloco - 16) = 0;
+int freeMemory(void* block) {
+    *(int*)(block - 16) = 0;
     return 0;
 }
 
-void* alocaMen(int num_bytes) {
+void* allocateMemory(int numBytes) {
     void* temp, * iterator, * freeSpace;
     int bytesQtd, diff;
 
     freeSpace = NULL;
     bytesQtd = INT_MAX;
 
-    iterator = topoInicialHeap;
-    while (iterator < topoAtualHeap) {
+    iterator = heapStart;
+    while (iterator < heapEnd) {
         if (*(int*)iterator == 0) {
             iterator = iterator + 8;
-            if (*(int*)iterator >= num_bytes && *(int*)iterator <= bytesQtd) {
+            if (*(int*)iterator >= numBytes && *(int*)iterator <= bytesQtd) {
                 bytesQtd = *(int*)iterator;
                 iterator = iterator + 8;
                 freeSpace = iterator;
@@ -44,19 +44,19 @@ void* alocaMen(int num_bytes) {
     if (freeSpace == NULL) {
 
         temp = sbrk(0);
-        diff = temp - topoAtualHeap;
-        if (diff < num_bytes)
-            sbrk((1 + (num_bytes / 4096)) * 4096);
+        diff = temp - heapEnd;
+        if (diff < numBytes)
+            sbrk((1 + (numBytes / 4096)) * 4096);
 
 
-        temp = topoAtualHeap;
+        temp = heapEnd;
         *(int*)temp = 1;
 
         temp = temp + 8;
-        *(int*)temp = num_bytes;
+        *(int*)temp = numBytes;
         temp = temp + 8;
 
-        topoAtualHeap = temp + num_bytes;
+        heapEnd = temp + numBytes;
     } else {
 
         *(int*)(freeSpace - 16) = 1;
@@ -69,24 +69,24 @@ void* alocaMen(int num_bytes) {
 int main()
 {
     printf("\n");
-    iniciaAlocador();
-    long int* new_mem = alocaMen(8);
+    startAllocator();
+    long int* new_mem = allocateMemory(8);
     printf("\n");
-    long int* new_mem2 = alocaMen(16);
+    long int* new_mem2 = allocateMemory(16);
     printf("\n");
-    long int* new_mem3 = alocaMen(32);
+    long int* new_mem3 = allocateMemory(32);
     printf("\n");
-    long int* new_mem4 = alocaMen(12);
+    long int* new_mem4 = allocateMemory(12);
     printf("\n");
 
-    liberaMen(new_mem2);
-    liberaMen(new_mem4);
+    freeMemory(new_mem2);
+    freeMemory(new_mem4);
 
-    long int* reused_mem = alocaMen(10);
-    long int* reused_mem2 = alocaMen(15);
-    long int* new_mem5 = alocaMen(3948);
-    long int* new_mem6 = alocaMen(8);
+    long int* reused_mem = allocateMemory(10);
+    long int* reused_mem2 = allocateMemory(15);
+    long int* new_mem5 = allocateMemory(3948);
+    long int* new_mem6 = allocateMemory(8);
 
-    finalizarAlocador();
+    endAllocator();
     return 0;
 }

@@ -4,34 +4,34 @@
 
 // Teve que usar o sbrk pq de acordo com o man, não da para fazer o que queremos com o brk
 
-void* topoInicialHeap;
-void* topoAtualHeap;
+void* heapStart;
+void* heapEnd;
 
-void iniciaAlocador() {
-    topoInicialHeap = topoAtualHeap = sbrk(0);
+void startAllocator() {
+    heapStart = heapEnd = sbrk(0);
 }
 
-void finalizarAlocador() {
-    brk(topoInicialHeap);
+void endAllocator() {
+    brk(heapStart);
 }
 
-int liberaMen(void* bloco) {
-    *(int*)(bloco - 16) = 0;
+int freeMemory(void* block) {
+    *(int*)(block - 16) = 0;
     return 0;
 }
 
-void* alocaMen(int num_bytes) {
+void* allocateMemory(int numBytes) {
     void* temp, * iterator, * freeSpace;
     int diff;
 
     freeSpace = NULL;
 
-    if (topoInicialHeap != topoAtualHeap) {
-        iterator = topoInicialHeap;
-        while (iterator < topoAtualHeap) {
+    if (heapStart != heapEnd) {
+        iterator = heapStart;
+        while (iterator < heapEnd) {
             if (*(int*)iterator == 0) {
                 iterator = iterator + 8;
-                if (*(int*)iterator >= num_bytes) {
+                if (*(int*)iterator >= numBytes) {
                     iterator = iterator + 8;
                     freeSpace = iterator;
                 } else iterator = iterator + 8;
@@ -46,20 +46,20 @@ void* alocaMen(int num_bytes) {
         printf("não achou\n");
 
         temp = sbrk(0);
-        diff = temp - topoAtualHeap;
-        if (diff < num_bytes) {
+        diff = temp - heapEnd;
+        if (diff < numBytes) {
             printf("teve que alocar\n");
-            sbrk((1 + (num_bytes / 4096)) * 4096);
+            sbrk((1 + (numBytes / 4096)) * 4096);
         }
 
-        temp = topoAtualHeap;
+        temp = heapEnd;
         *(int*)temp = 1;
 
         temp = temp + 8;
-        *(int*)temp = num_bytes;
+        *(int*)temp = numBytes;
         temp = temp + 8;
 
-        topoAtualHeap = temp + num_bytes;
+        heapEnd = temp + numBytes;
     } else {
         printf("achou\n");
 
@@ -72,39 +72,39 @@ void* alocaMen(int num_bytes) {
 
 int main(int argc, char** argv) {
     printf(" ");
-    iniciaAlocador();
+    startAllocator();
 
-    printf("Topo Inicial da heap: %p\n", topoInicialHeap);
+    printf("Topo Inicial da heap: %p\n", heapStart);
 
     printf("\nAlocação de teste = 150\n");
-    void* teste = alocaMen(150);
+    void* teste = allocateMemory(150);
 
     printf("\nAlocação de teste2 = 90\n");
-    void* teste2 = alocaMen(90);
+    void* teste2 = allocateMemory(90);
 
     printf("\nliberando de teste = 150\n");
-    liberaMen(teste);
+    freeMemory(teste);
 
     printf("\nAlocação de teste3 = 180\n");
-    void* teste3 = alocaMen(180);
+    void* teste3 = allocateMemory(180);
 
     printf("\nAlocação de teste4 = 50\n");
-    void* teste4 = alocaMen(50);
+    void* teste4 = allocateMemory(50);
 
     printf("\nliberando de test4 = 50\n");
-    liberaMen(teste4);
+    freeMemory(teste4);
 
     printf("\nliberando de test3 = 180\n");
-    liberaMen(teste3);
+    freeMemory(teste3);
 
     printf("\nAlocação de teste5 = 40\n");
-    void* teste5 = alocaMen(40);
+    void* teste5 = allocateMemory(40);
 
     printf("\nAlocação de teste6 = 160\n");
-    void* teste6 = alocaMen(160);
+    void* teste6 = allocateMemory(160);
 
     printf("\nAlocação de teste7 = 200\n");
-    void* teste7 = alocaMen(200);
+    void* teste7 = allocateMemory(200);
 
-    finalizarAlocador();
+    endAllocator();
 }
