@@ -134,7 +134,7 @@ end_while:
 
     pushq %rdi                                  # salvando o valor de %rdi (num_bytes)
 
-    addq HEAP_END, %rax                         # %rax <- %rax + topo atual da pilha
+    addq -8(%rbp), %rax                         # %rax <- %rax + topo atual da pilha
     movq %rax, %rdi                             # %rdi <- %rax
     movq $12, %rax                              # %rax <- 12 (syscall brk)
     syscall                                     # chamada do sistema para o brk
