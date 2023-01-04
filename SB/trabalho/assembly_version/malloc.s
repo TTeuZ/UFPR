@@ -189,22 +189,13 @@ main:
     call allocateMemory
     movq %rdi, -16(%rbp)
 
-    # movq $STR, %rdi                             # 1° parametro do printf
-    # call printf                                 # primeiro printf para instaurar o buffer do printf
-
     movq $32, %rdi                              # terceira alocação
     call allocateMemory
     movq %rdi, -32(%rbp)
 
-    # movq $STR, %rdi                             # 1° parametro do printf
-    # call printf                                 # primeiro printf para instaurar o buffer do printf
-
     movq $12, %rdi                              # quarta alocação
     call allocateMemory
     movq %rdi, -40(%rbp)
-
-    # movq $STR, %rdi                             # 1° parametro do printf
-    # call printf                                 # primeiro printf para instaurar o buffer do printf
 
     movq -16(%rbp), %rdi                        # primeira desalocação
     call freeMemory
@@ -216,29 +207,17 @@ main:
     call allocateMemory
     movq %rdi, 48(%rbp)
 
-    # movq $STR, %rdi                             # 1° parametro do printf
-    # call printf                                 # primeiro printf para instaurar o buffer do printf
-
     movq $15, %rdi                              # sexta alocação
     call allocateMemory
     movq %rdi, 56(%rbp)
-
-    # movq $STR, %rdi                             # 1° parametro do printf
-    # call printf                                 # primeiro printf para instaurar o buffer do printf
 
     movq $3948, %rdi                            # setima alocação
     call allocateMemory
     movq %rdi, 64(%rbp)
 
-    # movq $STR, %rdi                             # 1° parametro do printf
-    # call printf                                 # primeiro printf para instaurar o buffer do printf
-
     movq $8, %rdi                               # oitava alocação
     call allocateMemory
     movq %rdi, 72(%rbp)
-
-    # movq $STR, %rdi                             # 1° parametro do printf
-    # call printf                                 # primeiro printf para instaurar o buffer do printf
 
     call endAllocator                           # chamando o endAllocator
 
