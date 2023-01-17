@@ -18,8 +18,8 @@ public class Main implements Constants {
         // ---------------------------- Atributos do jogo ----------------------------
         Sector[][] board;
         Player[] players;
-        int actualCycle, whoHasWon, deadQtd;
-        boolean winner;
+        int actualCycle, whoHasWon;
+        boolean winner, oneHasDied;
 
         // ---------------------------- temporarias ----------------------------
         Sector tempSector;
@@ -36,8 +36,8 @@ public class Main implements Constants {
         players = new Player[2];
         players[SIMPLE] = new SimplePlayer(BOARD_CENTER, P1_ATTACK, P1_DEFENSE);
         players[SUPPORT] = new SupportPlayer(BOARD_CENTER, P2_ATTACK, P2_DEFENSE);
-        actualCycle = deadQtd = whoHasWon = 0;
-        winner = false;
+        actualCycle = whoHasWon = 0;
+        winner = oneHasDied = false;
 
         // ---------------------------- Gerando mesa ----------------------------
         boardGenerator.generate(board);
@@ -88,16 +88,16 @@ public class Main implements Constants {
             }
 
             // ---------------------------- Att. de Status ---------------------------
-            deadQtd = 0;
             for (count = 0; count < players.length; ++count) {
                 if (players[count].isAlive()) {
                     tempSector = players[count].sector(board);
                     players[count].setCanMove(!tempSector.hasAliveEnemies());
-                } else
-                    deadQtd++;
+                } else if (players[count] instanceof SimplePlayer)
+                    oneHasDied = true;
+
             }
 
-            if (deadQtd == 2)
+            if (oneHasDied)
                 actualCycle = END_GAME;
             else
                 actualCycle++;
