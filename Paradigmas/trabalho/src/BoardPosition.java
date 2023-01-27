@@ -1,6 +1,8 @@
 package src;
 
-public abstract class BoardPosition {
+import src.constants.Constants;
+
+public abstract class BoardPosition implements Constants {
     protected int x;
     protected int y;
 
@@ -12,11 +14,13 @@ public abstract class BoardPosition {
 
     // ---------------------------- Setters ----------------------------
     public void setX(int x) {
-        this.x = x;
+        if (x < BOARD_SIZE)
+            this.x = x;
     }
 
     public void setY(int y) {
-        this.y = y;
+        if (y < BOARD_SIZE)
+            this.y = y;
     }
 
     // ---------------------------- Getters ----------------------------
