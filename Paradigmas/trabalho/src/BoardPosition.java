@@ -1,6 +1,6 @@
 package src;
 
-import src.constants.Constants;
+import src.constants.*;
 
 public abstract class BoardPosition implements Constants {
     protected int x;

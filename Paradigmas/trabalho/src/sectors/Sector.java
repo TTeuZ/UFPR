@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 import src.BoardPosition;
 import src.characters.*;
-import src.constants.Constants;
 
-public abstract class Sector extends BoardPosition implements Constants {
+public abstract class Sector extends BoardPosition {
     protected boolean isSource;
     protected boolean found;
     protected int sides[];

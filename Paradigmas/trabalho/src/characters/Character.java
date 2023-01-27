@@ -1,9 +1,8 @@
 package src.characters;
 
 import src.BoardPosition;
-import src.constants.*;
 
-public abstract class Character extends BoardPosition implements Constants {
+public abstract class Character extends BoardPosition {
     protected int attack;
     protected int defense;
     protected boolean alive;

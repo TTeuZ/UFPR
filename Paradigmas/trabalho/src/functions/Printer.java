@@ -3,7 +3,7 @@ package src.functions;
 import java.util.ArrayList;
 
 import src.characters.*;
-import src.constants.Constants;
+import src.constants.*;
 import src.sectors.*;
 
 public class Printer implements Constants {

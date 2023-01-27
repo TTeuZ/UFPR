@@ -2,7 +2,7 @@ package src.functions;
 
 import java.util.Random;
 
-import src.constants.Constants;
+import src.constants.*;
 import src.sectors.*;
 
 public class BoardGenerator implements Constants {

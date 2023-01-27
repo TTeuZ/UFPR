@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import src.characters.*;
-import src.constants.Constants;
+import src.constants.*;
 import src.sectors.*;
 
 public class PlayerActionsHandler implements Constants {
