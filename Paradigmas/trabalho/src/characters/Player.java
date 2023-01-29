@@ -28,15 +28,6 @@ public abstract class Player extends Character {
         this.canMove = canMove;
     }
 
-    // ---------------------------- Getters ----------------------------
-    public boolean isCanSearch() {
-        return canSearch;
-    }
-
-    public boolean isCanMove() {
-        return canMove;
-    }
-
     // ---------------------------- Private Methods ----------------------------
     private void blindAttack(Virus virus) {
         Random random;

@@ -16,15 +16,11 @@ public abstract class Sector extends BoardPosition {
         super(x, y);
         this.isSource = isSource;
         this.setSides(sides);
-        this.setFound(found);
+        this.found = found;
         this.enemies = new ArrayList<Virus>();
     }
 
     // ---------------------------- Setters ----------------------------
-    public void setFound(boolean found) {
-        this.found = found;
-    }
-
     public void setSides(int[] sides) {
         if (this.sides == null)
             this.sides = sides;
@@ -79,7 +75,7 @@ public abstract class Sector extends BoardPosition {
 
     public boolean reachSector(Player player) {
         if (!this.found && !this.isSource) {
-            this.setFound(true);
+            this.found = true;
             this.generateEnemies();
         }
         player.setCanMove(!hasAliveEnemies());

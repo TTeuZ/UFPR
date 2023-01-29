@@ -10,16 +10,12 @@ public abstract class Character extends BoardPosition {
     // ---------------------------- Constructors ----------------------------
     public Character(int x, int y, int attack, int defense) {
         super(x, y);
-        this.setAttack(attack);
+        this.attack = attack;
         this.setDefense(defense);
         this.alive = true;
     }
 
     // ---------------------------- Setters ----------------------------
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
     public void setDefense(int defense) {
         if (defense <= 0) {
             this.defense = 0;

@@ -9,11 +9,6 @@ public class Virus extends Character {
     // ---------------------------- Constructors ----------------------------
     public Virus(int x, int y, int status, boolean canAvoid) {
         super(x, y, status, status);
-        this.setCanAvoid(canAvoid);
-    }
-
-    // ---------------------------- Setters ----------------------------
-    public void setCanAvoid(boolean canAvoid) {
         this.canAvoid = canAvoid;
     }
 
