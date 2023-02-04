@@ -118,7 +118,7 @@ public class Printer implements Constants {
         System.out.flush();
 
         System.out.println("----------------------------");
-        System.out.println("|   Antivìrus por um dia   |");
+        System.out.println("|   Antivírus por um dia   |");
         System.out.println("----------------------------");
         System.out.println("      1   2   3   4   5");
         for (x = 0; x < BOARD_ROWS; ++x) {
