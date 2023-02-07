@@ -42,12 +42,10 @@ void* allocateMemory(int numBytes) {
     }
 
     if (freeSpace == NULL) {
-
         temp = sbrk(0);
         diff = temp - heapEnd;
         if (diff < numBytes)
             sbrk((1 + (numBytes / 4096)) * 4096);
-
 
         temp = heapEnd;
         *(int*)temp = 1;
@@ -58,12 +56,20 @@ void* allocateMemory(int numBytes) {
 
         heapEnd = temp + numBytes;
     } else {
-
         *(int*)(freeSpace - 16) = 1;
         temp = freeSpace;
     }
 
     return temp;
+}
+
+void imprimeMapa() {
+    int count;
+
+    count = heapStart;
+    while (count < heapEnd) {
+
+    }
 }
 
 int main()
@@ -82,7 +88,7 @@ int main()
     freeMemory(new_mem2);
     freeMemory(new_mem4);
 
-    long int* reused_mem = allocateMemory(10);
+    long int* new_mem2 = allocateMemory(10);
     long int* reused_mem2 = allocateMemory(15);
     long int* new_mem5 = allocateMemory(3948);
     long int* new_mem6 = allocateMemory(8);
