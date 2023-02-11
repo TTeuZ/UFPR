@@ -8,6 +8,7 @@ void* heapStart;
 void* heapEnd;
 
 void iniciaAlocador() {
+    printf("\n");
     heapStart = heapEnd = sbrk(0);
 }
 
@@ -93,7 +94,6 @@ void imprimeMapa() {
 
 int main() {
     void* a, * b;
-    printf("\n");
     iniciaAlocador();
     imprimeMapa();
 
