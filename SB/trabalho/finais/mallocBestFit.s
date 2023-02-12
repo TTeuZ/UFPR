@@ -17,7 +17,6 @@ iniciaAlocador:
     pushq %rbp                                  # 
     movq %rsp, %rbp                             #
 # ---------------------------------------------
-
     movq $STR, %rdi                             # primeiro parametro do printf
     call printf                                 # chama o printf
 
@@ -143,7 +142,6 @@ end_while:
     addq $1, %rax                               # %rax <- %rax + 1
     imul $4096, %rax                            # %rax <- %rax * 4096
 
-
     pushq %rdi                                  # salvando o valor de %rdi (num_bytes)
     
     addq -8(%rbp), %rax                         # %rax <- %rax + topo atual da heap (temp)
@@ -181,11 +179,11 @@ exit_inside_alloc_if:
     popq %rdi                                   # recuperando o valor de %rdi (num_bytes)
 
     movq %rax, %rdx                             # %rdx <- topo alocado da heap
-    movq $HEAP_END, %rcx                        # %rcx <- heap_end
+    movq HEAP_END, %rcx                         # %rcx <- heap_end
     addq $16, %rcx                              # %rcx <- %rcx + 16
     subq %rcx, %rdx                             # %rcx <- sbrk(0) - %rcx    
 
-    movq %rcx, (%r10)                           # *(int*)freeSpace <- %rcx
+    movq %rdx, (%r10)                           # *(int*)freeSpace <- %rcx
     jmp exit_aloc_if                            # sai do if
 else_alloc_if:
     movq -24(%rbp), %r10                        # %r11 <- freeSpace
@@ -202,7 +200,7 @@ exit_aloc_if:
     ret   
 
 
-# -8(%rbp) = void *iterador = %r8
+# -8(%rbp) = void *iterator = %r8
 # -16(%rbp) = int free = %r9
 # -24(%rbp) = int size = %r10
 # -32(%rbp) = int count = %r11
@@ -216,10 +214,13 @@ imprimeMapa:
     movq %r8, -8(%rbp)                          # iterator <- topo inicial da heap
 print_while:
     movq $0, -32(%rbp)                          # count <- 0
+
     movq $12, %rax                              # chamada para brk
     movq $0, %rdi                               # %rdi <- 0 (parametro)
     syscall                                     # chamada do sistema para o brk
+
     movq %rax, %rcx                             # %rcx <- sbrk(0)
+    movq -8(%rbp), %r8                          # %r8 <- iterator
 
     cmpq %rcx, %r8                              # compara iterador com sbrk(0)
     jge end_print_while                         # se for maior, sai do while do print
@@ -232,14 +233,17 @@ print_while:
 else_print_free_if:
     movq $0, -16(%rbp)                          # free recebe 0
 exit_print_free_if:
-    addq $8, %r8                                # iterator <- iteator + 8
-    movq (%r8), %r10                             # %r10 <- *(int*)iterator
-    movq %r10, -24(%rbp)                        # size <- *(int*)iterator
-
     movq $HEADER_STRING, %rdi                   # primeiro parametro do printf
     call printf                                 # print do header
 
+    movq -8(%rbp), %r8                          # %r8 <- iterator
+
     addq $8, %r8                                # iterator <- iteator + 8
+    movq (%r8), %r10                            # %r10 <- *(int*)iterator
+    movq %r10, -24(%rbp)                        # size <- *(int*)iterator
+
+    addq $8, %r8                                # iterator <- iteator + 8
+    movq %r8, -8(%rbp)                          # salva o valor do iterador
 print_for:
     movq -32(%rbp), %r11                        # %r11 <- count
     movq -24(%rbp), %r10                        # rcx <- size
@@ -250,18 +254,22 @@ print_for:
     movq $1, %rcx                               # rcx <- $1
     cmpq %r9, %rcx                              # compara free com 1
     je else_char_select                         # se for igual pula pro else
-    movq $OCCUPED_CHAR, %rdi                       # coloca o '+' como parametro do printf
+    movq $OCCUPED_CHAR, %rdi                    # coloca o '+' como parametro do printf
     jmp exit_char_select                        # sai do if
 else_char_select:
-    movq $FREE_CHAR, %rdi                    # coloca o '-' como parametro do print
+    movq $FREE_CHAR, %rdi                       # coloca o '-' como parametro do print
 exit_char_select:
     call printf                                 # chama o printf
+
     movq -32(%rbp), %r11                        # %r11 <- count
     addq $1, %r11                               # %r11 <- %r11 + 1
     movq %r11, -32(%rbp)                        # count <- %r11
+    
     jmp print_for                               # volta pro for
 end_print_for:
     movq -24(%rbp), %r10                        # %r10 <- size
+    movq -8(%rbp), %r8                          # %r8 <- iterator
+    
     addq %r10, %r8                              # iterator <- iteator + size
     movq %r8, -8(%rbp)                          # atualiza a variavel local
     jmp print_while                             # volta pro while
@@ -269,7 +277,7 @@ end_print_while:
     movq $STR, %rdi                             # primeiro parametro do print
     call printf                                 # chama o printf
 # --------------------------------------------- restauração do registro de ativação
-    subq $32, %rsp                              # restauradno o espaço para 4 variaveis locais
+    addq $32, %rsp                              # restauradno o espaço para 4 variaveis locais
     popq %rbp                                   #
     ret                                         #
 
