@@ -288,6 +288,7 @@ main:
     subq $80, %rsp                              # espaço para 8 variaveis locais 
 # ---------------------------------------------
     call iniciaAlocador                         # chamando o iniciaAlocador
+    call imprimeMapa
 
     movq $32, %rdi                              # primeira alocação
     call alocaMem
