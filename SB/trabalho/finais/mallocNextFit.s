@@ -133,7 +133,9 @@ end_while:
     movq -8(%rbp), %r8                          # %r8 <- temp
     movq -32(%rbp), %rcx                        # %rcx <- diff
 
-    cmpq %rdi, %rcx                             # compara num_bytes (%rdi) com diff (%rcx)
+    movq %rdi, %rdx                             # %rdx <- numBytes
+    addq $16, %rdx                              # %rdx <- %rdx + 16
+    cmpq %rdx, %rcx                             # compara num_bytes (%rdx + 16) com diff (%rcx)
     jge exit_inside_alloc_if                    # sai do if interno
 
     movq $0, %rdx                               # %rdx <- 0
