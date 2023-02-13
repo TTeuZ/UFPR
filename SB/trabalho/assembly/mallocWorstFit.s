@@ -8,7 +8,11 @@
     FREE_CHAR: .string "+"
     OCCUPED_CHAR: .string "-"
 .section .text
-.globl main
+.globl iniciaAlocador
+.globl finalizaAlocador
+.globl liberaMem
+.globl alocaMem
+.globl imprimeMapa
 
 iniciaAlocador:
 # --------------------------------------------- registro de ativação
@@ -280,56 +284,3 @@ end_print_while:
     addq $32, %rsp                              # restauradno o espaço para 4 variaveis locais
     popq %rbp                                   #
     ret                                         #
-
-main:
-# --------------------------------------------- registro de ativação
-    pushq %rbp                                  #
-    movq %rsp, %rbp                             #
-    subq $80, %rsp                              # espaço para 8 variaveis locais 
-# ---------------------------------------------
-    call iniciaAlocador                         # chamando o iniciaAlocador
-    call imprimeMapa
-
-    movq $32, %rdi                              # primeira alocação
-    call alocaMem
-    movq %rdi, -8(%rbp)
-    call imprimeMapa
-
-    movq $50, %rdi                              # segunda alocação
-    call alocaMem
-    movq %rdi, -16(%rbp)
-    call imprimeMapa
-
-    movq -8(%rbp), %rdi                         # primeira desalocação
-    call liberaMem
-    call imprimeMapa
-
-    movq -16(%rbp), %rdi                        # primeira desalocação
-    call liberaMem
-    call imprimeMapa
-
-    movq $10, %rdi                              # primeira alocação
-    call alocaMem
-    movq %rdi, -16(%rbp)
-    call imprimeMapa
-
-    movq -16(%rbp), %rdi                        # primeira desalocação
-    call liberaMem
-    call imprimeMapa
-
-    movq $200, %rdi                             # segunda alocação
-    call alocaMem
-    movq %rdi, -16(%rbp)
-    call imprimeMapa
-
-    movq $20, %rdi                              # primeira alocação
-    call alocaMem
-    movq %rdi, -8(%rbp)
-    call imprimeMapa
-
-    call finalizaAlocador                       # chamando o finalizaAlocador
-    call imprimeMapa
-
-    addq $72, %rsp                              # restaura o valor da heap
-    movq $60, %rax                              #
-    syscall                                     #

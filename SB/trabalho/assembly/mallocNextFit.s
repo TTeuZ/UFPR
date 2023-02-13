@@ -1,6 +1,7 @@
 .section .data
     HEAP_START: .quad 0
     HEAP_END: .quad 0
+    POINTER: .quad 0
 
     STR: .string "\n"
     STR1: .string "topo da heap %p\n"
@@ -8,7 +9,11 @@
     FREE_CHAR: .string "+"
     OCCUPED_CHAR: .string "-"
 .section .text
-.globl main
+.globl iniciaAlocador
+.globl finalizaAlocador
+.globl liberaMem
+.globl alocaMem
+.globl imprimeMapa
 
 iniciaAlocador:
 # --------------------------------------------- registro de ativação
@@ -24,6 +29,7 @@ iniciaAlocador:
     
     movq %rax, HEAP_START                       # armazena o topo atual da heap em HEAP_START
     movq %rax, HEAP_END                         # armazena o topo atual da heap em HEAP_END
+    movq %rax, POINTER                          # armazena o topo atual da heap em POINTER
 # --------------------------------------------- restauração do registro de ativação
     popq %rbp                                   #
     ret                                         #
@@ -66,8 +72,8 @@ alocaMem:
     subq $32, %rsp                              # requisitando espaço para 5 variaveis locais
 # ---------------------------------------------
     movq $0, -24(%rbp)                          # freeSpace <- null (0)
-    movq HEAP_START, %r9                        # %r9 <- inicio da heap
-    movq %r9, -16(%rbp)                         # iterator <- inicio da heap
+    movq POINTER, %r9                           # %r9 <- pointer
+    movq %r9, -16(%rbp)                         # iterator <- pointer
 while:
     movq HEAP_END, %rdx                         # %rdx <- fim da heap
     movq -16(%rbp), %r9                         # %r9 <- iterador
@@ -88,6 +94,9 @@ while:
     cmpq (%r9), %rdi                            # compara num_bytes com *(int*)iterator
     jg else_bytes_if                            # se for maior vai para o fim deste if
     
+    movq %r9, %rdx                              # %rdx <- iterator
+    subq $8, %rdx                               # %rdx <- %rdx - 8
+    movq %rdx, POINTER                          # pointer <- %rdx
     addq $8, %r9                                # iterator <- iterator + 8
     movq %r9, -24(%rbp)                         # freeSpace <- iterator
     jmp exit_if
@@ -107,6 +116,9 @@ end_while:
     movq $0, %rdx                               # %rdx <- 0
     cmpq %r10, %rdx                             # compara freeSpace com null (0)
     jne else_alloc_if
+
+    movq HEAP_START, %rdx                       # %rdx <- heapStart
+    movq %rdx, POINTER                          # pointer <- heapStart
 
     pushq %rdi                                  # salvando o valor de %rdi (num_bytes)
     
@@ -275,42 +287,3 @@ end_print_while:
     addq $32, %rsp                              # restauradno o espaço para 4 variaveis locais
     popq %rbp                                   #
     ret                                         #
-
-main:
-# --------------------------------------------- registro de ativação
-    pushq %rbp                                  #
-    movq %rsp, %rbp                             #
-    subq $80, %rsp                              # espaço para 8 variaveis locais 
-# ---------------------------------------------
-    call iniciaAlocador                         # chamando o iniciaAlocador
-    call imprimeMapa
-
-    movq $32, %rdi                              # primeira alocação
-    call alocaMem
-    movq %rdi, -8(%rbp)
-    call imprimeMapa
-
-    movq $30, %rdi                              # segunda alocação
-    call alocaMem
-    movq %rdi, -16(%rbp)
-    call imprimeMapa
-
-    movq -8(%rbp), %rdi                         # primeira desalocação
-    call liberaMem
-    call imprimeMapa
-
-    movq -16(%rbp), %rdi                        # primeira desalocação
-    call liberaMem
-    call imprimeMapa
-
-    movq $20, %rdi                              # primeira alocação
-    call alocaMem
-    movq %rdi, -8(%rbp)
-    call imprimeMapa
-
-    call finalizaAlocador                       # chamando o finalizaAlocador
-    call imprimeMapa
-
-    addq $80, %rsp                              # restaura o valor da heap
-    movq $60, %rax                              #
-    syscall                                     #
