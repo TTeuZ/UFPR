@@ -200,7 +200,7 @@ else_alloc_if:
     movq %r10, -24(%rbp)                        # atualiza a variavel local
     movq %r10, -8(%rbp)                         # temp <- freeSpace
 exit_aloc_if:
-    movq -8(%rbp), %rdi                         # coloca temp como retorno da função
+    movq -8(%rbp), %rax                         # coloca temp como retorno da função
 # --------------------------------------------- restauração do registro de ativação
     addq $32, %rsp                              # restauradno o espaço das 3 variaveis locais
     popq %rbp                                   #
