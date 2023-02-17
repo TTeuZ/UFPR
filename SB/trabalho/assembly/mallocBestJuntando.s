@@ -46,17 +46,98 @@ finalizaAlocador:
     popq %rbp                                   #
     ret                                         #
 
-# parametro num_bytes = %rdi
+# -8(%rbp) = void *temp = %r8
+# -16(%rbp) = int bytesQtd = %r9
+# -24(%rbp) = int bytesQtd = %r11
+# parametro block = %rdi = %r10
 liberaMem:
 # --------------------------------------------- registro de ativação
     pushq %rbp                                  #
     movq %rsp, %rbp                             #
+    subq $24, %rsp                               # requisitando espaço para 2 variaveis locais
 # ---------------------------------------------
     movq %rdi, %r10                             # $r10 <- %rdi
     subq $16, %r10                              # %r1- <- %r10 - 16
     movq $0, (%r10)                             # (%r10) <- 0
+
+    movq %rdi, %r10                             # %r10 <- block
+    subq $8, %r10                               # %r10 <- block - 8
+    movq (%r10), %r9                            # %r9 <- *(int*)(block - 8)
+    movq (%r10), %r11                            # %r9 <- *(int*)(block - 8)
+    movq %r9, -16(%rbp)                         # bytesQtd <- (int*)(block - 8)
+    movq %r11, -24(%rbp)                         # bytesQtd <- (int*)(block - 8)
+
+    movq %rdi, %r8                              # %r8 <- block
+    movq -16(%rbp), %r9                         
+    addq %r9, %r8                               # %r8 <- block + bytesQtd
+    movq %r8, -8(%rbp)
+
+free_while:
+    pushq %rdi                                  # salvando o valor de %rdi (block)
+    
+    movq $12, %rax                              # %rax <- 12 (syscall brk)
+    movq $0, %rdi                               # %rdi <- 0 (parametro)
+    syscall  
+    movq %rax, %rcx                             # %rcx <- topo alocado da heap
+
+    popq %rdi                                   # recuperando o valor de %rdi (block)
+
+    movq -8(%rbp), %r8
+    cmpq %rcx, %r8
+    jge end_free_while
+
+    movq $0, %rdx
+    movq (%r8), %rcx
+    cmpq %rdx, %rcx
+    jne end_free_while
+
+    movq -16(%rbp), %r9
+    movq -8(%rbp), %r8
+    addq $8, %r8
+    movq (%r8), %r9
+    movq %r9, -16(%rbp)
+
+    movq %rdi, %r10
+    movq -16(%rbp), %r9
+    addq $16, %r9
+    subq $8, %r10
+    addq %r9, (%r10)
+
+    movq -8(%rbp), %r8
+    movq -16(%rbp), %r9
+    addq %r9, %r8
+    addq $16, %r8
+    movq %r8, -8(%rbp)
+
+    pushq %rdi                                  # salvando o valor de %rdi (block)
+    
+    movq $12, %rax                              # %rax <- 12 (syscall brk)
+    movq $0, %rdi                               # %rdi <- 0 (parametro)
+    syscall  
+    movq %rax, %rcx                             # %rcx <- topo alocado da heap
+
+    popq %rdi                                   # recuperando o valor de %rdi (block)
+
+    movq -8(%rbp), %r8
+    cmpq %r8, %rcx
+    jne else_free_if_while
+    movq HEAP_END, %rcx
+    movq -24(%rbp), %r11
+    movq %r11, %rdx
+    addq $32, %rdx
+    subq %rdx, %rcx
+    movq %rcx, HEAP_END
+    jmp end_free_if_while
+else_free_if_while:
+    movq -16(%rbp), %r9
+    addq $16, %r9
+    movq %r9, -16(%rbp)                        
+end_free_if_while:
+jmp free_while
+end_free_while:
     movq $0, %rax                               # retorno da função = 0    
 # --------------------------------------------- restauração do registro de ativação
+    addq $24, %rsp                              # restauradno o espaço das 2 variaveis locais
     popq %rbp                                   #
     ret                                         #
 
@@ -195,8 +276,37 @@ else_alloc_if:
     movq -24(%rbp), %r10                        # %r11 <- freeSpace
     subq $16, %r10                              # freeSpace(r11) <- freeSpace - 16
     movq $1, (%r10)                             # *(int*)freeSpace <- 1
-    addq $16, %r10                              # freeSpace(r11) <- freeSpace + 16
+
+    addq $8, %r10
+    movq (%r10), %r11
+    movq %r11, -32(%rbp)
+
+    movq -32(%rbp), %r11
+    movq %rdi, %rdx
+    subq %rdx, %r11
+                        
+    movq %r11, -32(%rbp) 
+
+    movq $16, %rdx
+    cmpq %rdx, %r11
+    jle end_split_alloc_if
+    movq -24(%rbp), %r10                        # %r10 <- freeSpace
+    subq $8, %r10
+    movq %rdi, (%r10)
+    
+    addq %rdi, %r10
+    addq $8, %r10
+    movq $0, (%r10)
+    addq $8, %r10
+    
+    movq -32(%rbp), %r11 
+    subq $16, %r11
+    movq %r11, (%r10)
     movq %r10, -24(%rbp)                        # atualiza a variavel local
+end_split_alloc_if:
+    movq -24(%rbp), %r10                        # %r10 <- freeSpace
+    subq $8, %r10
+    subq %rdi, %r10
     movq %r10, -8(%rbp)                         # temp <- freeSpace
 exit_aloc_if:
     movq -8(%rbp), %rax                         # coloca temp como retorno da função
@@ -260,10 +370,10 @@ print_for:
     movq $1, %rcx                               # rcx <- $1
     cmpq %r9, %rcx                              # compara free com 1
     je else_char_select                         # se for igual pula pro else
-    movq $OCCUPED_CHAR, %rdi                    # coloca o '+' como parametro do printf
+    movq $FREE_CHAR, %rdi                    # coloca o '+' como parametro do printf
     jmp exit_char_select                        # sai do if
 else_char_select:
-    movq $FREE_CHAR, %rdi                       # coloca o '-' como parametro do print
+    movq $OCCUPED_CHAR, %rdi                       # coloca o '-' como parametro do print
 exit_char_select:
     call printf                                 # chama o printf
 
