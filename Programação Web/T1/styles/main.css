@@ -1,0 +1,5 @@
+/* Css globais e sobrescritas do bootstrap */
+
+.container {
+    max-width: none !important;
+}

@@ -1,0 +1,38 @@
+/* Css da seçao da navbar lateral */
+
+.navbar__wrapper {
+    height: 100vh;
+    position: fixed;
+}
+
+.navbar__photo {
+    height: 205px;
+    width: 160px;
+    border-radius: 30%;
+}
+
+.navbar__wrapper a:hover {
+    color: #00bc8c !important;
+}
+
+.navbar_links__wrapper {
+    margin-top: auto;
+    margin-bottom: 30px;
+}
+
+.navbar_links__wrapper a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.navbar_links__wrapper a:hover {
+    color: #00bc8c !important;
+}
+
+.nav-link {
+    padding: var(--bs-nav-link-padding-y) 1rem !important;
+}
+
+.navbar__icons {
+    font-size: 1.5em;
+}
