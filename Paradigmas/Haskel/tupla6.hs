@@ -2,7 +2,7 @@ module Main where
 
 main :: IO ()
 main = do
-  print (contMestre 5)
+  print (countMDG 5 "doutor" 'f')
 
 firstTupla :: (String, String, Char) -> String
 firstTupla (x, y, z) = x
@@ -22,9 +22,10 @@ base x
   | x == 5 = ("jocileide", "doutor", 'f')
   | otherwise = ("ninguem", "", 'x')
 
-contMestre :: Int -> Int
-contMestre 0 = 0
-contMestre n =
-  if secondTupla (base n) == "mestre"
-    then 1 + contMestre (n - 1)
-    else contMestre (n - 1)
+countMDG :: Int -> String -> Char -> Int
+countMDG 0 _ _ = 0
+countMDG n s c
+  | secondTupla (base n) == s =
+    if thirdTupla (base n) == c then 1 + countMDG (n - 1) s c
+    else countMDG (n - 1) s c
+  | otherwise =countMDG (n - 1) s c

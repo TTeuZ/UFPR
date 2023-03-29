@@ -25,6 +25,6 @@ base x
 contMestre :: Int -> Int
 contMestre 0 = 0
 contMestre n =
-  if secondTupla (base n) == "mestre"
+  if secondTupla (base n) == "doutor"
     then 1 + contMestre (n - 1)
     else contMestre (n - 1)

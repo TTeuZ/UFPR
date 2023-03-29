@@ -2,7 +2,18 @@ module Main where
 
 main :: IO ()
 main = do
-  print (contMestre 5)
+  print (listaPesquisadores 5)
+  print (onlyDoctors (listaPesquisadores 5))
+
+type Nome = String
+
+type Titulo = String
+
+type Genero = Char
+
+type Pesquisador = (Nome, Titulo, Genero)
+
+type Grupo = [Pesquisador]
 
 firstTupla :: (String, String, Char) -> String
 firstTupla (x, y, z) = x
@@ -22,9 +33,12 @@ base x
   | x == 5 = ("jocileide", "doutor", 'f')
   | otherwise = ("ninguem", "", 'x')
 
-contMestre :: Int -> Int
-contMestre 0 = 0
-contMestre n =
-  if secondTupla (base n) == "mestre"
-    then 1 + contMestre (n - 1)
-    else contMestre (n - 1)
+listaPesquisadores :: Int -> [Pesquisador]
+listaPesquisadores 0 = []
+listaPesquisadores n = [base n] ++ listaPesquisadores (n - 1)
+
+onlyDoctors :: [Pesquisador] -> [Pesquisador]
+onlyDoctors [] = []
+onlyDoctors (h : t)
+  | secondTupla h == "doutor" = [h] ++ onlyDoctors t
+  | otherwise = onlyDoctors t
