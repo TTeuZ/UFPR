@@ -1,0 +1,137 @@
+<!-- Responsividade nao aplicada no momento -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/verticalNav.css">
+    <link rel="stylesheet" href="../styles/project.css">
+
+    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/8493a85789.js" crossorigin="anonymous"></script>
+
+    <title>Paulo Mateus Luza Alves</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <!-- Vertical navbar -->
+            <nav class="col-3 col-xl-2 col-lg-3 navbar__wrapper bg-dark d-flex flex-column">
+                <div class="d-flex align-items-center flex-column">
+                    <img class="navbar__photo mt-5" src="../assets/profile.jpg" alt="Foto de perfil">
+                    <span class="mt-3 fs-4 text-center"> Paulo Mateus Luza Alves </span>
+                </div>
+
+                <ul class="nav nav-pills flex-column mt-3">
+                    <li class="nav-item">
+                        <a class="nav-link fs-6" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-6" href="projects.html">Projetos</a>
+                    </li>
+                </ul>
+
+                <div class="navbar_links__wrapper d-flex align-items-center flex-column">
+                    <span class="fs-5"> Links e Redes sociais </span>
+                    <a class="d-flex flex-row align-items-center mt-2 nav-link" target="_blank"
+                        href="https://www.facebook.com/paulomateus.luzaalves">
+                        <i class="fa-brands fa-square-facebook navbar__icons"></i>
+                        <span class="fs-5 ms-2"> Facebook </span>
+                    </a>
+                    <a class="d-flex flex-row align-items-center mt-2 nav-link" target="_blank"
+                        href="https://www.instagram.com/paulo_mla/">
+                        <i class="fa-brands fa-square-instagram navbar__icons"></i>
+                        <span class="fs-5 ms-2"> Instagram </span>
+                    </a>
+                    <a class="d-flex flex-row align-items-center mt-2 nav-link" target="_blank"
+                        href="https://www.linkedin.com/in/paulo-mateus-luza-alves-69a73a162/">
+                        <i class="fa-brands fa-linkedin navbar__icons"></i>
+                        <span class="fs-5 ms-2"> LinkedIn </span>
+                    </a>
+                    <a class="d-flex flex-row align-items-center mt-2 nav-link" target="_blank"
+                        href="https://github.com/TTeuZ">
+                        <i class="fa-brands fa-square-github navbar__icons"></i>
+                        <span class="fs-5 ms-2"> GitHub </span>
+                    </a>
+                </div>
+            </nav>
+            <!-- Vertical navbar -->
+            <main class="col-9 col-xl-10 col-lg-9">
+                <article class="mt-5">
+                    <h2 class="text-center">Projetos</h2>
+
+                    <div class="col-12 col-xl-9 col-lg-9">
+                        <section class="ms-5 mt-4">
+                            <div class="project__title d-flex justify-content-start align-items-center">
+                                <span class="fs-4">Sistema Controle V1</span>
+                                <span class="badge bg-success ms-2">Vue.js</span>
+                                <span class="badge bg-success ms-2">Nuxt.js</span>
+                                <span class="badge bg-danger ms-2">Laravel</span>
+                            </div>
+                            <p>
+                                1° Projeto pessoal. Feito em Nuxt e Vue.js para o front-end e laravel para o back-end. Pensado em ser um sistema simples de cadastro e controle de estoque, alem de gerenciamento de fornecedores.
+                            </p>
+                            <div class="project__links">
+                                <a class="d-flex flex-row align-items-center mt-2 nav-link" target="_blank"
+                                    href="https://github.com/TTeuZ/Sistema-Controle-V1">
+                                    <i class="fa-brands fa-square-github project__icon"></i>
+                                    <span class="fs-6 ms-2"> GitHub</span>
+                                </a>
+                            </div>
+                        </section>
+
+                        <div class="divider ms-5"></div>
+
+                        <section class="mt-4 ms-5">
+                            <div class="project__title d-flex justify-content-start align-items-center">
+                                <span class="fs-4">Sistema Controle V2</span>
+                                <span class="badge bg-success ms-2">Vue.js</span>
+                                <span class="badge bg-success ms-2">Nuxt.js</span>
+                                <span class="badge bg-warning ms-2">Firebase</span>
+                            </div>
+                            <p>
+                                2° Projeto pessoal. Sistema feito em Vue.js e Nuxt.js para o front-end e FireBase para um banco de dados NoSQL. Segunda versão do sistema de controle, detendo as mesmas funcionalidades. 
+                            </p>
+                            <div class="project__links">
+                                <a class="d-flex flex-row align-items-center mt-2 nav-link" target="_blank"
+                                    href="https://github.com/TTeuZ/Sistema-Controle-V2">
+                                    <i class="fa-brands fa-square-github project__icon"></i>
+                                    <span class="fs-6 ms-2"> GitHub</span>
+                                </a>
+                            </div>
+                        </section>
+
+                        <div class="divider ms-5"></div>
+
+                        <section class="mt-4 ms-5">
+                            <div class="project__title d-flex justify-content-start align-items-center">
+                                <span class="fs-4">Kontrol</span>
+                                <span class="badge bg-success ms-2">Vue.js</span>
+                                <span class="badge bg-success ms-2">Nuxt.js</span>
+                                <span class="badge bg-success ms-2">Vuex</span>
+                            </div>
+                            <p>
+                                3° Projeto pessoal. Feito usando Vue.js, Vuex e Nuxt.js para o front-end e não possuindo back-end. A intenção deste projeto era criar um sistema que criasse suas telas automaticamente, 
+                                a partir de um json de configuração como fonte, ou seja, o código prncipal recebe este json, e apartir do seu conteudo constroi a aparência do sistema. 
+                            </p>
+                            <div class="project__links">
+                                <a class="d-flex flex-row align-items-center mt-2 nav-link" target="_blank"
+                                    href="https://github.com/TTeuZ/Kontroll">
+                                    <i class="fa-brands fa-square-github project__icon"></i>
+                                    <span class="fs-6 ms-2"> GitHub</span>
+                                </a>
+                            </div>
+                        </section>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>

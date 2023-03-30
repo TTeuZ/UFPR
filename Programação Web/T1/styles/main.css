@@ -4,7 +4,27 @@
     max-width: none !important;
 }
 
-.badge {
+.nav-link {
+    padding: var(--bs-nav-link-padding-y) 1rem !important;
+}
+
+.about__badge {
     padding: 0.5rem 1rem !important;
     font-size: 0.9rem !important;
+}
+
+.divider {
+    width: 100% !important;
+    height: 0px;
+    border: 0.5px solid white;
+    margin: 20px 0px;
+}
+
+a {
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+a:hover {
+    color: #00bc8c !important;
 }

@@ -20,19 +20,6 @@
     margin-bottom: 30px;
 }
 
-.navbar_links__wrapper a {
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.navbar_links__wrapper a:hover {
-    color: #00bc8c !important;
-}
-
-.nav-link {
-    padding: var(--bs-nav-link-padding-y) 1rem !important;
-}
-
 .navbar__icons {
     font-size: 1.5em;
 }
