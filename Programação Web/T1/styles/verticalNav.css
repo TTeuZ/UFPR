@@ -2,7 +2,7 @@
 
 .navbar__wrapper {
     height: 100vh;
-    position: fixed;
+    /* position: fixed; */
 }
 
 .navbar__photo {

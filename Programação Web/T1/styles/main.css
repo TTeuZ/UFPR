@@ -3,3 +3,8 @@
 .container {
     max-width: none !important;
 }
+
+.badge {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem !important;
+}
