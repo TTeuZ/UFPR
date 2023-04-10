@@ -22,16 +22,39 @@ end
 def treatCommand input
     treatedInput = {}
     inputSplited = []
+    valueTemp = []
     temp = ''
 
     inputSplited = input.split(/ /, 3)
     treatedInput['command'] = inputSplited[0]
     treatedInput['table'] = inputSplited[1]
     temp = inputSplited[2]
-    
-    # puts temp.gsub /( |(".*?"))/, "\\2"
-    # puts temp.scan(/((".*?")|([^ ]))/).map { |x| x[0] }.join
-    # puts temp.scan(/((".*?")|([^ ]))/).map { |x| x[0] }
+
+    if temp != nil
+    temp = temp.gsub /( |(".*?"))/, "\\2-"
+        temp = temp.split('"--')
+
+        treatedInput['values'] = {}
+        for value in temp do
+            valueTemp = value.delete!('"-').split('=')
+            treatedInput['values'][valueTemp[0]] = valueTemp[1]
+        end
+    end
 
     treatedInput
+end
+
+def verifyCommandAndTable command
+    commands = ['insere', 'altera', 'exclui', 'lista']
+    tables = ['addresses', 'colleges', 'students', 'subjects']
+    error = []
+
+    if not commands.include? command['command']
+        error.push('Por favor, insira um comando valido')
+    end
+    if not tables.include? command['table']
+        error.push('Por favor, insira uma tabela valida')
+    end
+
+    error
 end

@@ -13,10 +13,9 @@ require_relative 'src/tables/subject'
 
 # variaveis
 command = ''
+error = []
 treatedCommand = {}
 
-possibleCommands = ['insere', 'altera', 'exclui', 'lista']
-tables = ['addresses', 'colleges', 'students', 'subjects']
 lineWidth = 100
 
 puts '#' * lineWidth
@@ -55,11 +54,12 @@ while command != 'exit'
         showSchema
     else
         treatedCommand = treatCommand command
+        error = verifyCommandAndTable treatedCommand
 
-        if possibleCommands.include? treatedCommand['command']
+        if error == []
             puts 'valido'
         else
-            puts 'Por favor, insira um comando valido!'
+            puts error
         end
     end
 
