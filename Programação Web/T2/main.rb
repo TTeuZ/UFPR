@@ -2,8 +2,9 @@ require 'rubygems'
 require 'active_record'
 
 # Funcionais
-require_relative 'src/createDatabase'
 require_relative 'src/commandHandler'
+require_relative 'src/createDatabase'
+require_relative 'src/inputHandler'
 
 # Tabelas
 require_relative 'src/tables/address'
@@ -12,9 +13,9 @@ require_relative 'src/tables/student'
 require_relative 'src/tables/subject'
 
 # variaveis
-command = ''
+input = ''
 error = []
-treatedCommand = {}
+command = {}
 
 lineWidth = 100
 
@@ -46,20 +47,24 @@ puts '#' * lineWidth
 puts
 
 puts 'Insera um comando:'
-command = gets.chomp
+input = gets.chomp
 
 while command != 'exit'
     case command
     when 'schema'
         showSchema
     else
-        treatedCommand = treatCommand command
-        error = verifyCommandAndTable treatedCommand
+        command = treatInput input
+        if command != nil
+            error = verifyCommandAndTable command
 
-        if error == []
-            puts 'valido'
+            if error == []
+                treatCommand command
+            else
+                puts error
+            end
         else
-            puts error
+            puts "Por favor, insira valores em formatos validos!"
         end
     end
 
