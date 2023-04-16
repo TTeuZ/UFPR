@@ -3,4 +3,8 @@ class Subject<ActiveRecord::Base
 
     # Validacoes
     validates :name, :code, presence: true
+
+    def tableView
+        puts "#{self.id}|#{self.name}|#{self.code}"
+    end
 end

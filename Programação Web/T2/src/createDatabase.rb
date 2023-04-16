@@ -3,7 +3,8 @@ ActiveRecord::Base.establish_connection :adapter => "sqlite3", :database => "dat
 if not ActiveRecord::Base.connection.table_exists? 'colleges'
     ActiveRecord::Base.connection.create_table :colleges do |college|
         college.string :name
-        college.string :type
+        college.string :c_type
+        college.timestamps
     end
 end
 
@@ -13,17 +14,16 @@ if not ActiveRecord::Base.connection.table_exists? 'students'
         student.integer :age
         student.string :register
         student.belongs_to :college, foreign_key: true
+        student.timestamps
     end
 end
 
-if not ActiveRecord::Base.connection.table_exists? 'adresses'
-    ActiveRecord::Base.connection.create_table :adresses do |address|
-        address.string :country
-        address.string :state
-        address.string :city
+if not ActiveRecord::Base.connection.table_exists? 'addresses'
+    ActiveRecord::Base.connection.create_table :addresses do |address|
         address.string :streat
         address.integer :number
         address.references :student, foreign_key: true
+        address.timestamps
     end
 end
 
@@ -31,6 +31,7 @@ if not ActiveRecord::Base.connection.table_exists? 'subjects'
     ActiveRecord::Base.connection.create_table :subjects do |subject|
         subject.string :name
         subject.string :code
+        subject.timestamps
     end
 end
 
@@ -38,5 +39,6 @@ if not ActiveRecord::Base.connection.table_exists? 'students_subjects'
     ActiveRecord::Base.connection.create_table :students_subjects, id: false do |ss|
         ss.references :student
         ss.references :subject
+        ss.timestamps
     end
 end

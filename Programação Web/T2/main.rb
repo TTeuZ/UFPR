@@ -6,11 +6,30 @@ require_relative 'src/commandHandler'
 require_relative 'src/createDatabase'
 require_relative 'src/inputHandler'
 
+# Seeder
+require_relative 'src/seeds/seeder'
+
 # Tabelas
 require_relative 'src/tables/address'
 require_relative 'src/tables/college'
 require_relative 'src/tables/student'
 require_relative 'src/tables/subject'
+
+def commands
+    %w[insere altera exclui lista]
+end
+
+def commandsThatNeedValues
+    %w[altera exclui]
+end
+
+def tables
+    %w[addresses colleges students subjects students_subjects]
+end
+
+def models
+    %w[Address College Student Subject]
+end
 
 # variaveis
 input = ''
@@ -46,7 +65,7 @@ puts '#' + ' '.center(lineWidth - 2) + '#'
 puts '#' * lineWidth
 puts
 
-puts 'Insera um comando:'
+puts 'Insira um comando:'
 input = gets.chomp
 
 while command != 'exit'
@@ -68,6 +87,6 @@ while command != 'exit'
         end
     end
 
-    puts 'Insera um comando:'
-    command = gets.chomp
+    puts "\nInsira um comando:"
+    input = gets.chomp
 end

@@ -1,6 +1,10 @@
 class Address<ActiveRecord::Base
-    belongs_to :student
+    belongs_to :student, required: true
 
     # Validacoes
-    validates :country, :state, :city, :streat, :number, presence: true
+    validates :streat, :number, presence: true
+
+    def tableView
+        puts "#{self.id}|#{self.streat}|#{self.number}"
+    end
 end
