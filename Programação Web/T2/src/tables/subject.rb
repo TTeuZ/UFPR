@@ -7,4 +7,11 @@ class Subject<ActiveRecord::Base
     def tableView
         puts "#{self.id}|#{self.name}|#{self.code}"
     end
+
+    def printInfo(space: '')
+        puts "#{space}Matéria id: #{self.id}"
+        puts "#{space}Nome: #{self.name}"
+        puts "#{space}Código: #{self.code}"
+        puts ""
+    end
 end

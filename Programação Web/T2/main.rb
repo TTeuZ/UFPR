@@ -6,14 +6,15 @@ require_relative 'src/commandHandler'
 require_relative 'src/createDatabase'
 require_relative 'src/inputHandler'
 
-# Seeder
-require_relative 'src/seeds/seeder'
-
 # Tabelas
 require_relative 'src/tables/address'
 require_relative 'src/tables/college'
 require_relative 'src/tables/student'
 require_relative 'src/tables/subject'
+require_relative 'src/tables/students_subjects'
+
+# Seeder
+require_relative 'src/seeds/seeder'
 
 def commands
     %w[insere altera exclui lista]
@@ -28,7 +29,7 @@ def tables
 end
 
 def models
-    %w[Address College Student Subject]
+    %w[Address College Student Subject StudentsSubjects]
 end
 
 # variaveis

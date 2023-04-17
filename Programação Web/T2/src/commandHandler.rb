@@ -25,7 +25,7 @@ def treatCommand command
         updateHandler(table: selectedTable, command: command)
     when 'exclui'
         deleteHandler(table: selectedTable, command: command)
-    when 'lita'
+    when 'lista'
         listHandler(table: selectedTable, command: command)
     end
 end
@@ -66,7 +66,7 @@ def updateHandler (table:, command:)
                 updateHash = treatUpdateString updateString
         
                 objects[index].update(updateHash)
-                puts "Atualização Executada com sucesso!"
+                puts "Atualização executada com sucesso!"
             else
                 puts "Tupla selecionada não existe!"
             end
@@ -78,26 +78,26 @@ def updateHandler (table:, command:)
     end
 end
 
-def updateHandler (table:, command:)
+def deleteHandler (table:, command:)
     index = 0
     begin
         objects = table.where(command['values'])
         if objects.size != 0 
             if objects.size > 1 
-                puts "Existe mais de uma opção para atualizar, qual delas você deseja fazer a alteração?"
+                puts "Existe mais de uma opção para deletar, qual voce deseja deletar? caso deseje deletar todos, digite 0"
                 for obj in objects do
                     obj.tableView
                 end
                 index = gets.chomp.to_i - 1
             end
 
-            if index >= 0 && index <= (objects.size - 1)
-                puts "Quais valores você deseja alterar?"
-                updateString = gets.chomp
-                updateHash = treatUpdateString updateString
-        
-                objects[index].update(updateHash)
-                puts "Atualização Executada com sucesso!"
+            if index >= -1 && index <= (objects.size - 1)
+                if index == -1
+                    objects.destroy_all
+                else
+                    objects[index].destroy
+                end
+                puts "Exclusão executada com sucesso!"
             else
                 puts "Tupla selecionada não existe!"
             end
@@ -106,5 +106,14 @@ def updateHandler (table:, command:)
         end
     rescue => exception
         puts exception
+    end
+end
+
+def listHandler (table:, command:)
+    if table.all.size >= 1
+        puts ""
+        table.find_each { |obj| obj.printInfo }
+    else
+        puts "Nenhum registro encontrado!"
     end
 end

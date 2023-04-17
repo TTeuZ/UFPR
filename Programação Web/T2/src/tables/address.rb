@@ -7,4 +7,12 @@ class Address<ActiveRecord::Base
     def tableView
         puts "#{self.id}|#{self.streat}|#{self.number}"
     end
+
+    def printInfo(space: '')
+        if space == "" 
+            puts ""
+        end
+        puts "#{space}Endereço Id: #{self.id}"
+        puts "#{space}Endereço: #{self.streat}, #{self.number}"
+    end
 end

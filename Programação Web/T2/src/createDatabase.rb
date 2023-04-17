@@ -39,6 +39,5 @@ if not ActiveRecord::Base.connection.table_exists? 'students_subjects'
     ActiveRecord::Base.connection.create_table :students_subjects, id: false do |ss|
         ss.references :student
         ss.references :subject
-        ss.timestamps
     end
 end
