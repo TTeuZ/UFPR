@@ -37,7 +37,7 @@ input = ''
 error = []
 command = {}
 
-lineWidth = 100
+lineWidth = 112
 
 puts '#' * lineWidth
 puts '#' + ' '.center(lineWidth - 2) + '#'
@@ -49,7 +49,7 @@ puts '#' + ' '.center(lineWidth - 2) + '#'
 puts '#' + '      < operação > < tabela > { atributo = valor }'.ljust(lineWidth - 2) + '#'
 puts '#' + ' '.center(lineWidth - 2) + '#'
 puts '#' + '      - < operação > pode ser "insere", "altera", "exclui", "lista";'.ljust(lineWidth - 2) + '#'
-puts '#' + '      - < tabela > indica o nome da tabela (addresses, colleges, students, subjects);'.ljust(lineWidth - 2) + '#'
+puts '#' + '      - < tabela > indica o nome da tabela (addresses, colleges, students, subjects, students_subjects);'.ljust(lineWidth - 2) + '#'
 puts '#' + '      - atributo = valor indica o valor do atributo envolvido na operação (0..n valores);'.ljust(lineWidth - 2) + '#'
 puts '#' + '      - {...} indica repetição, os colchetes não devem ser adicionados.'.ljust(lineWidth - 2) + '#'
 puts '#' + ' '.center(lineWidth - 2) + '#'
