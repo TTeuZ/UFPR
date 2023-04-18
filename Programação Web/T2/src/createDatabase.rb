@@ -36,7 +36,7 @@ if not ActiveRecord::Base.connection.table_exists? 'subjects'
 end
 
 if not ActiveRecord::Base.connection.table_exists? 'students_subjects'
-    ActiveRecord::Base.connection.create_table :students_subjects, id: false do |ss|
+    ActiveRecord::Base.connection.create_table :students_subjects do |ss|
         ss.references :student
         ss.references :subject
     end

@@ -13,7 +13,7 @@ def showSchema
     puts ');'
     puts 'CREATE INDEX "index_adresses_on_student_id" ON "adresses" ("student_id");'
     puts 'CREATE TABLE IF NOT EXISTS "subjects" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "code" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);'
-    puts 'CREATE TABLE IF NOT EXISTS "students_subjects" ("student_id" integer, "subject_id" integer);'
+    puts 'CREATE TABLE IF NOT EXISTS "students_subjects" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "student_id" integer, "subject_id" integer);'
     puts 'CREATE INDEX "index_students_subjects_on_student_id" ON "students_subjects" ("student_id");'
     puts 'CREATE INDEX "index_students_subjects_on_subject_id" ON "students_subjects" ("subject_id");'
     puts
