@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="canvas__wrapper">
+        <canvas id="canvas" width="600" height="600"></canvas>
+        <div class="input__wrapper">
+            <label for="sides">Informe a quantidade de lados do poligono</label>
+            <div class="submit__wrapper">
+                <input type="number" name="sides" id="sides" min="3" max="8" onblur="validateInput(value)">
+                <button onclick="createPoligon()"> enviar </button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./canvas.js"></script>
+</body>
+
+<style>
+#canvas {
+    border: 1px solid black;
+}
+
+.canvas__wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.input__wrapper {
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+}   
+
+.submit__wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+</style>
+</html>
