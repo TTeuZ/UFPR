@@ -4,8 +4,6 @@ var context = canvas.getContext("2d")
 
 const point = (x, y) => ({x, y})
 const line = (begin, end) => ({begin, end})
-var lines = []
-
 const mouse = {
     x: 0, y: 0,
     button: 0,
@@ -13,6 +11,7 @@ const mouse = {
     dragX: 0, dragY: 0
 }
 
+var lines = []
 const size = 600
 const section = size / 6
 
@@ -26,9 +25,41 @@ function validateInput (value) {
 }
 
 function createPoligon () {
+    clearLines()
+
     const input = document.getElementById("sides")
     const value = input.value
-    console.log(value)
+
+    switch (value) {
+        case '3':
+            lines = createLines(3, 60, 50)
+        break
+        case '4':
+        break
+        case '5':
+        break
+        case '6':
+        break
+        case '7':
+        break
+        case '8':
+        break
+    }
+}
+
+function createLines(sides, ang, lineSize) {
+    var beginX, beginY, endX, endY
+    var radius, cos, sin
+    var count, sinal
+
+    sinal = 1
+    beginX = section * 2
+    beginY = section * 3
+    for (count = 0; count < sides; ++count) {
+        radius = ((sinal * ang) * Math.PI) / 180
+        cos = Math.cos(radius)
+        sin = Math.sin(radius)
+    }
 }
 
 // canva function
@@ -50,6 +81,8 @@ function drawLines () {
 
 // Main functions
 function normalBegin () {
+    clearLines()
+    
     const begin = point(section * 2, section * 3)
     const end = point(section * 4, section * 3)
     const newLine = line(begin, end)
@@ -57,6 +90,7 @@ function normalBegin () {
 }
 
 function draw () {
+    context.beginPath()
     cleanCanvas()
     drawLines()
     context.stroke()
