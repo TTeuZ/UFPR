@@ -24,7 +24,6 @@ function validateInput(value) {
 function treatInput() {
     const input = document.getElementById("sides")
     createPolygon(parseInt(input.value))
-    draw()
 }
 
 function cleanCanvas() { context.clearRect(0, 0, 600, 600) }
@@ -39,14 +38,10 @@ function drawLine(line) {
 
 function drawLines() {
     let count
+
+    context.beginPath()
     for (count = 0; count < lines.length; ++count)
         drawLine(lines[count])
-}
-
-function draw() {
-    context.beginPath()
-    cleanCanvas()
-    drawLines()
     context.stroke()
 }
 
@@ -81,6 +76,17 @@ function createPolygon(sides) {
     }
 }
 
-// main
+// Move Functions
+canvas.addEventListener('click', e => {
+    console.log(e)
+})
+
+// main loop
+function update() {
+    cleanCanvas()
+    drawLines()
+    window.requestAnimationFrame(update)
+}
+
 initialBeginning()
-draw()
+update()
