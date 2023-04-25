@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +15,7 @@
             <label for="sides">Informe a quantidade de lados do poligono</label>
             <div class="submit__wrapper">
                 <input type="number" name="sides" id="sides" min="3" max="8" onblur="validateInput(value)">
-                <button onclick="createPoligon()"> enviar </button>
+                <button onclick="treatInput()"> enviar </button>
             </div>
         </div>
     </div>
@@ -22,25 +23,26 @@
 </body>
 
 <style>
-#canvas {
-    border: 1px solid black;
-}
+    #canvas {
+        border: 1px solid black;
+    }
 
-.canvas__wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
+    .canvas__wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
 
-.input__wrapper {
-    padding-left: 15px;
-    display: flex;
-    flex-direction: column;
-}   
+    .input__wrapper {
+        padding-left: 15px;
+        display: flex;
+        flex-direction: column;
+    }
 
-.submit__wrapper {
-    display: flex;
-    justify-content: space-between;
-}
+    .submit__wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
 </style>
+
 </html>
