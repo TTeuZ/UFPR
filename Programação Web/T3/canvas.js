@@ -51,6 +51,14 @@ function draw() {
 }
 
 // Polygon functions
+function initialBeginning() {
+    var begin, end, newLine
+    begin = point(150, 300)
+    end = point(450, 300)
+    newLine = line(begin, end)
+    lines.push(newLine)
+}
+
 function createPolygon(sides) {
     var sideSize, center, x, y, begin, end, newLine, count
 
@@ -74,5 +82,5 @@ function createPolygon(sides) {
 }
 
 // main
-createPolygon(2)
+initialBeginning()
 draw()
