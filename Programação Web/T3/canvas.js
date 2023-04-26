@@ -34,42 +34,34 @@ function getCoordinates(canvas, event) {
     let coordinates = canvas.getBoundingClientRect()
     return {
         x: event.pageX - coordinates.left,
-        y: event.pageY - coordinates.top
+        y: event.pageY - coordinates.left
     }
 }
 
-// function cursorInLine(mouse, line) {
-//     var beginX, beginY, endX, endY
+function cursorInLine(mouse, line) {
+    var dBegin, dEnd
 
-//     beginX = line.begin.x - 5
-//     beginY = line.begin.y - 5
-//     endX = line.end.x + 5
-//     endY = line.end.y + 5
+    dBegin = Math.sqrt(Math.pow((line.begin.x - mouse.x),2) + Math.pow((line.begin.y - mouse.y),2))
+    dEnd = Math.sqrt(Math.pow((line.end.x - mouse.x),2) + Math.pow((line.end.y - mouse.y),2))
 
-//     var hitX = mouse.x >= beginX && mouse.x <= (beginX + 10)
-//     var hitY = mouse.y >= beginY && mouse.y <= (beginY + 10)
+    if (dBegin <= 10) return 'begin'
+    if (dEnd <= 10) return 'end'
+    // if (Math.abs(dBegin - dEnd) <= 20) console.log('middle')
+    if (Math.abs(dBegin - dEnd) <= 20) return 'middle'
+}
 
-//     if (hitX && hitY && button == 1) return 'begin'
-
-//     var hitX = mouse.x >= (endX - 10) && mouse.x <= endX
-//     var hitY = mouse.y >= (endY - 10) && mouse.y <= endY
-
-//     if (hitX && hitY && button == 1) return 'end'
-
-//     var hitX = mouse.x >= (beginX + 10) && mouse.x <= (endX - 10)
-//     var hitY = mouse.y >= beginY && mouse.y <= endY
-
-//     if (hitX && hitY) return 'middle'
-// }
-
-// function getLineOffsets(mouse, line) {
-//     return {
-//         beginX: mouse.x - line.begin.x,
-//         beginY: mouse.y - line.begin.y,
-//         endX: line.end.x - mouse.x,
-//         endY: line.end.y - mouse.y
-//     }
-// }
+function getLineOffsets(mouse, line) {
+    return {
+        begin: {
+            x: mouse.x - line.begin.x,
+            y: mouse.y - line.begin.y,
+        },
+        end: {
+            x: line.end.x - mouse.x,
+            y: line.end.y - mouse.y
+        }
+    }
+}
 
 // --------------------------------------------------------------------------------
 //                               Draw Functions
@@ -124,16 +116,17 @@ function createPolygon(sides) {
 // --------------------------------------------------------------------------------
 //                                Move Functions
 // --------------------------------------------------------------------------------
-// function treatNormalMove(line, mouse, event) {
-//     if (line.where == 'middle') {
-//         line.begin.x = mouse.x - line.offset.beginX
-//         line.begin.y = mouse.y - line.offset.beginY
-//         line.end.x = mouse.x + line.offset.endX
-//         line.end.y = mouse.y + line.offset.endY
-//     } else {
-//         console.log(line[line.where])
-//     }
-// }
+function treatNormalMove(line, mouse) {
+    if (line.where == 'middle') {
+        line.begin.x = mouse.x - line.offset.begin.x
+        line.begin.y = mouse.y - line.offset.begin.y
+        line.end.x = mouse.x + line.offset.end.x
+        line.end.y = mouse.y + line.offset.end.y
+    } else {
+        line[line.where].x = mouse.x - line.offset[line.where].x
+        line[line.where].y = mouse.y - line.offset[line.where].y
+    }
+}
 
 // function splitLineAndMove(line, event) {
 
@@ -143,25 +136,25 @@ canvas.addEventListener('mousedown', event => {
     var mouse = getCoordinates(canvas, event)
     button = event.buttons
 
-    // lines.forEach(line => {
-    //     switch (cursorInLine(mouse, line)) {
-    //         case 'begin':
-    //             line.isDragging = true
-    //             line.where = 'begin'
-    //             line.offset = getLineOffsets(mouse, line)
-    //             break
-    //         case 'middle':
-    //             line.isDragging = true
-    //             line.where = 'middle'
-    //             line.offset = getLineOffsets(mouse, line)
-    //             break
-    //         case 'end':
-    //             line.isDragging = true
-    //             line.where = 'end'
-    //             line.offset = getLineOffsets(mouse, line)
-    //             break
-    //     }
-    // })
+    lines.forEach(line => {
+        switch (cursorInLine(mouse, line)) {
+            case 'begin':
+                line.isDragging = true
+                line.where = 'begin'
+                line.offset = getLineOffsets(mouse, line)
+                break
+            case 'middle':
+                line.isDragging = true
+                line.where = 'middle'
+                line.offset = getLineOffsets(mouse, line)
+                break
+            case 'end':
+                line.isDragging = true
+                line.where = 'end'
+                line.offset = getLineOffsets(mouse, line)
+                break
+        }
+    })
 })
 
 canvas.addEventListener('mouseup', event => {
@@ -173,17 +166,17 @@ canvas.addEventListener('mouseup', event => {
 })
 
 canvas.addEventListener('mousemove', event => {
-    // var mouse = getCoordinates(canvas, event)
-
-    // lines.forEach(line => {
-    //     if (line.isDragging) {
-    //         if (button == 1) {
-    //             treatNormalMove(line, mouse, event)
-    //         } else {
-    //             splitLineAndMove(line, event)
-    //         }
-    //     }
-    // })
+    var mouse = getCoordinates(canvas, event)
+    
+    lines.forEach(line => {
+        if (line.isDragging) {
+            if (button == 1) {
+                treatNormalMove(line, mouse, event)
+            } else {
+                splitLineAndMove(line, event)
+            }
+        }
+    })
 })
 
 // --------------------------------------------------------------------------------
