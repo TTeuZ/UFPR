@@ -69,8 +69,8 @@ puts
 puts 'Insira um comando:'
 input = gets.chomp
 
-while command != 'exit'
-    case command
+while input != 'exit'
+    case input
     when 'schema'
         showSchema
     else
