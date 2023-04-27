@@ -34,20 +34,27 @@ function getCoordinates(canvas, event) {
     let coordinates = canvas.getBoundingClientRect()
     return {
         x: event.pageX - coordinates.left,
-        y: event.pageY - coordinates.left
+        y: event.pageY - coordinates.top
     }
 }
 
 function cursorInLine(mouse, line) {
-    var dBegin, dEnd
+    var dBegin, dEnd, dMiddle
 
-    dBegin = Math.sqrt(Math.pow((line.begin.x - mouse.x),2) + Math.pow((line.begin.y - mouse.y),2))
-    dEnd = Math.sqrt(Math.pow((line.end.x - mouse.x),2) + Math.pow((line.end.y - mouse.y),2))
+    dBegin = Math.sqrt(Math.pow((line.begin.x - mouse.x), 2) + Math.pow((line.begin.y - mouse.y), 2))
+    dEnd = Math.sqrt(Math.pow((line.end.x - mouse.x), 2) + Math.pow((line.end.y - mouse.y), 2))
+    dMiddle = Math.abs(
+        (line.end.y - line.begin.y) * mouse.x -
+        (line.end.x - line.begin.x) * mouse.y +
+        line.end.x * line.begin.y -
+        line.end.y * line.begin.x
+    ) / Math.sqrt((line.end.y - line.begin.y) ** 2 + (line.end.x - line.begin.x) ** 2)
 
-    if (dBegin <= 10) return 'begin'
-    if (dEnd <= 10) return 'end'
-    // if (Math.abs(dBegin - dEnd) <= 20) console.log('middle')
-    if (Math.abs(dBegin - dEnd) <= 20) return 'middle'
+    const lineSize = Math.sqrt(Math.pow(Math.abs(line.end.x - line.begin.x), 2) + Math.pow(Math.abs(line.end.y - line.begin.y), 2))
+
+    if (dBegin <= 10 && button == 1) return 'begin'
+    if (dEnd <= 10 && button == 1) return 'end'
+    if (dMiddle <= 10 && Math.ceil(Math.abs(dEnd - dBegin) + 1) < lineSize) return 'middle'
 }
 
 function getLineOffsets(mouse, line) {
@@ -67,17 +74,16 @@ function getLineOffsets(mouse, line) {
 //                               Draw Functions
 // --------------------------------------------------------------------------------
 function drawLine(line) {
+    context.beginPath()
     context.moveTo(line.begin.x, line.begin.y)
     context.lineTo(line.end.x, line.end.y)
+    context.stroke()
 }
 
 function drawLines() {
     let count
-
-    context.beginPath()
-    for (count = 0; count < lines.length; ++count)
+    for (count = 0; count < lines.length; count++)
         drawLine(lines[count])
-    context.stroke()
 }
 
 // --------------------------------------------------------------------------------
@@ -92,8 +98,7 @@ function initialBeginning() {
 }
 
 function createPolygon(sides) {
-    var sideSize, center, x, y, begin, end, newLine, count
-
+    var sideSize, center, x, y, begin, end, newLine, clone, count
     clearLines()
 
     sideSize = 150
@@ -109,14 +114,15 @@ function createPolygon(sides) {
         end = point(x, y)
         newLine = line(begin, end, false, null)
         lines.push(newLine)
-        begin = end
+        clone = JSON.parse(JSON.stringify(end));
+        begin = clone
     }
 }
 
 // --------------------------------------------------------------------------------
 //                                Move Functions
 // --------------------------------------------------------------------------------
-function treatNormalMove(line, mouse) {
+function treatNormalMove(mouse, line) {
     if (line.where == 'middle') {
         line.begin.x = mouse.x - line.offset.begin.x
         line.begin.y = mouse.y - line.offset.begin.y
@@ -128,9 +134,23 @@ function treatNormalMove(line, mouse) {
     }
 }
 
-// function splitLineAndMove(line, event) {
+function splitLine(mouse, actualLine) {
+    var begin, end, newLine
 
-// }
+    begin = point(actualLine.begin.x, actualLine.begin.y)
+    end = point(mouse.x, mouse.y)
+    newLine = line(begin, end, true, 'end')
+    newLine.offset = getLineOffsets(mouse, newLine)
+    lines.push(newLine)
+
+    begin = point(mouse.x, mouse.y)
+    end = point(actualLine.end.x, actualLine.end.y)
+    newLine = line(begin, end, true, 'begin')
+    newLine.offset = getLineOffsets(mouse, newLine)
+    lines.push(newLine)
+
+    lines.splice(lines.indexOf(actualLine), 1)
+}
 
 canvas.addEventListener('mousedown', event => {
     var mouse = getCoordinates(canvas, event)
@@ -144,9 +164,11 @@ canvas.addEventListener('mousedown', event => {
                 line.offset = getLineOffsets(mouse, line)
                 break
             case 'middle':
-                line.isDragging = true
-                line.where = 'middle'
-                line.offset = getLineOffsets(mouse, line)
+                if (button == 1) {
+                    line.isDragging = true
+                    line.where = 'middle'
+                    line.offset = getLineOffsets(mouse, line)
+                } else splitLine(mouse, line)
                 break
             case 'end':
                 line.isDragging = true
@@ -167,14 +189,10 @@ canvas.addEventListener('mouseup', event => {
 
 canvas.addEventListener('mousemove', event => {
     var mouse = getCoordinates(canvas, event)
-    
+
     lines.forEach(line => {
         if (line.isDragging) {
-            if (button == 1) {
-                treatNormalMove(line, mouse, event)
-            } else {
-                splitLineAndMove(line, event)
-            }
+            treatNormalMove(mouse, line)
         }
     })
 })
