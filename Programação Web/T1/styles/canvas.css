@@ -1,0 +1,31 @@
+.canvas__align {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#canvas {
+    border: 1px solid black;
+}
+
+.canvas__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input__wrapper {
+    padding-left: 15px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.submit__wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+#sides {
+    width: 70%;
+}
