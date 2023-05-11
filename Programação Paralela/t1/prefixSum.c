@@ -2,8 +2,7 @@
 // Aluno: Paulo Mateus Luza Alves
 // GRR: GRR20203945
 
-// template <typename T> std::string type_name();
-#include <iostream> // WILL USE SOME C++ features
+#include <iostream>
 #include <typeinfo>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,36 +12,33 @@
 
 #define DEBUG 0
 #define MAX_THREADS 64
-#define MAX_TOTAL_ELEMENTS (500 * 1000 * 1000) // para maquina de 16GB de RAM 
-#define NTIMES 1000
-// #define MAX_TOTAL_ELEMENTS (200 * 1000 * 1000) // para maquina de 8GB de RAM 
-// #define DEBUG 2
+#define MAX_TOTAL_ELEMENTS (500 * 1000 * 1000)
+#define NTIMES 1000										   
+#define TYPE long
 
-// ESCOLHA o tipo dos elementos usando o #define TYPE adequado abaixo
-// a fazer a SOMA DE PREFIXOS:											   
-#define TYPE long // OBS: o enunciado pedia ESSE (long)
-// #define TYPE long long
-// #define TYPE double
-// OBS: para o algoritmo da soma de prefixos
-// os tipos abaixo podem ser usados para medir tempo APENAS como referência 
-// pois nao conseguem precisao adequada ou estouram capacidade 
-// para quantidades razoaveis de elementos
-// #define TYPE float
-// #define TYPE int
-
-int nThreads; // numero efetivo de threads, obtido da linha de comando
-int nTotalElements; // numero total de elementos, obtido da linha de comando
-TYPE* InputVector; // will use malloc e free to allow large (>2GB) vectors (volatile )
-TYPE* OutputVector;	// will use malloc e free to allow large (>2GB) vectors (volatile )
+int nThreads;
+int nTotalElements;
+TYPE* InputVector;
+TYPE* OutputVector;
 chronometer_t parallelPrefixSumTime;
 volatile TYPE partialSum[MAX_THREADS];
 
-int min(int a, int b) {
+// -----------------------------------------
+
+pthread_t threads[MAX_THREADS];
+int threads_id[MAX_THREADS];
+int globalThreadsNumber, globalTotalElements;
+
+pthread_barrier_t thread_barrier;
+
+// -----------------------------------------
+
+int min (int a, int b) {
     if (a < b) return a;
     else return b;
 }
 
-void verifyPrefixSum(const TYPE* InputVec, const TYPE* OutputVec, long nTotalElmts) {
+void verifyPrefixSum (const TYPE* InputVec, const TYPE* OutputVec, long nTotalElmts) {
     volatile TYPE last = InputVec[0];
     int ok = 1;
     for (long i = 1; i < nTotalElmts; i++) {
@@ -57,17 +53,29 @@ void verifyPrefixSum(const TYPE* InputVec, const TYPE* OutputVec, long nTotalElm
     else printf("\nPrefix Sum DID NOT compute correctly!!!\n");
 }
 
-void ParallelPrefixSumPth(const TYPE* InputVec, const TYPE* OutputVec, long nTotalElmts, int nThreads) {
-    pthread_t thread[MAX_THREADS];
-    int my_thread_id[MAX_THREADS];
+void *prefixSum (void *id) {
 
-    ///////////////// INCLUIR AQUI SEU CODIGO da V1 /////////
-    // criar o POOL de threads aqui!
-    // voce pode criar outras funcoes para as suas threads
-    //////////////////////////////////////////////////////////
 }
 
-int main(int argc, char* argv[]) {
+void parallelPrefixSumPth (const TYPE* InputVec, const TYPE* OutputVec, long nTotalElmts, int nThreads) {
+    static int alreadyInit;
+    int count;
+
+    alreadyInit = 0;
+    if (!alreadyInit) {
+        pthread_barrier_init (&thread_barrier, NULL, nThreads);
+        threads_id[0] = 0;
+        for (count = 1; count < nThreads; ++count) {
+            threads_id[count] = count;
+            pthread_create (&threads[count], NULL, prefixSum, &threads_id[count]);
+        }
+        alreadyInit = 1;
+    }
+
+    prefixSum(&threads_id[0]);
+}
+
+int main (int argc, char* argv[]) {
     long i;
 
     ///////////////////////////////////////
@@ -152,7 +160,7 @@ int main(int argc, char* argv[]) {
     TYPE* InVec = InputVector;
     for (int i = 0; i < NTIMES; i++) {
         // globalSum = parallel_reduceSum( InputVector, nTotalElements, nThreads );
-        ParallelPrefixSumPth(InputVector, OutputVector, nTotalElements, nThreads);
+        parallelPrefixSumPth(InputVector, OutputVector, nTotalElements, nThreads);
         // InputVector += (nTotalElements % MAX_TOTAL_ELEMENTS);                                
         // wait 50 us == 50000 ns
         // nanosleep((const struct timespec[]){{0, 50000L}}, NULL);                                
