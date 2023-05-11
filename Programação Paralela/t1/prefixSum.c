@@ -53,13 +53,26 @@ void verifyPrefixSum (const TYPE* InputVec, const TYPE* OutputVec, long nTotalEl
     else printf("\nPrefix Sum DID NOT compute correctly!!!\n");
 }
 
-void *prefixSum (void *id) {
+void *prefixSum (void *idPointer) {
+    int id, numberOfElements, begin, end;
 
+    id = *((int *)idPointer)
+    numberOfElements = globalTotalElements / globalThreadsNumber;
+
+    begin = id * numberOfElements;
+    end = min ((id + 1) * nElements, globalTotalElements) - 1;
+
+    while (true) {
+        
+    }
 }
 
-void parallelPrefixSumPth (const TYPE* InputVec, const TYPE* OutputVec, long nTotalElmts, int nThreads) {
+void parallelPrefixSumPth (const TYPE* InputVec, const TYPE* OutputVec, long nTotalElements, int nThreads) {
     static int alreadyInit;
     int count;
+
+    globalThreadsNumber = nThreads;
+    globalTotalElements = nTotalElements;
 
     alreadyInit = 0;
     if (!alreadyInit) {
@@ -76,6 +89,7 @@ void parallelPrefixSumPth (const TYPE* InputVec, const TYPE* OutputVec, long nTo
 }
 
 int main (int argc, char* argv[]) {
+    int random;
     long i;
 
     ///////////////////////////////////////
@@ -114,10 +128,7 @@ int main (int argc, char* argv[]) {
     if (OutputVector == NULL)
         printf("Error allocating OutputVector of %d elements (size=%ld Bytes)\n", nTotalElements, nTotalElements * sizeof(TYPE));
 
-    // #if DEBUG >= 2 
-    // Print INFOS about the reduction
     TYPE myType;
-    long l;
     std::cout << "Using PREFIX SUM of TYPE ";
 
     if (typeid(myType) == typeid(int))
@@ -135,39 +146,20 @@ int main (int argc, char* argv[]) {
     std::cout << " elements (" << sizeof(TYPE)
         << " bytes each)\n" << std::endl;
 
-    /*printf("reading inputs...\n");
-    for (int i = 0; i < nTotalElements; i++)
-        scanf("%d", &InputVector[i]);
-    */
-
-    // initialize InputVector
-    // srand(time(NULL));   // Initialization, should only be called once.
-
-    int r;
     for (long i = 0; i < nTotalElements; i++) {
-        r = rand();  // Returns a pseudo-random integer
-        // between 0 and RAND_MAX.
-        InputVector[i] = (r % 1000) - 500;
+        random = rand();
+        InputVector[i] = (random % 1000) - 500;
         // InputVector[i] = 1; // i + 1;
     }
     printf("\n\nwill use %d threads to calculate prefix-sum of %d total elements\n", nThreads, nTotalElements);
-
+    
     chrono_reset(&parallelPrefixSumTime);
     chrono_start(&parallelPrefixSumTime);
 
     // call it N times
-    TYPE globalSum;
-    TYPE* InVec = InputVector;
-    for (int i = 0; i < NTIMES; i++) {
-        // globalSum = parallel_reduceSum( InputVector, nTotalElements, nThreads );
-        parallelPrefixSumPth(InputVector, OutputVector, nTotalElements, nThreads);
-        // InputVector += (nTotalElements % MAX_TOTAL_ELEMENTS);                                
-        // wait 50 us == 50000 ns
-        // nanosleep((const struct timespec[]){{0, 50000L}}, NULL);                                
-    }
+    for (int i = 0; i < NTIMES; i++) 
+        parallelPrefixSumPth(InputVector, OutputVector, nTotalElements, nThreads);                            
 
-    // Measuring time of the parallel algorithm 
-    // including threads creation and joins...
     chrono_stop(&parallelPrefixSumTime);
     chrono_reportTime(&parallelPrefixSumTime, "parallelPrefixSumTime");
 
@@ -179,7 +171,6 @@ int main (int argc, char* argv[]) {
     printf("Throughput: %lf OP/s\n", OPS);
 
     verifyPrefixSum(InputVector, OutputVector, nTotalElements);
-    //#if NEVER
 #if DEBUG >= 2 
     // Print InputVector
     printf("In: ");
