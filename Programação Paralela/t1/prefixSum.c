@@ -9,8 +9,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <typeinfo>
+#include <immintrin.h>
 
-#define DEBUG 2
+#define DEBUG 0
 #define MAX_THREADS 64
 #define MAX_TOTAL_ELEMENTS (500 * 1000 * 1000)
 #define NTIMES 1000
@@ -30,11 +31,6 @@ int threads_id[MAX_THREADS];
 pthread_barrier_t barrier;
 
 // -----------------------------------------
-
-int min (int a, int b) {
-    if (a < b) return a;
-    else return b;
-}
 
 void verifyPrefixSum (const TYPE *InputVec, const TYPE *OutputVec, long nTotalElmts) {
     volatile TYPE last = InputVec[0];
@@ -60,15 +56,13 @@ void *prefixSum (void *idPointer) {
     TYPE threadSum, partialPrefix;
 
     id = *((int *)idPointer);
-    numberOfElements = ceil (nTotalElements / nThreads);
+    numberOfElements = nTotalElements / nThreads;
 
     begin = id * numberOfElements;
-    end = min((id + 1) * numberOfElements, nTotalElements) - 1;
+    end = (id + 1) == nThreads ? nTotalElements : (id + 1) * numberOfElements;
+    end--;
 
     while (true) {
-        printf ("ID: %d, numberOfElements: %d, begin: %d, end: %d\n", id, numberOfElements, begin, end);
-        pthread_barrier_wait(&barrier);
-        
         threadSum = 0;
         for (count = begin; count <= end; ++count)
             threadSum += InputVector[count];
@@ -79,7 +73,7 @@ void *prefixSum (void *idPointer) {
 
         partialPrefix = 0;
         for (count = 0; count < id; ++ count)
-            partialPrefix += partialSum[id - 1];
+            partialPrefix += partialSum[count];
 
         OutputVector[begin] = InputVector[begin] + partialPrefix;
         for (count = begin + 1; count <= end; ++count) 
@@ -171,8 +165,8 @@ int main(int argc, char *argv[]) {
 
     for (long i = 0; i < elements; i++) {
         random = rand ();
-        // InputVector[i] = (random % 1000) - 500;
-        InputVector[i] = 1; // i + 1;
+        InputVector[i] = (random % 1000) - 500;
+        // InputVector[i] = 1; // i + 1;
     }
     printf ("\n\nwill use %d threads to calculate prefix-sum of %d total elements\n", threadsQtd, elements);
 
