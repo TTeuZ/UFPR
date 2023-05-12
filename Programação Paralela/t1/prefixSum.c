@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <typeinfo>
-#include <immintrin.h>
 
 #define DEBUG 0
 #define MAX_THREADS 64
