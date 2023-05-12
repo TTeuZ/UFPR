@@ -51,7 +51,7 @@ void verifyPrefixSum (const TYPE *InputVec, const TYPE *OutputVec, long nTotalEl
 }
 
 void *prefixSum (void *idPointer) {
-    int id, numberOfElements, begin, end, count;
+    int id, numberOfElements, begin, end, count, size, unroll_limit;
     TYPE threadSum, partialPrefix;
 
     id = *((int *)idPointer);
@@ -61,11 +61,20 @@ void *prefixSum (void *idPointer) {
     end = (id + 1) == nThreads ? nTotalElements : (id + 1) * numberOfElements;
     end--;
 
+    size = end - begin;
+    unroll_limit = size - (size % 4);
+
     while (true) {
         threadSum = 0;
-        for (count = begin; count <= end; ++count)
-            threadSum += InputVector[count];
-
+        for (count = 0; count < unroll_limit; count += 4) {
+            threadSum += InputVector[begin + count];
+            threadSum += InputVector[begin + count + 1];
+            threadSum += InputVector[begin + count + 2];
+            threadSum += InputVector[begin + count + 3];
+        }
+        for (count = unroll_limit; count <= size; ++count)
+            threadSum += InputVector[begin + count];
+        
         partialSum[id] = threadSum;
 
         pthread_barrier_wait(&barrier);
@@ -75,8 +84,14 @@ void *prefixSum (void *idPointer) {
             partialPrefix += partialSum[count];
 
         OutputVector[begin] = InputVector[begin] + partialPrefix;
-        for (count = begin + 1; count <= end; ++count) 
-            OutputVector[count] = InputVector[count] + OutputVector[count - 1];
+        for (count = 0; count < unroll_limit; count += 4) {
+            OutputVector[begin + count + 1] = InputVector[begin + count + 1] + OutputVector[begin + count];
+            OutputVector[begin + count + 2] = InputVector[begin + count + 2] + OutputVector[begin + count + 1];
+            OutputVector[begin + count + 3] = InputVector[begin + count + 3] + OutputVector[begin + count + 2];
+            OutputVector[begin + count + 4] = InputVector[begin + count + 4] + OutputVector[begin + count + 3];
+        }
+        for (count = unroll_limit; count <= size; ++count) 
+            OutputVector[begin + count + 1] = InputVector[begin + count + 1] + OutputVector[begin + count];
 
         if(id == 0)
             return NULL; 
