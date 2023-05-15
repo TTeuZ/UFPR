@@ -1,8 +1,8 @@
-all: prefixSum
+all: prefixSumPth
  
-prefixSum: prefixSum.c chrono.c
-#	g++ -mcmodel=large prefixSumPth.c -O3 -o prefixSumPth -lpthread
-	g++ prefixSum.c -O3 -o prefixSum -lpthread	
+prefixSumPth: prefixSumPth.c chrono.c
+#	g++ -mcmodel=large prefixSumPthPth.c -O3 -o prefixSumPthPth -lpthread
+	g++ prefixSumPth.c -O3 -o prefixSumPth -lpthread	
 
 
 
