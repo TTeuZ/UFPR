@@ -1,0 +1,55 @@
+.grade__cell {
+    width: 12.5%;
+    padding: 10px 0px 10px 0px;
+
+    border: 1px solid black;
+    color: black;
+    cursor: pointer;
+
+    text-align: center;
+}
+
+.ditNotAttended {
+    background-color: #F8F9F9;
+}
+
+.approved {
+    background-color: #28B463;
+}
+
+.equivalence {
+    background-color: #D4AC0D;
+}
+
+.unapproved {
+    background-color: #E74C3C;
+}
+
+.canceled {
+    background-color: #F8F9F9;
+}
+
+.registered {
+    background-color: #3498DB;
+}
+
+.locked {
+    background-color: #E74C3C;
+}
+
+.history__wrapper {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    overflow-y: auto;
+}
+
+.history__cell {
+    min-width: 300px;
+    padding: 5px;
+}
+
+.divisor {
+    border-right: 1px solid;
+}
