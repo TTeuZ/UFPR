@@ -57,14 +57,18 @@ void *prefixSum (void *idPointer) {
     id = *((int *)idPointer);
     numberOfElements = nTotalElements / nThreads;
 
+    // compute the begin and end where this thread will work
     begin = id * numberOfElements;
     end = (id + 1) == nThreads ? nTotalElements : (id + 1) * numberOfElements;
     end--;
 
+    // compute the unroll limit for the unroll & jam
     size = end - begin;
     unroll_limit = size - (size % 4);
 
+    // keep the thread alive
     while (true) {
+        // Applying the unroll & jam to calculate the partial sum of this thread
         threadSum = 0;
         for (count = 0; count < unroll_limit; count += 4) {
             threadSum += InputVector[begin + count];
@@ -79,10 +83,12 @@ void *prefixSum (void *idPointer) {
 
         pthread_barrier_wait(&barrier);
 
+        // calculate the initial prefix
         partialPrefix = 0;
         for (count = 0; count < id; ++ count)
             partialPrefix += partialSum[count];
 
+        // Applying the unroll & jam to calculate the prefix sum
         OutputVector[begin] = InputVector[begin] + partialPrefix;
         for (count = 0; count < unroll_limit; count += 4) {
             OutputVector[begin + count + 1] = InputVector[begin + count + 1] + OutputVector[begin + count];
@@ -105,9 +111,11 @@ void parallelPrefixSumPth (const TYPE *InputVec, const TYPE *OutputVec, long ele
     nThreads = threadsQtd;
     nTotalElements = elements;
 
+    // Verify if the barrier and pool of threads are already initialized
     if (alreadyInit == 0) {
         pthread_barrier_init (&barrier, NULL, threadsQtd);
         threads_id[0] = 0;
+        // create the threads
         for (count = 1; count < threadsQtd; ++count) {
             threads_id[count] = count;
             pthread_create (&threads[count], NULL, prefixSum, &threads_id[count]);
