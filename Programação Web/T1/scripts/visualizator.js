@@ -90,7 +90,7 @@ function getOpt() {
     let temp
 
     temp = selectedStudent.subjects.filter(s => s.type == 'Optativas')
-    return temp.slice(0, 6).toReversed()
+    return temp.slice(0, 6).reverse()
 }
 
 // --------------------------------------------------------------------------------
