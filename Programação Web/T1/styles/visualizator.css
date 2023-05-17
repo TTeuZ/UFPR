@@ -1,3 +1,7 @@
+.grade_header__cell {
+    padding: 5px 0px 5px 0px !important;
+}
+
 .grade__cell {
     width: 12.5%;
     padding: 10px 0px 10px 0px;
@@ -7,6 +11,15 @@
     cursor: pointer;
 
     text-align: center;
+}
+
+.header_divisor__wrapper {
+    border: 1px solid black;
+}
+
+.header__divisor {
+    background-color: #F8F9F9;
+    padding: 2px 0px 2px 0px;
 }
 
 .ditNotAttended {

@@ -2,9 +2,16 @@
 //                                  variables
 // --------------------------------------------------------------------------------
 
-let subjects
 let students
 let selectedStudent
+
+let subjects = [
+    'CI068', 'CI210', 'CI212', 'CI215', 'CI162', 'CI163', 'CI221', 'OPT',
+    'CI055', 'CI056', 'CI057', 'CI062', 'CI065', 'CI165', 'CI211', 'OPT',
+    'CM046', 'CI067', 'CI064', 'CE003', 'CI059', 'CI209', 'OPT', 'OPT',
+    'CM045', 'CM005', 'CI237', 'CI058', 'CI061', 'CI218', 'OPT', 'OPT',
+    'CM201', 'CM202', 'CI166', 'CI164', 'SA214', 'CI220', 'TG I', 'TG II'
+]
 
 // --------------------------------------------------------------------------------
 //                         Student/subejects functions
@@ -58,7 +65,7 @@ function addSubject(student, item) {
 }
 
 function createStudent(item) {
-    let tempStudent, tempSubject
+    let tempStudent
 
     tempStudent = {
         id: item.ID_CURSO_ALUNO,
@@ -72,16 +79,18 @@ function createStudent(item) {
     return tempStudent
 }
 
-function createSubject(item) {
-    let tempSubject
-    tempSubject = {
-        name: item.NOME_ATIV_CURRIC,
-        code: item.COD_ATIV_CURRIC,
-        type: item.DESCR_ESTRUTURA,
-        totalOfHours: item.CH_TOTAL,
+function getTCC() {
+    return {
+        tcc1: selectedStudent.subjects.findLast(s => s.type == 'Trabalho de Graduação I'),
+        tcc2: selectedStudent.subjects.findLast(s => s.type == 'Trabalho de Graduação II')
     }
+}
 
-    return tempSubject
+function getOpt() {
+    let temp
+
+    temp = selectedStudent.subjects.filter(s => s.type == 'Optativas')
+    return temp.slice(0, 6).toReversed()
 }
 
 // --------------------------------------------------------------------------------
@@ -108,11 +117,10 @@ function loadJson(path) {
 }
 
 function treatJson(json) {
-    let temp, localSubjects, localStudents, tempStudent, tempSubject
+    let temp, localStudents, tempStudent, tempSubject
 
     temp = json.DATA.ALUNO
     localStudents = []
-    localSubjects = []
 
     temp.forEach(item => {
         tempStudent = localStudents.find(student => student.grr == item.MATR_ALUNO)
@@ -122,16 +130,9 @@ function treatJson(json) {
         } else {
             addSubject(tempStudent, item)
         }
-
-        tempSubject = localSubjects.find(subject => subject.code == item.COD_ATIV_CURRIC)
-        if (tempSubject == undefined) {
-            tempSubject = createSubject(item)
-            localSubjects.push(tempSubject)
-        }
     })
 
     students = localStudents
-    subjects = localSubjects
     selectedStudent = students[0]
 }
 
@@ -170,7 +171,6 @@ function setLoadedStudents() {
     const studentsSelector = document.querySelector('#students')
     let studentOptions, temp
 
-    // Prenchimento do seletor
     studentOptions = ""
     students.forEach(student => {
         temp = `<option value="${student.grr}">
@@ -220,15 +220,50 @@ function showHistory(code) {
 function setStudentTable() {
     const grade = document.querySelector('#grade')
     const numCols = 8
-    let gradeStruct, tempSubject
+    let gradeStruct, temp, tempSubject, tempTCC, tempOpt, count
 
     gradeStruct = "<tr>"
+    for (count = 1; count <= numCols; ++count)
+        gradeStruct += `<td class="grade__cell grade_header__cell ${count <= 3 ? 'approved' : 'unapproved'}">${count}°</td>`
+    gradeStruct += "</tr>"
+
+    gradeStruct += '<tr class="header_divisor__wrapper">'
+    for (count = 1; count <= numCols; ++count)
+        gradeStruct += `<td class="header__divisor"></td>`
+    gradeStruct += "</tr><tr>"
+
+    tempTCC = getTCC()
+    tempOpt = getOpt()
+
     subjects.forEach((subject, index) => {
-        tempSubject = selectedStudent.subjects.findLast(s => s.code == subject.code)
-        if (tempSubject == undefined)
-            gradeStruct += `<td class="grade__cell ditNotAttended"><span> ${subject.code} </span></td>`
-        else
-            gradeStruct += `<td class="grade__cell ${tempSubject.innerStatus}" oncontextmenu="showPopUp('${subject.code}')" onclick="showHistory('${subject.code}')"><span> ${tempSubject.code} </span></td>`
+        tempSubject = selectedStudent.subjects.findLast(s => s.code == subject)
+        if (tempSubject == undefined) {
+            switch (subject) {
+                case 'OPT':
+                    temp = tempOpt.pop()
+                    if (temp != undefined)
+                        gradeStruct += `<td class="grade__cell ${temp.innerStatus}" oncontextmenu="showPopUp('${temp.code}')" onclick="showHistory('${temp.code}')"><span> ${temp.code} </span></td>`
+                    else
+                        gradeStruct += `<td class="grade__cell ditNotAttended"><span> ${subject} </span></td>`
+                    break
+                case 'TG I':
+                    if (tempTCC.tcc1 != undefined)
+                        gradeStruct += `<td class="grade__cell ${tempTCC.tcc1.innerStatus}" oncontextmenu="showPopUp('${tempTCC.tcc1.code}')" onclick="showHistory('${tempTCC.tcc1.code}')"><span> ${tempTCC.tcc1.code} </span></td>`
+                    else
+                        gradeStruct += `<td class="grade__cell ditNotAttended"><span> ${subject} </span></td>`
+                    break
+                case 'TG II':
+                    if (tempTCC.tcc2 != undefined)
+                        gradeStruct += `<td class="grade__cell ${tempTCC.tcc2.innerStatus}" oncontextmenu="showPopUp('${tempTCC.tcc2.code}')" onclick="showHistory('${tempTCC.tcc2.code}')"><span> ${tempTCC.tcc2.code} </span></td>`
+                    else
+                        gradeStruct += `<td class="grade__cell ditNotAttended"><span> ${subject} </span></td>`
+                    break
+                default:
+                    gradeStruct += `<td class="grade__cell ditNotAttended"><span> ${subject} </span></td>`
+                    break
+            }
+        } else
+            gradeStruct += `<td class="grade__cell ${tempSubject.innerStatus}" oncontextmenu="showPopUp('${subject}')" onclick="showHistory('${subject}')"><span> ${subject} </span></td>`
 
         if (index % numCols == 7)
             gradeStruct += "</tr><tr>"
