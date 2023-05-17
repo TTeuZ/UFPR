@@ -242,19 +242,19 @@ function setStudentTable() {
                 case 'OPT':
                     temp = tempOpt.pop()
                     if (temp != undefined)
-                        gradeStruct += `<td class="grade__cell ${temp.innerStatus}" oncontextmenu="showPopUp('${temp.code}')" onclick="showHistory('${temp.code}')"><span> ${temp.code} </span></td>`
+                        gradeStruct += `<td class="grade__cell pointer ${temp.innerStatus}" oncontextmenu="showPopUp('${temp.code}')" onclick="showHistory('${temp.code}')"><span> ${temp.code} </span></td>`
                     else
                         gradeStruct += `<td class="grade__cell ditNotAttended"><span> ${subject} </span></td>`
                     break
                 case 'TG I':
                     if (tempTCC.tcc1 != undefined)
-                        gradeStruct += `<td class="grade__cell ${tempTCC.tcc1.innerStatus}" oncontextmenu="showPopUp('${tempTCC.tcc1.code}')" onclick="showHistory('${tempTCC.tcc1.code}')"><span> ${tempTCC.tcc1.code} </span></td>`
+                        gradeStruct += `<td class="grade__cell pointer ${tempTCC.tcc1.innerStatus}" oncontextmenu="showPopUp('${tempTCC.tcc1.code}')" onclick="showHistory('${tempTCC.tcc1.code}')"><span> ${tempTCC.tcc1.code} </span></td>`
                     else
                         gradeStruct += `<td class="grade__cell ditNotAttended"><span> ${subject} </span></td>`
                     break
                 case 'TG II':
                     if (tempTCC.tcc2 != undefined)
-                        gradeStruct += `<td class="grade__cell ${tempTCC.tcc2.innerStatus}" oncontextmenu="showPopUp('${tempTCC.tcc2.code}')" onclick="showHistory('${tempTCC.tcc2.code}')"><span> ${tempTCC.tcc2.code} </span></td>`
+                        gradeStruct += `<td class="grade__cell pointer ${tempTCC.tcc2.innerStatus}" oncontextmenu="showPopUp('${tempTCC.tcc2.code}')" onclick="showHistory('${tempTCC.tcc2.code}')"><span> ${tempTCC.tcc2.code} </span></td>`
                     else
                         gradeStruct += `<td class="grade__cell ditNotAttended"><span> ${subject} </span></td>`
                     break
@@ -263,7 +263,7 @@ function setStudentTable() {
                     break
             }
         } else
-            gradeStruct += `<td class="grade__cell ${tempSubject.innerStatus}" oncontextmenu="showPopUp('${subject}')" onclick="showHistory('${subject}')"><span> ${subject} </span></td>`
+            gradeStruct += `<td class="grade__cell pointer ${tempSubject.innerStatus}" oncontextmenu="showPopUp('${subject}')" onclick="showHistory('${subject}')"><span> ${subject} </span></td>`
 
         if (index % numCols == 7)
             gradeStruct += "</tr><tr>"

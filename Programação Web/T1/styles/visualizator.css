@@ -8,9 +8,13 @@
 
     border: 1px solid black;
     color: black;
-    cursor: pointer;
+    /* cursor: pointer; */
 
     text-align: center;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 .header_divisor__wrapper {
