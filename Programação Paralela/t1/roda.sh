@@ -5,6 +5,6 @@ do
     #for vez in {1..1}   # 1 vez
     for vez in {1..10}  # 10 vezes
     do
-        ./prefixSumPth $1 $nt | grep -oP '(?<=total_time_in_seconds: )[^ ]*'
+        ./prefixSumPth-v1 $1 $nt | grep -oP '(?<=total_time_in_seconds: )[^ ]*'
     done
 done
