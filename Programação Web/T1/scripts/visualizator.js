@@ -195,6 +195,10 @@ function showPopUp(code) {
     )
 }
 
+function didNotAttendedPopUp(code) {
+    alert(`Sem histórico para ${code}`)
+}
+
 function showHistory(code) {
     const history = document.querySelector('#history')
     let subjects, temp
@@ -219,6 +223,12 @@ function showHistory(code) {
     history.innerHTML = temp
 }
 
+function didNotAttendedHistory(code) {
+    const history = document.querySelector('#history')
+    temp = `<h4>Sem histórico para ${code}</h4>`
+    history.innerHTML = temp
+}
+
 function setStudentTable() {
     const grade = document.querySelector('#grade')
     const numCols = 8
@@ -239,30 +249,20 @@ function setStudentTable() {
 
     subjects.forEach((subject, index) => {
         tempSubject = selectedStudent.subjects.findLast(s => s.code == subject)
+
         if (tempSubject == undefined) {
-            switch (subject) {
-                case 'OPT':
-                    temp = tempOpt.pop()
-                    if (temp != undefined)
-                        gradeStruct += `<td class="grade__cell pointer ${temp.innerStatus}" oncontextmenu="showPopUp('${temp.code}')" onclick="showHistory('${temp.code}')"><span> ${temp.code} </span></td>`
-                    else
-                        gradeStruct += `<td class="grade__cell ditNotAttended"><span> ${subject} </span></td>`
-                    break
-                case 'TG I':
-                    if (tempTCC.tcc1 != undefined)
-                        gradeStruct += `<td class="grade__cell pointer ${tempTCC.tcc1.innerStatus}" oncontextmenu="showPopUp('${tempTCC.tcc1.code}')" onclick="showHistory('${tempTCC.tcc1.code}')"><span> ${tempTCC.tcc1.code} </span></td>`
-                    else
-                        gradeStruct += `<td class="grade__cell ditNotAttended"><span> ${subject} </span></td>`
-                    break
-                case 'TG II':
-                    if (tempTCC.tcc2 != undefined)
-                        gradeStruct += `<td class="grade__cell pointer ${tempTCC.tcc2.innerStatus}" oncontextmenu="showPopUp('${tempTCC.tcc2.code}')" onclick="showHistory('${tempTCC.tcc2.code}')"><span> ${tempTCC.tcc2.code} </span></td>`
-                    else
-                        gradeStruct += `<td class="grade__cell ditNotAttended"><span> ${subject} </span></td>`
-                    break
-                default:
-                    gradeStruct += `<td class="grade__cell ditNotAttended"><span> ${subject} </span></td>`
-                    break
+            temp = tempOpt.pop()
+            if (subject == 'OPT' && temp != undefined)
+                gradeStruct += `<td class="grade__cell pointer ${temp.innerStatus}" oncontextmenu="showPopUp('${temp.code}')" onclick="showHistory('${temp.code}')"><span> ${temp.code} </span></td>`
+            else if (subject == 'TG I' && tempTCC.tcc1 != undefined) {
+                gradeStruct += `<td class="grade__cell pointer ${tempTCC.tcc1.innerStatus}" oncontextmenu="showPopUp('${tempTCC.tcc1.code}')" onclick="showHistory('${tempTCC.tcc1.code}')"><span> ${tempTCC.tcc1.code} </span></td>`
+                tempOpt.push(temp)
+            } else if (subject == 'TG II' && tempTCC.tcc2 != undefined) {
+                gradeStruct += `<td class="grade__cell pointer ${tempTCC.tcc2.innerStatus}" oncontextmenu="showPopUp('${tempTCC.tcc2.code}')" onclick="showHistory('${tempTCC.tcc2.code}')"><span> ${tempTCC.tcc2.code} </span></td>`
+                tempOpt.push(temp)
+            } else {
+                gradeStruct += `<td class="grade__cell pointer ditNotAttended" oncontextmenu="didNotAttendedPopUp('${subject}')" onclick="didNotAttendedHistory('${subject}')"><span> ${subject} </span></td>`
+                tempOpt.push(temp)
             }
         } else
             gradeStruct += `<td class="grade__cell pointer ${tempSubject.innerStatus}" oncontextmenu="showPopUp('${subject}')" onclick="showHistory('${subject}')"><span> ${subject} </span></td>`
