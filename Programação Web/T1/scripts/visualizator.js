@@ -89,7 +89,8 @@ function getTCC() {
 function getOpt() {
     let temp
 
-    temp = selectedStudent.subjects.filter(s => s.type == 'Optativas')
+    temp = selectedStudent.subjects.filter(s => s.type == 'Optativas' && (s.innerStatus == 'approved' || s.innerStatus == 'registered' || s.innerStatus == 'equivalence'))
+
     return temp.slice(0, 6).reverse()
 }
 
@@ -153,16 +154,6 @@ function changeSelectedStudent(value) {
     setStudentTable()
 }
 
-function showPopUp(code) {
-    let tempSubject
-
-    tempSubject = selectedStudent.subjects.findLast(s => s.code == code)
-
-    alert(
-        `${tempSubject.code} - ${tempSubject.name} \nAno/Semestre: ${tempSubject.year}/${tempSubject.semester} \nNota: ${tempSubject.finalGrade} \nFrequência: ${tempSubject.frequency}`
-    )
-}
-
 // --------------------------------------------------------------------------------
 //                            HTML update functions
 // --------------------------------------------------------------------------------
@@ -194,6 +185,16 @@ function setStudentInfo() {
     studentInfo.innerHTML = temp
 }
 
+function showPopUp(code) {
+    let tempSubject
+
+    tempSubject = selectedStudent.subjects.findLast(s => s.code == code)
+
+    alert(
+        `${tempSubject.code} - ${tempSubject.name} \nAno/Semestre: ${tempSubject.year}/${tempSubject.semester} \nNota: ${tempSubject.finalGrade} \nFrequência: ${tempSubject.frequency}\nStatus: ${tempSubject.status}`
+    )
+}
+
 function showHistory(code) {
     const history = document.querySelector('#history')
     let subjects, temp
@@ -210,6 +211,7 @@ function showHistory(code) {
         temp += `<span>Semestre: ${subject.semester}</span>`
         temp += `<span>Nota final: ${subject.finalGrade}</span>`
         temp += `<span>Frequência: ${subject.frequency}</span>`
+        temp += `<span>Status: ${subject.status}</span>`
         temp += '</div>'
     })
     temp += '</div>'
