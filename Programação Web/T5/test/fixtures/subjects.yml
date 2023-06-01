@@ -3,9 +3,7 @@
 one:
   name: MyString
   code: MyString
-  college: one
 
 two:
   name: MyString
   code: MyString
-  college: two

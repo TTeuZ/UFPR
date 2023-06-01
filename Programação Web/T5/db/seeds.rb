@@ -37,13 +37,13 @@ seedAddresses = Address.create([
 ])
 
 seedSubjects = Subject.create([
-    {name: "Matéria 1", code: "CI11", college_id: "1"},
-    {name: "Matéria 2", code: "CI22", college_id: "2"},
-    {name: "Matéria 3", code: "CI33", college_id: "3"},
-    {name: "Matéria 4", code: "CI44", college_id: "4"},
-    {name: "Matéria 5", code: "CI55", college_id: "1"},
-    {name: "Matéria 6", code: "CI66", college_id: "2"},
-    {name: "Matéria 7", code: "CI77", college_id: "3"}
+    {name: "Matéria 1", code: "CI11"},
+    {name: "Matéria 2", code: "CI22"},
+    {name: "Matéria 3", code: "CI33"},
+    {name: "Matéria 4", code: "CI44"},
+    {name: "Matéria 5", code: "CI55"},
+    {name: "Matéria 6", code: "CI66"},
+    {name: "Matéria 7", code: "CI77"}
 ])
 
 seedStudentsSubjects = StudentsSubject.create([

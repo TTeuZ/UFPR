@@ -15,7 +15,6 @@ class SubjectsTest < ApplicationSystemTestCase
     click_on "New subject"
 
     fill_in "Code", with: @subject.code
-    fill_in "College", with: @subject.college_id
     fill_in "Name", with: @subject.name
     click_on "Create Subject"
 
@@ -28,7 +27,6 @@ class SubjectsTest < ApplicationSystemTestCase
     click_on "Edit this subject", match: :first
 
     fill_in "Code", with: @subject.code
-    fill_in "College", with: @subject.college_id
     fill_in "Name", with: @subject.name
     click_on "Update Subject"
 

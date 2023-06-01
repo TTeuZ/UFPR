@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_01_012814) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_01_201401) do
   create_table "addresses", force: :cascade do |t|
     t.string "streat"
     t.integer "number"
@@ -49,15 +49,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_01_012814) do
   create_table "subjects", force: :cascade do |t|
     t.string "name"
     t.string "code"
-    t.integer "college_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["college_id"], name: "index_subjects_on_college_id"
   end
 
   add_foreign_key "addresses", "students"
   add_foreign_key "students", "colleges"
   add_foreign_key "students_subjects", "students"
   add_foreign_key "students_subjects", "subjects"
-  add_foreign_key "subjects", "colleges"
 end
