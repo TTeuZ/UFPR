@@ -2115,3 +2115,834 @@ Processing by StudentsSubjectsController#index as HTML
 Completed 200 OK in 5ms (Views: 4.5ms | ActiveRecord: 0.1ms | Allocations: 3745)
 
 
+Started GET "/students_subjects" for 127.0.0.1 at 2023-05-31 22:33:23 -0300
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by StudentsSubjectsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering students_subjects/index.html.erb within layouts/application
+  [1m[36mStudentsSubject Load (0.1ms)[0m  [1m[34mSELECT "students_subjects".* FROM "students_subjects"[0m
+  ↳ app/views/students_subjects/index.html.erb:6
+  Rendered students_subjects/index.html.erb within layouts/application (Duration: 4.8ms | Allocations: 1624)
+  Rendered layout layouts/application.html.erb (Duration: 81.7ms | Allocations: 43090)
+Completed 200 OK in 96ms (Views: 84.0ms | ActiveRecord: 0.1ms | Allocations: 49162)
+
+
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."name" = ? AND "colleges"."c_type" = ? LIMIT ?[0m  [["name", "UFPR"], ["c_type", "Publica"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.6ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "UFPR"], ["c_type", "Publica"], ["created_at", "2023-06-01 01:34:31.613697"], ["updated_at", "2023-06-01 01:34:31.613697"]]
+  [1m[36mTRANSACTION (13.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."name" = ? AND "colleges"."c_type" = ? LIMIT ?[0m  [["name", "UFRJ"], ["c_type", "Publica"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "UFRJ"], ["c_type", "Publica"], ["created_at", "2023-06-01 01:34:31.631940"], ["updated_at", "2023-06-01 01:34:31.631940"]]
+  [1m[36mTRANSACTION (19.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCollege Load (0.3ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."name" = ? AND "colleges"."c_type" = ? LIMIT ?[0m  [["name", "PUC"], ["c_type", "Privada"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.5ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "PUC"], ["c_type", "Privada"], ["created_at", "2023-06-01 01:34:31.659252"], ["updated_at", "2023-06-01 01:34:31.659252"]]
+  [1m[36mTRANSACTION (15.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."name" = ? AND "colleges"."c_type" = ? LIMIT ?[0m  [["name", "Uninter"], ["c_type", "Privada"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Uninter"], ["c_type", "Privada"], ["created_at", "2023-06-01 01:34:31.681781"], ["updated_at", "2023-06-01 01:34:31.681781"]]
+  [1m[36mTRANSACTION (13.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."name" = ? AND "students"."age" = ? AND "students"."register" = ? AND "students"."college_id" = ? LIMIT ?[0m  [["name", "Paulo Mateus Luza Alves"], ["age", 22], ["register", "GRR20203945"], ["college_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."name" = ? AND "students"."age" = ? AND "students"."register" = ? AND "students"."college_id" = ? LIMIT ?[0m  [["name", "Luis"], ["age", 22], ["register", "GRR20200001"], ["college_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.0ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."name" = ? AND "students"."age" = ? AND "students"."register" = ? AND "students"."college_id" = ? LIMIT ?[0m  [["name", "Ariel"], ["age", 22], ["register", "GRR20200002"], ["college_id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.0ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.5ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Ariel"], ["age", 22], ["register", "GRR20200002"], ["college_id", 2], ["created_at", "2023-06-01 01:34:31.726094"], ["updated_at", "2023-06-01 01:34:31.726094"]]
+  [1m[36mTRANSACTION (15.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."name" = ? AND "students"."age" = ? AND "students"."register" = ? AND "students"."college_id" = ? LIMIT ?[0m  [["name", "Fernanda"], ["age", 22], ["register", "GRR20200003"], ["college_id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.3ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Fernanda"], ["age", 22], ["register", "GRR20200003"], ["college_id", 2], ["created_at", "2023-06-01 01:34:31.750566"], ["updated_at", "2023-06-01 01:34:31.750566"]]
+  [1m[36mTRANSACTION (15.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."name" = ? AND "students"."age" = ? AND "students"."register" = ? AND "students"."college_id" = ? LIMIT ?[0m  [["name", "Heric"], ["age", 22], ["register", "GRR20200004"], ["college_id", 3], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Heric"], ["age", 22], ["register", "GRR20200004"], ["college_id", 3], ["created_at", "2023-06-01 01:34:31.774033"], ["updated_at", "2023-06-01 01:34:31.774033"]]
+  [1m[36mTRANSACTION (15.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."name" = ? AND "students"."age" = ? AND "students"."register" = ? AND "students"."college_id" = ? LIMIT ?[0m  [["name", "Claudinei"], ["age", 22], ["register", "GRR20200005"], ["college_id", 3], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Claudinei"], ["age", 22], ["register", "GRR20200005"], ["college_id", 3], ["created_at", "2023-06-01 01:34:31.795012"], ["updated_at", "2023-06-01 01:34:31.795012"]]
+  [1m[36mTRANSACTION (13.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."name" = ? AND "students"."age" = ? AND "students"."register" = ? AND "students"."college_id" = ? LIMIT ?[0m  [["name", "Guilherme"], ["age", 22], ["register", "GRR20200006"], ["college_id", 4], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Guilherme"], ["age", 22], ["register", "GRR20200006"], ["college_id", 4], ["created_at", "2023-06-01 01:34:31.814062"], ["updated_at", "2023-06-01 01:34:31.814062"]]
+  [1m[36mTRANSACTION (14.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddress Load (0.1ms)[0m  [1m[34mSELECT "addresses".* FROM "addresses" WHERE "addresses"."streat" = ? AND "addresses"."number" = ? AND "addresses"."student_id" = ? LIMIT ?[0m  [["streat", "Rua teste um"], ["number", 11], ["student_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mAddress Load (0.1ms)[0m  [1m[34mSELECT "addresses".* FROM "addresses" WHERE "addresses"."streat" = ? AND "addresses"."number" = ? AND "addresses"."student_id" = ? LIMIT ?[0m  [["streat", "Rua teste dois"], ["number", 22], ["student_id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste dois"], ["number", 22], ["student_id", 2], ["created_at", "2023-06-01 01:34:31.847325"], ["updated_at", "2023-06-01 01:34:31.847325"]]
+  [1m[36mTRANSACTION (14.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddress Load (0.1ms)[0m  [1m[34mSELECT "addresses".* FROM "addresses" WHERE "addresses"."streat" = ? AND "addresses"."number" = ? AND "addresses"."student_id" = ? LIMIT ?[0m  [["streat", "Rua teste tres"], ["number", 33], ["student_id", 3], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste tres"], ["number", 33], ["student_id", 3], ["created_at", "2023-06-01 01:34:31.866766"], ["updated_at", "2023-06-01 01:34:31.866766"]]
+  [1m[36mTRANSACTION (14.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddress Load (0.1ms)[0m  [1m[34mSELECT "addresses".* FROM "addresses" WHERE "addresses"."streat" = ? AND "addresses"."number" = ? AND "addresses"."student_id" = ? LIMIT ?[0m  [["streat", "Rua teste quatro"], ["number", 44], ["student_id", 4], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste quatro"], ["number", 44], ["student_id", 4], ["created_at", "2023-06-01 01:34:31.885765"], ["updated_at", "2023-06-01 01:34:31.885765"]]
+  [1m[36mTRANSACTION (14.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddress Load (0.1ms)[0m  [1m[34mSELECT "addresses".* FROM "addresses" WHERE "addresses"."streat" = ? AND "addresses"."number" = ? AND "addresses"."student_id" = ? LIMIT ?[0m  [["streat", "Rua teste cinco"], ["number", 55], ["student_id", 5], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste cinco"], ["number", 55], ["student_id", 5], ["created_at", "2023-06-01 01:34:31.905387"], ["updated_at", "2023-06-01 01:34:31.905387"]]
+  [1m[36mTRANSACTION (14.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddress Load (0.1ms)[0m  [1m[34mSELECT "addresses".* FROM "addresses" WHERE "addresses"."streat" = ? AND "addresses"."number" = ? AND "addresses"."student_id" = ? LIMIT ?[0m  [["streat", "Rua teste seis"], ["number", 66], ["student_id", 6], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste seis"], ["number", 66], ["student_id", 6], ["created_at", "2023-06-01 01:34:31.926010"], ["updated_at", "2023-06-01 01:34:31.926010"]]
+  [1m[36mTRANSACTION (13.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mAddress Load (0.1ms)[0m  [1m[34mSELECT "addresses".* FROM "addresses" WHERE "addresses"."streat" = ? AND "addresses"."number" = ? AND "addresses"."student_id" = ? LIMIT ?[0m  [["streat", "Rua teste sete"], ["number", 77], ["student_id", 7], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."name" = ? AND "subjects"."code" = ? AND "subjects"."college_id" = ? LIMIT ?[0m  [["name", "Matéria 1"], ["code", "CI11"], ["college_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."name" = ? AND "subjects"."code" = ? AND "subjects"."college_id" = ? LIMIT ?[0m  [["name", "Matéria 2"], ["code", "CI22"], ["college_id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 2"], ["code", "CI22"], ["college_id", 2], ["created_at", "2023-06-01 01:34:31.964975"], ["updated_at", "2023-06-01 01:34:31.964975"]]
+  [1m[36mTRANSACTION (14.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."name" = ? AND "subjects"."code" = ? AND "subjects"."college_id" = ? LIMIT ?[0m  [["name", "Matéria 3"], ["code", "CI33"], ["college_id", 3], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.0ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 3"], ["code", "CI33"], ["college_id", 3], ["created_at", "2023-06-01 01:34:31.984290"], ["updated_at", "2023-06-01 01:34:31.984290"]]
+  [1m[36mTRANSACTION (14.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."name" = ? AND "subjects"."code" = ? AND "subjects"."college_id" = ? LIMIT ?[0m  [["name", "Matéria 4"], ["code", "CI44"], ["college_id", 4], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.0ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 4"], ["code", "CI44"], ["college_id", 4], ["created_at", "2023-06-01 01:34:32.003199"], ["updated_at", "2023-06-01 01:34:32.003199"]]
+  [1m[36mTRANSACTION (19.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mSubject Load (0.4ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."name" = ? AND "subjects"."code" = ? AND "subjects"."college_id" = ? LIMIT ?[0m  [["name", "Matéria 5"], ["code", "CI55"], ["college_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.2ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."name" = ? AND "subjects"."code" = ? AND "subjects"."college_id" = ? LIMIT ?[0m  [["name", "Matéria 6"], ["code", "CI66"], ["college_id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 6"], ["code", "CI66"], ["college_id", 2], ["created_at", "2023-06-01 01:34:32.045719"], ["updated_at", "2023-06-01 01:34:32.045719"]]
+  [1m[36mTRANSACTION (16.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."name" = ? AND "subjects"."code" = ? AND "subjects"."college_id" = ? LIMIT ?[0m  [["name", "Matéria 7"], ["code", "CI77"], ["college_id", 3], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 7"], ["code", "CI77"], ["college_id", 3], ["created_at", "2023-06-01 01:34:32.068458"], ["updated_at", "2023-06-01 01:34:32.068458"]]
+  [1m[36mTRANSACTION (14.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "UFPR"], ["c_type", "Publica"], ["created_at", "2023-06-01 01:36:25.079229"], ["updated_at", "2023-06-01 01:36:25.079229"]]
+  [1m[36mTRANSACTION (14.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "UFRJ"], ["c_type", "Publica"], ["created_at", "2023-06-01 01:36:25.098595"], ["updated_at", "2023-06-01 01:36:25.098595"]]
+  [1m[36mTRANSACTION (14.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.3ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "PUC"], ["c_type", "Privada"], ["created_at", "2023-06-01 01:36:25.115422"], ["updated_at", "2023-06-01 01:36:25.115422"]]
+  [1m[36mTRANSACTION (14.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Uninter"], ["c_type", "Privada"], ["created_at", "2023-06-01 01:36:25.132866"], ["updated_at", "2023-06-01 01:36:25.132866"]]
+  [1m[36mTRANSACTION (14.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Ariel"], ["age", 22], ["register", "GRR20200002"], ["college_id", 2], ["created_at", "2023-06-01 01:36:25.178691"], ["updated_at", "2023-06-01 01:36:25.178691"]]
+  [1m[36mTRANSACTION (14.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Fernanda"], ["age", 22], ["register", "GRR20200003"], ["college_id", 2], ["created_at", "2023-06-01 01:36:25.197765"], ["updated_at", "2023-06-01 01:36:25.197765"]]
+  [1m[36mTRANSACTION (14.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Heric"], ["age", 22], ["register", "GRR20200004"], ["college_id", 3], ["created_at", "2023-06-01 01:36:25.216653"], ["updated_at", "2023-06-01 01:36:25.216653"]]
+  [1m[36mTRANSACTION (14.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Claudinei"], ["age", 22], ["register", "GRR20200005"], ["college_id", 3], ["created_at", "2023-06-01 01:36:25.234908"], ["updated_at", "2023-06-01 01:36:25.234908"]]
+  [1m[36mTRANSACTION (14.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Guilherme"], ["age", 22], ["register", "GRR20200006"], ["college_id", 4], ["created_at", "2023-06-01 01:36:25.252992"], ["updated_at", "2023-06-01 01:36:25.252992"]]
+  [1m[36mTRANSACTION (14.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste dois"], ["number", 22], ["student_id", 2], ["created_at", "2023-06-01 01:36:25.286739"], ["updated_at", "2023-06-01 01:36:25.286739"]]
+  [1m[36mTRANSACTION (15.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste tres"], ["number", 33], ["student_id", 3], ["created_at", "2023-06-01 01:36:25.305679"], ["updated_at", "2023-06-01 01:36:25.305679"]]
+  [1m[36mTRANSACTION (14.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste quatro"], ["number", 44], ["student_id", 4], ["created_at", "2023-06-01 01:36:25.324817"], ["updated_at", "2023-06-01 01:36:25.324817"]]
+  [1m[36mTRANSACTION (15.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste cinco"], ["number", 55], ["student_id", 5], ["created_at", "2023-06-01 01:36:25.344225"], ["updated_at", "2023-06-01 01:36:25.344225"]]
+  [1m[36mTRANSACTION (14.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste seis"], ["number", 66], ["student_id", 6], ["created_at", "2023-06-01 01:36:25.362255"], ["updated_at", "2023-06-01 01:36:25.362255"]]
+  [1m[36mTRANSACTION (14.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste sete"], ["number", 77], ["student_id", 7], ["created_at", "2023-06-01 01:36:25.380497"], ["updated_at", "2023-06-01 01:36:25.380497"]]
+  [1m[36mTRANSACTION (18.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "UFPR"], ["c_type", "Publica"], ["created_at", "2023-06-01 01:36:37.792124"], ["updated_at", "2023-06-01 01:36:37.792124"]]
+  [1m[36mTRANSACTION (15.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.3ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "UFRJ"], ["c_type", "Publica"], ["created_at", "2023-06-01 01:36:37.810673"], ["updated_at", "2023-06-01 01:36:37.810673"]]
+  [1m[36mTRANSACTION (16.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.6ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "PUC"], ["c_type", "Privada"], ["created_at", "2023-06-01 01:36:37.831404"], ["updated_at", "2023-06-01 01:36:37.831404"]]
+  [1m[36mTRANSACTION (14.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Uninter"], ["c_type", "Privada"], ["created_at", "2023-06-01 01:36:37.851836"], ["updated_at", "2023-06-01 01:36:37.851836"]]
+  [1m[36mTRANSACTION (19.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Ariel"], ["age", 22], ["register", "GRR20200002"], ["college_id", 2], ["created_at", "2023-06-01 01:36:37.907147"], ["updated_at", "2023-06-01 01:36:37.907147"]]
+  [1m[36mTRANSACTION (15.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.3ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Create (1.0ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Fernanda"], ["age", 22], ["register", "GRR20200003"], ["college_id", 2], ["created_at", "2023-06-01 01:36:37.939293"], ["updated_at", "2023-06-01 01:36:37.939293"]]
+  [1m[36mTRANSACTION (18.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Heric"], ["age", 22], ["register", "GRR20200004"], ["college_id", 3], ["created_at", "2023-06-01 01:36:37.967244"], ["updated_at", "2023-06-01 01:36:37.967244"]]
+  [1m[36mTRANSACTION (16.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.3ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Claudinei"], ["age", 22], ["register", "GRR20200005"], ["college_id", 3], ["created_at", "2023-06-01 01:36:37.990147"], ["updated_at", "2023-06-01 01:36:37.990147"]]
+  [1m[36mTRANSACTION (15.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Guilherme"], ["age", 22], ["register", "GRR20200006"], ["college_id", 4], ["created_at", "2023-06-01 01:36:38.010200"], ["updated_at", "2023-06-01 01:36:38.010200"]]
+  [1m[36mTRANSACTION (14.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste dois"], ["number", 22], ["student_id", 2], ["created_at", "2023-06-01 01:36:38.043326"], ["updated_at", "2023-06-01 01:36:38.043326"]]
+  [1m[36mTRANSACTION (14.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.3ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste tres"], ["number", 33], ["student_id", 3], ["created_at", "2023-06-01 01:36:38.061510"], ["updated_at", "2023-06-01 01:36:38.061510"]]
+  [1m[36mTRANSACTION (14.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste quatro"], ["number", 44], ["student_id", 4], ["created_at", "2023-06-01 01:36:38.080260"], ["updated_at", "2023-06-01 01:36:38.080260"]]
+  [1m[36mTRANSACTION (17.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste cinco"], ["number", 55], ["student_id", 5], ["created_at", "2023-06-01 01:36:38.101723"], ["updated_at", "2023-06-01 01:36:38.101723"]]
+  [1m[36mTRANSACTION (17.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste seis"], ["number", 66], ["student_id", 6], ["created_at", "2023-06-01 01:36:38.122821"], ["updated_at", "2023-06-01 01:36:38.122821"]]
+  [1m[36mTRANSACTION (16.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.4ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste sete"], ["number", 77], ["student_id", 7], ["created_at", "2023-06-01 01:36:38.143388"], ["updated_at", "2023-06-01 01:36:38.143388"]]
+  [1m[36mTRANSACTION (16.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 2"], ["code", "CI22"], ["college_id", 2], ["created_at", "2023-06-01 01:36:38.204621"], ["updated_at", "2023-06-01 01:36:38.204621"]]
+  [1m[36mTRANSACTION (16.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Create (2.2ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 3"], ["code", "CI33"], ["college_id", 3], ["created_at", "2023-06-01 01:36:38.224808"], ["updated_at", "2023-06-01 01:36:38.224808"]]
+  [1m[36mTRANSACTION (16.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.4ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 4"], ["code", "CI44"], ["college_id", 4], ["created_at", "2023-06-01 01:36:38.247564"], ["updated_at", "2023-06-01 01:36:38.247564"]]
+  [1m[36mTRANSACTION (16.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 6"], ["code", "CI66"], ["college_id", 2], ["created_at", "2023-06-01 01:36:38.271603"], ["updated_at", "2023-06-01 01:36:38.271603"]]
+  [1m[36mTRANSACTION (16.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 7"], ["code", "CI77"], ["college_id", 3], ["created_at", "2023-06-01 01:36:38.292400"], ["updated_at", "2023-06-01 01:36:38.292400"]]
+  [1m[36mTRANSACTION (16.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "UFPR"], ["c_type", "Publica"], ["created_at", "2023-06-01 01:36:57.291464"], ["updated_at", "2023-06-01 01:36:57.291464"]]
+  [1m[36mTRANSACTION (11.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "UFRJ"], ["c_type", "Publica"], ["created_at", "2023-06-01 01:36:57.306634"], ["updated_at", "2023-06-01 01:36:57.306634"]]
+  [1m[36mTRANSACTION (10.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "PUC"], ["c_type", "Privada"], ["created_at", "2023-06-01 01:36:57.320253"], ["updated_at", "2023-06-01 01:36:57.320253"]]
+  [1m[36mTRANSACTION (217.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Uninter"], ["c_type", "Privada"], ["created_at", "2023-06-01 01:36:57.540336"], ["updated_at", "2023-06-01 01:36:57.540336"]]
+  [1m[36mTRANSACTION (256.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Ariel"], ["age", 22], ["register", "GRR20200002"], ["college_id", 2], ["created_at", "2023-06-01 01:36:57.826125"], ["updated_at", "2023-06-01 01:36:57.826125"]]
+  [1m[36mTRANSACTION (215.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Fernanda"], ["age", 22], ["register", "GRR20200003"], ["college_id", 2], ["created_at", "2023-06-01 01:36:58.044657"], ["updated_at", "2023-06-01 01:36:58.044657"]]
+  [1m[36mTRANSACTION (211.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Heric"], ["age", 22], ["register", "GRR20200004"], ["college_id", 3], ["created_at", "2023-06-01 01:36:58.259995"], ["updated_at", "2023-06-01 01:36:58.259995"]]
+  [1m[36mTRANSACTION (181.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Claudinei"], ["age", 22], ["register", "GRR20200005"], ["college_id", 3], ["created_at", "2023-06-01 01:36:58.445539"], ["updated_at", "2023-06-01 01:36:58.445539"]]
+  [1m[36mTRANSACTION (204.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.3ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Guilherme"], ["age", 22], ["register", "GRR20200006"], ["college_id", 4], ["created_at", "2023-06-01 01:36:58.653864"], ["updated_at", "2023-06-01 01:36:58.653864"]]
+  [1m[36mTRANSACTION (116.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.3ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste dois"], ["number", 22], ["student_id", 2], ["created_at", "2023-06-01 01:36:58.791082"], ["updated_at", "2023-06-01 01:36:58.791082"]]
+  [1m[36mTRANSACTION (95.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.4ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste tres"], ["number", 33], ["student_id", 3], ["created_at", "2023-06-01 01:36:58.895084"], ["updated_at", "2023-06-01 01:36:58.895084"]]
+  [1m[36mTRANSACTION (143.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste quatro"], ["number", 44], ["student_id", 4], ["created_at", "2023-06-01 01:36:59.043413"], ["updated_at", "2023-06-01 01:36:59.043413"]]
+  [1m[36mTRANSACTION (74.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.3ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste cinco"], ["number", 55], ["student_id", 5], ["created_at", "2023-06-01 01:36:59.122228"], ["updated_at", "2023-06-01 01:36:59.122228"]]
+  [1m[36mTRANSACTION (51.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.3ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste seis"], ["number", 66], ["student_id", 6], ["created_at", "2023-06-01 01:36:59.177760"], ["updated_at", "2023-06-01 01:36:59.177760"]]
+  [1m[36mTRANSACTION (37.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.5ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste sete"], ["number", 77], ["student_id", 7], ["created_at", "2023-06-01 01:36:59.219040"], ["updated_at", "2023-06-01 01:36:59.219040"]]
+  [1m[36mTRANSACTION (72.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 2"], ["code", "CI22"], ["college_id", 2], ["created_at", "2023-06-01 01:36:59.309901"], ["updated_at", "2023-06-01 01:36:59.309901"]]
+  [1m[36mTRANSACTION (43.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.5ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 3"], ["code", "CI33"], ["college_id", 3], ["created_at", "2023-06-01 01:36:59.360060"], ["updated_at", "2023-06-01 01:36:59.360060"]]
+  [1m[36mTRANSACTION (53.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 4"], ["code", "CI44"], ["college_id", 4], ["created_at", "2023-06-01 01:36:59.418485"], ["updated_at", "2023-06-01 01:36:59.418485"]]
+  [1m[36mTRANSACTION (106.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.2ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.2ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.5ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 6"], ["code", "CI66"], ["college_id", 2], ["created_at", "2023-06-01 01:36:59.543836"], ["updated_at", "2023-06-01 01:36:59.543836"]]
+  [1m[36mTRANSACTION (28.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 7"], ["code", "CI77"], ["college_id", 3], ["created_at", "2023-06-01 01:36:59.577349"], ["updated_at", "2023-06-01 01:36:59.577349"]]
+  [1m[36mTRANSACTION (38.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.0ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.6ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 2], ["subject_id", 3], ["created_at", "2023-06-01 01:36:59.655755"], ["updated_at", "2023-06-01 01:36:59.655755"]]
+  [1m[36mTRANSACTION (54.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 2], ["subject_id", 2], ["created_at", "2023-06-01 01:36:59.715058"], ["updated_at", "2023-06-01 01:36:59.715058"]]
+  [1m[36mTRANSACTION (59.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 2], ["subject_id", 7], ["created_at", "2023-06-01 01:36:59.784724"], ["updated_at", "2023-06-01 01:36:59.784724"]]
+  [1m[36mTRANSACTION (37.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 3], ["subject_id", 7], ["created_at", "2023-06-01 01:36:59.826855"], ["updated_at", "2023-06-01 01:36:59.826855"]]
+  [1m[36mTRANSACTION (64.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.3ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (1.0ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 3], ["subject_id", 6], ["created_at", "2023-06-01 01:36:59.911154"], ["updated_at", "2023-06-01 01:36:59.911154"]]
+  [1m[36mTRANSACTION (71.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 3], ["subject_id", 5], ["created_at", "2023-06-01 01:36:59.991928"], ["updated_at", "2023-06-01 01:36:59.991928"]]
+  [1m[36mTRANSACTION (86.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 4], ["subject_id", 3], ["created_at", "2023-06-01 01:37:00.082931"], ["updated_at", "2023-06-01 01:37:00.082931"]]
+  [1m[36mTRANSACTION (59.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (1.7ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 5], ["subject_id", 2], ["created_at", "2023-06-01 01:37:00.168649"], ["updated_at", "2023-06-01 01:37:00.168649"]]
+  [1m[36mTRANSACTION (84.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 6], ["subject_id", 2], ["created_at", "2023-06-01 01:37:00.259272"], ["updated_at", "2023-06-01 01:37:00.259272"]]
+  [1m[36mTRANSACTION (75.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 6], ["subject_id", 7], ["created_at", "2023-06-01 01:37:00.340644"], ["updated_at", "2023-06-01 01:37:00.340644"]]
+  [1m[36mTRANSACTION (86.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 6], ["subject_id", 6], ["created_at", "2023-06-01 01:37:00.432014"], ["updated_at", "2023-06-01 01:37:00.432014"]]
+  [1m[36mTRANSACTION (66.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.4ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 7], ["subject_id", 2], ["created_at", "2023-06-01 01:37:00.503942"], ["updated_at", "2023-06-01 01:37:00.503942"]]
+  [1m[36mTRANSACTION (82.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 7], ["subject_id", 3], ["created_at", "2023-06-01 01:37:00.591431"], ["updated_at", "2023-06-01 01:37:00.591431"]]
+  [1m[36mTRANSACTION (88.5ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/students_subjects" for 127.0.0.1 at 2023-05-31 22:37:17 -0300
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by StudentsSubjectsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering students_subjects/index.html.erb within layouts/application
+  [1m[36mStudentsSubject Load (0.1ms)[0m  [1m[34mSELECT "students_subjects".* FROM "students_subjects"[0m
+  ↳ app/views/students_subjects/index.html.erb:6
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.7ms | Allocations: 225)
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.0ms | Allocations: 19)
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.0ms | Allocations: 19)
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.0ms | Allocations: 19)
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.0ms | Allocations: 19)
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.0ms | Allocations: 19)
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.0ms | Allocations: 19)
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.0ms | Allocations: 19)
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.0ms | Allocations: 19)
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.0ms | Allocations: 19)
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.0ms | Allocations: 19)
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.1ms | Allocations: 19)
+  Rendered students_subjects/_students_subject.html.erb (Duration: 0.0ms | Allocations: 19)
+  Rendered students_subjects/index.html.erb within layouts/application (Duration: 17.0ms | Allocations: 7701)
+  Rendered layout layouts/application.html.erb (Duration: 68.1ms | Allocations: 48705)
+Completed 200 OK in 82ms (Views: 71.5ms | ActiveRecord: 0.5ms | Allocations: 54772)
+
+
+Started GET "/colleges" for 127.0.0.1 at 2023-05-31 22:37:22 -0300
+Processing by CollegesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering colleges/index.html.erb within layouts/application
+  [1m[36mCollege Load (0.2ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges"[0m
+  ↳ app/views/colleges/index.html.erb:6
+  Rendered colleges/_college.html.erb (Duration: 1.5ms | Allocations: 192)
+  Rendered colleges/_college.html.erb (Duration: 0.1ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/index.html.erb within layouts/application (Duration: 18.4ms | Allocations: 6107)
+  Rendered layout layouts/application.html.erb (Duration: 21.6ms | Allocations: 8943)
+Completed 200 OK in 26ms (Views: 22.1ms | ActiveRecord: 0.7ms | Allocations: 11073)
+
+
+Started GET "/colelges" for 127.0.0.1 at 2023-05-31 22:37:23 -0300
+  
+ActionController::RoutingError (No route matches [GET] "/colelges"):
+  
+Started GET "/colleges" for 127.0.0.1 at 2023-05-31 22:37:27 -0300
+Processing by CollegesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering colleges/index.html.erb within layouts/application
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges"[0m
+  ↳ app/views/colleges/index.html.erb:6
+  Rendered colleges/_college.html.erb (Duration: 0.1ms | Allocations: 19)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.1ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.1ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.1ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/index.html.erb within layouts/application (Duration: 6.6ms | Allocations: 2913)
+  Rendered layout layouts/application.html.erb (Duration: 16.0ms | Allocations: 5691)
+Completed 200 OK in 18ms (Views: 17.1ms | ActiveRecord: 0.1ms | Allocations: 5968)
+
+
+  [1m[35m (65.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (63.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateColleges (20230601010617)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "colleges" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "c_type" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20230601010617"]]
+  [1m[36mTRANSACTION (96.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateStudents (20230601010905)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "students" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "age" integer, "register" varchar, "college_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_1d4ff93d0b"
+FOREIGN KEY ("college_id")
+  REFERENCES "colleges" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_students_on_college_id" ON "students" ("college_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20230601010905"]]
+  [1m[36mTRANSACTION (68.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateAddresses (20230601011110)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "addresses" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "streat" varchar, "number" integer, "student_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_c23856a13c"
+FOREIGN KEY ("student_id")
+  REFERENCES "students" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_addresses_on_student_id" ON "addresses" ("student_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20230601011110"]]
+  [1m[36mTRANSACTION (61.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateStudentsSubjects (20230601011944)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "students_subjects" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "student_id" integer NOT NULL, "subject_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2e9b65ae54"
+FOREIGN KEY ("student_id")
+  REFERENCES "students" ("id")
+, CONSTRAINT "fk_rails_fe2ec73250"
+FOREIGN KEY ("subject_id")
+  REFERENCES "subjects" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_students_subjects_on_student_id" ON "students_subjects" ("student_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_students_subjects_on_subject_id" ON "students_subjects" ("subject_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20230601011944"]]
+  [1m[36mTRANSACTION (57.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateSubjects (20230601012814)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "subjects" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "code" varchar, "college_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_d79344c40c"
+FOREIGN KEY ("college_id")
+  REFERENCES "colleges" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_subjects_on_college_id" ON "subjects" ("college_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20230601012814"]]
+  [1m[36mTRANSACTION (65.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2023-06-01 01:37:42.643994"], ["updated_at", "2023-06-01 01:37:42.643994"]]
+  [1m[36mTRANSACTION (59.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.4ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "UFPR"], ["c_type", "Publica"], ["created_at", "2023-06-01 01:37:51.690439"], ["updated_at", "2023-06-01 01:37:51.690439"]]
+  [1m[36mTRANSACTION (141.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "UFRJ"], ["c_type", "Publica"], ["created_at", "2023-06-01 01:37:51.835704"], ["updated_at", "2023-06-01 01:37:51.835704"]]
+  [1m[36mTRANSACTION (102.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "PUC"], ["c_type", "Privada"], ["created_at", "2023-06-01 01:37:51.939989"], ["updated_at", "2023-06-01 01:37:51.939989"]]
+  [1m[36mTRANSACTION (45.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Create (0.2ms)[0m  [1m[32mINSERT INTO "colleges" ("name", "c_type", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Uninter"], ["c_type", "Privada"], ["created_at", "2023-06-01 01:37:51.988028"], ["updated_at", "2023-06-01 01:37:51.988028"]]
+  [1m[36mTRANSACTION (52.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Paulo Mateus Luza Alves"], ["age", 22], ["register", "GRR20203945"], ["college_id", 1], ["created_at", "2023-06-01 01:37:52.065215"], ["updated_at", "2023-06-01 01:37:52.065215"]]
+  [1m[36mTRANSACTION (49.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Luis"], ["age", 22], ["register", "GRR20200001"], ["college_id", 1], ["created_at", "2023-06-01 01:37:52.119571"], ["updated_at", "2023-06-01 01:37:52.119571"]]
+  [1m[36mTRANSACTION (54.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Ariel"], ["age", 22], ["register", "GRR20200002"], ["college_id", 2], ["created_at", "2023-06-01 01:37:52.178278"], ["updated_at", "2023-06-01 01:37:52.178278"]]
+  [1m[36mTRANSACTION (50.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Fernanda"], ["age", 22], ["register", "GRR20200003"], ["college_id", 2], ["created_at", "2023-06-01 01:37:52.232748"], ["updated_at", "2023-06-01 01:37:52.232748"]]
+  [1m[36mTRANSACTION (92.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Heric"], ["age", 22], ["register", "GRR20200004"], ["college_id", 3], ["created_at", "2023-06-01 01:37:52.328876"], ["updated_at", "2023-06-01 01:37:52.328876"]]
+  [1m[36mTRANSACTION (104.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Claudinei"], ["age", 22], ["register", "GRR20200005"], ["college_id", 3], ["created_at", "2023-06-01 01:37:52.437290"], ["updated_at", "2023-06-01 01:37:52.437290"]]
+  [1m[36mTRANSACTION (15.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mStudent Create (0.2ms)[0m  [1m[32mINSERT INTO "students" ("name", "age", "register", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Guilherme"], ["age", 22], ["register", "GRR20200006"], ["college_id", 4], ["created_at", "2023-06-01 01:37:52.459227"], ["updated_at", "2023-06-01 01:37:52.459227"]]
+  [1m[36mTRANSACTION (263.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste um"], ["number", 11], ["student_id", 1], ["created_at", "2023-06-01 01:37:52.737003"], ["updated_at", "2023-06-01 01:37:52.737003"]]
+  [1m[36mTRANSACTION (13.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste dois"], ["number", 22], ["student_id", 2], ["created_at", "2023-06-01 01:37:52.754398"], ["updated_at", "2023-06-01 01:37:52.754398"]]
+  [1m[36mTRANSACTION (170.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.3ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.7ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste tres"], ["number", 33], ["student_id", 3], ["created_at", "2023-06-01 01:37:52.941605"], ["updated_at", "2023-06-01 01:37:52.941605"]]
+  [1m[36mTRANSACTION (166.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste quatro"], ["number", 44], ["student_id", 4], ["created_at", "2023-06-01 01:37:53.115918"], ["updated_at", "2023-06-01 01:37:53.115918"]]
+  [1m[36mTRANSACTION (14.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste cinco"], ["number", 55], ["student_id", 5], ["created_at", "2023-06-01 01:37:53.133565"], ["updated_at", "2023-06-01 01:37:53.133565"]]
+  [1m[36mTRANSACTION (48.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste seis"], ["number", 66], ["student_id", 6], ["created_at", "2023-06-01 01:37:53.186006"], ["updated_at", "2023-06-01 01:37:53.186006"]]
+  [1m[36mTRANSACTION (49.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mAddress Create (0.2ms)[0m  [1m[32mINSERT INTO "addresses" ("streat", "number", "student_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["streat", "Rua teste sete"], ["number", 77], ["student_id", 7], ["created_at", "2023-06-01 01:37:53.239050"], ["updated_at", "2023-06-01 01:37:53.239050"]]
+  [1m[36mTRANSACTION (50.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 1"], ["code", "CI11"], ["college_id", 1], ["created_at", "2023-06-01 01:37:53.305913"], ["updated_at", "2023-06-01 01:37:53.305913"]]
+  [1m[36mTRANSACTION (82.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.4ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 2"], ["code", "CI22"], ["college_id", 2], ["created_at", "2023-06-01 01:37:53.392808"], ["updated_at", "2023-06-01 01:37:53.392808"]]
+  [1m[36mTRANSACTION (14.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 3"], ["code", "CI33"], ["college_id", 3], ["created_at", "2023-06-01 01:37:53.413196"], ["updated_at", "2023-06-01 01:37:53.413196"]]
+  [1m[36mTRANSACTION (95.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 4"], ["code", "CI44"], ["college_id", 4], ["created_at", "2023-06-01 01:37:53.515903"], ["updated_at", "2023-06-01 01:37:53.515903"]]
+  [1m[36mTRANSACTION (15.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 5"], ["code", "CI55"], ["college_id", 1], ["created_at", "2023-06-01 01:37:53.536261"], ["updated_at", "2023-06-01 01:37:53.536261"]]
+  [1m[36mTRANSACTION (54.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.2ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.4ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 6"], ["code", "CI66"], ["college_id", 2], ["created_at", "2023-06-01 01:37:53.599290"], ["updated_at", "2023-06-01 01:37:53.599290"]]
+  [1m[36mTRANSACTION (38.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "subjects" ("name", "code", "college_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Matéria 7"], ["code", "CI77"], ["college_id", 3], ["created_at", "2023-06-01 01:37:53.642319"], ["updated_at", "2023-06-01 01:37:53.642319"]]
+  [1m[36mTRANSACTION (54.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 1], ["subject_id", 1], ["created_at", "2023-06-01 01:37:53.711268"], ["updated_at", "2023-06-01 01:37:53.711268"]]
+  [1m[36mTRANSACTION (79.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 1], ["subject_id", 2], ["created_at", "2023-06-01 01:37:53.795305"], ["updated_at", "2023-06-01 01:37:53.795305"]]
+  [1m[36mTRANSACTION (86.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 1], ["subject_id", 5], ["created_at", "2023-06-01 01:37:53.887061"], ["updated_at", "2023-06-01 01:37:53.887061"]]
+  [1m[36mTRANSACTION (47.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 2], ["subject_id", 3], ["created_at", "2023-06-01 01:37:53.938860"], ["updated_at", "2023-06-01 01:37:53.938860"]]
+  [1m[36mTRANSACTION (63.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 2], ["subject_id", 2], ["created_at", "2023-06-01 01:37:54.008273"], ["updated_at", "2023-06-01 01:37:54.008273"]]
+  [1m[36mTRANSACTION (166.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 2], ["subject_id", 1], ["created_at", "2023-06-01 01:37:54.179778"], ["updated_at", "2023-06-01 01:37:54.179778"]]
+  [1m[36mTRANSACTION (13.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 2], ["subject_id", 7], ["created_at", "2023-06-01 01:37:54.197894"], ["updated_at", "2023-06-01 01:37:54.197894"]]
+  [1m[36mTRANSACTION (64.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 3], ["subject_id", 7], ["created_at", "2023-06-01 01:37:54.267371"], ["updated_at", "2023-06-01 01:37:54.267371"]]
+  [1m[36mTRANSACTION (40.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.2ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 3], ["subject_id", 6], ["created_at", "2023-06-01 01:37:54.313441"], ["updated_at", "2023-06-01 01:37:54.313441"]]
+  [1m[36mTRANSACTION (43.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.6ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.2ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.6ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 3], ["subject_id", 5], ["created_at", "2023-06-01 01:37:54.378945"], ["updated_at", "2023-06-01 01:37:54.378945"]]
+  [1m[36mTRANSACTION (25.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 4], ["subject_id", 3], ["created_at", "2023-06-01 01:37:54.412234"], ["updated_at", "2023-06-01 01:37:54.412234"]]
+  [1m[36mTRANSACTION (46.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 4], ["subject_id", 1], ["created_at", "2023-06-01 01:37:54.463722"], ["updated_at", "2023-06-01 01:37:54.463722"]]
+  [1m[36mTRANSACTION (91.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 5], ["subject_id", 2], ["created_at", "2023-06-01 01:37:54.561709"], ["updated_at", "2023-06-01 01:37:54.561709"]]
+  [1m[36mTRANSACTION (14.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 6], ["subject_id", 2], ["created_at", "2023-06-01 01:37:54.580631"], ["updated_at", "2023-06-01 01:37:54.580631"]]
+  [1m[36mTRANSACTION (150.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 6], ["subject_id", 7], ["created_at", "2023-06-01 01:37:54.735998"], ["updated_at", "2023-06-01 01:37:54.735998"]]
+  [1m[36mTRANSACTION (126.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.2ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 6], ["subject_id", 6], ["created_at", "2023-06-01 01:37:54.868418"], ["updated_at", "2023-06-01 01:37:54.868418"]]
+  [1m[36mTRANSACTION (332.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.0ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 7], ["subject_id", 2], ["created_at", "2023-06-01 01:37:55.206130"], ["updated_at", "2023-06-01 01:37:55.206130"]]
+  [1m[36mTRANSACTION (61.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mStudent Load (0.1ms)[0m  [1m[34mSELECT "students".* FROM "students" WHERE "students"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mSubject Load (0.1ms)[0m  [1m[34mSELECT "subjects".* FROM "subjects" WHERE "subjects"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mStudentsSubject Create (0.3ms)[0m  [1m[32mINSERT INTO "students_subjects" ("student_id", "subject_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["student_id", 7], ["subject_id", 3], ["created_at", "2023-06-01 01:37:55.272982"], ["updated_at", "2023-06-01 01:37:55.272982"]]
+  [1m[36mTRANSACTION (53.6ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/colleges" for 127.0.0.1 at 2023-05-31 22:38:01 -0300
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by CollegesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering colleges/index.html.erb within layouts/application
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges"[0m
+  ↳ app/views/colleges/index.html.erb:6
+  Rendered colleges/_college.html.erb (Duration: 0.6ms | Allocations: 224)
+  Rendered colleges/_college.html.erb (Duration: 0.1ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/_college.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered colleges/index.html.erb within layouts/application (Duration: 14.1ms | Allocations: 6414)
+  Rendered layout layouts/application.html.erb (Duration: 73.5ms | Allocations: 48054)
+Completed 200 OK in 86ms (Views: 75.1ms | ActiveRecord: 0.6ms | Allocations: 54300)
+
+
+Started GET "/colleges/3" for 127.0.0.1 at 2023-05-31 22:38:04 -0300
+Processing by CollegesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mCollege Load (0.2ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/colleges_controller.rb:63:in `set_college'
+  Rendering layout layouts/application.html.erb
+  Rendering colleges/show.html.erb within layouts/application
+  Rendered colleges/_college.html.erb (Duration: 0.1ms | Allocations: 19)
+  Rendered colleges/show.html.erb within layouts/application (Duration: 9.9ms | Allocations: 797)
+  Rendered layout layouts/application.html.erb (Duration: 13.5ms | Allocations: 3567)
+Completed 200 OK in 17ms (Views: 14.0ms | ActiveRecord: 0.2ms | Allocations: 6219)
+
+
+Started GET "/colleges/3/edit" for 127.0.0.1 at 2023-05-31 22:38:06 -0300
+Processing by CollegesController#edit as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mCollege Load (0.1ms)[0m  [1m[34mSELECT "colleges".* FROM "colleges" WHERE "colleges"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/colleges_controller.rb:63:in `set_college'
+  Rendering layout layouts/application.html.erb
+  Rendering colleges/edit.html.erb within layouts/application
+  Rendered colleges/_form.html.erb (Duration: 4.4ms | Allocations: 2195)
+  Rendered colleges/edit.html.erb within layouts/application (Duration: 5.5ms | Allocations: 2553)
+  Rendered layout layouts/application.html.erb (Duration: 8.1ms | Allocations: 5321)
+Completed 200 OK in 10ms (Views: 8.8ms | ActiveRecord: 0.1ms | Allocations: 6131)
+
+
