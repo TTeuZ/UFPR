@@ -61,3 +61,10 @@ StudentsSubject.create([
                          { student_id: '7', subject_id: '2' },
                          { student_id: '7', subject_id: '3' }
                        ])
+
+User.create([
+              { email: 'user@ufpr.com.br', password: 'user123456789', password_confirmation: 'user123456789',
+                user_type: 'normal' },
+              { email: 'admin@ufpr.com.br', password: 'admin123456789', password_confirmation: 'admin123456789',
+                user_type: 'admin' }
+            ])
