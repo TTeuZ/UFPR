@@ -1,5 +1,7 @@
-class College < ApplicationRecord
-    has_many :student, dependent: :destroy
+# frozen_string_literal: true
 
-    validates :name, :c_type, presence: true
+class College < ApplicationRecord
+  has_many :student, dependent: :destroy
+
+  validates :name, :c_type, presence: true
 end

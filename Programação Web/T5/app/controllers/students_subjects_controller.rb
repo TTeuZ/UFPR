@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class StudentsSubjectsController < ApplicationController
-  before_action :set_students_subject, only: %i[ show edit update destroy ]
+  before_action :set_students_subject, only: %i[show edit update destroy]
 
   # GET /students_subjects or /students_subjects.json
   def index
@@ -7,8 +9,7 @@ class StudentsSubjectsController < ApplicationController
   end
 
   # GET /students_subjects/1 or /students_subjects/1.json
-  def show
-  end
+  def show; end
 
   # GET /students_subjects/new
   def new
@@ -16,8 +17,7 @@ class StudentsSubjectsController < ApplicationController
   end
 
   # GET /students_subjects/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /students_subjects or /students_subjects.json
   def create
@@ -25,7 +25,9 @@ class StudentsSubjectsController < ApplicationController
 
     respond_to do |format|
       if @students_subject.save
-        format.html { redirect_to students_subject_url(@students_subject), notice: "Students subject was successfully created." }
+        format.html do
+          redirect_to students_subject_url(@students_subject), notice: 'Students subject was successfully created.'
+        end
         format.json { render :show, status: :created, location: @students_subject }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,9 @@ class StudentsSubjectsController < ApplicationController
   def update
     respond_to do |format|
       if @students_subject.update(students_subject_params)
-        format.html { redirect_to students_subject_url(@students_subject), notice: "Students subject was successfully updated." }
+        format.html do
+          redirect_to students_subject_url(@students_subject), notice: 'Students subject was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @students_subject }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +56,20 @@ class StudentsSubjectsController < ApplicationController
     @students_subject.destroy
 
     respond_to do |format|
-      format.html { redirect_to students_subjects_url, notice: "Students subject was successfully destroyed." }
+      format.html { redirect_to students_subjects_url, notice: 'Students subject was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_students_subject
-      @students_subject = StudentsSubject.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def students_subject_params
-      params.require(:students_subject).permit(:student_id, :subject_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_students_subject
+    @students_subject = StudentsSubject.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def students_subject_params
+    params.require(:students_subject).permit(:student_id, :subject_id)
+  end
 end

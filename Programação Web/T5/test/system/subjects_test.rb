@@ -1,43 +1,45 @@
-require "application_system_test_case"
+# frozen_string_literal: true
+
+require 'application_system_test_case'
 
 class SubjectsTest < ApplicationSystemTestCase
   setup do
     @subject = subjects(:one)
   end
 
-  test "visiting the index" do
+  test 'visiting the index' do
     visit subjects_url
-    assert_selector "h1", text: "Subjects"
+    assert_selector 'h1', text: 'Subjects'
   end
 
-  test "should create subject" do
+  test 'should create subject' do
     visit subjects_url
-    click_on "New subject"
+    click_on 'New subject'
 
-    fill_in "Code", with: @subject.code
-    fill_in "Name", with: @subject.name
-    click_on "Create Subject"
+    fill_in 'Code', with: @subject.code
+    fill_in 'Name', with: @subject.name
+    click_on 'Create Subject'
 
-    assert_text "Subject was successfully created"
-    click_on "Back"
+    assert_text 'Subject was successfully created'
+    click_on 'Back'
   end
 
-  test "should update Subject" do
+  test 'should update Subject' do
     visit subject_url(@subject)
-    click_on "Edit this subject", match: :first
+    click_on 'Edit this subject', match: :first
 
-    fill_in "Code", with: @subject.code
-    fill_in "Name", with: @subject.name
-    click_on "Update Subject"
+    fill_in 'Code', with: @subject.code
+    fill_in 'Name', with: @subject.name
+    click_on 'Update Subject'
 
-    assert_text "Subject was successfully updated"
-    click_on "Back"
+    assert_text 'Subject was successfully updated'
+    click_on 'Back'
   end
 
-  test "should destroy Subject" do
+  test 'should destroy Subject' do
     visit subject_url(@subject)
-    click_on "Destroy this subject", match: :first
+    click_on 'Destroy this subject', match: :first
 
-    assert_text "Subject was successfully destroyed"
+    assert_text 'Subject was successfully destroyed'
   end
 end
