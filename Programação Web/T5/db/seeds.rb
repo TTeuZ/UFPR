@@ -63,8 +63,8 @@ StudentsSubject.create([
                        ])
 
 User.create([
-              { email: 'user@ufpr.com.br', password: 'user123456789', password_confirmation: 'user123456789',
+              { email: 'user@ufpr.com.br', password: 'password', password_confirmation: 'password',
                 user_type: 'normal' },
-              { email: 'admin@ufpr.com.br', password: 'admin123456789', password_confirmation: 'admin123456789',
+              { email: 'admin@ufpr.com.br', password: 'password', password_confirmation: 'password',
                 user_type: 'admin' }
             ])
