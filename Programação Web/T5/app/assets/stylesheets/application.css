@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+a {
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.login__wrapper {
+    height: 80vh;
+}
