@@ -10,64 +10,64 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_01_230116) do
-  create_table "addresses", force: :cascade do |t|
-    t.string "streat"
-    t.integer "number"
-    t.integer "student_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["student_id"], name: "index_addresses_on_student_id"
+ActiveRecord::Schema[7.0].define(version: 20_230_601_230_116) do
+  create_table 'addresses', force: :cascade do |t|
+    t.string 'streat'
+    t.integer 'number'
+    t.integer 'student_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['student_id'], name: 'index_addresses_on_student_id'
   end
 
-  create_table "colleges", force: :cascade do |t|
-    t.string "name"
-    t.string "c_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'colleges', force: :cascade do |t|
+    t.string 'name'
+    t.string 'c_type'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "students", force: :cascade do |t|
-    t.string "name"
-    t.integer "age"
-    t.string "register"
-    t.integer "college_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["college_id"], name: "index_students_on_college_id"
+  create_table 'students', force: :cascade do |t|
+    t.string 'name'
+    t.integer 'age'
+    t.string 'register'
+    t.integer 'college_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['college_id'], name: 'index_students_on_college_id'
   end
 
-  create_table "students_subjects", force: :cascade do |t|
-    t.integer "student_id", null: false
-    t.integer "subject_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["student_id"], name: "index_students_subjects_on_student_id"
-    t.index ["subject_id"], name: "index_students_subjects_on_subject_id"
+  create_table 'students_subjects', force: :cascade do |t|
+    t.integer 'student_id', null: false
+    t.integer 'subject_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['student_id'], name: 'index_students_subjects_on_student_id'
+    t.index ['subject_id'], name: 'index_students_subjects_on_subject_id'
   end
 
-  create_table "subjects", force: :cascade do |t|
-    t.string "name"
-    t.string "code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'subjects', force: :cascade do |t|
+    t.string 'name'
+    t.string 'code'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.string "user_type", default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  create_table 'users', force: :cascade do |t|
+    t.string 'email', default: '', null: false
+    t.string 'encrypted_password', default: '', null: false
+    t.string 'reset_password_token'
+    t.datetime 'reset_password_sent_at'
+    t.datetime 'remember_created_at'
+    t.string 'user_type', default: '', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
   end
 
-  add_foreign_key "addresses", "students"
-  add_foreign_key "students", "colleges"
-  add_foreign_key "students_subjects", "students"
-  add_foreign_key "students_subjects", "subjects"
+  add_foreign_key 'addresses', 'students'
+  add_foreign_key 'students', 'colleges'
+  add_foreign_key 'students_subjects', 'students'
+  add_foreign_key 'students_subjects', 'subjects'
 end
