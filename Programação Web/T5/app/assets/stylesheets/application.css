@@ -19,6 +19,10 @@ a {
     color: white !important;
 }
 
+.nav__wrapper a:hover {
+    color: #00bc8c !important;
+}
+
 .login__wrapper {
     height: 80vh;
 }

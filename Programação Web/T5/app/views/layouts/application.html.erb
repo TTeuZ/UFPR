@@ -23,7 +23,7 @@
           </button>
         <% end %>
         <% if user_signed_in?%>
-          <div>
+          <div class="nav__wrapper">
             <%= link_to 'Universidades', colleges_path, class: 'me-2' %>
             <%= link_to 'Estudantes', students_path, class: 'me-2' %>
             <%= link_to 'Endereços', addresses_path, class: 'me-2' %>
