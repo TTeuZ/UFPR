@@ -2,6 +2,7 @@
 
 class StudentsSubjectsController < ApplicationController
   before_action :set_students_subject, only: %i[show edit update destroy]
+  before_action :authenticate_user!
 
   # GET /students_subjects or /students_subjects.json
   def index

@@ -9,12 +9,27 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "bootstrap.min", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <script src="https://kit.fontawesome.com/8493a85789.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>  
-
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand text-white" href="/">Visualizador</a>
+        <% if !user_signed_in?%>
+          <button type="button" class="btn btn-outline-light">
+            <%= link_to 'Logar', new_user_session_path %>
+          </button>
+        <% end %>
+        <% if user_signed_in?%>
+          <button type="button" class="btn btn-outline-light">
+            <%= link_to 'Sair', destroy_user_session_path %>
+          </button>
+        <% end %>
+      </div>
+    </nav>
+    
     <%= yield %>
   </body>
 </html>
