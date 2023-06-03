@@ -14,7 +14,9 @@
         <th scope="col">Id</th>
         <th scope="col">Nome</th>
         <th scope="col">Código</th>
-        <th scope="col" class="text-end">Ações</th>
+        <% if current_user.user_type == 'admin' %>
+          <th scope="col" class="text-end">Ações</th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
@@ -23,12 +25,14 @@
           <td> <%= subject.id %> </td>
           <td> <%= subject.name %> </td>
           <td> <%= subject.code %> </td>
-          <td class="d-flex flex-row justify-content-end" align='right'> 
-            <button type="button" class="btn btn-outline-light btn-sm">
-              <%= link_to "Editar", edit_subject_path(subject) %>
-            </button>
-            <%= button_to "Deletar", subject, method: :delete, class: 'btn btn-outline-danger btn-sm text-white ms-3' %>
-          </td>
+          <% if current_user.user_type == 'admin' %>
+            <td class="d-flex flex-row justify-content-end" align='right'> 
+              <button type="button" class="btn btn-outline-light btn-sm">
+                <%= link_to "Editar", edit_subject_path(subject) %>
+              </button>
+              <%= button_to "Deletar", subject, method: :delete, class: 'btn btn-outline-danger btn-sm text-white ms-3' %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
