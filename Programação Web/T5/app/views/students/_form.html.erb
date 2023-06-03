@@ -2,20 +2,20 @@
   <div class="d-flex flex-row">
     <div class="w-50">
       <div>
-        <%= form.label :name, style: "display: block", class: 'form-label' %>
+        <%= form.label :nome, style: "display: block", class: 'form-label' %>
         <%= form.text_field :name, class: 'form-control' %>
       </div>
       <div class="mt-2">
-        <%= form.label :age, style: "display: block", class: 'form-label' %>
+        <%= form.label :idade, style: "display: block", class: 'form-label' %>
         <%= form.number_field :age, class: 'form-control' %>
       </div>
       <div>
-        <%= form.label :register, style: "display: block", class: 'form-label' %>
+        <%= form.label :GRR, style: "display: block", class: 'form-label' %>
         <%= form.text_field :register, class: 'form-control' %>
       </div>
       <div>
-        <%= form.label :college_id, style: "display: block", class: 'form-label' %>
-        <%= form.number_field :college_id, class: 'form-control' %>
+        <%= form.label :Universidade, style: "display: block", class: 'form-label' %>
+        <%= form.collection_select(:college_id, College.all, :id, :name, { :prompt => 'Selecione uma faculdade', :selected => student.college_id }, { class: 'form-control' }) %>
       </div>
 
       <div class="d-flex flex-row justify-content-end align-items-center mt-4">

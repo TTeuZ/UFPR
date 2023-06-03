@@ -2,12 +2,12 @@
   <div class="d-flex flex-row">
     <div class="w-50">
       <div>
-        <%= form.label :student_id, style: "display: block", class: 'form-label' %>
-        <%= form.number_field :student_id, class: 'form-control' %>
+        <%= form.label :estudante, style: "display: block", class: 'form-label' %>
+        <%= form.collection_select(:student_id, Student.all, :id, :name, { :prompt => 'Selecione um estudante', :selected => students_subject.student_id }, { class: 'form-control' }) %>
       </div>
       <div class="mt-2">
-        <%= form.label :subject_id, style: "display: block", class: 'form-label' %>
-        <%= form.number_field :subject_id, class: 'form-control' %>
+        <%= form.label :matéria, style: "display: block", class: 'form-label' %>
+        <%= form.collection_select(:subject_id, Subject.all, :id, :name, { :prompt => 'Selecione uma matéria', :selected => students_subject.subject_id, }, { class: 'form-control' }) %>
       </div>
 
       <div class="d-flex flex-row justify-content-end align-items-center mt-4">
