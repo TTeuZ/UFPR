@@ -26,8 +26,8 @@ class CollegesController < ApplicationController
 
     respond_to do |format|
       if @college.save
-        format.html { redirect_to college_url(@college), notice: 'College was successfully created.' }
-        format.json { render :show, status: :created, location: @college }
+        format.html { redirect_to action: 'index', notice: 'College was successfully created.' }
+        format.json { render action: 'index', status: :created, location: @college }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @college.errors, status: :unprocessable_entity }
@@ -39,8 +39,8 @@ class CollegesController < ApplicationController
   def update
     respond_to do |format|
       if @college.update(college_params)
-        format.html { redirect_to college_url(@college), notice: 'College was successfully updated.' }
-        format.json { render :show, status: :ok, location: @college }
+        format.html { redirect_to action: 'index', notice: 'College was successfully updated.' }
+        format.json { render action: 'index', status: :ok, location: @college }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @college.errors, status: :unprocessable_entity }
