@@ -62,11 +62,13 @@
                   <% end %>
                 </tbody>
               </table>
-              <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-outline-success">
-                  <%= link_to "Adicionar nova matéria", new_students_subject_path(:student_id => student.id) %>
-                </button>
-              </div>
+              <% if current_user.user_type == 'admin' %>
+                <div class="d-flex justify-content-end">
+                  <button type="button" class="btn btn-outline-success">
+                    <%= link_to "Adicionar nova matéria", new_students_subject_path(:student_id => student.id) %>
+                  </button>
+                </div>
+              <% end %>
             </section>
           </div>
         </div>
