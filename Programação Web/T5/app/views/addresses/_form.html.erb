@@ -1,32 +1,36 @@
 <%= form_with(model: address) do |form| %>
-  <% if address.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
+  <div class="d-flex flex-row">
+    <div class="w-50">
+      <div>
+        <%= form.label :streat, style: "display: block", class: 'form-label' %>
+        <%= form.text_field :streat, class: 'form-control' %>
+      </div>
+      <div class="mt-2">
+        <%= form.label :number, style: "display: block", class: 'form-label' %>
+        <%= form.number_field :number, class: 'form-control' %>
+      </div>
+      <div>
+        <%= form.label :student_id, style: "display: block", class: 'form-label' %>
+        <%= form.number_field :student_id, class: 'form-control' %>
+      </div>
 
-      <ul>
-        <% address.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <div class="d-flex flex-row justify-content-end align-items-center mt-4">
+        <%= form.submit 'Salvar' , :class => 'btn btn-outline-success' %>
+        <button type="button" class="btn btn-outline-danger ms-3">
+          <%= link_to "Cancelar", addresses_path %>
+        </button>
+      </div>
     </div>
-  <% end %>
 
-  <div>
-    <%= form.label :streat, style: "display: block" %>
-    <%= form.text_field :streat %>
-  </div>
-
-  <div>
-    <%= form.label :number, style: "display: block" %>
-    <%= form.number_field :number %>
-  </div>
-
-  <div>
-    <%= form.label :student_id, style: "display: block" %>
-    <%= form.text_field :student_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <% if address.errors.any? %>
+      <div class="text-danger mt-4 ms-3">
+        <h4><%= pluralize(address.errors.count, "error") %> prohibited this student from being saved:</h4>
+        <ul>
+          <% address.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </div>
 <% end %>

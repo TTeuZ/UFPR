@@ -1,10 +1,7 @@
-<h1>Editing address</h1>
+<div class="mx-3 my-3">
+  <div class="w-100 border-bottom mb-4 d-flex flex-row justify-content-between align-items-center">
+    <h2> Editar endereço </h2>
+  </div>
 
-<%= render "form", address: @address %>
-
-<br>
-
-<div>
-  <%= link_to "Show this address", @address %> |
-  <%= link_to "Back to addresses", addresses_path %>
+  <%= render "form", address: @address %>
 </div>

@@ -1,14 +1,42 @@
-<p style="color: green"><%= notice %></p>
+<div class="mx-3 my-3">
+  <div class="w-100 border-bottom mb-4 d-flex flex-row justify-content-between align-items-center">
+    <h2> Endereços </h2>
+    <% if current_user.user_type == 'admin' %>
+      <button type="button" class="btn btn-outline-success">
+        <%= link_to "Adicionar", new_address_path %>
+      </button>
+    <% end %>
+  </div>
 
-<h1>Addresses</h1>
-
-<div id="addresses">
-  <% @addresses.each do |address| %>
-    <%= render address %>
-    <p>
-      <%= link_to "Show this address", address %>
-    </p>
-  <% end %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Rua</th>
+        <th scope="col">Numero</th>
+        <th scope="col">Estudante</th>
+        <% if current_user.user_type == 'admin' %>
+          <th scope="col" class="text-end">Ações</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @addresses.each do |address| %>
+        <tr>
+          <td> <%= address.id %> </td>
+          <td> <%= address.streat %> </td>
+          <td> <%= address.number %> </td>
+          <td> <%= address.student.name %> </td>
+          <% if current_user.user_type == 'admin' %>
+            <td class="d-flex flex-row justify-content-end" align='right'> 
+              <button type="button" class="btn btn-outline-light btn-sm">
+                <%= link_to "Editar", edit_address_path(address) %>
+              </button>
+              <%= button_to "Deletar", address, method: :delete, class: 'btn btn-outline-danger btn-sm text-white ms-3' %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
-
-<%= link_to "New address", new_address_path %>
