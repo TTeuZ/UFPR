@@ -3,7 +3,7 @@
     <div class="w-50">
       <div>
         <%= form.label :estudante, style: "display: block", class: 'form-label' %>
-        <%= form.collection_select(:student_id, Student.all, :id, :name, { :prompt => 'Selecione um estudante', :selected => students_subject.student_id }, { class: 'form-control' }) %>
+        <%= form.collection_select(:student_id, Student.all, :id, :name, { :prompt => 'Selecione um estudante', :selected => params[:student_id] != nil ? params[:student_id] : students_subject.student_id }, { class: 'form-control' }) %>
       </div>
       <div class="mt-2">
         <%= form.label :matéria, style: "display: block", class: 'form-label' %>

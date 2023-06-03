@@ -57,6 +57,11 @@
                   <% end %>
                 </tbody>
               </table>
+              <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-success">
+                  <%= link_to "Adicionar novo estudante", new_student_path(:college_id => college.id) %>
+                </button>
+              </div>
             </section>
           </div>
         </div>
