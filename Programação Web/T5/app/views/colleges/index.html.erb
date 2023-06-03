@@ -1,14 +1,65 @@
-<p style="color: green"><%= notice %></p>
+<div class="mx-3 my-3">
+  <div class="w-100 border-bottom mb-4 d-flex flex-row justify-content-between align-items-center">
+    <h2> Universidades </h2>
+    <% if current_user.user_type == 'admin' %>
+      <button type="button" class="btn btn-outline-light">
+        <%= link_to "Adicionar", new_college_path %>
+      </button>
+    <% end %>
+  </div>
 
-<h1>Colleges</h1>
-
-<div id="colleges">
-  <% @colleges.each do |college| %>
-    <%= render college %>
-    <p>
-      <%= link_to "Show this college", college %>
-    </p>
-  <% end %>
+  <div class="accordion" id="collegesAccordion">
+    <% @colleges.each_with_index do |college, index| %>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_<%= dom_id college %>" aria-expanded="batata">
+            <span> <%= college.name %> </span>
+          </button>
+        </h2>
+        <div id="collapse_<%= dom_id college %>" class="accordion-collapse collapse" data-bs-parent="#collegesAccordion">
+          <div class="accordion-body">
+            <section class="d-flex flex-row justify-content-between align-items-center pb-1">
+              <div class="d-flex flex-column">
+                <span> Nome: <%= college.name %> </span>
+                <span> Tipo: <%= college.c_type %> </span>
+              </div>
+              <% if current_user.user_type == 'admin' %>
+                <div class="d-flex flex-row align-items-center">
+                  <button type="button" class="btn btn-outline-primary">
+                    <%= link_to "Editar", edit_college_path(college) %>
+                  </button>
+                  <%= button_to "Apagar", college, method: :delete, class: 'btn btn-outline-danger text-white ms-3' %>
+                </div>
+              <% end %>
+            </section>
+            <section class="mt-2">
+              <h5 class="border-bottom"> Estudantes </h5>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">GRR</th>
+                    <th scope="col" class="text-end">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% college.student.each do |student| %>
+                    <tr>
+                      <td> <%= student.name %> </td>
+                      <td> <%= student.register %> </td>
+                      <td align='right'> 
+                        <button type="button" class="btn btn-outline-light btn-sm">
+                          <%= link_to "Ver mais", student %>
+                        </button>
+                     </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </section>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
-
-<%= link_to "New college", new_college_path %>

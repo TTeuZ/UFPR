@@ -1,27 +1,32 @@
-<%= form_with(model: college) do |form| %>
-  <% if college.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(college.errors.count, "error") %> prohibited this college from being saved:</h2>
+  <%= form_with(model: @college) do |form| %>
+    <div class="d-flex flex-row">
+      <div class="w-50">
+        <div>
+          <%= form.label :name, style: "display: block", class: 'form-label' %>
+          <%= form.text_field :name, class: 'form-control' %>
+        </div>
+        <div class="mt-2">
+          <%= form.label :c_type, style: "display: block", class: 'form-label' %>
+          <%= form.text_field :c_type, class: 'form-control' %>
+        </div>
 
-      <ul>
-        <% college.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <div class="d-flex flex-row justify-content-end align-items-center mt-4">
+          <%= form.submit 'Salvar' , :class => 'btn btn-outline-success' %>
+          <button type="button" class="btn btn-outline-danger ms-3">
+            <%= link_to "Cancelar", colleges_path %>
+          </button>
+        </div>
+      </div>
+
+      <% if @college.errors.any? %>
+        <div class="text-danger mt-4 ms-3">
+          <h4><%= pluralize(@college.errors.count, "error") %> prohibited this college from being saved:</h4>
+          <ul>
+            <% @college.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :c_type, style: "display: block" %>
-    <%= form.text_field :c_type %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
