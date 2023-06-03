@@ -1,9 +1,7 @@
-<h1>New subject</h1>
+<div class="mx-3 my-3">
+  <div class="w-100 border-bottom mb-4 d-flex flex-row justify-content-between align-items-center">
+    <h2> Nova matéria </h2>
+  </div>
 
-<%= render "form", subject: @subject %>
-
-<br>
-
-<div>
-  <%= link_to "Back to subjects", subjects_path %>
+  <%= render "form", subject: @subject %>
 </div>
