@@ -27,9 +27,9 @@ class StudentsSubjectsController < ApplicationController
     respond_to do |format|
       if @students_subject.save
         format.html do
-          redirect_to students_subject_url(@students_subject), notice: 'Students subject was successfully created.'
+          redirect_to action: 'index', notice: 'Students subject was successfully created.'
         end
-        format.json { render :show, status: :created, location: @students_subject }
+        format.json { render action: 'index', status: :created, location: @students_subject }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @students_subject.errors, status: :unprocessable_entity }
@@ -42,9 +42,9 @@ class StudentsSubjectsController < ApplicationController
     respond_to do |format|
       if @students_subject.update(students_subject_params)
         format.html do
-          redirect_to students_subject_url(@students_subject), notice: 'Students subject was successfully updated.'
+          redirect_to action: 'index', notice: 'Students subject was successfully updated.'
         end
-        format.json { render :show, status: :ok, location: @students_subject }
+        format.json { render action: 'index', status: :ok, location: @students_subject }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @students_subject.errors, status: :unprocessable_entity }

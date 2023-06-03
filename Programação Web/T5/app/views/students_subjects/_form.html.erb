@@ -1,27 +1,32 @@
 <%= form_with(model: students_subject) do |form| %>
-  <% if students_subject.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(students_subject.errors.count, "error") %> prohibited this students_subject from being saved:</h2>
+  <div class="d-flex flex-row">
+    <div class="w-50">
+      <div>
+        <%= form.label :student_id, style: "display: block", class: 'form-label' %>
+        <%= form.number_field :student_id, class: 'form-control' %>
+      </div>
+      <div class="mt-2">
+        <%= form.label :subject_id, style: "display: block", class: 'form-label' %>
+        <%= form.number_field :subject_id, class: 'form-control' %>
+      </div>
 
-      <ul>
-        <% students_subject.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <div class="d-flex flex-row justify-content-end align-items-center mt-4">
+        <%= form.submit 'Salvar' , :class => 'btn btn-outline-success' %>
+        <button type="button" class="btn btn-outline-danger ms-3">
+          <%= link_to "Cancelar", students_subjects_path %>
+        </button>
+      </div>
     </div>
-  <% end %>
 
-  <div>
-    <%= form.label :student_id, style: "display: block" %>
-    <%= form.text_field :student_id %>
-  </div>
-
-  <div>
-    <%= form.label :subject_id, style: "display: block" %>
-    <%= form.text_field :subject_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <% if students_subject.errors.any? %>
+      <div class="text-danger mt-4 ms-3">
+        <h4><%= pluralize(students_subject.errors.count, "error") %> prohibited this student from being saved:</h4>
+        <ul>
+          <% students_subject.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
   </div>
 <% end %>
