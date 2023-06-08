@@ -45,24 +45,75 @@ const int SEED = 100;
 // int MPI_Bcast(void *buffer, int count, MPI_Datatype datatype, int root, MPI_Comm comm)
 void my_Bcast_rb(void *buffer, int count, MPI_Datatype datatype, int root, MPI_Comm comm)
 {
-    int np, is_odd, split_size, adder;
+    if (nproc == 0)
+        return;
+
+    int np, i, is_odd, one_size, two_size;
+    long int *internal_buffer, *split_one, *split_two;
     MPI_Status status;
 
     is_odd = LOGIC_RANK(processId, root, nproc) % 2;
-    split_size = count / 2;
-    adder = count % 2;
+    one_size = (count / 2) + (count % 2);
+    two_size = count / 2;
 
-    if (nproc > 1)
+    internal_buffer = (long int *)buffer;
+    split_one = (long int *)calloc(one_size, sizeof(long int));
+    split_two = (long int *)calloc(two_size, sizeof(long int));
+
+    if (processId == root)
     {
-        if (processId == root)
-            MPI_Send(buffer, count, datatype, LOGIC_RANK(processId, root, nproc) + 1, 1, comm);
-        else
-            MPI_Recv(buffer, count, datatype, MPI_ANY_SOURCE, 1, comm, &status);
+        for (i = 0; i < one_size; ++i)
+            split_one[i] = internal_buffer[i];
+        for (i = one_size; i < count; ++i)
+            split_two[i - one_size] = internal_buffer[i];
 
-        for (np = 2; np < nproc; np *= 2)
-            if ((LOGIC_RANK(processId, root, nproc) + np < nproc) && (LOGIC_RANK(processId, root, nproc) < np))
-                MPI_Send(buffer, count, datatype, LOGIC_RANK(processId, root, nproc) + np, 1, comm);
+        MPI_Send((void *)split_two, two_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + 1, root, nproc), 1, comm);
     }
+    else
+    {
+        if (is_odd)
+            MPI_Recv((void *)split_two, two_size, datatype, MPI_ANY_SOURCE, 1, comm, &status);
+        else
+            MPI_Recv((void *)split_one, one_size, datatype, MPI_ANY_SOURCE, 1, comm, &status);
+    }
+
+    for (np = 2; np < nproc; np *= 2)
+        if ((LOGIC_RANK(processId, root, nproc) + np < nproc) && (LOGIC_RANK(processId, root, nproc) < np))
+        {
+            if (is_odd)
+                MPI_Send((void *)split_two, two_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + np, root, nproc), 1, comm);
+            else
+                MPI_Send((void *)split_one, one_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + np, root, nproc), 1, comm);
+        }
+
+    if (processId == root)
+        MPI_Send((void *)split_one, one_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + 1, root, nproc), 1, comm);
+    else
+    {
+        if (is_odd)
+        {
+            MPI_Recv((void *)split_one, one_size, datatype, MPI_ANY_SOURCE, 1, comm, &status);
+            MPI_Send((void *)split_two, two_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + 1, root, nproc), 1, comm);
+        }
+        else
+        {
+            MPI_Recv((void *)split_two, two_size, datatype, MPI_ANY_SOURCE, 1, comm, &status);
+            MPI_Send((void *)split_one, one_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + 1, root, nproc), 1, comm);
+        }
+    }
+
+    if (processId != root)
+    {
+        for (i = 0; i < one_size; ++i)
+            internal_buffer[i] = split_one[i];
+        for (i = one_size; i < count; ++i)
+            internal_buffer[i] = split_two[i - one_size];
+
+        buffer = (void *)internal_buffer;
+    }
+
+    free(split_one);
+    free(split_two);
 }
 
 // OBS1: sua função my_Bcast_rb
