@@ -27,7 +27,7 @@ class StudentsSubjectsController < ApplicationController
     respond_to do |format|
       if @students_subject.save
         format.html do
-          redirect_to action: 'index', notice: 'Students subject was successfully created.'
+          redirect_to students_subjects_url, notice: 'Materia adicionada ao aluno com sucesso!'
         end
         format.json { render action: 'index', status: :created, location: @students_subject }
       else
@@ -42,7 +42,7 @@ class StudentsSubjectsController < ApplicationController
     respond_to do |format|
       if @students_subject.update(students_subject_params)
         format.html do
-          redirect_to action: 'index', notice: 'Students subject was successfully updated.'
+          redirect_to students_subjects_url, notice: 'Materia atualizada ao aluno com sucesso!'
         end
         format.json { render action: 'index', status: :ok, location: @students_subject }
       else
@@ -57,7 +57,7 @@ class StudentsSubjectsController < ApplicationController
     @students_subject.destroy
 
     respond_to do |format|
-      format.html { redirect_to students_subjects_url, notice: 'Students subject was successfully destroyed.' }
+      format.html { redirect_to students_subjects_url, notice: 'Materia apagada do aluno com sucesso!' }
       format.json { head :no_content }
     end
   end

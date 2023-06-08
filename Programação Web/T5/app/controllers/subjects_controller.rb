@@ -26,7 +26,7 @@ class SubjectsController < ApplicationController
 
     respond_to do |format|
       if @subject.save
-        format.html { redirect_to action: 'index', notice: 'Subject was successfully created.' }
+        format.html { redirect_to subjects_url, notice: 'Materia adicionada com sucesso!' }
         format.json { render action: 'index', status: :created, location: @subject }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class SubjectsController < ApplicationController
   def update
     respond_to do |format|
       if @subject.update(subject_params)
-        format.html { redirect_to action: 'index', notice: 'Subject was successfully updated.' }
+        format.html { redirect_to subjects_url, notice: 'Materia atualizada com sucesso!' }
         format.json { render action: 'index', status: :ok, location: @subject }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +53,7 @@ class SubjectsController < ApplicationController
     @subject.destroy
 
     respond_to do |format|
-      format.html { redirect_to subjects_url, notice: 'Subject was successfully destroyed.' }
+      format.html { redirect_to subjects_url, notice: 'Materia apagada com sucesso!' }
       format.json { head :no_content }
     end
   end
