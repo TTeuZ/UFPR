@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "chrono.c"
+// #include "chrono.c" CHRONO COMENTADO
 #include <assert.h>
 
 #define USE_MPI_Bcast 1 // do NOT change
@@ -29,7 +29,7 @@ int raiz;      // maquina que ira enviar as mensagens
 int processId; // rank dos processos
 int ni;        // tamanho do vetor contendo as mensagens
 
-chronometer_t myBroadcastChrono;
+// chronometer_t myBroadcastChrono; CHRONO COMENTADO
 
 // #define DEBUG 1
 #define DEBUG 0
@@ -45,7 +45,24 @@ const int SEED = 100;
 // int MPI_Bcast(void *buffer, int count, MPI_Datatype datatype, int root, MPI_Comm comm)
 void my_Bcast_rb(void *buffer, int count, MPI_Datatype datatype, int root, MPI_Comm comm)
 {
-    ////////////////// INSERIR AQUI SEU CODIGO
+    int np, is_odd, split_size, adder;
+    MPI_Status status;
+
+    is_odd = LOGIC_RANK(processId, root, nproc) % 2;
+    split_size = count / 2;
+    adder = count % 2;
+
+    if (nproc > 1)
+    {
+        if (processId == root)
+            MPI_Send(buffer, count, datatype, LOGIC_RANK(processId, root, nproc) + 1, 1, comm);
+        else
+            MPI_Recv(buffer, count, datatype, MPI_ANY_SOURCE, 1, comm, &status);
+
+        for (np = 2; np < nproc; np *= 2)
+            if ((LOGIC_RANK(processId, root, nproc) + np < nproc) && (LOGIC_RANK(processId, root, nproc) < np))
+                MPI_Send(buffer, count, datatype, LOGIC_RANK(processId, root, nproc) + np, 1, comm);
+    }
 }
 
 // OBS1: sua função my_Bcast_rb
@@ -182,6 +199,7 @@ int main(int argc, char *argv[])
     // preenche a mensagem
     if (processId == raiz)
     {
+        printf("ni: %d, nmsg: %ld\n", ni, nmsg);
         for (long int i = 1; i <= ni; i++)
             inmsg[i - 1] = i + SEED;
     }
@@ -195,8 +213,8 @@ int main(int argc, char *argv[])
 
     if (processId == 0)
     {
-        chrono_reset(&myBroadcastChrono);
-        chrono_start(&myBroadcastChrono);
+        // chrono_reset(&myBroadcastChrono); CHRONO COMENTADO
+        // chrono_start(&myBroadcastChrono); CHRONO COMENTADO
     }
 
     for (int m = 0; m < nmsg; m++)
@@ -212,16 +230,16 @@ int main(int argc, char *argv[])
 
     if (processId == 0)
     {
-        chrono_stop(&myBroadcastChrono);
-        chrono_reportTime(&myBroadcastChrono, "myBroadcastChrono");
+        // chrono_stop(&myBroadcastChrono); CHRONO COMENTADO
+        // chrono_reportTime(&myBroadcastChrono, "myBroadcastChrono"); CHRONO COMENTADO
 
         // calcular e imprimir a VAZAO (nesse caso: numero de BYTES/s)
-        double total_time_in_seconds = (double)chrono_gettotal(&myBroadcastChrono) / ((double)1000 * 1000 * 1000);
-        double total_time_in_micro = (double)chrono_gettotal(&myBroadcastChrono) / ((double)1000);
-        printf("total_time_in_seconds: %lf s\n", total_time_in_seconds);
-        printf("Latencia: %lf us (CADA broadcast)\n", (total_time_in_micro / nmsg));
-        double MBPS = (((double)nmsg * tmsg) / ((double)total_time_in_seconds * 1000 * 1000));
-        printf("Throughput: %lf MB/s\n", MBPS * (nproc - 1));
+        // double total_time_in_seconds = (double)chrono_gettotal(&myBroadcastChrono) / ((double)1000 * 1000 * 1000); CHRONO COMENTADO
+        // double total_time_in_micro = (double)chrono_gettotal(&myBroadcastChrono) / ((double)1000); CHRONO COMENTADO
+        // printf("total_time_in_seconds: %lf s\n", total_time_in_seconds); CHRONO COMENTADO
+        // printf("Latencia: %lf us (CADA broadcast)\n", (total_time_in_micro / nmsg)); CHRONO COMENTADO
+        // double MBPS = (((double)nmsg * tmsg) / ((double)total_time_in_seconds * 1000 * 1000)); CHRONO COMENTADO
+        // printf("Throughput: %lf MB/s\n", MBPS * (nproc - 1)); CHRONO COMENTADO
     }
 
 #if DEBUG == 1
