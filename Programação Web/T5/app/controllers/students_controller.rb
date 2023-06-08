@@ -15,6 +15,7 @@ class StudentsController < ApplicationController
   # GET /students/new
   def new
     @student = Student.new
+    @student.address = Address.new
   end
 
   # GET /students/1/edit
@@ -26,7 +27,7 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        format.html { redirect_to action: 'index', notice: 'Student was successfully created.' }
+        format.html { redirect_to students_url, notice: 'Estudante criado com sucesso!' }
         format.json { render action: 'index', status: :created, location: @student }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +40,7 @@ class StudentsController < ApplicationController
   def update
     respond_to do |format|
       if @student.update(student_params)
-        format.html { redirect_to action: 'index', notice: 'Student was successfully updated.' }
+        format.html { redirect_to students_url, notice: 'Estudante atualizado com sucesso!' }
         format.json { render action: 'index', status: :ok, location: @student }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +54,7 @@ class StudentsController < ApplicationController
     @student.destroy
 
     respond_to do |format|
-      format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
+      format.html { redirect_to students_url, notice: 'Estudante apagado com sucesso!' }
       format.json { head :no_content }
     end
   end
@@ -67,6 +68,7 @@ class StudentsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def student_params
-    params.require(:student).permit(:name, :age, :register, :college_id)
+    params.require(:student).permit(:name, :age, :register, :college_id,
+                                    address_attributes: %i[streat number student_id _destroy])
   end
 end

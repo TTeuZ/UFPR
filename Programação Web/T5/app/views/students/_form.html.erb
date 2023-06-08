@@ -18,6 +18,19 @@
         <%= form.collection_select(:college_id, College.all, :id, :name, { :prompt => 'Selecione uma faculdade', :selected => params[:college_id] != nil ? params[:college_id] : student.college_id }, { class: 'form-control' }) %>
       </div>
 
+      <div class="my-3 border-bottom"></div>
+
+      <%= form.fields_for :address, @student.address do |address_form| %>
+        <div>
+          <%= address_form.label :rua, style: "display: block", class: 'form-label' %>
+          <%= address_form.text_field :streat, class: 'form-control' %>
+        </div>
+        <div class="mt-2">
+          <%= address_form.label :numero, style: "display: block", class: 'form-label' %>
+          <%= address_form.number_field :number, class: 'form-control' %>
+        </div>
+      <% end %>
+
       <div class="d-flex flex-row justify-content-end align-items-center mt-4">
         <%= form.submit 'Salvar' , :class => 'btn btn-outline-success' %>
         <button type="button" class="btn btn-outline-danger ms-3">
