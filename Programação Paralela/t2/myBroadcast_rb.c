@@ -45,12 +45,13 @@ const int SEED = 100;
 // int MPI_Bcast(void *buffer, int count, MPI_Datatype datatype, int root, MPI_Comm comm)
 void my_Bcast_rb(void *buffer, int count, MPI_Datatype datatype, int root, MPI_Comm comm)
 {
-    if (nproc == 0)
+    if (nproc < 1)
         return;
 
     int np, i, is_odd, one_size, two_size;
     long int *internal_buffer, *split_one, *split_two;
     MPI_Status status;
+    MPI_Request request;
 
     is_odd = LOGIC_RANK(processId, root, nproc) % 2;
     one_size = (count / 2) + (count % 2);
@@ -67,7 +68,7 @@ void my_Bcast_rb(void *buffer, int count, MPI_Datatype datatype, int root, MPI_C
         for (i = one_size; i < count; ++i)
             split_two[i - one_size] = internal_buffer[i];
 
-        MPI_Send((void *)split_two, two_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + 1, root, nproc), 1, comm);
+        MPI_Isend((void *)split_two, two_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + 1, root, nproc), 1, comm, &request);
     }
     else
     {
@@ -81,24 +82,24 @@ void my_Bcast_rb(void *buffer, int count, MPI_Datatype datatype, int root, MPI_C
         if ((LOGIC_RANK(processId, root, nproc) + np < nproc) && (LOGIC_RANK(processId, root, nproc) < np))
         {
             if (is_odd)
-                MPI_Send((void *)split_two, two_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + np, root, nproc), 1, comm);
+                MPI_Isend((void *)split_two, two_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + np, root, nproc), 1, comm, &request);
             else
-                MPI_Send((void *)split_one, one_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + np, root, nproc), 1, comm);
+                MPI_Isend((void *)split_one, one_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + np, root, nproc), 1, comm, &request);
         }
 
     if (processId == root)
-        MPI_Send((void *)split_one, one_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + 1, root, nproc), 1, comm);
+        MPI_Isend((void *)split_one, one_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + 1, root, nproc), 1, comm, &request);
     else
     {
         if (is_odd)
         {
-            MPI_Recv((void *)split_one, one_size, datatype, MPI_ANY_SOURCE, 1, comm, &status);
-            MPI_Send((void *)split_two, two_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + 1, root, nproc), 1, comm);
+            MPI_Recv((void *)split_one, one_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) - 1, root, nproc), 1, comm, &status);
+            MPI_Isend((void *)split_two, two_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + 1, root, nproc), 1, comm, &request);
         }
         else
         {
-            MPI_Recv((void *)split_two, two_size, datatype, MPI_ANY_SOURCE, 1, comm, &status);
-            MPI_Send((void *)split_one, one_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + 1, root, nproc), 1, comm);
+            MPI_Recv((void *)split_two, two_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) - 1, root, nproc), 1, comm, &status);
+            MPI_Isend((void *)split_one, one_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId, root, nproc) + 1, root, nproc), 1, comm, &request);
         }
     }
 
