@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-// #include "chrono.c" CHRONO COMENTADO
+#include "chrono.c"
 #include <assert.h>
 
 #define USE_MPI_Bcast 1 // do NOT change
@@ -29,7 +29,7 @@ int raiz;      // maquina que ira enviar as mensagens
 int processId; // rank dos processos
 int ni;        // tamanho do vetor contendo as mensagens
 
-// chronometer_t myBroadcastChrono; CHRONO COMENTADO
+chronometer_t myBroadcastChrono;
 
 // #define DEBUG 1
 #define DEBUG 0
@@ -264,8 +264,8 @@ int main(int argc, char *argv[])
 
     if (processId == 0)
     {
-        // chrono_reset(&myBroadcastChrono); CHRONO COMENTADO
-        // chrono_start(&myBroadcastChrono); CHRONO COMENTADO
+        chrono_reset(&myBroadcastChrono);
+        chrono_start(&myBroadcastChrono);
     }
 
     for (int m = 0; m < nmsg; m++)
@@ -281,16 +281,16 @@ int main(int argc, char *argv[])
 
     if (processId == 0)
     {
-        // chrono_stop(&myBroadcastChrono); CHRONO COMENTADO
-        // chrono_reportTime(&myBroadcastChrono, "myBroadcastChrono"); CHRONO COMENTADO
+        chrono_stop(&myBroadcastChrono);
+        chrono_reportTime(&myBroadcastChrono, "myBroadcastChrono");
 
         // calcular e imprimir a VAZAO (nesse caso: numero de BYTES/s)
-        // double total_time_in_seconds = (double)chrono_gettotal(&myBroadcastChrono) / ((double)1000 * 1000 * 1000); CHRONO COMENTADO
-        // double total_time_in_micro = (double)chrono_gettotal(&myBroadcastChrono) / ((double)1000); CHRONO COMENTADO
-        // printf("total_time_in_seconds: %lf s\n", total_time_in_seconds); CHRONO COMENTADO
-        // printf("Latencia: %lf us (CADA broadcast)\n", (total_time_in_micro / nmsg)); CHRONO COMENTADO
-        // double MBPS = (((double)nmsg * tmsg) / ((double)total_time_in_seconds * 1000 * 1000)); CHRONO COMENTADO
-        // printf("Throughput: %lf MB/s\n", MBPS * (nproc - 1)); CHRONO COMENTADO
+        double total_time_in_seconds = (double)chrono_gettotal(&myBroadcastChrono) / ((double)1000 * 1000 * 1000);
+        double total_time_in_micro = (double)chrono_gettotal(&myBroadcastChrono) / ((double)1000);
+        printf("total_time_in_seconds: %lf s\n", total_time_in_seconds);
+        printf("Latencia: %lf us (CADA broadcast)\n", (total_time_in_micro / nmsg));
+        double MBPS = (((double)nmsg * tmsg) / ((double)total_time_in_seconds * 1000 * 1000));
+        printf("Throughput: %lf MB/s\n", MBPS * (nproc - 1));
     }
 
 #if DEBUG == 1
