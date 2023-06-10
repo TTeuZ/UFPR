@@ -17,7 +17,7 @@ int main()
         if (topology != NULL)
             print_topology(topology);
         else
-            fprintf(stderr, "\nThe given graph has cycle. Please, send a ADG (Acyclic Digraph) instead.\n\n");
+            fprintf(stderr, "\nThe given graph has a cycle. Please, send a ADG (Acyclic Digraph) instead.\n\n");
     }
     else
         fprintf(stderr, "\nThe given graph is undirect. Please, send a ADG (Acyclic Digraph) instead.\n\n");
