@@ -3,7 +3,7 @@
 /* ============================== Internal Functions ============================== */
 
 /*!
-    \brief Recursive function to the DFS search
+    \brief Recursive function to the DFS search to fiind the topology
     \param graph Pointer to the graph structure.
     \param node Node 'root' of the respective call
     \param topology Pointer to the topology structure
@@ -13,34 +13,23 @@ void topology_dfs(Agraph_t *graph, Agnode_t *node, topology_t *topology, int *in
 {
     Agnode_t *neigh_node;
     Agedge_t *edge;
-    dfs_node_t *info, *info_tail, *info_head;
+    dfs_node_t *info;
 
     info = (dfs_node_t *)aggetrec(node, "dfs_node_t", FALSE);
     info->state = 1;
-    info->pre = ++(*index);
 
-    for (edge = agfstout(graph, node); edge && topology->valid; edge = agnxtout(graph, edge))
+    for (edge = agfstout(graph, node); edge; edge = agnxtout(graph, edge))
     {
         neigh_node = aghead(edge);
         info = (dfs_node_t *)aggetrec(neigh_node, "dfs_node_t", FALSE);
 
         if (info->state == 0)
             topology_dfs(graph, aghead(edge), topology, index);
-        else
-        {
-            info_tail = (dfs_node_t *)aggetrec(agtail(edge), "dfs_node_t", FALSE);
-            info_head = (dfs_node_t *)aggetrec(aghead(edge), "dfs_node_t", FALSE);
-            printf("%d < %d\n", info_head->pre, info_tail->pre);
-            if (info_head->pre < info_tail->pre)
-                topology->valid = FALSE;
-        }
     }
 
     info = (dfs_node_t *)aggetrec(node, "dfs_node_t", FALSE);
     info->state = 2;
-    info->pos = ++(*index);
-    if (topology->valid)
-        add_to_topology(topology, node);
+    add_to_topology(topology, node);
 }
 
 /* ============================== Internal Functions ============================== */
@@ -64,7 +53,6 @@ topology_t *alloc_topology(Agraph_t *graph)
 
     temp->size = nodes_qty;
     temp->count = 0;
-    temp->valid = TRUE;
     return temp;
 }
 
@@ -80,29 +68,19 @@ void add_to_topology(topology_t *topology, Agnode_t *node)
     topology->count++;
 }
 
-topology_t *get_topology(Agraph_t *graph)
+void get_topology(Agraph_t *graph, topology_t *topology)
 {
     int index;
     Agnode_t *node;
     dfs_node_t *info;
-    topology_t *topology;
 
     index = 0;
-    topology = alloc_topology(graph);
-    if (!topology)
-        return NULL;
-
-    // Binding with the dfs_node_t for internal attributes
-    // The aginit already initalize the values of dfs_node_t with 0.
-    aginit(graph, 1, "dfs_node_t", sizeof(dfs_node_t), FALSE);
-    for (node = agfstnode(graph); node && topology->valid; node = agnxtnode(graph, node))
+    for (node = agfstnode(graph); node; node = agnxtnode(graph, node))
     {
         info = (dfs_node_t *)aggetrec(node, "dfs_node_t", FALSE);
         if (info->state == 0)
             topology_dfs(graph, node, topology, &index);
     }
-
-    return topology;
 }
 
 void print_topology(topology_t *topology)
