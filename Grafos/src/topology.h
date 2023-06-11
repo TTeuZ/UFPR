@@ -5,6 +5,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+typedef struct dfs_node
+{
+    Agrec_t header;
+    int pre;
+    int pos;
+    int state;
+} dfs_node_t;
+
 typedef struct topology
 {
     int size;

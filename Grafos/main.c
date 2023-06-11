@@ -11,6 +11,9 @@ int main()
 
     topology = NULL;
     graph = agread(stdin, NULL);
+
+    aginit(graph, 1, "dfs_node_t", sizeof(dfs_node_t), FALSE);
+
     if (agisdirected(graph))
     {
         topology = get_topology(graph);
