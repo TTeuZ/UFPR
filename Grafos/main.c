@@ -11,13 +11,16 @@ int main()
 
     topology = NULL;
     graph = agread(stdin, NULL);
-
-    aginit(graph, 1, "dfs_node_t", sizeof(dfs_node_t), FALSE);
+    if (!graph)
+    {
+        fprintf(stderr, "\nSomething went wrong with the graph allocation!\n\n");
+        return 1;
+    }
 
     if (agisdirected(graph))
     {
         topology = get_topology(graph);
-        if (topology != NULL)
+        if (topology != NULL && topology->valid)
             print_topology(topology);
         else
             fprintf(stderr, "\nThe given graph has a cycle. Please, send a ADG (Acyclic Digraph) instead.\n\n");
@@ -26,7 +29,7 @@ int main()
         fprintf(stderr, "\nThe given graph is undirect. Please, send a ADG (Acyclic Digraph) instead.\n\n");
 
     if (topology != NULL)
-        free(topology);
+        free_topology(topology);
     agclose(graph);
     return 0;
 }

@@ -15,9 +15,31 @@ typedef struct dfs_node
 
 typedef struct topology
 {
+    int valid;
     int size;
-    // Agnode_t array?
+    int count;
+    Agnode_t **list;
 } topology_t;
+
+/*!
+    \brief Alocate memory for the topology structure
+    \param graph Pointer to the graph structure.
+    \return NULL if something went wrong with the allocation. A pointer to the strcuture if success.
+*/
+topology_t *alloc_topology(Agraph_t *graph);
+
+/*!
+    \brief Free the memory allocated for the topology structure
+    \param topology Pointer to the topology structure.
+*/
+void free_topology(topology_t *topology);
+
+/*!
+    \brief Add the node to topology sort
+    \param topology Pointer to the topology structure.
+    \param node Node 'root' of the respective call
+*/
+void add_to_topology(topology_t *topology, Agnode_t *node);
 
 /*!
     \brief Get the topology for the given graph.
