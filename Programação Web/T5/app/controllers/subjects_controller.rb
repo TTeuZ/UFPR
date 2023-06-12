@@ -3,6 +3,7 @@
 class SubjectsController < ApplicationController
   before_action :set_subject, only: %i[show edit update destroy]
   before_action :authenticate_user!
+  before_action :check_user_permission, only: %i[new edit update create destroy]
 
   # GET /subjects or /subjects.json
   def index

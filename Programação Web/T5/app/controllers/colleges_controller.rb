@@ -3,6 +3,7 @@
 class CollegesController < ApplicationController
   before_action :set_college, only: %i[show edit update destroy]
   before_action :authenticate_user!
+  before_action :check_user_permission, only: %i[new edit update create destroy]
 
   # GET /colleges or /colleges.json
   def index
