@@ -45,7 +45,7 @@ const int SEED = 100;
 // int MPI_Bcast(void *buffer, int count, MPI_Datatype datatype, int root, MPI_Comm comm)
 void my_Bcast_rb(void *buffer, int count, MPI_Datatype datatype, int root, MPI_Comm comm)
 {
-    if (nproc < 1)
+    if (nproc <= 1)
         return;
 
     int np, i, is_odd, one_size, two_size;
