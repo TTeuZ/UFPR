@@ -70,12 +70,15 @@ void my_Bcast_rb(void *buffer, int count, MPI_Datatype datatype, int root, MPI_C
         if ((LOGIC_RANK(processId, root, nproc) + np < nproc) && (LOGIC_RANK(processId, root, nproc) < np))
             MPI_Send((void *)loop_buffer, loop_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId + np, root, nproc), root, nproc), 1, MPI_COMM_WORLD);
 
+    // MPI_Barrier(MPI_COMM_WORLD);
+
     if (processId == root)
         MPI_Send((void *)loop_buffer, loop_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId + 1, root, nproc), root, nproc), 1, MPI_COMM_WORLD);
     else
     {
         MPI_Recv((void *)change_buffer, change_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId - 1, root, nproc), root, nproc), 1, MPI_COMM_WORLD, &status);
-        MPI_Send((void *)loop_buffer, loop_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId + 1, root, nproc), root, nproc), 1, MPI_COMM_WORLD);
+        if ((LOGIC_RANK(processId, root, nproc) != nproc - 1))
+            MPI_Send((void *)loop_buffer, loop_size, datatype, PHYSIC_RANK(LOGIC_RANK(processId + 1, root, nproc), root, nproc), 1, MPI_COMM_WORLD);
     }
 }
 
