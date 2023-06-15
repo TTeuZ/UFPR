@@ -28,7 +28,7 @@ int main()
         print_topology(topology);
     }
     else
-        fprintf(stderr, "\nThe given graph is not a ADG. Please, send a ADG (Acyclic Digraph) instead.\n\n");
+        fprintf(stderr, "\nThe given graph is not a DAG. Please, send a DAG (Direct Acyclic Graph) instead.\n\n");
 
     free_topology(topology);
     agclose(graph);
