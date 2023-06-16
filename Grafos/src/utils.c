@@ -56,7 +56,7 @@ int is_acyclic(Agraph_t *graph)
             info_tail = (dfs_node_t *)aggetrec(agtail(edge), "dfs_node_t", FALSE);
             info_head = (dfs_node_t *)aggetrec(aghead(edge), "dfs_node_t", FALSE);
 
-            if (info_head->pre < info_tail->pre && info_tail->pos < info_head->pos)
+            if (info_head->pre < info_tail->pre && info_tail->pre < info_tail->pos && info_tail->pos < info_head->pos)
                 return FALSE;
         }
         info = (dfs_node_t *)aggetrec(node, "dfs_node_t", FALSE);
