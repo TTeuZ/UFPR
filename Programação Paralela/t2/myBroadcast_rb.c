@@ -1,7 +1,6 @@
 // TRABALHO2: CI316 1o semestre 2023 (myBroadcast_rb.c)
-// Aluno: Paulo Mateus Luza Alves
-// GRR: GRR20203945
-
+// Aluno: Paulo Mateus Luza Alves - GRR: GRR20203945
+// Aluno: Luis Felipe Risch - GRR: GRR20203940
 // Esqueleto de programa principal disponibilizado pelo prof!
 
 //////////////////////////////////////////////
