@@ -1,7 +1,7 @@
-all: myBroadcast_rb
+all: myBcast_rb
 
-myBroadcast_rb: myBroadcast_rb.c
-	mpic++ myBroadcast_rb.c -o myBroadcast_rb
+myBcast_rb: myBcast_rb.c
+	mpic++ myBcast_rb.c -o myBcast_rb
 
 
 
