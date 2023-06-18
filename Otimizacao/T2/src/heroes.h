@@ -9,7 +9,6 @@ typedef struct hero_pair_t
 typedef struct heroes_t
 {
     int quantity, conflicts_qty, friendships_qty;
-    int unavoided_conflicts;
     hero_pair_t *conflicts;
     hero_pair_t *friendships;
     short int **aux_matrix;

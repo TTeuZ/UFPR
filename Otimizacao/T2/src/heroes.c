@@ -27,7 +27,6 @@ int heroes_init(heroes_t *heroes, int quantity, int conflicts, int friendships)
     heroes->quantity = quantity;
     heroes->conflicts_qty = conflicts;
     heroes->friendships_qty = friendships;
-    heroes->unavoided_conflicts = 0;
 
     heroes->conflicts = alloc_array(conflicts, sizeof(hero_pair_t));
     if (heroes->conflicts == NULL)
