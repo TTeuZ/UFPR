@@ -1,0 +1,6 @@
+strict digraph digraph1 {
+    a -> b
+    a -> c
+    b -> d
+    c -> d
+}

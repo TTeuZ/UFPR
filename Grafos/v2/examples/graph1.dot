@@ -1,0 +1,11 @@
+graph example1 {
+    d
+    a -- i
+    a -- h
+    a -- g
+    a -- c
+    c -- g
+    i -- h
+    e -- g
+    b -- f
+}

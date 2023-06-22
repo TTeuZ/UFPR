@@ -44,9 +44,9 @@ void add_to_topology(topology_t *topology, Agnode_t *node);
     \brief Get the topology for the given graph.
     \param graph Pointer to the graph structure.
     \param topology Pointer to the topology structure.
-    \return NULL if the graph has cycle. A pointer to the topology structure if it hasn't.
+    \return 0 if has a cycle, 1 otherwise
 */
-void get_topology(Agraph_t *graph, topology_t *topology);
+int get_topology(Agraph_t *graph, topology_t *topology);
 
 /*!
     \brief Print out the topology for the given graph

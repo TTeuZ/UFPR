@@ -3,13 +3,13 @@
 /* ============================== Internal Functions ============================== */
 
 /*!
-    \brief Recursive function to the DFS search to fiind the topology
+    \brief Recursive function to the DFS search to find the topology
     \param graph Pointer to the graph structure.
     \param node Node 'root' of the respective call
     \param topology Pointer to the topology structure
-    \param index same as the 't' in the DFS
+    \param has_cycle int value that indicates whether it has a cycle or not
 */
-void topology_dfs(Agraph_t *graph, Agnode_t *node, topology_t *topology, int *index)
+void topology_dfs(Agraph_t *graph, Agnode_t *node, topology_t *topology, int *has_cycle)
 {
     Agnode_t *neigh_node;
     Agedge_t *edge;
@@ -18,13 +18,15 @@ void topology_dfs(Agraph_t *graph, Agnode_t *node, topology_t *topology, int *in
     info = (dfs_node_t *)aggetrec(node, "dfs_node_t", FALSE);
     info->state = 1;
 
-    for (edge = agfstout(graph, node); edge; edge = agnxtout(graph, edge))
+    for (edge = agfstout(graph, node); edge && !(*has_cycle); edge = agnxtout(graph, edge))
     {
         neigh_node = aghead(edge);
         info = (dfs_node_t *)aggetrec(neigh_node, "dfs_node_t", FALSE);
 
         if (info->state == 0)
-            topology_dfs(graph, aghead(edge), topology, index);
+            topology_dfs(graph, aghead(edge), topology, has_cycle);
+        else if (info->state == 1)
+            *has_cycle = TRUE;
     }
 
     info = (dfs_node_t *)aggetrec(node, "dfs_node_t", FALSE);
@@ -68,19 +70,21 @@ void add_to_topology(topology_t *topology, Agnode_t *node)
     topology->count++;
 }
 
-void get_topology(Agraph_t *graph, topology_t *topology)
+int get_topology(Agraph_t *graph, topology_t *topology)
 {
-    int index;
+    int has_cycle;
     Agnode_t *node;
     dfs_node_t *info;
 
-    index = 0;
-    for (node = agfstnode(graph); node; node = agnxtnode(graph, node))
+    has_cycle = FALSE;
+    for (node = agfstnode(graph); node && !has_cycle; node = agnxtnode(graph, node))
     {
         info = (dfs_node_t *)aggetrec(node, "dfs_node_t", FALSE);
         if (info->state == 0)
-            topology_dfs(graph, node, topology, &index);
+            topology_dfs(graph, node, topology, &has_cycle);
     }
+
+    return !has_cycle;
 }
 
 void print_topology(topology_t *topology)
