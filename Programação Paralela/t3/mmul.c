@@ -12,6 +12,7 @@
 
 // defines
 #define DEBUG 0
+#define ROOT 0
 #define EPSILON 1e-9
 #define GIGA 1e9
 
@@ -20,7 +21,7 @@ const double SEED = 0.1;
 
 int nla, ncb, m;
 int nproc, process_id;
-chronometer_t myBroadcastChrono;
+chronometer_t chrono;
 
 /* ============================== Auxiliary Functions ============================== */
 double **alloc_matrix(int lines, int columns)
@@ -56,49 +57,25 @@ void sequential_mult_matrix(double **matrix_a, double **matrix_b, double **matri
 
 void parallel_mult_matrix(double **matrix_a, double **matrix_b, double **matrix_c)
 {
-    // int i, j, k;
-    // int scatter_size;
-    // double **submatrix;
+    int i, j, k, lines;
+    double **sub_matrix_a, **sub_matrix_c;
 
-    // scatter_size = nla / nproc;
-    // submatrix = alloc_matrix(scatter_size, m);
+    lines = nla / nproc;
+    sub_matrix_a = alloc_matrix(lines, m);
+    sub_matrix_c = alloc_matrix(lines, ncb);
 
-    // MPI_Bcast(matrix_b[0], m * ncb, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    // MPI_Scatter(matrix_a[0], scatter_size * m, MPI_DOUBLE, submatrix[0], scatter_size * m, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Bcast(&matrix_b[0][0], m * ncb, MPI_DOUBLE, ROOT, MPI_COMM_WORLD);
+    MPI_Scatter(&matrix_a[0][0], lines * m, MPI_DOUBLE, &(sub_matrix_a[0][0]), lines * m, MPI_DOUBLE, ROOT, MPI_COMM_WORLD);
 
-    // for (i = 0; i < scatter_size; i++)
-    //     for (j = 0; j < ncb; j++)
-    //         for (k = 0; k < m; k++)
-    //             matrix_c[i + (process_id * scatter_size)][j] += submatrix[i][k] * matrix_b[k][j];
+    for (int i = 0; i < lines; ++i)
+        for (int j = 0; j < ncb; ++j)
+            for (int k = 0; k < m; ++k)
+                sub_matrix_c[i][j] += sub_matrix_a[i][k] * matrix_b[k][j];
 
-    // // if (process_id == 0)
-    // //     MPI_Gather(MPI_IN_PLACE, scatter_size * m, MPI_DOUBLE, matrix_c[0], scatter_size * m, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    // // else
-    // // MPI_Gather(matrix_c[scatter_size * process_id], scatter_size * m, MPI_DOUBLE, matrix_c[scatter_size * process_id], scatter_size * m, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Gather(&sub_matrix_c[0][0], lines * ncb, MPI_DOUBLE, &matrix_c[0][0], lines * ncb, MPI_DOUBLE, ROOT, MPI_COMM_WORLD);
 
-    // free_matrix(submatrix);
-
-    int i, j, k;
-    int scatter_size;
-    double **submatrix;
-
-    scatter_size = nla / nproc;
-    submatrix = alloc_matrix(scatter_size, m);
-
-    MPI_Bcast(matrix_b[0], m * ncb, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    MPI_Scatter(matrix_a[0], scatter_size * m, MPI_DOUBLE, submatrix[0], scatter_size * m, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-
-    for (i = 0; i < scatter_size; i++)
-        for (j = 0; j < ncb; j++)
-            for (k = 0; k < m; k++)
-                matrix_c[0][j] += submatrix[i][k] * matrix_b[k][j];
-
-    // if (process_id == 0)
-    //     MPI_Gather(MPI_IN_PLACE, scatter_size * m, MPI_DOUBLE, matrix_c[0], scatter_size * m, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    // else
-    MPI_Gather(matrix_c[scatter_size * process_id], scatter_size * m, MPI_DOUBLE, matrix_c[scatter_size * process_id], scatter_size * m, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-
-    free_matrix(submatrix);
+    free_matrix(sub_matrix_a);
+    free_matrix(sub_matrix_c);
 }
 
 int verify_mult(double **matrix_a, double **matrix_b, double **matrix_c)
@@ -118,28 +95,6 @@ int verify_mult(double **matrix_a, double **matrix_b, double **matrix_c)
                 fprintf(stderr, "Erro no calculo: posiçao matrix_c[%d][%d] = %f, porem deveria ser %f\n", i, j, matrix_c[i][j], result[i][j]);
                 is_equal = 0;
             }
-
-    // printf("\nmatrix_c: %d\n", process_id);
-    // for (int i = 0; i < nla; ++i)
-    // {
-    //     for (int j = 0; j < m; ++j)
-    //         printf("%f ", matrix_a[i][j]);
-    //     printf("\n");
-    // }
-    // printf("\nresult: %d\n", process_id);
-    // for (int i = 0; i < nla; ++i)
-    // {
-    //     for (int j = 0; j < ncb; ++j)
-    //         printf("%f ", result[i][j]);
-    //     printf("\n");
-    // }
-    // printf("\nmatrix_c: %d\n", process_id);
-    // for (int i = 0; i < nla; ++i)
-    // {
-    //     for (int j = 0; j < ncb; ++j)
-    //         printf("%f ", matrix_c[i][j]);
-    //     printf("\n");
-    // }
 
     free_matrix(result);
     return is_equal;
@@ -192,18 +147,12 @@ int main(int argc, char *argv[])
     // filling the matrix
     if (process_id == 0)
     {
-        // for (int i = 0; i < nla; ++i)
-        //     for (int j = 0; j < m; ++j)
-        //         matrix_a[i][j] = i + j + SEED;
-        // for (int i = 0; i < m; ++i)
-        //     for (int j = 0; j < ncb; ++j)
-        //         matrix_b[i][j] = (i * 2) + j + SEED;
         for (int i = 0; i < nla; ++i)
             for (int j = 0; j < m; ++j)
-                matrix_a[i][j] = 1;
+                matrix_a[i][j] = i + j + SEED;
         for (int i = 0; i < m; ++i)
             for (int j = 0; j < ncb; ++j)
-                matrix_b[i][j] = 1;
+                matrix_b[i][j] = (i * 2) + j + SEED;
     }
 
     MPI_Barrier(MPI_COMM_WORLD);
@@ -211,8 +160,8 @@ int main(int argc, char *argv[])
     // startting counting the time
     if (process_id == 0)
     {
-        chrono_reset(&myBroadcastChrono);
-        chrono_start(&myBroadcastChrono);
+        chrono_reset(&chrono);
+        chrono_start(&chrono);
     }
 
     printf("rank: %d, host: %s\n", process_id, host_name);
@@ -223,12 +172,12 @@ int main(int argc, char *argv[])
 
     if (process_id == 0)
     {
-        chrono_stop(&myBroadcastChrono);
+        chrono_stop(&chrono);
 
         flops_qty = 1;
         flops_qty *= nla * ncb * m;
         flops_qty *= 2;
-        total_time = (double)chrono_gettotal(&myBroadcastChrono) / ((double)1000 * 1000 * 1000);
+        total_time = (double)chrono_gettotal(&chrono) / ((double)1000 * 1000 * 1000);
         throughput = (double)(flops_qty / (GIGA * total_time));
     }
 
