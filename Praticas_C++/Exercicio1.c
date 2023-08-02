@@ -4,10 +4,15 @@
 
 #define NAME_MAX 50
 typedef struct person {
-    char name[50];
+    char name[NAME_MAX];
     uint64_t cpf;
     uint8_t age;
 } person_t;
+
+void flush_stdin() {
+    int buf = 0;
+    while (buf != '\n' && buf != EOF) buf = getchar();
+}
 
 int countDigits(uint64_t cpf) {
     int count = 0;
@@ -56,8 +61,9 @@ int main() {
     for (count = 0; count < 3; ++count) {
         fprintf(stdout, "Pessoa %d: \n", count + 1);
 
-        fprintf(stdout, "Nome (Apenas o primeiro): ");
-        fscanf(stdin, "%s", persons[count].name);
+        fprintf(stdout, "Nome: ");
+        fscanf(stdin, "%[^\n]", persons[count].name);
+        getchar();
 
         fprintf(stdout, "Idade: ");
         fscanf(stdin, "%hhd", &persons[count].age);
@@ -72,6 +78,7 @@ int main() {
         }
 
         fprintf(stdout, "\n");
+        flush_stdin();
     }
 
     fprintf(stdout, "As informações dadas foram:\n");
