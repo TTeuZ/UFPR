@@ -55,7 +55,7 @@ int validarCPF(uint64_t cpf) {
 
 int main() {
     person_t persons[3];
-    int count, valid;
+    int count, isValid, isNumber;
 
     fprintf(stdout, "Informe os dados das 3 pessoas:\n");
     for (count = 0; count < 3; ++count) {
@@ -63,19 +63,25 @@ int main() {
 
         fprintf(stdout, "Nome: ");
         fscanf(stdin, "%[^\n]", persons[count].name);
-        getchar();
 
-        fprintf(stdout, "Idade: ");
-        fscanf(stdin, "%hhd", &persons[count].age);
+        do {
+            flush_stdin();
+            fprintf(stdout, "Idade: ");
+            isValid = fscanf(stdin, "%hhd", &persons[count].age);
 
-        fprintf(stdout, "CPF (Apenas numeros): ");
-        fscanf(stdin, "%ld", &persons[count].cpf);
+            if (!isValid)
+                fprintf(stdout, "Por favor, forneça uma idade válida! \n");
+        } while (!isValid);
 
-        while (!validarCPF(persons[count].cpf)) {
-            fprintf(stdout, "Por favor, forneça um cpf válido! \n");
+        do {
+            flush_stdin();
             fprintf(stdout, "CPF (Apenas numeros): ");
-            fscanf(stdin, "%ld", &persons[count].cpf);
-        }
+            isNumber = fscanf(stdin, "%ld", &persons[count].cpf);
+            if (isNumber) isValid = validarCPF(persons[count].cpf);
+
+            if (!isNumber || !isValid)
+                fprintf(stdout, "Por favor, forneça um cpf válido! \n");
+        } while (!isNumber || !isValid);
 
         fprintf(stdout, "\n");
         flush_stdin();
