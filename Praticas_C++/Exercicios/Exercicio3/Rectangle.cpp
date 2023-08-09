@@ -28,6 +28,6 @@ void Rectangle::introduce() {
     std::cout << "\tAltura: " << height << std::endl;
 }
 
-uint32_t Rectangle::perimeter() { return (height * 2) + (width)*2; };
+uint32_t Rectangle::perimeter() { return (height * 2) + (width * 2); };
 
 uint32_t Rectangle::area() { return height * width; };
