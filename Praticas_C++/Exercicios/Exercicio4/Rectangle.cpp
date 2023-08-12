@@ -3,6 +3,15 @@
 #include <iostream>
 #include <string>
 
+// Constructors
+Rectangle::Rectangle() : color{"black"}, width{10}, height{10} {};
+
+Rectangle::Rectangle(std::string color, uint32_t width, uint32_t height)
+    : color{color} {
+    setWidth(width);
+    setHeight(height);
+}
+
 // Getters
 std::string Rectangle::getColor() { return color; };
 

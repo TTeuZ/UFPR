@@ -6,6 +6,10 @@
 
 class Rectangle {
    public:
+    // Constructors
+    Rectangle();
+    Rectangle(std::string color, uint32_t width = 100, uint32_t height = 100);
+
     // Getters
     std::string getColor();
     uint32_t getWidth();

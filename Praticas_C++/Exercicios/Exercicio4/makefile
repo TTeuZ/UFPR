@@ -1,5 +1,5 @@
 FLAGS=-Wall #-Wshadow
-PROGRAM=exercicio3
+PROGRAM=exercicio4
 
 all: $(PROGRAM)
 

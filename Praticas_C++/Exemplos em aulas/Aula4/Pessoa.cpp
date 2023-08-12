@@ -7,15 +7,15 @@
 // no corpo do construtor caso nâo, colocamos na lista de membros
 // Isso serve para otimizar
 
-Pessoa::Pessoa() : name("Padrao"), cpf(0){};
+Pessoa::Pessoa() : name{"Padrao"}, cpf{0} {};
 
-Pessoa::Pessoa(std::string newName, uint8_t newAge) : name(newName) {
+Pessoa::Pessoa(std::string newName, uint8_t newAge) : name{newName} {
     setAge(newAge);
 }
 
 // Constructor delegating
 Pessoa::Pessoa(std::string newName, uint8_t newAge, uint64_t cpf)
-    : Pessoa(newName, newAge) {
+    : Pessoa{newName, newAge} {
     setCpf(cpf);
 }
 
