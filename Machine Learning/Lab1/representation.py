@@ -38,14 +38,6 @@ def getConcavityRepresentation(file, chunkConfig):
     return []
 
 
-def test(file):
-    count = 0
-    for i in range(file['height']):
-        for j in range(file['width']):
-            count += 1
-    print(f'teste: {count}')
-
-
 if __name__ == '__main__':
     representation = []
     files = getFilesList("digits/test.txt")
@@ -54,4 +46,3 @@ if __name__ == '__main__':
         binarizedFile = getBinaryFile(file[0])
         chunkConfig = getChunkConfig(binarizedFile)
         concavity = getConcavityRepresentation(binarizedFile, chunkConfig)
-        test(binarizedFile)
