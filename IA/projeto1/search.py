@@ -95,7 +95,7 @@ def depthFirstSearch(problem: SearchProblem):
 
     while not stack.isEmpty():
         node = stack.pop()
-        if not {node['state']}.issubset(outFringe):
+        if not node['state'] in outFringe:
             outFringe.add(node['state'])
 
             if problem.isGoalState(node['state']):
