@@ -8,4 +8,4 @@ for fruit, price in fruitPrices.items():
     if price < 2.00:
         print('%s cost %f a pound' % (fruit, price))
     else:
-        print(fruit + ' are too expensive!')
+        print(fruit + ' are too expensive!!')
