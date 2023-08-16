@@ -1,5 +1,6 @@
 #include "Pessoa.hpp"
 
+// Constructors
 Pessoa::Pessoa() {}
 
 Pessoa::Pessoa(std::string nomePessoa) : nome{nomePessoa} {}
@@ -10,10 +11,18 @@ Pessoa::Pessoa(std::string nomePessoa, uint64_t cpfPessoa, uint8_t idadePessoa)
     setIdade(idadePessoa);
 }
 
+// Getters
+std::string Pessoa::getNome() { return nome; }
+
 uint64_t Pessoa::getCpf() {
     // retorna uma cópia do cpf
     return cpf;
 }
+
+unsigned short Pessoa::getIdade() { return (unsigned short)idade; }
+
+// Setters
+void Pessoa::setNome(std::string novoNome) { nome = novoNome; }
 
 void Pessoa::setCpf(uint64_t novoCpf) {
     if (validarCPF(novoCpf)) {
@@ -24,12 +33,6 @@ void Pessoa::setCpf(uint64_t novoCpf) {
     return;
 }
 
-std::string Pessoa::getNome() { return nome; }
-
-void Pessoa::setNome(std::string novoNome) { nome = novoNome; }
-
-unsigned short Pessoa::getIdade() { return (unsigned short)idade; }
-
 void Pessoa::setIdade(unsigned short novaIdade) {
     if (novaIdade < 120)
         idade = (unsigned char)novaIdade;
@@ -37,6 +40,7 @@ void Pessoa::setIdade(unsigned short novaIdade) {
         idade = 0;  // indicar erro
 }
 
+// Functions
 bool Pessoa::validarCPF(uint64_t cpfTeste) {
     unsigned int somatorioValidaUltimo;
     unsigned int modulo;

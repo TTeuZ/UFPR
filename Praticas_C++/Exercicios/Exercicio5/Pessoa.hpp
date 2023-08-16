@@ -6,17 +6,19 @@
 
 class Pessoa {
    public:
+    // Constructors
     Pessoa();
     Pessoa(std::string nomePessoa);
     Pessoa(std::string nomePessoa, uint64_t cpfPessoa, uint8_t idade);
 
-    uint64_t getCpf();
-    void setCpf(uint64_t novoCpf);
-
+    // Getters
     std::string getNome();
-    void setNome(std::string novoNome);
-
+    uint64_t getCpf();
     unsigned short getIdade();
+
+    // Setters
+    void setNome(std::string novoNome);
+    void setCpf(uint64_t novoCpf);
     void setIdade(unsigned short novaIdade);
 
    private:
