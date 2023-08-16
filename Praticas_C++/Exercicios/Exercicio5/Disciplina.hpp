@@ -35,7 +35,7 @@ class Disciplina {
     std::string nome;
     unsigned short int cargaHoraria;
     Pessoa* professor;
-    Pessoa** alunos;
+    Pessoa* alunos[50];
     unsigned short int qtdAlunos;
 };
 #endif

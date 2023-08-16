@@ -6,9 +6,7 @@ Disciplina::Disciplina(std::string nomeDisciplina,
     : nome{nomeDisciplina},
       cargaHoraria{cargaHoraria},
       professor{professor},
-      qtdAlunos{0} {
-    alunos = new Pessoa*[50];
-}
+      qtdAlunos{0} {}
 
 // Getters
 std::string Disciplina::getNome() { return nome; }
@@ -81,5 +79,4 @@ bool Disciplina::removerAluno(uint64_t cpf) {
 
 void Disciplina::liberaAlunos() {
     for (unsigned short int i{0}; i < qtdAlunos; ++i) delete alunos[i];
-    delete[] alunos;
 }
