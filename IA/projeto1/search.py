@@ -89,12 +89,12 @@ def depthFirstSearch(problem: SearchProblem):
     "*** YOUR CODE HERE ***"
     from util import Stack
 
-    stack = Stack() # fringe
+    fringe = Stack() # fringe
     outFringe = set()
-    stack.push({ 'state': problem.getStartState(), 'path': [] })
+    fringe.push({ 'state': problem.getStartState(), 'path': [] })
 
-    while not stack.isEmpty():
-        node = stack.pop()
+    while not fringe.isEmpty():
+        node = fringe.pop()
         if not node['state'] in outFringe:
             outFringe.add(node['state'])
 
@@ -104,14 +104,36 @@ def depthFirstSearch(problem: SearchProblem):
             successors = problem.getSuccessors(node['state'])
             for successor in successors:
                 newNode = { 'state': successor[0], 'path': node['path'] + [successor[1]]}
-                stack.push(newNode)
+                fringe.push(newNode)
 
     return []
 
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    from util import Queue
+
+    fringe = Queue() # fringe
+    outFringe = set()
+    fringe.push({ 'state': problem.getStartState(), 'path': [] })
+
+    while not fringe.isEmpty():
+        node = fringe.pop()
+
+        print(node['state'], len(node['path']))
+
+        if not node['state'] in outFringe:
+            outFringe.add(node['state'])
+
+            if problem.isGoalState(node['state']):
+                return node['path']
+
+            successors = problem.getSuccessors(node['state'])
+            for successor in successors:
+                newNode = { 'state': successor[0], 'path': node['path'] + [successor[1]]}
+                fringe.push(newNode)
+
+    return []
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
