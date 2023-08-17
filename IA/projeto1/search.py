@@ -93,13 +93,13 @@ def depthFirstSearch(problem: SearchProblem):
     from util import Stack
 
     fringe = Stack()  # fringe
-    outFringe = set()
+    outFringe = []
     fringe.push({"state": problem.getStartState(), "path": []})
 
     while not fringe.isEmpty():
         node = fringe.pop()
         if not node["state"] in outFringe:
-            outFringe.add(node["state"])
+            outFringe.append(node["state"])
 
             if problem.isGoalState(node["state"]):
                 return node["path"]
@@ -144,14 +144,14 @@ def uniformCostSearch(problem: SearchProblem):
     from util import PriorityQueue
 
     fringe = PriorityQueue()
-    outFringe = set()
+    outFringe = []
     fringe.push({"state": problem.getStartState(), "path": []}, 0)
 
     while not fringe.isEmpty():
         node = fringe.pop()
 
         if not node["state"] in outFringe:
-            outFringe.add(node["state"])
+            outFringe.append(node["state"])
 
             if problem.isGoalState(node["state"]):
                 return node["path"]
@@ -178,14 +178,14 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     from util import PriorityQueue
 
     fringe = PriorityQueue()
-    outFringe = set()
+    outFringe = []
     fringe.push({"state": problem.getStartState(), "path": []}, 0)
 
     while not fringe.isEmpty():
         node = fringe.pop()
 
         if not node["state"] in outFringe:
-            outFringe.add(node["state"])
+            outFringe.append(node["state"])
 
             if problem.isGoalState(node["state"]):
                 return node["path"]
