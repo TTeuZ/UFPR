@@ -118,14 +118,14 @@ def breadthFirstSearch(problem: SearchProblem):
     from util import Queue
 
     fringe = Queue()  # fringe
-    outFringe = set()
+    outFringe = []
     fringe.push({"state": problem.getStartState(), "path": []})
 
     while not fringe.isEmpty():
         node = fringe.pop()
 
         if not node["state"] in outFringe:
-            outFringe.add(node["state"])
+            outFringe.append(node["state"])
 
             if problem.isGoalState(node["state"]):
                 return node["path"]
