@@ -42,6 +42,7 @@ import util
 import time
 import search
 import pacman
+import itertools
 
 
 class GoWestAgent(Agent):
@@ -382,7 +383,13 @@ class CornersProblem(search.SearchProblem):
             nextx, nexty = int(x + dx), int(y + dy)
             if not self.walls[nextx][nexty]:
                 nextState = (nextx, nexty)
-                successors.append(((nextState, state[1].copy()), action, 1))
+
+                visited = state[1].copy()
+                for i in range(4):
+                    if self.corners[i] == nextState:
+                        visited[i] = 1
+
+                successors.append(((nextState, visited), action, 1))
 
         self._expanded += 1  # DO NOT CHANGE
         return successors
@@ -420,18 +427,36 @@ def cornersHeuristic(state: Any, problem: CornersProblem):
     walls = problem.walls  # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
+    # from util import manhattanDistance
+
+    # pathCost = 0
+    # for i in range(4):
+    #     if state[1][i] == 0:
+    #         cost = manhattanDistance(state[0], corners[i])
+    #         if cost > pathCost:
+    #             pathCost = cost
+
+    # return pathCost
     from util import manhattanDistance
 
-    pathCost = 0
-    for i in range(len(corners)):
+    pathCost = 99999
+    unvisited = []
+    for i in range(4):
         if state[1][i] == 0:
-            cost = manhattanDistance(state[0], corners[i])
-            if cost > pathCost: pathCost = cost
+            unvisited.append(corners[i])
 
-    if 0 not in state[1]:
-        print(state, pathCost)
+    for cornersPath in itertools.permutations(unvisited):
+        cost = 0
+        actualState = state[0]
+        for corner in cornersPath:
+            cost += manhattanDistance(actualState, corner)
+            actualState = corner
 
-    return pathCost  # Default to trivial solution
+        if cost < pathCost:
+            pathCost = cost
+
+    return pathCost
+
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
