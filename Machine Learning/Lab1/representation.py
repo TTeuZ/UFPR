@@ -25,24 +25,74 @@ def getChunkConfig(file):
             chunkConfig.append((wStart, wEnd, hStart, hEnd))
     return chunkConfig
 
-# Array composition
-# u r d l ur rd dl ul ud rl urd rdl udl url urdl
-def getConcavityRepresentation(file, chunkConfig):
+def getResult(chunk, image, pixel):
+    result = ''
+    # pixel para cima
+    for i in range(chunk[2], pixel[1]):
+        print('batata')
+
+    # pixel para direita
+    for i in range(pixel[0], chunk[1]):
+        print('batata')
+    
+    # pixel para baixo
+    for i in range(pixel[1], chunk[3]):
+        print('batata')
+    
+    # pixel para esquerda
+    for i in range(chunk[0], pixel[0]):
+        print('batata')
+
+    return result
+
+def getConcavity(file, chunkConfig):
+    concavity = []
     for chunk in chunkConfig:
-        chunkConcavity = {'u': 0, 'r': 0, 'd': 0, 'l': 0, 'ur': 0, 'rd': 0, 'dl': 0, 'ul': 0, 'ud': 0, 'rl': 0, 'urd': 0, 'rdl': 0, 'udl': 0, 'url': 0, 'urdl': 0}
+        chunkConcavity = {'ur': 0, 'rd': 0, 'dl': 0, 'ul': 0, 'urd': 0, 'rdl': 0, 'udl': 0, 'url': 0, 'urdl': 0, '0': 0, '1': 0, '2': 0, '3': 0}
         for i in range(chunk[2], chunk[3]):
             for j in range(chunk[0], chunk[1]):
                 if file['image'][i][j] != 1:
-                    
+                    result = getResult(chunk, file['image'], (i,j))
+                    if result in chunkConcavity.keys():
+                        chunkConfig[result] += 1
+        concavity += chunkConcavity.values()            
     
-    return []
+    return concavity
 
+def getBlackPixelDensity(binarizedFile, chunkConfig):
+    densityByChunck = []
+    for chunk in chunkConfig:
+        chunkArea = (chunk[1] - chunk[0]) * (chunk[3] - chunk[2])
+        pixels = 0
+        for i in range(chunk[2], chunk[3]):
+            for j in range (chunk[0], chunk[1]):
+                if binarizedFile['image'][i][j] == 1:
+                    pixels += 1;
+        # density = pixels / chunkArea
+        density = pixels
+        densityByChunck.append(density)
+    
+    return densityByChunck
 
 if __name__ == '__main__':
     representation = []
     files = getFilesList("digits/test.txt")
 
     for file in files:
+        imageRep = []
+
+        # Preparing the data
         binarizedFile = getBinaryFile(file[0])
         chunkConfig = getChunkConfig(binarizedFile)
-        concavity = getConcavityRepresentation(binarizedFile, chunkConfig)
+
+        # Getting representation
+        concavity = getConcavity(binarizedFile, chunkConfig)
+        blackPixelDensity = getBlackPixelDensity(binarizedFile, chunkConfig)
+
+        imageRep += concavity
+        imageRep += blackPixelDensity
+        imageRep += [file[1]]
+        representation.append(imageRep)
+    
+    for rep in representation:
+        print(rep)
