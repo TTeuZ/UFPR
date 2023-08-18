@@ -564,8 +564,32 @@ def foodHeuristic(state: Tuple[Tuple, List[List]], problem: FoodSearchProblem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
-    return 0
+    from util import manhattanDistance
 
+    # print(foodGrid.asList())
+    # print(position)
+
+    # pathCost = 99999
+    # for foodPermutation in itertools.permutations(foodGrid.asList()):
+    #     cost = 0
+    #     actualPos = position
+    #     for food in foodPermutation:
+    #         cost += manhattanDistance(actualPos, food)
+    #         actualPos = food
+
+    #     if cost < pathCost:
+    #         pathCost = cost
+
+    # return pathCost if pathCost != 99999 else 0
+
+    pathCost = 99999
+    for food in foodGrid.asList():
+        cost = manhattanDistance(position, food)
+
+        if cost < pathCost:
+            pathCost = cost
+            
+    return pathCost if pathCost != 99999 else 0
 
 class ClosestDotSearchAgent(SearchAgent):
     "Search for all food using a sequence of searches"
