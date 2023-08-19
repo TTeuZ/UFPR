@@ -1,8 +1,10 @@
 import cv2
 
+
 def getFilesList(path):
     files = open(path, "r")
     return [(file[5:].split(' ')[0], file.split(' ')[1][:-1]) for file in files]
+
 
 def getBinaryFile(file):
     fullPath = 'digits/data/' + file
@@ -13,6 +15,7 @@ def getBinaryFile(file):
         for j in range(w):
             image[i][j] = 1 if image[i][j] < 128 else 0
     return {'width': w, 'height': h, 'image': image}
+
 
 def getChunkConfig(file):
     chunkConfig = []
@@ -25,39 +28,71 @@ def getChunkConfig(file):
             chunkConfig.append((wStart, wEnd, hStart, hEnd))
     return chunkConfig
 
-def getResult(chunk, image, pixel):
+
+# chunk[0] = wStart | chunk[1] = wEnd | chunk[2] = hStart | chunk[3] = hEnd
+def getResult(chunk, file, pixel):
     result = ''
+
     # pixel para cima
     for i in range(chunk[2], pixel[1]):
-        print('batata')
+        # print(file['image'][i][pixel[0]])
+        print(i)
 
-    # pixel para direita
-    for i in range(pixel[0], chunk[1]):
-        print('batata')
-    
-    # pixel para baixo
-    for i in range(pixel[1], chunk[3]):
-        print('batata')
-    
-    # pixel para esquerda
-    for i in range(chunk[0], pixel[0]):
-        print('batata')
+    # pixel para cima
+    # for i in range(chunk[2], pixel[1]):
+    #     if file['image'][pixel[0]][i] == 1:
+    #         result += 'u'
 
-    return result
+    #     # for j in range(chunk[0], pixel[0]):
+    #     #     if file['image'][j][i] == 1:
+    #     #         return '0'
+
+    #     # for j in range(pixel[0], chunk[1]):
+    #     #     if file['image'][j][i] == 1:
+    #     #         return '1'
+
+    # # pixel para direita
+    # for i in range(pixel[0], chunk[1]):
+    #     if file['image'][i][pixel[1]] == 1:
+    #         result += 'r'
+
+    # # # pixel para baixo
+    # for i in range(pixel[1], chunk[3]):
+    #     if file['image'][pixel[0]][i] == 1:
+    #         result += 'd'
+
+    #     # for j in range(chunk[0], pixel[0]):
+    #     #     if file['image'][j][i] == 1:
+    #     #         return '2'
+
+    #     # for j in range(pixel[0], chunk[1]):
+    #     #     if file['image'][j][i] == 1:
+    #     #         return '3'
+
+    # # # pixel para esquerda
+    # for i in range(chunk[0], pixel[0]):
+    #     if file['image'][i][pixel[1]] == 1:
+    #         result += 'l'
+
+    return str(result)
+
 
 def getConcavity(file, chunkConfig):
     concavity = []
     for chunk in chunkConfig:
-        chunkConcavity = {'ur': 0, 'rd': 0, 'dl': 0, 'ul': 0, 'urd': 0, 'rdl': 0, 'udl': 0, 'url': 0, 'urdl': 0, '0': 0, '1': 0, '2': 0, '3': 0}
+        chunkConcavity = {'ur': 0, 'rd': 0, 'dl': 0, 'ul': 0, 'urd': 0, 'rdl': 0,
+                          'udl': 0, 'url': 0, 'urdl': 0, '0': 0, '1': 0, '2': 0, '3': 0}
         for i in range(chunk[2], chunk[3]):
             for j in range(chunk[0], chunk[1]):
                 if file['image'][i][j] != 1:
-                    result = getResult(chunk, file['image'], (i,j))
-                    if result in chunkConcavity.keys():
-                        chunkConfig[result] += 1
-        concavity += chunkConcavity.values()            
-    
+                    result = getResult(chunk, file, (i, j))
+                    print(result)
+                    # if result in chunkConcavity.keys():
+                    # chunkConfig[result] += 1
+        concavity += chunkConcavity.values()
+
     return concavity
+
 
 def getBlackPixelDensity(binarizedFile, chunkConfig):
     densityByChunck = []
@@ -65,14 +100,15 @@ def getBlackPixelDensity(binarizedFile, chunkConfig):
         chunkArea = (chunk[1] - chunk[0]) * (chunk[3] - chunk[2])
         pixels = 0
         for i in range(chunk[2], chunk[3]):
-            for j in range (chunk[0], chunk[1]):
+            for j in range(chunk[0], chunk[1]):
                 if binarizedFile['image'][i][j] == 1:
-                    pixels += 1;
+                    pixels += 1
         # density = pixels / chunkArea
         density = pixels
         densityByChunck.append(density)
-    
+
     return densityByChunck
+
 
 if __name__ == '__main__':
     representation = []
@@ -93,6 +129,7 @@ if __name__ == '__main__':
         imageRep += blackPixelDensity
         imageRep += [file[1]]
         representation.append(imageRep)
-    
-    for rep in representation:
-        print(rep)
+
+    # for rep in representation:
+        # print(' '.join(str(r) for r in rep))
+        # print(len(rep))
