@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from statistics import mean, mode, stdev, variance
 
-results_qtd = 20
+results_qtd = 25
 
 #  Accuracy variables
 accuracy_list = []
