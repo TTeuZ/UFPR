@@ -1,6 +1,6 @@
 import os
 
-results_qtd = 10
+results_qtd = 20
 
 for i in range(results_qtd):
     command = 'python3 ../src_files/knn.py ../results/representation.txt > ../results/knn_results/result' + \

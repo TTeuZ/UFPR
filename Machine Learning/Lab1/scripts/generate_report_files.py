@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from statistics import mean, mode, stdev, variance
 
-results_qtd = 10
+results_qtd = 20
 
 #  Accuracy variables
 accuracy_list = []
@@ -36,7 +36,7 @@ for index in range(results_qtd):
         data = linecache.getline(file, row)
         confusion_matrix.append([int(x) for x in data.split(' ')[:-1]])
 
-    temp_matrix = np.matrix(confusion_matrix)
+    temp_matrix = np.array(confusion_matrix)
     confusion_matrices.append(temp_matrix)
     if index != 0:
         confusion_matrix_avg = confusion_matrix_avg.__add__(temp_matrix)
@@ -49,7 +49,7 @@ for index in range(results_qtd):
         data = linecache.getline(file, row)
         f_score.append([float(x) for x in data.split(' ') if x != ''][1:-1])
 
-    temp_matrix = np.matrix(f_score)
+    temp_matrix = np.array(f_score)
     f_score_matrices.append(temp_matrix)
     if index != 0:
         f_score_matrix_avg = f_score_matrix_avg.__add__(temp_matrix)
@@ -69,30 +69,42 @@ plt.savefig('../results/final/accuracy.svg', bbox_inches='tight')
 file = open('../results/final/final.txt', 'w')
 
 # Accuracy results
-file.write(f"max: {max(accuracy_list)}\n")
-file.write(f"media: {mean(accuracy_list)}\n")
-file.write(f"moda: {mode(accuracy_list)}\n")
-file.write(f"desvio padrao: {stdev(accuracy_list)}\n")
-file.write(f"variancia: {variance(accuracy_list)}\n")
+file.write(f"max: {max(accuracy_list):.5f}\n")
+file.write(f"media: {mean(accuracy_list):.5f}\n")
+file.write(f"moda: {mode(accuracy_list):.5f}\n")
+file.write(f"desvio padrao: {stdev(accuracy_list):.5f}\n")
+file.write(f"variancia: {variance(accuracy_list):.5f}\n")
 
 # Confusion matrix results
 file.write("\nAvarage of confusion matrix:\n")
 confusion_matrix_avg = confusion_matrix_avg.__truediv__(results_qtd)
-for row in confusion_matrix_avg:
-    file.write(f"{str(row)[2:-2]}\n")
+for i in range(10):
+    for j in range(10):
+        file.write(f"{confusion_matrix_avg[i][j]:.3f}\t\t")
+    file.write('\n')
 
 file.write("\nBest of confusion matrix:\n")
 best_matrix = confusion_matrices[accuracy_list.index(max(accuracy_list))]
-for row in best_matrix:
-    file.write(f"{str(row)[2:-2]}\n")
+for i in range(10):
+    for j in range(10):
+        file.write(f"{best_matrix[i][j]} ")
+    file.write('\n')
 
 # f-score results
 file.write("\nAvarage of f-score:\n")
+file.write("\t\tprecision\trecall\t\tf1-score\n")
 f_score_matrix_avg = f_score_matrix_avg.__truediv__(results_qtd)
-for index, row in enumerate(f_score_matrix_avg):
-    file.write(f"{index} {str(row)[2:-2]}\n")
+for i in range(10):
+    file.write(f"{i}\t\t")
+    for j in range(3):
+        file.write(f"{f_score_matrix_avg[i][j]:.3f}\t\t\t")
+    file.write('\n')
 
 file.write("\nBest of f-score:\n")
+file.write("\t\tprecision\trecall\t\tf1-score\n")
 best_matrix = f_score_matrices[accuracy_list.index(max(accuracy_list))]
-for index, row in enumerate(best_matrix):
-    file.write(f"{index} {str(row)[2:-2]}\n")
+for i in range(10):
+    file.write(f"{i}\t\t")
+    for j in range(3):
+        file.write(f"{best_matrix[i][j]:.3f}\t\t\t")
+    file.write('\n')
