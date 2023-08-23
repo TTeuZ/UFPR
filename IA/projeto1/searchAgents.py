@@ -427,16 +427,6 @@ def cornersHeuristic(state: Any, problem: CornersProblem):
     walls = problem.walls  # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
-    # from util import manhattanDistance
-
-    # pathCost = 0
-    # for i in range(4):
-    #     if state[1][i] == 0:
-    #         cost = manhattanDistance(state[0], corners[i])
-    #         if cost > pathCost:
-    #             pathCost = cost
-
-    # return pathCost
     from util import manhattanDistance
 
     pathCost = 99999
@@ -564,32 +554,16 @@ def foodHeuristic(state: Tuple[Tuple, List[List]], problem: FoodSearchProblem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
-    from util import manhattanDistance
 
-    # print(foodGrid.asList())
-    # print(position)
-
-    # pathCost = 99999
-    # for foodPermutation in itertools.permutations(foodGrid.asList()):
-    #     cost = 0
-    #     actualPos = position
-    #     for food in foodPermutation:
-    #         cost += manhattanDistance(actualPos, food)
-    #         actualPos = food
-
-    #     if cost < pathCost:
-    #         pathCost = cost
-
-    # return pathCost if pathCost != 99999 else 0
-
-    pathCost = 99999
-    for food in foodGrid.asList():
-        cost = manhattanDistance(position, food)
-
-        if cost < pathCost:
+    pathCost = 0
+    foodList = foodGrid.asList()
+    for food in foodList:
+        cost = mazeDistance(position, food, problem.startingGameState)
+        if cost > pathCost:
             pathCost = cost
-            
-    return pathCost if pathCost != 99999 else 0
+
+    return pathCost
+
 
 class ClosestDotSearchAgent(SearchAgent):
     "Search for all food using a sequence of searches"
@@ -625,7 +599,7 @@ class ClosestDotSearchAgent(SearchAgent):
         problem = AnyFoodSearchProblem(gameState)
 
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return search.bfs(problem)
 
 
 class AnyFoodSearchProblem(PositionSearchProblem):
@@ -662,7 +636,7 @@ class AnyFoodSearchProblem(PositionSearchProblem):
         x, y = state
 
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return state in self.food.asList()
 
 
 def mazeDistance(
