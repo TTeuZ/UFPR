@@ -43,12 +43,18 @@ class ReflexAgent(Agent):
         legalMoves = gameState.getLegalActions()
 
         # Choose one of the best actions
-        scores = [self.evaluationFunction(gameState, action) for action in legalMoves]
-        bestScore = max(scores)
-        bestIndices = [index for index in range(len(scores)) if scores[index] == bestScore]
-        chosenIndex = random.choice(bestIndices) # Pick randomly among the best
+        # scores = [self.evaluationFunction(gameState, action) for action in legalMoves]
+        # bestScore = max(scores)
+        # bestIndices = [index for index in range(len(scores)) if scores[index] == bestScore]
+        # chosenIndex = random.choice(bestIndices) # Pick randomly among the best
 
         "Add more of your code here if you want to"
+        # Adicionar a verifićão se dois scores iguais surgirem mais um é stop, remover ele
+
+        scores = [self.evaluationFunction(gameState, action) for action in legalMoves]
+        avarageScore = sum(scores) / len(scores)
+        indices = [index for index in range(len(scores)) if scores[index] >= avarageScore]
+        chosenIndex = random.choice(indices)
 
         return legalMoves[chosenIndex]
 
@@ -68,19 +74,81 @@ class ReflexAgent(Agent):
         to create a masterful evaluation function.
         """
         # Useful information you can extract from a GameState (pacman.py)
-        successorGameState = currentGameState.generatePacmanSuccessor(action)
-        newPos = successorGameState.getPacmanPosition()
-        newFood = successorGameState.getFood()
-        newGhostStates = successorGameState.getGhostStates()
-        newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
 
         "*** YOUR CODE HERE ***"
         evaluation = 0
-        foodDistances = [manhattanDistance(newPos, food) for food in newFood.asList()]
 
-        evaluation += (100 / (min(foodDistances) * 5))   
+        # # Adder
+        # walls = currentGameState.getWalls() 
+        # top, right = walls.height - 2, walls.width - 2
+        # adder = top * right
 
-        print(action, evaluation)
+        # # Food
+        # successorGameState = currentGameState.generatePacmanSuccessor(action)
+        # oldFoodCount = currentGameState.getNumFood()
+        # newFoodCount = successorGameState.getNumFood()
+        # newFood = successorGameState.getFood().asList()
+        # # newCapsules = successorGameState.getCapsules()
+
+        # # Pacman
+        # newPos = successorGameState.getPacmanPosition()
+
+        # # Ghost
+        # newGhostStates = successorGameState.getGhostStates()
+        # newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
+
+        # # Eat one food
+        # evaluation += abs(oldFoodCount - newFoodCount) * adder
+
+        # # Moves closer to a food
+        # foodDistances = [manhattanDistance(newPos, food) for food in newFood if len(newFood) != 0]
+        # evaluation += (adder / min(foodDistances)) if len(newFood) != 0 else adder
+
+        # # capsulesDistance = [manhattanDistance(newPos, newCapsules) for newCapsules in newCapsules if len(newCapsules) != 0]  
+        # # evaluation += (adder / (min(capsulesDistance) * 3)) if len(newCapsules) != 0 else adder
+
+        # # Run from ghost or hunt a ghost
+        # ghostDistances = [manhattanDistance(newPos, ghost.getPosition()) for ghost in newGhostStates]
+        # for index, time in enumerate(newScaredTimes):
+        #     canBeHunted = 1 if time > 0 else -1
+        #     evaluation += canBeHunted * (adder / ghostDistances[index]) 
+
+        # New game state
+        successorGameState = currentGameState.generatePacmanSuccessor(action)
+
+        # Helpers
+        walls = currentGameState.getWalls() 
+        top, right = walls.height - 2, walls.width - 2
+        limit = top * right
+
+        oldFoodCount = currentGameState.getNumFood()
+        newFoodCount = successorGameState.getNumFood()
+        newFood = successorGameState.getFood().asList()
+        # newCapsules = successorGameState.getCapsules()
+
+        newPos = successorGameState.getPacmanPosition()
+
+        newGhostStates = successorGameState.getGhostStates()
+        newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
+
+        # Calc evaluation
+        evaluation += limit * 0.1 if abs(oldFoodCount - newFoodCount) >= 1 else 0
+
+        foodDistances = [manhattanDistance(newPos, food) for food in newFood if len(newFood) != 0]
+        multiplier = 0.3
+        for i in range(1, min(foodDistances)):
+            multiplier -= 0.01 
+        evaluation += limit * multiplier if multiplier >= 0 else 0
+
+        ghostDistances = [manhattanDistance(newPos, ghost.getPosition()) for ghost in newGhostStates]
+        for index, time in enumerate(newScaredTimes):
+            canBeHunted = 1 if time > 0 else -1
+            multiplier = 0
+            for i in range (int(ghostDistances[index])):
+                multiplier += 0.02 * canBeHunted
+            evaluation += limit * multiplier if multiplier >= 0 else 0
+
+        print(evaluation, action)
 
         return evaluation
 
