@@ -73,43 +73,29 @@ class ReflexAgent(Agent):
         "*** YOUR CODE HERE ***"
         evaluation = 0
 
-        # # Helpers
-        # successorGameState = currentGameState.generatePacmanSuccessor(action)
+        # Helpers
+        successorGameState = currentGameState.generatePacmanSuccessor(action)
 
-        # newPos = successorGameState.getPacmanPosition()
+        newPos = successorGameState.getPacmanPosition()
 
-        # oldFoodCount = currentGameState.getNumFood()
-        # newFoodCount = successorGameState.getNumFood()
-        # newFood = successorGameState.getFood().asList()
-        # # newCapsules = successorGameState.getCapsules()
+        oldFoodCount = currentGameState.getNumFood()
+        newFoodCount = successorGameState.getNumFood()
+        newFood = successorGameState.getFood().asList()
 
-        # newGhostStates = successorGameState.getGhostStates()
-        # newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
+        oldCapsules = currentGameState.getCapsules()
+        newCapsules = successorGameState.getCapsules()
 
-        # # Calc evaluation
-        # evaluation = successorGameState.getScore()
-        # evaluation = evaluation - (newFoodCount * 20);
+        newGhostStates = successorGameState.getGhostStates()
 
-        # foodDistances = [manhattanDistance(food, newPos) for food in newFood]
-        # evaluation = evaluation - (min(foodDistances) * 5)
+        # Calc evaluation
+        hasAte = abs(oldFoodCount - newFoodCount) or (abs(len(oldCapsules) - len(newCapsules)))
+        foodDistances = [manhattanDistance(newPos, food) for food in newFood]       
+        foodDistance = min(foodDistances) if not hasAte else 0
 
-        # badGhostsDistances = []
-        # goodGhostDistances = []
-        # for ghost in newGhostStates:
-        #     ghostDistance = manhattanDistance(ghost.getPosition(), newPos)
-        #     # print(f"ghost {index + 1}: {ghostDistance} - {newScaredTimes[index]}")
-        #     if ghost.scaredTimer == 0:
-        #         badGhostsDistances.append(ghostDistance)
-        #     else:
-        #         goodGhostDistances.append(ghostDistance)
-        
-        # if len(badGhostsDistances) > 0:
-        #     evaluation = evaluation - (min(badGhostsDistances) * 10)
-        
-        # if len(goodGhostDistances) > 0:
-        #     evaluation += (min(goodGhostDistances) * 5)
+        ghostDistances = [manhattanDistance(newPos, ghost.getPosition()) for ghost in newGhostStates if ghost.scaredTimer == 0]
+        ghostDistance = min(ghostDistances) if len(ghostDistances) != 0 else 0
 
-        print(evaluation, action)
+        evaluation = (100 / (foodDistance + 0.1)) - (100 / (ghostDistance + 0.5))
 
         return evaluation
 
