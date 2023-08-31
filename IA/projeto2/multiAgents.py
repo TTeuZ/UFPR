@@ -158,7 +158,39 @@ class MinimaxAgent(MultiAgentSearchAgent):
         Returns whether or not the game state is a losing state
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+
+        depth = 0
+        curAgent = 0
+        action = 'Stop'
+        agents = gameState.getNumAgents()
+        return self.minimaxRecursive(action, curAgent, depth, agents, gameState)[1]
+
+    
+
+    def minimaxRecursive(self, action, curAgent, depth, agents, gameState: GameState):
+        if depth == (self.depth - 1) and curAgent == (agents - 1):
+            print('batata')
+            return (self.evaluationFunction(gameState), action)
+        
+        nextAgent = curAgent + 1;
+        if nextAgent == agents: 
+            nextAgent = 0
+            depth += 1
+        
+        nextStatuses = []
+        nextAgentActions = gameState.getLegalActions(nextAgent)
+        for action in nextAgentActions:
+            nextState = gameState.generateSuccessor(nextAgent, action)
+            nextStatuses.append(self.minimaxRecursive(action, nextAgent, depth, agents, nextState))
+        
+        if len(nextStatuses) != 0:
+            
+        return 'Stop'
+
+
+        
+
+
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
