@@ -159,21 +159,24 @@ class MinimaxAgent(MultiAgentSearchAgent):
         """
         "*** YOUR CODE HERE ***"
         actions = gameState.getLegalActions(0)
-        scores = [self.minimaxRecursive(1, 0, action, gameState) for action in actions]
-        print(scores)
-        return 'Stop'
+        scores = [self.minimaxRecursive(1, 0, gameState.generateSuccessor(0, action)) for action in actions]
+
+        return actions[scores.index(max(scores))]
 
 
-
-    
-
-    def minimaxRecursive(self, agent, depth, action, gameState: GameState):
-        if depth == (self.depth - 1):
+    def minimaxRecursive(self, agent, depth, gameState: GameState):
+        if depth == self.depth or gameState.isWin() or gameState.isLose():
             return self.evaluationFunction(gameState)
         
-        
-        return 'batata'
+        nextAgent = (agent + 1) % gameState.getNumAgents()
+        if nextAgent == 0: depth += 1
 
+        actions = gameState.getLegalActions(agent)
+        successors = [gameState.generateSuccessor(agent, action) for action in actions]
+        scores = [self.minimaxRecursive(nextAgent, depth, state) for state in successors]
+
+        return max(scores) if agent == 0 else min(scores)
+    
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
