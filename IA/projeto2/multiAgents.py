@@ -4,13 +4,13 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
 # Student side autograding was added by Brad Miller, Nick Hay, and
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
-
+import math
 
 from util import manhattanDistance
 from game import Directions
@@ -18,6 +18,7 @@ import random, util
 
 from game import Agent
 from pacman import GameState
+
 
 class ReflexAgent(Agent):
     """
@@ -28,7 +29,6 @@ class ReflexAgent(Agent):
     it in any way you see fit, so long as you don't touch our method
     headers.
     """
-
 
     def getAction(self, gameState: GameState):
         """
@@ -46,11 +46,11 @@ class ReflexAgent(Agent):
         scores = [self.evaluationFunction(gameState, action) for action in legalMoves]
         bestScore = max(scores)
         bestIndices = [index for index in range(len(scores)) if scores[index] == bestScore]
-        
-        if len(bestIndices) > 1:
-            bestIndices = [index for index in bestIndices if legalMoves[index] != 'Stop']
 
-        chosenIndex = random.choice(bestIndices) # Pick randomly among the best
+        if len(bestIndices) > 1:
+            bestIndices = [index for index in bestIndices if legalMoves[index] != "Stop"]
+
+        chosenIndex = random.choice(bestIndices)  # Pick randomly among the best
         return legalMoves[chosenIndex]
 
     def evaluationFunction(self, currentGameState: GameState, action):
@@ -89,7 +89,7 @@ class ReflexAgent(Agent):
 
         # Calc evaluation
         hasAte = abs(oldFoodCount - newFoodCount) or (abs(len(oldCapsules) - len(newCapsules)))
-        foodDistances = [manhattanDistance(newPos, food) for food in newFood]       
+        foodDistances = [manhattanDistance(newPos, food) for food in newFood]
         foodDistance = min(foodDistances) if not hasAte else 0
 
         ghostDistances = [manhattanDistance(newPos, ghost.getPosition()) for ghost in newGhostStates if ghost.scaredTimer == 0]
@@ -98,6 +98,7 @@ class ReflexAgent(Agent):
         evaluation = (100 / (foodDistance + 0.1)) - (100 / (ghostDistance + 0.5))
 
         return evaluation
+
 
 def scoreEvaluationFunction(currentGameState: GameState):
     """
@@ -108,6 +109,7 @@ def scoreEvaluationFunction(currentGameState: GameState):
     (not reflex agents).
     """
     return currentGameState.getScore()
+
 
 class MultiAgentSearchAgent(Agent):
     """
@@ -124,10 +126,11 @@ class MultiAgentSearchAgent(Agent):
     is another abstract class.
     """
 
-    def __init__(self, evalFn = 'scoreEvaluationFunction', depth = '2'):
-        self.index = 0 # Pacman is always agent index 0
+    def __init__(self, evalFn="scoreEvaluationFunction", depth="2"):
+        self.index = 0  # Pacman is always agent index 0
         self.evaluationFunction = util.lookup(evalFn, globals())
         self.depth = int(depth)
+
 
 class MinimaxAgent(MultiAgentSearchAgent):
     """
@@ -163,11 +166,10 @@ class MinimaxAgent(MultiAgentSearchAgent):
 
         return actions[scores.index(max(scores))]
 
-
     def minimaxRecursive(self, agent, depth, gameState: GameState):
         if depth == self.depth or gameState.isWin() or gameState.isLose():
             return self.evaluationFunction(gameState)
-        
+
         nextAgent = (agent + 1) % gameState.getNumAgents()
         if nextAgent == 0: depth += 1
 
@@ -176,7 +178,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
         scores = [self.minimaxRecursive(nextAgent, depth, state) for state in successors]
 
         return max(scores) if agent == 0 else min(scores)
-    
+
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
@@ -188,11 +190,63 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        alpha = -math.inf
+        beta = math.inf
+        scores = []
+
+        actions = gameState.getLegalActions(0)
+        for action in actions:
+            score = self.betaMinimaxRecursive(1, 0, alpha, beta, gameState.generateSuccessor(0, action))
+            alpha = max(alpha, score)
+            scores.append(score)
+
+        return actions[scores.index(max(scores))]
+    
+
+    def betaMinimaxRecursive(self, agent, depth, alpha, beta, gameState: GameState):
+        if depth == self.depth or gameState.isWin() or gameState.isLose():
+            return self.evaluationFunction(gameState)
+        
+        pruningValue = math.inf
+
+        nextAgent = (agent + 1) % gameState.getNumAgents()
+        if nextAgent == 0: depth += 1
+        recursive = self.alphaMinimaxRecursive if nextAgent == 0 else self.betaMinimaxRecursive
+
+        actions = gameState.getLegalActions(agent)
+        for action in actions:
+            state = gameState.generateSuccessor(agent, action)
+            pruningValue = min(pruningValue, recursive(nextAgent, depth, alpha, beta, state))
+
+            if pruningValue < alpha: return pruningValue
+            beta = min(beta, pruningValue)
+
+        return pruningValue
+
+
+    def alphaMinimaxRecursive(self, agent, depth, alpha, beta, gameState: GameState):
+        if depth == self.depth or gameState.isWin() or gameState.isLose():
+            return self.evaluationFunction(gameState)
+        
+        pruningValue = -math.inf
+
+        nextAgent = (agent + 1) % gameState.getNumAgents()
+        if nextAgent == 0: depth += 1
+        recursive = self.alphaMinimaxRecursive if nextAgent == 0 else self.betaMinimaxRecursive
+
+        actions = gameState.getLegalActions(agent)
+        for action in actions:
+            state = gameState.generateSuccessor(agent, action)
+            pruningValue = max(pruningValue, recursive(nextAgent, depth, alpha, beta, state))
+
+            if pruningValue > beta: return pruningValue
+            alpha = max(alpha, pruningValue)
+
+        return pruningValue
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
     """
-      Your expectimax agent (question 4)
+    Your expectimax agent (question 4)
     """
 
     def getAction(self, gameState: GameState):
@@ -205,6 +259,7 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         "*** YOUR CODE HERE ***"
         util.raiseNotDefined()
 
+
 def betterEvaluationFunction(currentGameState: GameState):
     """
     Your extreme ghost-hunting, pellet-nabbing, food-gobbling, unstoppable
@@ -214,6 +269,7 @@ def betterEvaluationFunction(currentGameState: GameState):
     """
     "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
+
 
 # Abbreviation
 better = betterEvaluationFunction
