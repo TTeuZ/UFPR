@@ -285,7 +285,21 @@ def betterEvaluationFunction(currentGameState: GameState):
     DESCRIPTION: <write something here so we know what you did>
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    # Helpers
+    position = currentGameState.getPacmanPosition()
+    foodCount = currentGameState.getNumFood();
+    ghostStates = currentGameState.getGhostStates()
+
+    # Calculation of evaluation
+    evaluation = currentGameState.getScore()
+    evaluation += 100 / (foodCount + 0.1)
+
+    ghostDistances = [manhattanDistance(position, ghost.getPosition()) for ghost in ghostStates if ghost.scaredTimer == 0]
+    ghostDistance = min(ghostDistances) if len(ghostDistances) != 0 else 0
+    evaluation += 100 / (ghostDistance + 0.5)
+
+    return evaluation
 
 
 # Abbreviation
