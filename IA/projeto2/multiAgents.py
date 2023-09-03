@@ -289,12 +289,22 @@ def betterEvaluationFunction(currentGameState: GameState):
     # Helpers
     position = currentGameState.getPacmanPosition()
     foodCount = currentGameState.getNumFood();
+    foodsPos = currentGameState.getFood().asList()
     ghostStates = currentGameState.getGhostStates()
 
-    # Calculation of evaluation
+    # End game state
+    if currentGameState.isWin() or currentGameState.isLose():
+        return currentGameState.getScore()
+
     evaluation = currentGameState.getScore()
+
     evaluation += 100 / (foodCount + 0.1)
 
+    foodDistances = [manhattanDistance(position, food) for food in foodsPos]
+    foodDistances = sorted(foodDistances)
+    evaluation += sum((1 / distance) for distance in foodDistances[:5])
+
+    # Keep closer but safe from ghost to get the opportunity to eat they
     ghostDistances = [manhattanDistance(position, ghost.getPosition()) for ghost in ghostStates if ghost.scaredTimer == 0]
     ghostDistance = min(ghostDistances) if len(ghostDistances) != 0 else 0
     evaluation += 100 / (ghostDistance + 0.5)
