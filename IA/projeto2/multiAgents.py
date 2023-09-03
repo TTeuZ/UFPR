@@ -244,6 +244,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
 
         return pruningValue
 
+
 class ExpectimaxAgent(MultiAgentSearchAgent):
     """
     Your expectimax agent (question 4)
@@ -257,7 +258,23 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         legal moves.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        actions = gameState.getLegalActions(0)
+        scores = [self.expectimaxRecursive(1, 0, gameState.generateSuccessor(0, action)) for action in actions]
+
+        return actions[scores.index(max(scores))]
+
+    def expectimaxRecursive(self, agent, depth, gameState: GameState):
+        if depth == self.depth or gameState.isWin() or gameState.isLose():
+            return self.evaluationFunction(gameState)
+
+        nextAgent = (agent + 1) % gameState.getNumAgents()
+        if nextAgent == 0: depth += 1
+
+        actions = gameState.getLegalActions(agent)
+        successors = [gameState.generateSuccessor(agent, action) for action in actions]
+        scores = [self.expectimaxRecursive(nextAgent, depth, state) for state in successors]
+
+        return max(scores) if agent == 0 else sum(map(lambda score: (1 / len(scores)) * score, scores))
 
 
 def betterEvaluationFunction(currentGameState: GameState):
