@@ -291,6 +291,8 @@ def betterEvaluationFunction(currentGameState: GameState):
     foodCount = currentGameState.getNumFood();
     foodsPos = currentGameState.getFood().asList()
     ghostStates = currentGameState.getGhostStates()
+    ghostTimers = [ghost.scaredTimer for ghost in ghostStates]
+    capsules = currentGameState.getCapsules()
 
     # End game state
     if currentGameState.isWin() or currentGameState.isLose():
@@ -302,12 +304,13 @@ def betterEvaluationFunction(currentGameState: GameState):
 
     foodDistances = [manhattanDistance(position, food) for food in foodsPos]
     foodDistances = sorted(foodDistances)
-    evaluation += sum((1 / distance) for distance in foodDistances[:5])
+    evaluation += sum((5 / distance) for distance in foodDistances[:5])
 
     # Keep closer but safe from ghost to get the opportunity to eat they
-    ghostDistances = [manhattanDistance(position, ghost.getPosition()) for ghost in ghostStates if ghost.scaredTimer == 0]
-    ghostDistance = min(ghostDistances) if len(ghostDistances) != 0 else 0
-    evaluation += 100 / (ghostDistance + 0.5)
+    if len(capsules) > 0 or sum(ghostTimers) > 0:
+        ghostDistances = [manhattanDistance(position, ghost.getPosition()) for ghost in ghostStates if ghost.scaredTimer == 0]
+        ghostDistance = min(ghostDistances) if len(ghostDistances) != 0 else 0
+        evaluation += 100 / (ghostDistance + 0.5)
 
     return evaluation
 
