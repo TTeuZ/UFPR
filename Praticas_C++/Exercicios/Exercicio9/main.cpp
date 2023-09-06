@@ -16,10 +16,10 @@ int main() {
     SalaAula sala2{"Lab Info 2", 20};
 
     Pessoa prof1{"João", 11111111111, 40};
-    Disciplina dis1{"Orientacao a Objetos", 60, bcc, &prof1, &sala};
+    Disciplina dis1{bcc, "Orientacao a Objetos", &prof1, 60, &sala};
 
     Pessoa prof2{"Maria", 22222222222, 30};
-    Disciplina dis2{"Sistemas Operacionais", 60, bcc, &prof2, &sala2};
+    Disciplina dis2{bcc, "Sistemas Operacionais", &prof2, 60, &sala2};
 
     ConteudoMinistrado* c1{new ConteudoMinistrado{"Ponteiros", 4}};
     ConteudoMinistrado* c2{new ConteudoMinistrado{"Referencias", 4}};
