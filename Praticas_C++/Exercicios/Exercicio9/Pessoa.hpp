@@ -22,7 +22,7 @@ class Pessoa {
     void setIdade(unsigned short idade);
 
    private:
-    bool validarCPF(uint64_t teste);
+    bool validarCPF(uint64_t cpf);
 
     std::string nome;
     uint64_t cpf;

@@ -11,15 +11,15 @@ class SalaAula {
 
    public:
     // Constructors
-    SalaAula(std::string nome, unsigned int capacidade);
+    SalaAula(std::string nome, uint16_t capacidade);
 
     // Getters
     std::string getNome();
-    unsigned int getCapacidade();
+    uint16_t getCapacidade();
 
     // Setters
     void setNome(std::string nome);
-    void setCapcidade(unsigned int capacidade);
+    void setCapacidade(uint16_t capacidade);
 
     // Functions
     void adicionarDisciplina(Disciplina* disciplina);
@@ -28,7 +28,7 @@ class SalaAula {
 
    private:
     std::string nome;
-    unsigned int capacidade;
+    uint16_t capacidade;
     std::list<Disciplina*> disciplinasMinistradas;
 };
 #endif

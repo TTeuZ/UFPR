@@ -1,19 +1,21 @@
 #include "ConteudoMinistrado.hpp"
 
-unsigned int ConteudoMinistrado::proxId{1};
+uint64_t ConteudoMinistrado::proxId{1};
 
+// Constructors
 ConteudoMinistrado::ConteudoMinistrado(std::string descricao,
-                                       unsigned short cargaHorariaConteudo)
+                                       uint8_t cargaHorariaConteudo)
     : descricao(descricao),
       cargaHorariaConteudo(cargaHorariaConteudo),
       id{ConteudoMinistrado::proxId} {
     ConteudoMinistrado::proxId++;
 }
 
+// Getters
 std::string& ConteudoMinistrado::getDescricao() { return this->descricao; }
 
-unsigned short ConteudoMinistrado::getCargaHorariaConteudo() {
+uint8_t ConteudoMinistrado::getCargaHorariaConteudo() {
     return this->cargaHorariaConteudo;
 }
 
-unsigned int ConteudoMinistrado::getId() { return this->id; }
+uint64_t ConteudoMinistrado::getId() { return this->id; }

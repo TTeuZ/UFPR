@@ -1,24 +1,24 @@
 #ifndef CONTEUDO_MINISTRADO_HPP
 #define CONTEUDO_MINISTRADO_HPP
 
+#include <cstdint>
 #include <string>
 
 class ConteudoMinistrado {
    public:
     // Constructors
-    ConteudoMinistrado(std::string descricao,
-                       unsigned short cargaHorariaConteudo);
+    ConteudoMinistrado(std::string descricao, uint8_t cargaHorariaConteudo);
 
     // Getters
     std::string& getDescricao();
-    unsigned short getCargaHorariaConteudo();
-    unsigned int getId();
+    uint8_t getCargaHorariaConteudo();
+    uint64_t getId();
 
    private:
-    static unsigned int proxId;
+    static uint64_t proxId;
 
     std::string descricao;
-    unsigned short cargaHorariaConteudo;
-    unsigned int id;
+    uint8_t cargaHorariaConteudo;
+    uint64_t id;
 };
 #endif

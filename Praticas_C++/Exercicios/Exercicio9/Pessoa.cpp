@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+// Constructors
 Pessoa::Pessoa() {}
 
 Pessoa::Pessoa(std::string nome) : nome{nome} {}

@@ -1,13 +1,13 @@
 #include "SalaAula.hpp"
 
 // Constructors
-SalaAula::SalaAula(std::string nome, unsigned int capacidade)
+SalaAula::SalaAula(std::string nome, uint16_t capacidade)
     : nome{nome}, capacidade{capacidade} {}
 
 // Getters
 std::string SalaAula::getNome() { return this->nome; }
 
-unsigned int SalaAula::getCapacidade() { return this->capacidade; }
+uint16_t SalaAula::getCapacidade() { return this->capacidade; }
 
 std::list<Disciplina*>& SalaAula::getDisciplinas() {
     return this->disciplinasMinistradas;
@@ -16,7 +16,7 @@ std::list<Disciplina*>& SalaAula::getDisciplinas() {
 // Setters
 void SalaAula::setNome(std::string nome) { this->nome = nome; }
 
-void SalaAula::setCapcidade(unsigned int capacidade) {
+void SalaAula::setCapacidade(uint16_t capacidade) {
     this->capacidade = capacidade;
 }
 
