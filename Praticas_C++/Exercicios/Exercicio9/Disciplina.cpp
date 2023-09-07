@@ -37,8 +37,8 @@ void Disciplina::setNome(std::string nome) { this->nome = nome; }
 
 void Disciplina::setProfessor(Pessoa* prof) { this->professor = prof; }
 
-void Disciplina::setCargaHoraria(unsigned int carga) {
-    this->cargaHoraria = carga;
+void Disciplina::setCargaHoraria(int8_t cargaHoraria) {
+    this->cargaHoraria = cargaHoraria;
 }
 
 void Disciplina::setSalaAula(SalaAula* sala) {
@@ -51,8 +51,7 @@ void Disciplina::setSalaAula(SalaAula* sala) {
 }
 
 // Functions
-void Disciplina::imprimirDados(std::string& cabecalho,
-                               unsigned int cargaTotalCurso) {
+void Disciplina::imprimirDados(std::string& cabecalho, int8_t cargaTotalCurso) {
     double pctCurso = (double)this->cargaHoraria / cargaTotalCurso;
     pctCurso = pctCurso * 100;
     std::cout << cabecalho << std::endl;
@@ -104,7 +103,7 @@ void Disciplina::adicionaConteudo(ConteudoMinistrado* conteudo) {
     this->conteudos.push_back(conteudo);
 }
 
-bool Disciplina::removerConteudoMinistrado(unsigned long id) {
+bool Disciplina::removerConteudoMinistrado(uint64_t id) {
     std::list<ConteudoMinistrado*>::iterator it{this->conteudos.begin()};
     for (; it != this->conteudos.end(); ++it) {
         if ((*it)->getId() == id) {

@@ -29,11 +29,11 @@ class Disciplina {
     // Setters
     void setNome(std::string nome);
     void setProfessor(Pessoa* prof);
-    void setCargaHoraria(unsigned int carga);
+    void setCargaHoraria(int8_t cargaHoraria);
     void setSalaAula(SalaAula* sala);
 
     // Functions
-    void imprimirDados(std::string& cabecalho, unsigned int cargaTotalCurso);
+    void imprimirDados(std::string& cabecalho, int8_t cargaTotalCurso);
 
     std::string getNomeProfessor();
 
@@ -42,7 +42,7 @@ class Disciplina {
     bool removerAluno(uint64_t cpf);
 
     void adicionaConteudo(ConteudoMinistrado* conteudo);
-    bool removerConteudoMinistrado(unsigned long id);
+    bool removerConteudoMinistrado(uint64_t id);
 
     void liberaAlunos();
     void limparConteudos();
