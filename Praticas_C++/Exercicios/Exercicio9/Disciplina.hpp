@@ -19,11 +19,11 @@ class Disciplina {
 
     // Getters
     Curso& getCurso();
-    std::string getNome();
+    std::string& getNome();
     Pessoa* getProfessor();
     int getCargaHoraria();
     SalaAula* getSalaAula();
-    std::list<Pessoa*> getAlunos();
+    std::list<Pessoa*>& getAlunos();
     std::list<ConteudoMinistrado*>& getConteudos();
 
     // Setters

@@ -5,7 +5,7 @@ SalaAula::SalaAula(std::string nome, uint16_t capacidade)
     : nome{nome}, capacidade{capacidade} {}
 
 // Getters
-std::string SalaAula::getNome() { return this->nome; }
+std::string& SalaAula::getNome() { return this->nome; }
 
 uint16_t SalaAula::getCapacidade() { return this->capacidade; }
 

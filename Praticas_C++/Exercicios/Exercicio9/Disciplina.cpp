@@ -18,7 +18,7 @@ Disciplina::Disciplina(Curso& curso, std::string nome, Pessoa* professor,
 // Getters
 Curso& Disciplina::getCurso() { return this->curso; };
 
-std::string Disciplina::getNome() { return this->nome; }
+std::string& Disciplina::getNome() { return this->nome; }
 
 Pessoa* Disciplina::getProfessor() { return this->professor; }
 
@@ -26,7 +26,7 @@ int Disciplina::getCargaHoraria() { return this->cargaHoraria; }
 
 SalaAula* Disciplina::getSalaAula() { return this->sala; }
 
-std::list<Pessoa*> Disciplina::getAlunos() { return this->alunos; }
+std::list<Pessoa*>& Disciplina::getAlunos() { return this->alunos; }
 
 std::list<ConteudoMinistrado*>& Disciplina::getConteudos() {
     return this->conteudos;

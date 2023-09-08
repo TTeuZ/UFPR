@@ -7,22 +7,21 @@ Pessoa::Pessoa() {}
 
 Pessoa::Pessoa(std::string nome) : nome{nome} {}
 
-Pessoa::Pessoa(std::string nome, uint64_t cpf, unsigned short idade)
-    : Pessoa{nome} {
+Pessoa::Pessoa(std::string nome, uint64_t cpf, uint8_t idade) : Pessoa{nome} {
     setCpf(cpf);
     setIdade(idade);
 }
 
 // Getters
+std::string& Pessoa::getNome() { return this->nome; }
+
 uint64_t Pessoa::getCpf() { return this->cpf; }
 
-std::string Pessoa::getNome() { return this->nome; }
-
-unsigned short int Pessoa::getIdade() {
-    return (unsigned short int)this->idade;
-}
+uint8_t Pessoa::getIdade() { return (int)this->idade; }
 
 // Setters
+void Pessoa::setNome(std::string nome) { this->nome = nome; }
+
 void Pessoa::setCpf(uint64_t cpf) {
     if (validarCPF(cpf)) {
         this->cpf = cpf;
@@ -32,9 +31,7 @@ void Pessoa::setCpf(uint64_t cpf) {
     return;
 }
 
-void Pessoa::setNome(std::string nome) { this->nome = nome; }
-
-void Pessoa::setIdade(unsigned short int idade) {
+void Pessoa::setIdade(uint8_t idade) {
     if (idade < 120)
         this->idade = (uint8_t)idade;
     else

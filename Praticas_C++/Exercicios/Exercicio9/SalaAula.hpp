@@ -14,8 +14,9 @@ class SalaAula {
     SalaAula(std::string nome, uint16_t capacidade);
 
     // Getters
-    std::string getNome();
+    std::string& getNome();
     uint16_t getCapacidade();
+    std::list<Disciplina*>& getDisciplinas();
 
     // Setters
     void setNome(std::string nome);
@@ -24,7 +25,6 @@ class SalaAula {
     // Functions
     void adicionarDisciplina(Disciplina* disciplina);
     void removerDisciplina(Disciplina* disciplina);
-    std::list<Disciplina*>& getDisciplinas();
 
    private:
     std::string nome;

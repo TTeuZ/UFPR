@@ -8,18 +8,18 @@ class Pessoa {
    public:
     // Constructors
     Pessoa();
-    Pessoa(std::string pessoa);
-    Pessoa(std::string pessoa, uint64_t cpf, unsigned short idade);
+    Pessoa(std::string nome);
+    Pessoa(std::string nome, uint64_t cpf, uint8_t idade);
 
     // Getters
+    std::string& getNome();
     uint64_t getCpf();
-    std::string getNome();
-    unsigned short int getIdade();
+    uint8_t getIdade();
 
     // Setters
-    void setCpf(uint64_t cpf);
     void setNome(std::string nome);
-    void setIdade(unsigned short idade);
+    void setCpf(uint64_t cpf);
+    void setIdade(uint8_t idade);
 
    private:
     bool validarCPF(uint64_t cpf);
