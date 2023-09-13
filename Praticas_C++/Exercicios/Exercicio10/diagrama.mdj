@@ -861,7 +861,7 @@
 											"top": 673,
 											"width": 555.2802734375,
 											"height": 13,
-											"text": "+limparConteudos()",
+											"text": "-limparConteudos()",
 											"horizontalAlignment": 0
 										},
 										{
@@ -4844,7 +4844,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGKchxqjC7ZoJ4="
 							},
-							"name": "limparConteudos"
+							"name": "limparConteudos",
+							"visibility": "private"
 						},
 						{
 							"_type": "UMLOperation",
