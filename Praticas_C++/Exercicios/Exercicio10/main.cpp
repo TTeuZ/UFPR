@@ -21,15 +21,10 @@ int main() {
     Pessoa prof2{"Maria", 22222222222, 30};
     Disciplina dis2{bcc, "Sistemas Operacionais", &prof2, 60, &sala2};
 
-    ConteudoMinistrado* c1{new ConteudoMinistrado{"Ponteiros", 4}};
-    ConteudoMinistrado* c2{new ConteudoMinistrado{"Referencias", 4}};
-    dis1.adicionaConteudo(c1);
-    dis1.adicionaConteudo(c2);
-
-    ConteudoMinistrado* c3{new ConteudoMinistrado{"Strings", 4}};
-    ConteudoMinistrado* c4{new ConteudoMinistrado{"Floats", 4}};
-    dis2.adicionaConteudo(c3);
-    dis2.adicionaConteudo(c4);
+    dis1.adicionaConteudo("Ponteiros", 4);
+    dis1.adicionaConteudo("Referencias", 4);
+    dis2.adicionaConteudo("Strings", 4);
+    dis2.adicionaConteudo("Floats", 4);
 
     Console::imprimirDadosDisciplina(dis1);
 
@@ -50,9 +45,6 @@ int main() {
     std::cout << "-------------------------------------------\n" << std::endl;
 
     Console::imprimirDadosDisciplina(dis2);
-
-    dis1.limparConteudos();
-    dis2.limparConteudos();
 
     return 0;
 }

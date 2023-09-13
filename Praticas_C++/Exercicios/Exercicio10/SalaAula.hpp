@@ -13,6 +13,9 @@ class SalaAula {
     // Constructors
     SalaAula(std::string nome, uint16_t capacidade);
 
+    // Constructors
+    ~SalaAula();
+
     // Getters
     std::string& getNome();
     uint16_t getCapacidade();

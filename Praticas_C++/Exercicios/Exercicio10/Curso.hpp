@@ -9,6 +9,9 @@ class Curso {
     // Constructors
     Curso(std::string nome, uint8_t anoCriacao, uint8_t cargaHorariaMinima);
 
+    // Destructor
+    ~Curso();
+
     // Getters
     std::string& getNome();
     uint8_t getAnoCriacao();

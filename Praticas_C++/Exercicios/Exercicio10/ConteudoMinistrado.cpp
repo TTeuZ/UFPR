@@ -11,6 +11,9 @@ ConteudoMinistrado::ConteudoMinistrado(std::string descricao,
     ConteudoMinistrado::proxId++;
 }
 
+// Destructor
+ConteudoMinistrado::~ConteudoMinistrado(){};
+
 // Getters
 std::string& ConteudoMinistrado::getDescricao() { return this->descricao; }
 

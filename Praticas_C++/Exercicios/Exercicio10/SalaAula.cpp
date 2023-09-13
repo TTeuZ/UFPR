@@ -4,6 +4,16 @@
 SalaAula::SalaAula(std::string nome, uint16_t capacidade)
     : nome{nome}, capacidade{capacidade} {}
 
+// Destructor
+SalaAula::~SalaAula() {
+    Disciplina* temp;
+    while (!this->disciplinasMinistradas.empty()) {
+        temp = this->disciplinasMinistradas.back();
+        this->disciplinasMinistradas.pop_back();
+        temp->sala = nullptr;
+    }
+}
+
 // Getters
 std::string& SalaAula::getNome() { return this->nome; }
 

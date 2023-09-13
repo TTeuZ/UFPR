@@ -6,6 +6,9 @@ Curso::Curso(std::string nome, uint8_t anoCriacao, uint8_t cargaHorariaMinima)
       anoCriacao(anoCriacao),
       cargaHorariaMinima(cargaHorariaMinima) {}
 
+// Destructor
+Curso::~Curso(){};
+
 // Getters
 std::string& Curso::getNome() { return this->nome; }
 

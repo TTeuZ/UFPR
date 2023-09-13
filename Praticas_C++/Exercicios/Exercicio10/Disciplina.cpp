@@ -5,6 +5,11 @@
 #include "SalaAula.hpp"
 
 // Constructors
+Disciplina::Disciplina(Curso& curso, std::string nome, SalaAula* sala)
+    : curso{curso}, nome{nome}, sala{nullptr} {
+    this->setSalaAula(sala);
+}
+
 Disciplina::Disciplina(Curso& curso, std::string nome, Pessoa* professor,
                        uint8_t cargaHoraria, SalaAula* salaa)
     : curso{curso},
@@ -15,8 +20,14 @@ Disciplina::Disciplina(Curso& curso, std::string nome, Pessoa* professor,
     this->setSalaAula(sala);
 }
 
+// Destructor
+Disciplina::~Disciplina() {
+    this->limparConteudos();
+    this->setSalaAula(nullptr);
+}
+
 // Getters
-Curso& Disciplina::getCurso() { return this->curso; };
+Curso& Disciplina::getCurso() { return this->curso; }
 
 std::string& Disciplina::getNome() { return this->nome; }
 
@@ -71,13 +82,9 @@ void Disciplina::adicionarAluno(Pessoa* aluno) {
 
 bool Disciplina::removerAluno(Pessoa* aluno) {
     std::list<Pessoa*>::iterator it{this->alunos.begin()};
-
     for (; it != this->alunos.end(); ++it) {
         if (*it == aluno) {
-            Pessoa* alunoAchado{*it};
             this->alunos.erase(it);
-            delete alunoAchado;
-
             return true;
         }
     }
@@ -86,20 +93,18 @@ bool Disciplina::removerAluno(Pessoa* aluno) {
 
 bool Disciplina::removerAluno(uint64_t cpf) {
     std::list<Pessoa*>::iterator it{this->alunos.begin()};
-
     for (; it != this->alunos.end(); ++it) {
         if ((*it)->getCpf() == cpf) {
-            Pessoa* alunoAchado{*it};
             this->alunos.erase(it);
-            delete alunoAchado;
-
             return true;
         }
     }
     return false;
 }
 
-void Disciplina::adicionaConteudo(ConteudoMinistrado* conteudo) {
+void Disciplina::adicionaConteudo(std::string descricao,
+                                  uint8_t cargaHorariaConteudo) {
+    ConteudoMinistrado* conteudo{new ConteudoMinistrado{"Ponteiros", 4}};
     this->conteudos.push_back(conteudo);
 }
 
@@ -110,18 +115,10 @@ bool Disciplina::removerConteudoMinistrado(uint64_t id) {
             ConteudoMinistrado* conteudo{*it};
             this->conteudos.erase(it);
             delete conteudo;
-
             return true;
         }
     }
     return false;
-}
-
-void Disciplina::liberaAlunos() {
-    while (!this->alunos.empty()) {
-        delete this->alunos.back();
-        this->alunos.pop_back();
-    }
 }
 
 void Disciplina::limparConteudos() {

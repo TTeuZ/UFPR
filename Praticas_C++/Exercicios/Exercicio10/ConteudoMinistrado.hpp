@@ -9,6 +9,9 @@ class ConteudoMinistrado {
     // Constructors
     ConteudoMinistrado(std::string descricao, uint8_t cargaHorariaConteudo);
 
+    // Destructor
+    ~ConteudoMinistrado();
+
     // Getters
     std::string& getDescricao();
     uint8_t getCargaHorariaConteudo();

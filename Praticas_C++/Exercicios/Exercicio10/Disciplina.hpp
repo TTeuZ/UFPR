@@ -14,8 +14,12 @@ class Disciplina {
 
    public:
     // Constructor
+    Disciplina(Curso& curso, std::string nome, SalaAula* sala);
     Disciplina(Curso& curso, std::string nome, Pessoa* professor,
                uint8_t cargaHoraria, SalaAula* sala);
+
+    // Destructor
+    ~Disciplina();
 
     // Getters
     Curso& getCurso();
@@ -41,13 +45,12 @@ class Disciplina {
     bool removerAluno(Pessoa* aluno);
     bool removerAluno(uint64_t cpf);
 
-    void adicionaConteudo(ConteudoMinistrado* conteudo);
+    void adicionaConteudo(std::string descricao, uint8_t cargaHorariaConteudo);
     bool removerConteudoMinistrado(uint64_t id);
 
-    void liberaAlunos();
+   private:
     void limparConteudos();
 
-   private:
     Curso& curso;
     std::string nome;
     Pessoa* professor;

@@ -11,6 +11,9 @@ class Pessoa {
     Pessoa(std::string nome);
     Pessoa(std::string nome, uint64_t cpf, uint8_t idade);
 
+    // Destructor
+    ~Pessoa();
+
     // Getters
     std::string& getNome();
     uint64_t getCpf();

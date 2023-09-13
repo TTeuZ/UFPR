@@ -4,6 +4,9 @@
 #include "Disciplina.hpp"
 
 class Console {
+    // Destructor
+    ~Console();
+
    public:
     static void imprimirDadosDisciplina(Disciplina& disciplina);
 };

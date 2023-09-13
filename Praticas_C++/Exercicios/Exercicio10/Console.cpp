@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+// Destructor
+Console::~Console(){};
+
 void Console::imprimirDadosDisciplina(Disciplina& disciplina) {
     std::cout << "Disicplina: " << disciplina.getNome() << std::endl;
     if (disciplina.getProfessor() != nullptr)
@@ -17,7 +20,8 @@ void Console::imprimirDadosDisciplina(Disciplina& disciplina) {
          it != disciplina.getConteudos().end(); ++it) {
         std::cout << "Id: " << (*it)->getId() << std::endl
                   << "Conteudo: " << (*it)->getDescricao() << std::endl
-                  << "Carga: " << (*it)->getCargaHorariaConteudo() << std::endl
+                  << "Carga: " << (int)(*it)->getCargaHorariaConteudo()
+                  << std::endl
                   << std::endl;
     }
 }

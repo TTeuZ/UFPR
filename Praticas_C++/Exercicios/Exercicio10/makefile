@@ -1,5 +1,5 @@
 parametrosCompilacao = -Wall #-Wshadow
-nomePrograma = exercicio9
+nomePrograma = exercicio10
 objetos = main.o Console.o ConteudoMinistrado.o Curso.o Disciplina.o Pessoa.o SalaAula.o
 
 all: $(nomePrograma)

@@ -12,6 +12,9 @@ Pessoa::Pessoa(std::string nome, uint64_t cpf, uint8_t idade) : Pessoa{nome} {
     setIdade(idade);
 }
 
+// Destructor
+Pessoa::~Pessoa(){};
+
 // Getters
 std::string& Pessoa::getNome() { return this->nome; }
 
