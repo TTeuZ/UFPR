@@ -1,0 +1,13 @@
+const double* calcularImposto(const Investimento* const inv) const;
+
+1° const:
+    Indica que o retorno double*, que é um ponteiro, será um ponteiro não const para dados const. Logo, com este retorno, não podemos alterar o valor do objeto apontado pelo retorno.
+
+2° const:
+    Da mesma forma que o 1° const, mas nesse caso, para o parâmetro 'inv', estamos informando que este ponteiro não pode alterar os dados apontados por ele.
+
+3° const:
+    Com este const, estamos informando que este ponteiro não pode ser alterado para 'apontar' para outro objeto do tipo 'Investimento'
+
+4° const:
+    Com este const, estamos indicando que a função calcularImposto não realiza nenhum tipo de alteração aos dados membros/estado do objeto que a chamou.
