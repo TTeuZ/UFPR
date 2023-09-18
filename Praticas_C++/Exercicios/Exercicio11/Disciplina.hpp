@@ -14,9 +14,10 @@ class Disciplina {
 
    public:
     // Constructor
-    Disciplina(Curso& curso, const std::string& nome, SalaAula* sala);
-    Disciplina(Curso& curso, const std::string& nome, Pessoa* professor,
-               const uint8_t cargaHoraria, SalaAula* sala);
+    Disciplina(const Curso& curso, const std::string& nome, SalaAula* sala);
+    Disciplina(const Curso& curso, const std::string& nome,
+               const Pessoa* professor, const uint8_t cargaHoraria,
+               SalaAula* sala);
 
     // Destructor
     ~Disciplina();
@@ -27,12 +28,12 @@ class Disciplina {
     const Pessoa* getProfessor() const;
     int getCargaHoraria() const;
     const SalaAula* getSalaAula() const;
-    const std::list<Pessoa*>& getAlunos() const;
+    const std::list<const Pessoa*>& getAlunos() const;
     const std::list<ConteudoMinistrado*>& getConteudos() const;
 
     // Setters
     void setNome(const std::string& nome);
-    void setProfessor(Pessoa* professor);
+    void setProfessor(const Pessoa* professor);
     void setCargaHoraria(const int8_t cargaHoraria);
     void setSalaAula(SalaAula* sala);
 
@@ -42,8 +43,8 @@ class Disciplina {
 
     const std::string& getNomeProfessor() const;
 
-    void adicionarAluno(Pessoa* aluno);
-    bool removerAluno(Pessoa* aluno);
+    void adicionarAluno(const Pessoa* aluno);
+    bool removerAluno(const Pessoa* aluno);
     bool removerAluno(const uint64_t cpf);
 
     void adicionaConteudo(const std::string& descricao,
@@ -53,12 +54,12 @@ class Disciplina {
    private:
     void limparConteudos();
 
-    Curso& curso;
+    const Curso& curso;
     std::string nome;
-    Pessoa* professor;
+    const Pessoa* professor;
     uint8_t cargaHoraria;
     SalaAula* sala;
-    std::list<Pessoa*> alunos;
+    std::list<const Pessoa*> alunos;
     std::list<ConteudoMinistrado*> conteudos;
 };
 #endif

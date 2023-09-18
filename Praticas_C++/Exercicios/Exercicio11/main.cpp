@@ -26,6 +26,16 @@ int main() {
     dis2.adicionaConteudo("Strings", 4);
     dis2.adicionaConteudo("Floats", 4);
 
+    Pessoa aluno1{"Leo", 22222222222, 30};
+    Pessoa aluno2{"Joao", 22222222222, 30};
+    dis1.adicionarAluno(&aluno1);
+    dis1.adicionarAluno(&aluno2);
+
+    Pessoa aluno3{"Nina", 22222222222, 30};
+    Pessoa aluno4{"Lawrence", 22222222222, 30};
+    dis2.adicionarAluno(&aluno3);
+    dis2.adicionarAluno(&aluno4);
+
     Console::imprimirDadosDisciplina(dis1);
 
     std::cout << "-------------------------------------------\n" << std::endl;

@@ -5,13 +5,15 @@
 #include "SalaAula.hpp"
 
 // Constructors
-Disciplina::Disciplina(Curso& curso, const std::string& nome, SalaAula* sala)
+Disciplina::Disciplina(const Curso& curso, const std::string& nome,
+                       SalaAula* sala)
     : curso{curso}, nome{nome}, sala{nullptr} {
     this->setSalaAula(sala);
 }
 
-Disciplina::Disciplina(Curso& curso, const std::string& nome, Pessoa* professor,
-                       const uint8_t cargaHoraria, SalaAula* sala)
+Disciplina::Disciplina(const Curso& curso, const std::string& nome,
+                       const Pessoa* professor, const uint8_t cargaHoraria,
+                       SalaAula* sala)
     : curso{curso},
       nome{nome},
       professor{professor},
@@ -37,7 +39,9 @@ int Disciplina::getCargaHoraria() const { return this->cargaHoraria; }
 
 const SalaAula* Disciplina::getSalaAula() const { return this->sala; }
 
-const std::list<Pessoa*>& Disciplina::getAlunos() const { return this->alunos; }
+const std::list<const Pessoa*>& Disciplina::getAlunos() const {
+    return this->alunos;
+}
 
 const std::list<ConteudoMinistrado*>& Disciplina::getConteudos() const {
     return this->conteudos;
@@ -46,7 +50,7 @@ const std::list<ConteudoMinistrado*>& Disciplina::getConteudos() const {
 // Setters
 void Disciplina::setNome(const std::string& nome) { this->nome = nome; }
 
-void Disciplina::setProfessor(Pessoa* professor) {
+void Disciplina::setProfessor(const Pessoa* professor) {
     this->professor = professor;
 }
 
@@ -79,12 +83,12 @@ const std::string& Disciplina::getNomeProfessor() const {
     return this->professor->getNome();
 }
 
-void Disciplina::adicionarAluno(Pessoa* aluno) {
+void Disciplina::adicionarAluno(const Pessoa* aluno) {
     this->alunos.push_back(aluno);
 }
 
-bool Disciplina::removerAluno(Pessoa* aluno) {
-    std::list<Pessoa*>::iterator it{this->alunos.begin()};
+bool Disciplina::removerAluno(const Pessoa* aluno) {
+    std::list<const Pessoa*>::const_iterator it{this->alunos.begin()};
     for (; it != this->alunos.end(); ++it) {
         if (*it == aluno) {
             this->alunos.erase(it);
@@ -95,7 +99,7 @@ bool Disciplina::removerAluno(Pessoa* aluno) {
 }
 
 bool Disciplina::removerAluno(const uint64_t cpf) {
-    std::list<Pessoa*>::iterator it{this->alunos.begin()};
+    std::list<const Pessoa*>::const_iterator it{this->alunos.begin()};
     for (; it != this->alunos.end(); ++it) {
         if ((*it)->getCpf() == cpf) {
             this->alunos.erase(it);
