@@ -1,6 +1,7 @@
 parametrosCompilacao = -Wall #-Wshadow
-nomePrograma = exercicio11
-objetos = main.o Console.o ConteudoMinistrado.o Curso.o Disciplina.o Pessoa.o SalaAula.o
+nomePrograma = aula
+# objetos = main.o Console.o ConteudoMinistrado.o Curso.o Disciplina.o Pessoa.o Professor.o ProfessorAdjunto SalaAula.o
+objetos = $(patsubst %.cpp, %.o, $(wildcard *.cpp))
 
 all: $(nomePrograma)
 
