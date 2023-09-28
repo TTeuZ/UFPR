@@ -25,6 +25,12 @@ void Trajeto::imprimirTrajeto() const {
     }
 }
 
+/*
+ * No calculo da distância total temos a inversâo de controle, pois neste
+ * caso em especifico, a classe Trajeto perde o controle do calculo da
+ * distancia, pois a função carcularDistanciaPontos é definida nas classes
+ * filhas.
+ */
 double Trajeto::getDistanciaPercorrida() const {
     if (this->pontos->size() < 1) return 0;
 
