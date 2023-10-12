@@ -1,6 +1,4 @@
 #include <iostream>
-#include <list>
-#include <string>
 
 #include "./Aluno/Aluno.hpp"
 #include "./Console/Console.hpp"
