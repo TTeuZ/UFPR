@@ -86,7 +86,6 @@ class ValueIterationAgent(ValueEstimationAgent):
                 v_k[state][i + 1] = q_values[q_values.argMax()]
 
         for state in states: self.values[state] = v_k[state][self.iterations]
-        
 
     def getValue(self, state):
         """
