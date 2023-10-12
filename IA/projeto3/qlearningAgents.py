@@ -62,7 +62,9 @@ class QLearningAgent(ReinforcementAgent):
           terminal state, you should return a value of 0.0.
         """
         "*** YOUR CODE HERE ***"
-        return self.q_values[state][self.q_values[state].argMax()] if state in self.q_values else 0.0
+        actions = self.getLegalActions(state)
+        values = [self.getQValue(state, action) for action in actions]
+        return max(values) if values else 0.0
 
     def computeActionFromQValues(self, state):
         """
@@ -111,13 +113,8 @@ class QLearningAgent(ReinforcementAgent):
         if not state in self.q_values: 
             self.q_values[state] = util.Counter()
 
-        next_state_q_values = util.Counter()
-
-        next_state_actions = self.getLegalActions(nextState)
-        for next_state_action in next_state_actions:
-            next_state_q_values[next_state_action] = self.getQValue(nextState, next_state_action)
-        
-        sample = reward + (self.discount * next_state_q_values[next_state_q_values.argMax()])
+        next_state_q_value = self.computeValueFromQValues(nextState)
+        sample = reward + (self.discount * next_state_q_value)
 
         new_q_value = ((1 - self.alpha) * self.getQValue(state, action)) + (self.alpha * sample)
         self.q_values[state][action] = new_q_value
@@ -179,14 +176,28 @@ class ApproximateQAgent(PacmanQAgent):
           where * is the dotProduct operator
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+
+        features = self.featExtractor.getFeatures(state, action)
+
+        q_value = 0.0
+        for feat in features:
+            q_value += self.weights[feat] * features[feat]
+        
+        return q_value
 
     def update(self, state, action, nextState, reward: float):
         """
            Should update your weights based on transition
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+
+        features = self.featExtractor.getFeatures(state, action)
+
+        next_state_q_value = self.computeValueFromQValues(nextState)
+        difference = (reward + (self.discount * next_state_q_value)) - self.getQValue(state, action)
+
+        for feat in features:
+            self.weights[feat] = self.weights[feat] + (self.alpha * difference * features[feat])
 
     def final(self, state):
         """Called at the end of each game."""
