@@ -7,8 +7,8 @@ objects += $(patsubst %.cpp, %.o, $(wildcard Src/Functionals/**/*.cpp))
 
 all: $(programName)
 
-$(programName): $(objects)
-	g++ -o $(programName) $(objects) $(flags)
+$(programName): $(objects) ./Src/Constants.hpp
+	g++ -o $(programName) $(objects) ./Src/Constants.hpp $(flags)
 
 main.o: main.cpp
 	g++ -c main.cpp $(flags)

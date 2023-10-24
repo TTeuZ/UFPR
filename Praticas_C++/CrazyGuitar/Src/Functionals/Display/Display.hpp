@@ -7,9 +7,22 @@
 
 class Display {
    public:
+    /**
+     * Instanciate an allegro display and an allegro bitmap with the respective
+     * width and height
+     *
+     * @param width Game display width
+     * @param height Game DIsplay height
+     */
     Display(const uint16_t widht, const uint16_t height);
 
+    /**
+     * Free the memory allocated for the allego display and bitmap
+     */
     virtual ~Display();
+
+    // TODO: Getters
+    // TODO: Function to flip display
 
    private:
     uint16_t widht;
