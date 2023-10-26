@@ -3,9 +3,9 @@
 // Constructors
 Curso::Curso(const std::string& nome, const uint8_t anoCriacao,
              const uint8_t cargaHorariaMinima)
-    : nome(nome),
-      anoCriacao(anoCriacao),
-      cargaHorariaMinima(cargaHorariaMinima) {}
+    : nome(nome), anoCriacao(anoCriacao) {
+    this->setCargaHorariaMinima(cargaHorariaMinima);
+}
 
 // Getters
 const std::string& Curso::getNome() const { return this->nome; }

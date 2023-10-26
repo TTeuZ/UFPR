@@ -12,7 +12,7 @@ class NaoPositivoException : public std::invalid_argument {
     // Destructor
     virtual ~NaoPositivoException() = default;
 
-    const std::string& desc;
+    const std::string desc;
 };
 
 #endif

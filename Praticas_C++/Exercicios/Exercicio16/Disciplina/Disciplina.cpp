@@ -80,7 +80,7 @@ void Disciplina::imprimirDados(const std::string& cabecalho,
 }
 
 const std::string& Disciplina::getNomeProfessor() const {
-    return this->professor == nullptr ? "" : this->professor->getNome();
+    return this->professor->getNome();
 }
 
 void Disciplina::adicionarAluno(const Aluno* aluno) {

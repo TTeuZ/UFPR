@@ -11,7 +11,7 @@ class NullPointerException : public std::runtime_error {
     // Destructor
     virtual ~NullPointerException() = default;
 
-    const std::string& desc;
+    const std::string desc;
 };
 
 #endif
