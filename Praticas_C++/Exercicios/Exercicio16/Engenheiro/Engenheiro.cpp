@@ -1,5 +1,7 @@
 #include "Engenheiro.hpp"
 
+using namespace ufpr;
+
 // Constructors
 Engenheiro::Engenheiro(const std::string& nome, const uint64_t cpf,
                        const uint16_t numeroCrea)

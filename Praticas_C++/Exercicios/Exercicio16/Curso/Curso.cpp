@@ -1,5 +1,7 @@
 #include "Curso.hpp"
 
+using namespace ufpr;
+
 // Constructors
 Curso::Curso(const std::string& nome, const uint8_t anoCriacao,
              const uint8_t cargaHorariaMinima)

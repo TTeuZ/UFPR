@@ -1,5 +1,7 @@
 #include "Aluno.hpp"
 
+using namespace ufpr;
+
 // Constructors
 Aluno::Aluno(const std::string& nome, const uint64_t cpf, const uint64_t grr,
              const double ira)

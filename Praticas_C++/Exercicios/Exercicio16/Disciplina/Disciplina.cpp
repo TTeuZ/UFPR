@@ -4,6 +4,8 @@
 
 #include "../SalaAula/SalaAula.hpp"
 
+using namespace ufpr;
+
 // Constructors
 Disciplina::Disciplina(const Curso& curso, const std::string& nome,
                        SalaAula* sala)

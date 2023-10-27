@@ -1,5 +1,7 @@
 #include "Professor.hpp"
 
+using namespace ufpr;
+
 // Constructors
 Professor::Professor(const std::string& nome, const uint64_t cpf,
                      const uint16_t valorHora, const uint8_t cargaHoraria)

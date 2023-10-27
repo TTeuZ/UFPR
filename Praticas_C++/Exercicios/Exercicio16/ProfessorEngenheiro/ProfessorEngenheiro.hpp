@@ -8,6 +8,7 @@
 #include "../Engenheiro/Engenheiro.hpp"
 #include "../Professor/Professor.hpp"
 
+namespace ufpr {
 class ProfessorEngenheiro : public Professor, public Engenheiro {
    public:
     // Constructor
@@ -21,4 +22,5 @@ class ProfessorEngenheiro : public Professor, public Engenheiro {
     // Functions
     virtual uint32_t getSalario() const override;
 };
+}  // namespace ufpr
 #endif

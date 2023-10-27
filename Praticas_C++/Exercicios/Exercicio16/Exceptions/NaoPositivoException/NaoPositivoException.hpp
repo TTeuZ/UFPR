@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <string>
 
+namespace ufpr {
 class NaoPositivoException : public std::invalid_argument {
    public:
     // Constructor
@@ -14,5 +15,6 @@ class NaoPositivoException : public std::invalid_argument {
 
     const std::string desc;
 };
+}  // namespace ufpr
 
 #endif

@@ -3,6 +3,7 @@
 
 #include "../Professor/Professor.hpp"
 
+namespace ufpr {
 class ProfessorAdjunto : public Professor {
    public:
     // Constructors
@@ -23,5 +24,6 @@ class ProfessorAdjunto : public Professor {
    private:
     std::string linhaPesquisa;
 };
+}  // namespace ufpr
 
 #endif

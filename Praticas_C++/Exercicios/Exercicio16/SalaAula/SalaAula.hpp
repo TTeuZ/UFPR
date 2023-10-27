@@ -8,6 +8,7 @@
 #include "../Exceptions/NaoPositivoException/NaoPositivoException.hpp"
 #include "../Exceptions/NullPointerException/NullPointerException.hpp"
 
+namespace ufpr {
 class SalaAula {
     friend void Disciplina::setSalaAula(SalaAula* aula);
 
@@ -36,4 +37,5 @@ class SalaAula {
     uint16_t capacidade;
     std::list<Disciplina*> disciplinasMinistradas;
 };
+}  // namespace ufpr
 #endif

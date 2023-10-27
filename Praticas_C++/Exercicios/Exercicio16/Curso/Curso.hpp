@@ -6,6 +6,7 @@
 
 #include "../Exceptions/NaoPositivoException/NaoPositivoException.hpp"
 
+namespace ufpr {
 class Curso {
    public:
     // Constructors
@@ -29,5 +30,5 @@ class Curso {
     uint8_t anoCriacao;
     uint8_t cargaHorariaMinima;
 };
-
+}  // namespace ufpr
 #endif

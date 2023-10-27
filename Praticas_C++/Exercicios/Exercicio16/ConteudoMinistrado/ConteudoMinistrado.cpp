@@ -1,5 +1,7 @@
 #include "ConteudoMinistrado.hpp"
 
+using namespace ufpr;
+
 uint64_t ConteudoMinistrado::proxId{1};
 
 // Constructors

@@ -1,5 +1,7 @@
 #include "ProfessorEngenheiro.hpp"
 
+using namespace ufpr;
+
 // Constructor
 ProfessorEngenheiro::ProfessorEngenheiro(const std::string& nome,
                                          const uint64_t cpf,

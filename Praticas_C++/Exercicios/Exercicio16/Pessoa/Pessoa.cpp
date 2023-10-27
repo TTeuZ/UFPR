@@ -1,5 +1,7 @@
 #include "Pessoa.hpp"
 
+using namespace ufpr;
+
 // Constructors
 Pessoa::Pessoa(const std::string& nome) : nome{nome} {}
 

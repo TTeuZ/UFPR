@@ -3,6 +3,7 @@
 
 #include "../Disciplina/Disciplina.hpp"
 
+namespace ufpr {
 class Console {
     // Destructor
     virtual ~Console() = default;
@@ -10,4 +11,5 @@ class Console {
    public:
     static void imprimirDadosDisciplina(const Disciplina& disciplina);
 };
+}  // namespace ufpr
 #endif

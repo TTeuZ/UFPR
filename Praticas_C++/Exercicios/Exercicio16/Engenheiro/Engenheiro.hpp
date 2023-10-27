@@ -6,6 +6,7 @@
 
 #include "../Pessoa/Pessoa.hpp"
 
+namespace ufpr {
 class Engenheiro : virtual public Pessoa {
    public:
     // Constructors
@@ -28,4 +29,5 @@ class Engenheiro : virtual public Pessoa {
     constexpr static uint32_t salarioPadrâo{9405};
     uint16_t numeroCrea;
 };
+}  // namespace ufpr
 #endif

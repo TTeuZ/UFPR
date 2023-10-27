@@ -1,5 +1,7 @@
 #include "ProfessorAdjunto.hpp"
 
+using namespace ufpr;
+
 // Getters
 const std::string& ProfessorAdjunto::getLinhaPesquisa() const {
     return this->linhaPesquisa;

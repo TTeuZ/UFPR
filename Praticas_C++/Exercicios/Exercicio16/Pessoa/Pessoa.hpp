@@ -7,6 +7,7 @@
 
 #include "../Exceptions/CPFInvalidoException/CPFInvalidoException.hpp"
 
+namespace ufpr {
 class Pessoa {
    public:
     // Constructors
@@ -36,4 +37,5 @@ class Pessoa {
    private:
     bool validarCPF(uint64_t cpf);
 };
+}  // namespace ufpr
 #endif

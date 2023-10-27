@@ -11,6 +11,7 @@
 #include "../Pessoa/Pessoa.hpp"
 #include "../Professor/Professor.hpp"
 
+namespace ufpr {
 class SalaAula;  // Foward Declaration -> para resolver o include circular
 
 class Disciplina {
@@ -66,4 +67,5 @@ class Disciplina {
     std::list<const Aluno*> alunos;
     std::list<ConteudoMinistrado*> conteudos;
 };
+}  // namespace ufpr
 #endif

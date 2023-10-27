@@ -2,7 +2,7 @@
 #define ALUNO_HPP
 
 #include "../Pessoa/Pessoa.hpp"
-
+namespace ufpr {
 class Aluno : public Pessoa {
    public:
     // Constructors
@@ -24,5 +24,6 @@ class Aluno : public Pessoa {
     uint64_t grr;
     double ira;
 };
+}  // namespace ufpr
 
 #endif

@@ -3,6 +3,7 @@
 
 #include "../Pessoa/Pessoa.hpp"
 
+namespace ufpr {
 class Professor : virtual public Pessoa {
    public:
     // Constructors
@@ -27,5 +28,6 @@ class Professor : virtual public Pessoa {
     uint16_t valorHora;
     uint8_t cargaHoraria;
 };
+}  // namespace ufpr
 
 #endif

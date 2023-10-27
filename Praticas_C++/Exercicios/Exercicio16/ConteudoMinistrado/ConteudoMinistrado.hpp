@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <string>
 
+namespace ufpr {
 class ConteudoMinistrado {
    public:
     // Constructors
@@ -25,4 +26,5 @@ class ConteudoMinistrado {
     uint8_t cargaHorariaConteudo;
     uint64_t id;
 };
+}  // namespace ufpr
 #endif

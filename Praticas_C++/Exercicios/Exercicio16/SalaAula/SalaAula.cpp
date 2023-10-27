@@ -1,5 +1,7 @@
 #include "SalaAula.hpp"
 
+using namespace ufpr;
+
 // Constructors
 SalaAula::SalaAula(const std::string& nome, const uint16_t capacidade)
     : nome{nome} {

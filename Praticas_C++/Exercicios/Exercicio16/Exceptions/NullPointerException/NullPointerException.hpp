@@ -3,6 +3,7 @@
 
 #include <stdexcept>
 
+namespace ufpr {
 class NullPointerException : public std::runtime_error {
    public:
     // Constructor
@@ -13,5 +14,6 @@ class NullPointerException : public std::runtime_error {
 
     const std::string desc;
 };
+}  // namespace ufpr
 
 #endif
