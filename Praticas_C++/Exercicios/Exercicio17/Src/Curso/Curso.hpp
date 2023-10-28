@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <string>
 
-#include "../Exceptions/NaoPositivoException/NaoPositivoException.hpp"
+#include "../../Exceptions/NaoPositivoException/NaoPositivoException.hpp"
 
 namespace ufpr {
 class Curso {

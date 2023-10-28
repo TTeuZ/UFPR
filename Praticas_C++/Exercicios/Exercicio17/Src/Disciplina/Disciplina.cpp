@@ -8,20 +8,22 @@ using namespace ufpr;
 
 // Constructors
 Disciplina::Disciplina(const Curso& curso, const std::string& nome,
-                       SalaAula* sala)
-    : curso{curso}, nome{nome}, sala{nullptr} {
-    this->setSalaAula(sala);
+                       const uint8_t cargaHoraria,
+                       const enums::EnumTipoDisciplina tipo)
+    : curso{curso}, nome{nome}, sala{nullptr}, tipo{tipo} {
+    this->setCargaHoraria(cargaHoraria);
 }
 
 Disciplina::Disciplina(const Curso& curso, const std::string& nome,
                        const Professor* professor, const uint8_t cargaHoraria,
-                       SalaAula* sala)
+                       SalaAula* sala, const enums::EnumTipoDisciplina tipo)
     : curso{curso},
       nome{nome},
       professor{professor},
-      cargaHoraria{cargaHoraria},
-      sala{nullptr} {
+      sala{nullptr},
+      tipo{tipo} {
     this->setSalaAula(sala);
+    this->setCargaHoraria(cargaHoraria);
 }
 
 // Destructor
@@ -57,6 +59,11 @@ void Disciplina::setProfessor(const Professor* professor) {
 }
 
 void Disciplina::setCargaHoraria(const int8_t cargaHoraria) {
+    if (this->tipo == enums::EnumTipoDisciplina::MANDATORIA &&
+        cargaHoraria < 30)
+        throw std::invalid_argument(
+            "Disciplina mandatoria precisa ter mais de 30 horas");
+
     this->cargaHoraria = cargaHoraria;
 }
 
@@ -86,7 +93,8 @@ const std::string& Disciplina::getNomeProfessor() const {
 }
 
 void Disciplina::adicionarAluno(const Aluno* aluno) {
-    if (aluno == nullptr) throw NullPointerException{"Aluno não pode ser nulo"};
+    if (aluno == nullptr)
+        throw exceptions::NullPointerException{"Aluno não pode ser nulo"};
     this->alunos.push_back(aluno);
 }
 

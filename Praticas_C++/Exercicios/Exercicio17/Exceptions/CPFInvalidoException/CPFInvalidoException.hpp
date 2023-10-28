@@ -4,6 +4,8 @@
 #include <stdexcept>
 
 namespace ufpr {
+namespace exceptions {
+
 class CPFInvalidoException : public std::runtime_error {
    public:
     // Constructor
@@ -14,5 +16,7 @@ class CPFInvalidoException : public std::runtime_error {
 
     const uint64_t cpf;
 };
+
+}  // namespace exceptions
 }  // namespace ufpr
 #endif

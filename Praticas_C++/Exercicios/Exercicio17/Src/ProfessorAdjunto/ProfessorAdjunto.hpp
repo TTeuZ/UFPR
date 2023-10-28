@@ -1,6 +1,9 @@
 #ifndef PROFESSOR_ADJUNTO_HPP
 #define PROFESSOR_ADJUNTO_HPP
 
+#include <cstdint>
+#include <string>
+
 #include "../Professor/Professor.hpp"
 
 namespace ufpr {

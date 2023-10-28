@@ -1,7 +1,11 @@
 #ifndef ALUNO_HPP
 #define ALUNO_HPP
 
+#include <cstdint>
+#include <string>
+
 #include "../Pessoa/Pessoa.hpp"
+
 namespace ufpr {
 class Aluno : public Pessoa {
    public:

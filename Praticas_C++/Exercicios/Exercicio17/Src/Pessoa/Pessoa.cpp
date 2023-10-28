@@ -25,7 +25,7 @@ uint8_t Pessoa::getIdade() const { return (int)this->idade; }
 void Pessoa::setNome(const std::string& nome) { this->nome = nome; }
 
 void Pessoa::setCpf(const uint64_t cpf) {
-    if (!this->validarCPF(cpf)) throw CPFInvalidoException{cpf};
+    if (!this->validarCPF(cpf)) throw exceptions::CPFInvalidoException{cpf};
     this->cpf = cpf;
 }
 

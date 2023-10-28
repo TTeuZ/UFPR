@@ -1,12 +1,12 @@
 #ifndef SALA_AULA_H
 #define SALA_AULA_H
 
-#include <list>
 #include <string>
+#include <cstdint>
 
 #include "../Disciplina/Disciplina.hpp"
-#include "../Exceptions/NaoPositivoException/NaoPositivoException.hpp"
-#include "../Exceptions/NullPointerException/NullPointerException.hpp"
+#include "../../Exceptions/NaoPositivoException/NaoPositivoException.hpp"
+#include "../../Exceptions/NullPointerException/NullPointerException.hpp"
 
 namespace ufpr {
 class SalaAula {

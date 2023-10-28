@@ -1,6 +1,6 @@
 #include "NullPointerException.hpp"
 
-using namespace ufpr;
+using namespace ufpr::exceptions;
 
 NullPointerException::NullPointerException(const std::string& desc)
     : runtime_error{"O ponteiro não pode ser null"}, desc{desc} {};

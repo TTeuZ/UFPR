@@ -2,10 +2,9 @@
 #define PESSOA_H
 
 #include <cstdint>
-#include <stdexcept>
 #include <string>
 
-#include "../Exceptions/CPFInvalidoException/CPFInvalidoException.hpp"
+#include "../../Exceptions/CPFInvalidoException/CPFInvalidoException.hpp"
 
 namespace ufpr {
 class Pessoa {

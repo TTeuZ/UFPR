@@ -2,9 +2,10 @@
 #define NAO_POSITIVO_EXCEPTION_HPP
 
 #include <stdexcept>
-#include <string>
 
 namespace ufpr {
+namespace exceptions {
+
 class NaoPositivoException : public std::invalid_argument {
    public:
     // Constructor
@@ -15,6 +16,8 @@ class NaoPositivoException : public std::invalid_argument {
 
     const std::string desc;
 };
+
+}  // namespace exceptions
 }  // namespace ufpr
 
 #endif

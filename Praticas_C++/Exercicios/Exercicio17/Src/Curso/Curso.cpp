@@ -23,7 +23,8 @@ void Curso::setNome(const std::string& nome) { this->nome = nome; };
 
 void Curso::setCargaHorariaMinima(const uint8_t cargaHorariaMinima) {
     if (cargaHorariaMinima < 0)
-        throw NaoPositivoException{"Carga horária minima deve ser maior que 0"};
+        throw exceptions::NaoPositivoException{
+            "Carga horária minima deve ser maior que 0"};
 
     this->cargaHorariaMinima = cargaHorariaMinima;
 };

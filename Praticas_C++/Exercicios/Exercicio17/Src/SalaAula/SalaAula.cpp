@@ -32,7 +32,7 @@ void SalaAula::setNome(const std::string& nome) { this->nome = nome; }
 
 void SalaAula::setCapacidade(const uint16_t capacidade) {
     if (capacidade <= 0)
-        throw NaoPositivoException{
+        throw exceptions::NaoPositivoException{
             "Capacidade nâo pode ser menor ou igual a zero"};
 
     this->capacidade = capacidade;
@@ -41,14 +41,14 @@ void SalaAula::setCapacidade(const uint16_t capacidade) {
 // Functions
 void SalaAula::adicionarDisciplina(Disciplina* disciplina) {
     if (disciplina == nullptr)
-        throw NullPointerException{"Disciplina não pode ser nula"};
+        throw exceptions::NullPointerException{"Disciplina não pode ser nula"};
 
     disciplina->setSalaAula(this);
 }
 
 void SalaAula::removerDisciplina(Disciplina* disciplina) {
     if (disciplina == nullptr)
-        throw NullPointerException{"Disciplina não pode ser nula"};
+        throw exceptions::NullPointerException{"Disciplina não pode ser nula"};
 
     this->disciplinasMinistradas.remove(disciplina);
     disciplina->sala = nullptr;

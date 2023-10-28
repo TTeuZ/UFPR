@@ -1,36 +1,38 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "./Aluno/Aluno.hpp"
-#include "./Console/Console.hpp"
-#include "./ConteudoMinistrado/ConteudoMinistrado.hpp"
-#include "./Curso/Curso.hpp"
-#include "./Disciplina/Disciplina.hpp"
-#include "./Engenheiro/Engenheiro.hpp"
-#include "./Pessoa/Pessoa.hpp"
-#include "./Professor/Professor.hpp"
-#include "./ProfessorAdjunto/ProfessorAdjunto.hpp"
-#include "./ProfessorEngenheiro/ProfessorEngenheiro.hpp"
-#include "./SalaAula/SalaAula.hpp"
+#include "./Enums/EnumTipoDisciplina.hpp"
+#include "./Exceptions/CPFInvalidoException/CPFInvalidoException.hpp"
+#include "./Exceptions/NaoPositivoException/NaoPositivoException.hpp"
+#include "./Exceptions/NullPointerException/NullPointerException.hpp"
+#include "./Src/Aluno/Aluno.hpp"
+#include "./Src/Console/Console.hpp"
+#include "./Src/ConteudoMinistrado/ConteudoMinistrado.hpp"
+#include "./Src/Curso/Curso.hpp"
+#include "./Src/Disciplina/Disciplina.hpp"
+#include "./Src/Engenheiro/Engenheiro.hpp"
+#include "./Src/Pessoa/Pessoa.hpp"
+#include "./Src/Professor/Professor.hpp"
+#include "./Src/ProfessorAdjunto/ProfessorAdjunto.hpp"
+#include "./Src/ProfessorEngenheiro/ProfessorEngenheiro.hpp"
+#include "./Src/SalaAula/SalaAula.hpp"
 
 int main() {
-    Curso *c;
-    Disciplina *d;
+    ufpr::Curso *c;
+    ufpr::Disciplina *d;
     try {
-        c = new Curso{"Batata", (unsigned char)2023, (unsigned char)3000};
-        d = new Disciplina{*c, "Pão de batata 1", nullptr};
+        c = new ufpr::Curso{"Batata", (unsigned char)2023, (unsigned char)3000};
+        d = new ufpr::Disciplina{*c, "Pão de batata 1", 60,
+                                 ufpr::enums::EnumTipoDisciplina::MANDATORIA};
     } catch (std::bad_alloc &e) {
         std::cout << "Erro de alocação - " << e.what() << std::endl;
         return 1;
-    } catch (NaoPositivoException &e) {
+    } catch (ufpr::exceptions::NaoPositivoException &e) {
         std::cout << e.what() << " - " << e.desc << std::endl;
         return 1;
-    }
-
-    try {
-        d->adicionarAluno(nullptr);
-    } catch (NullPointerException &e) {
-        std::cout << e.what() << " - " << e.desc << std::endl;
+    } catch (std::invalid_argument &e) {
+        std::cout << e.what() << std::endl;
+        return 1;
     }
 
     delete c;
