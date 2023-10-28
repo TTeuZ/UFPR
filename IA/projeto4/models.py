@@ -60,6 +60,7 @@ class PerceptronModel(object):
 
             converged = True
 
+
 class RegressionModel(object):
     """
     A neural network model for approximating a function that maps from real
