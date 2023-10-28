@@ -68,7 +68,19 @@ class RegressionModel(object):
     """
     def __init__(self):
         # Initialize your model parameters here
+        # One hidden layer with size equal to 512
         "*** YOUR CODE HERE ***"
+        self.batch_size = 200
+        self.learn_rate = 0.05
+        self.loss_limit = 0.01
+
+        # Hidden layer
+        self.hidden = nn.Parameter(1, 512)
+        self.hidden_bias = nn.Parameter(1, 512)
+
+        # Output layer
+        self.output = nn.Parameter(512, 1)
+        self.output_bias = nn.Parameter(1, 1)
 
     def run(self, x):
         """
@@ -80,6 +92,11 @@ class RegressionModel(object):
             A node with shape (batch_size x 1) containing predicted y-values
         """
         "*** YOUR CODE HERE ***"
+        intermediate = nn.AddBias(nn.Linear(x, self.hidden), self.hidden_bias)
+        intermediate = nn.ReLU(intermediate)
+        output = nn.AddBias(nn.Linear(intermediate, self.output), self.output_bias)
+
+        return output
 
     def get_loss(self, x, y):
         """
@@ -92,12 +109,26 @@ class RegressionModel(object):
         Returns: a loss node
         """
         "*** YOUR CODE HERE ***"
+        pred = self.run(x)
+        return nn.SquareLoss(pred, y)
 
     def train(self, dataset):
         """
         Trains the model.
         """
         "*** YOUR CODE HERE ***"
+        while True:
+            for x, y in dataset.iterate_once(self.batch_size):
+                loss = self.get_loss(x, y)
+
+                gradients = nn.gradients(loss, [self.hidden, self.hidden_bias, self.output, self.output_bias])
+                self.hidden.update(gradients[0], -self.learn_rate)
+                self.hidden_bias.update(gradients[1], -self.learn_rate)
+                self.output.update(gradients[2], -self.learn_rate)
+                self.output_bias.update(gradients[3], -self.learn_rate)
+
+            if nn.as_scalar(loss) <= self.loss_limit:
+                break
 
 class DigitClassificationModel(object):
     """
