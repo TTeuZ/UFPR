@@ -6,7 +6,7 @@ from keras.layers import Dense
 from sklearn.datasets import load_svmlight_file
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
-from keras.utils import np_utils
+# from keras.utils import np_utils
 from sklearn.model_selection import train_test_split
 
 import config
@@ -21,9 +21,9 @@ x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.33, random_s
 label = y_test
 
 # converts the labels to a categorical one-hot-vector
-y_train = keras.utils.np_utils.to_categorical(y_train, num_classes=2)
-y_val = keras.utils.np_utils.to_categorical(y_val, num_classes=2)
-y_test = keras.utils.np_utils.to_categorical(y_test, num_classes=2)
+y_train = keras.utils.to_categorical(y_train, num_classes=2)
+y_val = keras.utils.to_categorical(y_val, num_classes=2)
+y_test = keras.utils.to_categorical(y_test, num_classes=2)
 
 # Using sequantial keras model
 model = Sequential()
@@ -58,3 +58,4 @@ plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
+plt.savefig('../results/accuracy.svg', bbox_inches='tight')
