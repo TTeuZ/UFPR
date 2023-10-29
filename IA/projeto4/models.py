@@ -237,6 +237,21 @@ class LanguageIDModel(object):
 
         # Initialize your model parameters here
         "*** YOUR CODE HERE ***"
+        self.batch_size = 100
+        self.learn_rate = 0.2
+        self.accuracy_limit = 0.87
+
+        # Hidden layer
+        hidden_size = 200
+        self.hidden_layers = []
+        self.hidden_layers.append({'layer': nn.Parameter(self.num_chars, hidden_size), 'bias': nn.Parameter(1, hidden_size)})
+        self.hidden_layers.append({'layer': nn.Parameter(hidden_size, hidden_size), 'bias': nn.Parameter(1, hidden_size)})
+
+        # Output layer
+        num_languages = len(self.languages)
+        self.output = nn.Parameter(hidden_size, num_languages)
+        self.output_bias = nn.Parameter(1, num_languages)
+
 
     def run(self, xs):
         """
@@ -268,6 +283,22 @@ class LanguageIDModel(object):
                 (also called logits)
         """
         "*** YOUR CODE HERE ***"
+        intermediate = nn.Linear(xs[0], self.hidden_layers[0]['layer'])
+        intermediate = nn.ReLU(nn.AddBias(intermediate, self.hidden_layers[0]['bias']))
+
+        for x in xs[1:]:
+            a = nn.ReLU(nn.AddBias(nn.Linear(intermediate, self.hidden_layers[1]['layer']), self.hidden_layers[1]['bias']))
+            b = nn.ReLU(nn.AddBias(nn.Linear(x, self.hidden_layers[0]['layer']), self.hidden_layers[0]['bias']))
+
+            intermediate = nn.Add(a, b)
+
+            a = nn.ReLU(nn.Linear(intermediate, self.hidden_layers[1]['layer']))
+            b = nn.ReLU(nn.Linear(x, self.hidden_layers[0]['layer']))
+
+            intermediate = nn.Add(a, b)
+        
+        output = nn.AddBias(nn.Linear(intermediate, self.output), self.output_bias)
+        return output
 
     def get_loss(self, xs, y):
         """
@@ -284,9 +315,29 @@ class LanguageIDModel(object):
         Returns: a loss node
         """
         "*** YOUR CODE HERE ***"
+        pred = self.run(xs)
+        return nn.SoftmaxLoss(pred, y)
 
     def train(self, dataset):
         """
         Trains the model.
         """
         "*** YOUR CODE HERE ***"
+        while True:
+            for x, y in dataset.iterate_once(self.batch_size):
+                loss = self.get_loss(x, y)
+
+                values_to_update = [self.hidden_layers[0]['layer'], self.hidden_layers[1]['layer'], self.output,
+                                    self.hidden_layers[0]['bias'], self.hidden_layers[1]['bias'], self.output_bias]
+                gradients = nn.gradients(loss, values_to_update)
+
+                self.hidden_layers[0]['layer'].update(gradients[0], -self.learn_rate)
+                self.hidden_layers[1]['layer'].update(gradients[1], -self.learn_rate)
+                self.output.update(gradients[2], -self.learn_rate)
+
+                self.hidden_layers[0]['bias'].update(gradients[3], -self.learn_rate)
+                self.hidden_layers[1]['bias'].update(gradients[4], -self.learn_rate)
+                self.output_bias.update(gradients[5], -self.learn_rate)
+
+            if dataset.get_validation_accuracy() >= self.accuracy_limit:
+                break
