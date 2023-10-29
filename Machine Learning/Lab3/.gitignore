@@ -1,0 +1,17 @@
+# Zips
+imdb_master.csv.zip
+reviews_data.txt.gz
+
+# Unzipeds
+__MACOSX
+imdb_master.csv
+reviews_data.txt
+
+# Models
+word2vec/models/word2vec*
+
+# Features
+word2vec/features/*.txt
+
+# Python
+__pycache__
