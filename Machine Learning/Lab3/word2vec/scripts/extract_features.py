@@ -60,7 +60,7 @@ def extract_features(model, reviews, metric):
 
 def write_results(result, reviews):
 	print('Saving train.txt file...')
-	file = open("../features/train.txt", "w")
+	file = open(f"../features/train_{config.VectorSize}_{config.WindowSize}_{config.MinCount}.txt", "w")
 	result_len = len(result)
 
 	for i in range(0, int(result_len / 2)):
@@ -75,7 +75,7 @@ def write_results(result, reviews):
 	file.close()
 	
 	print ('Saving test.txt file...')
-	file = open("../features/test.txt", "w")
+	file = open(f"../features/test_{config.VectorSize}_{config.WindowSize}_{config.MinCount}.txt", "w")
 
 	for i in range(int(result_len / 2), result_len):
 
