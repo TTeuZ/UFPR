@@ -98,6 +98,7 @@ if __name__ == "__main__":
     # Reding the CSV file to getter the features
     reviews = read_csv("../../files/imdb_master.csv")
 	
+	# Extracting the features
     results = extract_features(model, reviews, config.method)
 	
     # Creating the files train.txt and test.txt
