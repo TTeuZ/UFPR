@@ -13,7 +13,7 @@ x_test, y_test = load_svmlight_file(f"../features/test_{config.VectorSize}_{conf
 
 # x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.33, random_state=42)
 
-model = svm.SVC()
+model = svm.SVC(C=24, gamma=0.005009627595770921, kernel='rbf')
 model.fit(x_train, y_train)
 
 pred = model.predict(x_test)

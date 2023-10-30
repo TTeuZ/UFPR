@@ -1,6 +1,6 @@
 # Model Config
-VectorSize = 200
-WindowSize = 20
+VectorSize = 300
+WindowSize = 15
 MinCount = 2
 method = 1 # 1 - Mean; 2 - median
 
