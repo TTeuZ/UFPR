@@ -5,8 +5,7 @@ import logging
 import numpy as np
 
 # Params Values
-# 300, 400, 500
-vector_sizes = [200]
+vector_sizes = [50, 100, 150, 200, 250, 300, 400, 500]
 windows = [5, 10, 15, 20]
 counts = [2, 5, 10]
 methods = [1, 2]
