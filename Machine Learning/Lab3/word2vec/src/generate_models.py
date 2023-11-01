@@ -3,7 +3,13 @@ import gensim
 import pickle
 import logging
 
-import config
+# Params Values
+vector_sizes = [50, 100, 150, 200, 250, 300, 400, 500]
+windows = [5, 10, 15, 20]
+counts = [2, 5, 10]
+
+# Input Files
+DataTR = "../../files/reviews_data.txt.gz"
 
 # Configuring logging
 logging.basicConfig(level=logging.DEBUG)
@@ -22,12 +28,9 @@ def read_input(input_file):
 			yield gensim.utils.simple_preprocess(line)
 
 
-def read_and_train():
-	documents = list(read_input(config.DataTR))
-	print("Done reading data file")
-
+def train(documents, size, window, count):
 	print("Training model")
-	model = gensim.models.Word2Vec(documents, vector_size=config.VectorSize, window=config.WindowSize, min_count=config.MinCount, workers=10)
+	model = gensim.models.Word2Vec(documents, vector_size=size, window=window, min_count=count, workers=10)
 	model.train(documents, total_examples=len(documents), epochs=10)
 	print("Model trained")
 	
@@ -43,10 +46,16 @@ def save_model(model, path):
 
 
 if __name__ == "__main__":
-    path = f"../models/word2vec_{config.VectorSize}_{config.WindowSize}_{config.MinCount}"
+    documents = list(read_input(DataTR))
+    print("Done reading data file")
 
-	# training the model
-    model = read_and_train()
+    for size in vector_sizes:
+        for window in windows:
+            for count in counts:
+                path = f"../models/word2vec_{size}_{window}_{count}"
 
-	# Save the model for reuse
-    save_model(model, path)
+                # training the model
+                model = train(documents, size, window, count)
+
+                # Save the model for reuse
+                save_model(model, path)

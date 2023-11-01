@@ -4,7 +4,12 @@ import pickle
 import logging
 import numpy as np
 
-import config
+# Params Values
+# 300, 400, 500
+vector_sizes = [200]
+windows = [5, 10, 15, 20]
+counts = [2, 5, 10]
+methods = [1, 2]
 
 # Configuring logging
 logging.basicConfig(level=logging.DEBUG)
@@ -36,7 +41,7 @@ def read_csv(path):
 	return reviews
 
 
-def extract_features(model, reviews, metric):
+def extract_features(model, reviews, vector_size, metric):
 	result = []
 
 	print('Building Representation...')
@@ -48,7 +53,7 @@ def extract_features(model, reviews, metric):
 			try:
 				v_mean.append(model.wv[w[k]])
 			except KeyError:
-				v_mean.append(np.zeros(config.VectorSize))
+				v_mean.append(np.zeros(vector_size))
 
 		if metric == 1:
 			result.append(np.mean(v_mean, axis=0))
@@ -58,9 +63,9 @@ def extract_features(model, reviews, metric):
 	return result
 
 
-def write_results(result, reviews):
-	print('Saving train.txt file...')
-	file = open(f"../features/train_{config.VectorSize}_{config.WindowSize}_{config.MinCount}.txt", "w")
+def write_results(result, reviews, size, window, count, method):
+	print(f'Saving train_{size}_{window}_{count}_{method}.txt" file...')
+	file = open(f"../features/train_{size}_{window}_{count}_{method}.txt", "w")
 	result_len = len(result)
 
 	for i in range(0, int(result_len / 2)):
@@ -74,8 +79,8 @@ def write_results(result, reviews):
 
 	file.close()
 	
-	print ('Saving test.txt file...')
-	file = open(f"../features/test_{config.VectorSize}_{config.WindowSize}_{config.MinCount}.txt", "w")
+	print(f'Saving test_{size}_{window}_{count}_{method} file...')
+	file = open(f"../features/test_{size}_{window}_{count}_{method}.txt", "w")
 
 	for i in range(int(result_len / 2), result_len):
 
@@ -87,19 +92,23 @@ def write_results(result, reviews):
 		file.write(line)
 
 	file.close()
-
+	
 
 if __name__ == "__main__":
-    path = f"../models/word2vec_{config.VectorSize}_{config.WindowSize}_{config.MinCount}"
-
-    # Getting one of the trained models
-    model = open_model(path)
-
-    # Reding the CSV file to getter the features
+	# Reding the CSV file to getter the features
     reviews = read_csv("../../files/imdb_master.csv")
 	
-	# Extracting the features
-    results = extract_features(model, reviews, config.method)
-	
-    # Creating the files train.txt and test.txt
-    write_results(results, reviews)
+    for size in vector_sizes:
+        for window in windows:
+            for count in counts:
+                path = f"../models/word2vec_{size}_{window}_{count}"
+				
+                # Getting one of the trained models
+                model = open_model(path)
+
+                for method in methods:
+					# Extracting the features
+                    results = extract_features(model, reviews, size, method)
+					
+                    # Creating the files train.txt and test.txt
+                    write_results(results, reviews, size, window, count, method)
