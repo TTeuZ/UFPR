@@ -27,6 +27,10 @@ class Pessoa {
     void setCpf(const CPF& cpf);
     void setIdade(const uint8_t idade);
 
+    // Operators
+    bool operator==(const Pessoa& outro) const;
+    bool operator!=(const Pessoa& outro) const;
+
    protected:
     std::string nome;
     CPF cpf;

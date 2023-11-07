@@ -47,6 +47,7 @@ bool CPF::validarCPF(uint64_t cpfTeste) const {
     return true;  // cpf valido
 }
 
+// Operators
 const CPF& CPF::operator=(const CPF& outro) {
     if (&outro != this) this->numero = outro.numero;
     return *this;

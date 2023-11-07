@@ -31,5 +31,29 @@ int main() {
 
     std::cout << "Valor no indice " << index << ": " << cpf[index] << std::endl;
 
+    ufpr::Pessoa p1{"Batata1", cpf};
+    ufpr::Pessoa p2{"Batata2", cpf};
+    ufpr::Pessoa p3{"Batata1", cpf};
+
+    if (p1 == p2)
+        std::cout << "p1 == p2" << std::endl;
+    else
+        std::cout << "p1 != p2" << std::endl;
+
+    if (p1 == p3)
+        std::cout << "p1 == p3" << std::endl;
+    else
+        std::cout << "p1 != p3" << std::endl;
+
+    if (p2 == p3)
+        std::cout << "p2 == p3" << std::endl;
+    else
+        std::cout << "p2 != p3" << std::endl;
+
+    if (p1 == p1)
+        std::cout << "p1 == p1" << std::endl;
+    else
+        std::cout << "p1 != p1" << std::endl;
+
     return 0;
 }

@@ -28,3 +28,13 @@ void Pessoa::setIdade(const uint8_t idade) {
         throw std::invalid_argument{"Idade deve ser menor que 120"};
     this->idade = idade;
 }
+
+// Operators
+bool Pessoa::operator==(const Pessoa& outro) const {
+    bool equal{true};
+
+    if (this->cpf != outro.cpf || this->nome != outro.nome) equal = false;
+    return equal;
+}
+
+bool Pessoa::operator!=(const Pessoa& outro) const { return !(*this == outro); }
