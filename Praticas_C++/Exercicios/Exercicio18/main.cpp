@@ -55,5 +55,9 @@ int main() {
     else
         std::cout << "p1 != p1" << std::endl;
 
+    std::cout << cpf(3, 3) << std::endl;
+    std::cout << cpf(0, 10) << std::endl;
+    std::cout << cpf(7, 2) << std::endl;
+
     return 0;
 }

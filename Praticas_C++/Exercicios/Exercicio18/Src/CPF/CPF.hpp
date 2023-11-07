@@ -32,6 +32,7 @@ class CPF {
     bool operator<=(const CPF& outro) const;
     bool operator>=(const CPF& outro) const;
     unsigned short operator[](const int idx) const;
+    uint64_t operator()(const int begin, const int qtd) const;
 
    private:
     bool validarCPF(uint64_t cpfTeste) const;

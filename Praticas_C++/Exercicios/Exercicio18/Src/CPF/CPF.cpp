@@ -88,6 +88,27 @@ unsigned short CPF::operator[](const int idx) const {
     return result;
 }
 
+uint64_t CPF::operator()(const int begin, const int qtd) const {
+    if (begin < 0 || qtd < 0)
+        throw std::invalid_argument{"Indices precisam ser positivos"};
+    if ((qtd + begin) >= 11)
+        throw std::out_of_range{"Posição indicada fora dos limites"};
+
+    uint64_t temp = this->numero;
+    uint64_t removal{1};
+
+    if (begin != 0) {
+        for (int i{0}; i < 11 - begin; ++i) removal = removal * 10;
+        temp = temp % removal;
+    }
+    if (qtd != 10) {
+        int newSize = 11 - begin;
+        for (int i{0}; i < newSize - qtd; ++i) temp = temp / 10;
+    }
+
+    return temp;
+}
+
 std::ostream& operator<<(std::ostream& stream, const CPF& cpf) {
     unsigned int verificador{(unsigned int)(cpf.numero % 100)};
     uint64_t prim{cpf.numero / 100};
