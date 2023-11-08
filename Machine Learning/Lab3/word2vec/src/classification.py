@@ -6,13 +6,14 @@ from sklearn import svm
 
 # Reading the trainning and testing features
 print("getting the data...")
-x_train, y_train = load_svmlight_file(f"../features/train_500_10_10_1.txt")
-x_test, y_test = load_svmlight_file(f"../features/test_500_10_10_1.txt")
+x_train, y_train = load_svmlight_file(
+    f"../imdb_master/features/train_500_10_2_1.txt")
+x_test, y_test = load_svmlight_file(
+    f"../imdb_master/features/test_500_10_2_1.txt")
 
 # x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.33, random_state=42)
-
 print("fitting the model...")
-model = svm.SVC(C=88, gamma=0.006502719927259994, kernel='rbf')
+model = svm.SVC(C=3, gamma=0.020756759688054908, kernel='rbf')
 model.fit(x_train, y_train)
 
 print("getting prediction...")

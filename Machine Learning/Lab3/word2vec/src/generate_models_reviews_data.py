@@ -52,7 +52,7 @@ if __name__ == "__main__":
     for size in vector_sizes:
         for window in windows:
             for count in counts:
-                path = f"../models/word2vec_{size}_{window}_{count}"
+                path = f"../reviews_data/models/word2vec_{size}_{window}_{count}"
 
                 # training the model
                 model = train(documents, size, window, count)

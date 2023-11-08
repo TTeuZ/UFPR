@@ -8,10 +8,12 @@ imdb_master.csv
 reviews_data.txt
 
 # Models
-word2vec/models/word2vec*
+word2vec/reviews_data/models/word2vec*
+word2vec/imdb_master/models/word2vec*
 
 # Features
-word2vec/features/*.txt
+word2vec/reviews_data/features/*.txt
+word2vec/imdb_master/features/*.txt
 
 # Python
 __pycache__
