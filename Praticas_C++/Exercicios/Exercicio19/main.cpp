@@ -19,45 +19,19 @@
 #include "./Src/SalaAula/SalaAula.hpp"
 
 int main() {
-    ufpr::CPF cpf{11111111111};
+    ufpr::Curso *c = new ufpr::Curso{"Batata", (unsigned char)2023, (unsigned char)3000};
+    ufpr::Disciplina *d1 = new ufpr::Disciplina{*c, "Pão de batata 1", 60, ufpr::enums::EnumTipoDisciplina::MANDATORIA};
 
-    std::cout << "Informe o cpf: " << std::endl;
-    std::cin >> cpf;
-    std::cout << cpf << std::endl;
+    d1->adicionaConteudo("teste1", 60);
+    d1->adicionaConteudo("teste2", 60);
+    d1->adicionaConteudo("teste3", 60);
 
-    int index;
-    std::cout << "Informe o indice: " << std::endl;
-    std::cin >> index;
+    ufpr::Disciplina d2{*d1};
 
-    std::cout << "Valor no indice " << index << ": " << cpf[index] << std::endl;
+    delete d1;
 
-    ufpr::Pessoa p1{"Batata1", cpf};
-    ufpr::Pessoa p2{"Batata2", cpf};
-    ufpr::Pessoa p3{"Batata1", cpf};
-
-    if (p1 == p2)
-        std::cout << "p1 == p2" << std::endl;
-    else
-        std::cout << "p1 != p2" << std::endl;
-
-    if (p1 == p3)
-        std::cout << "p1 == p3" << std::endl;
-    else
-        std::cout << "p1 != p3" << std::endl;
-
-    if (p2 == p3)
-        std::cout << "p2 == p3" << std::endl;
-    else
-        std::cout << "p2 != p3" << std::endl;
-
-    if (p1 == p1)
-        std::cout << "p1 == p1" << std::endl;
-    else
-        std::cout << "p1 != p1" << std::endl;
-
-    std::cout << cpf(3, 3) << std::endl;
-    std::cout << cpf(0, 10) << std::endl;
-    std::cout << cpf(7, 2) << std::endl;
+    std::list<ufpr::ConteudoMinistrado *>::const_iterator it{d2.getConteudos().begin()};
+    for (; it != d2.getConteudos().end(); ++it) std::cout << (*it)->getDescricao() << std::endl;
 
     return 0;
 }
