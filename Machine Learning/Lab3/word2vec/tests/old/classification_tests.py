@@ -8,8 +8,10 @@ from sklearn import svm
 import config
 
 # Reading the trainning and testing features
-x_train, y_train = load_svmlight_file(f"../features/train_{config.VectorSize}_{config.WindowSize}_{config.MinCount}_{config.method}.txt")
-x_test, y_test = load_svmlight_file(f"../features/test_{config.VectorSize}_{config.WindowSize}_{config.MinCount}_{config.method}.txt")
+x_train, y_train = load_svmlight_file(
+    f"../features/train_{config.VectorSize}_{config.WindowSize}_{config.MinCount}_{config.method}.txt")
+x_test, y_test = load_svmlight_file(
+    f"../features/test_{config.VectorSize}_{config.WindowSize}_{config.MinCount}_{config.method}.txt")
 
 # x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.33, random_state=42)
 

@@ -16,33 +16,34 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def read_input(input_file):
-	"""This method reads the input file which is in gzip format"""
+    """This method reads the input file which is in gzip format"""
 
-	logging.info("reading file {0}...this may take a while".format(input_file))
+    logging.info("reading file {0}...this may take a while".format(input_file))
 
-	with gzip.open(input_file, 'rb') as f:
-		for i, line in enumerate(f):
-			if (i % 10000) == 0:
-				logging.info("read {0} reviews".format(i))
+    with gzip.open(input_file, 'rb') as f:
+        for i, line in enumerate(f):
+            if (i % 10000) == 0:
+                logging.info("read {0} reviews".format(i))
 
-			yield gensim.utils.simple_preprocess(line)
+            yield gensim.utils.simple_preprocess(line)
 
 
 def train(documents, size, window, count):
-	print("Training model")
-	model = gensim.models.Word2Vec(documents, vector_size=size, window=window, min_count=count, workers=10)
-	model.train(documents, total_examples=len(documents), epochs=10)
-	print("Model trained")
-	
-	return model
+    print("Training model")
+    model = gensim.models.Word2Vec(
+        documents, vector_size=size, window=window, min_count=count, workers=10)
+    model.train(documents, total_examples=len(documents), epochs=10)
+    print("Model trained")
+
+    return model
 
 
 def save_model(model, path):
-	print ('Saving Model into modelogensin file...')
+    print('Saving Model into modelogensin file...')
 
-	file = open(path, 'wb')
-	pickle.dump(model, file)
-	file.close()
+    file = open(path, 'wb')
+    pickle.dump(model, file)
+    file.close()
 
 
 if __name__ == "__main__":

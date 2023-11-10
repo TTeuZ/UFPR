@@ -23,8 +23,8 @@ def read_input(input_file):
     with open(input_file, encoding="ISO-8859-1") as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            if (row["label"] == "unsup"):
-                yield gensim.utils.simple_preprocess(str(row))
+            if (row['label'] == "unsup"):
+                yield gensim.utils.simple_preprocess(row['review'])
 
 
 def train(documents, size, window, count):

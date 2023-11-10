@@ -12,10 +12,13 @@ from sklearn.model_selection import train_test_split
 import config
 
 # Reading the trainning and testing features
-x, y = load_svmlight_file(f"../features/train_{config.VectorSize}_{config.WindowSize}_{config.MinCount}_{config.method}.txt")
-x_test, y_test = load_svmlight_file(f"../features/test_{config.VectorSize}_{config.WindowSize}_{config.MinCount}_{config.method}.txt")
+x, y = load_svmlight_file(
+    f"../features/train_{config.VectorSize}_{config.WindowSize}_{config.MinCount}_{config.method}.txt")
+x_test, y_test = load_svmlight_file(
+    f"../features/test_{config.VectorSize}_{config.WindowSize}_{config.MinCount}_{config.method}.txt")
 
-x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.33, random_state=42)
+x_train, x_val, y_train, y_val = train_test_split(
+    x, y, test_size=0.33, random_state=42)
 
 # Saving for the confusion matrix
 label = y_test
@@ -33,20 +36,22 @@ model = Sequential()
 model.add(Dense(50, activation='relu', input_dim=config.VectorSize))
 model.add(Dense(2, activation='sigmoid'))
 
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='binary_crossentropy',
+              optimizer='adam', metrics=['accuracy'])
 
-history = model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=128, verbose=1)
+history = model.fit(x_train, y_train, validation_data=(
+    x_val, y_val), epochs=10, batch_size=128, verbose=1)
 
 loss, acc = model.evaluate(x_test, y_test)
 
 y_pred = model.predict(x_test)
-classes=np.argmax(y_pred, axis=1)
+classes = np.argmax(y_pred, axis=1)
 
 cm = confusion_matrix(label, classes)
-print (cm)
+print(cm)
 
-print ('Loss    : ', loss)
-print ('Accuracy: ', acc)
+print('Loss    : ', loss)
+print('Accuracy: ', acc)
 
 # list all data in history
 print(history.history.keys())
@@ -58,4 +63,5 @@ plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
-plt.savefig(f'../results/accuracy_{config.VectorSize}_{config.WindowSize}_{config.MinCount}_{config.method}.svg', bbox_inches='tight')
+plt.savefig(
+    f'../results/accuracy_{config.VectorSize}_{config.WindowSize}_{config.MinCount}_{config.method}.svg', bbox_inches='tight')
