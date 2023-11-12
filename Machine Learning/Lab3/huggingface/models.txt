@@ -1,0 +1,29 @@
+# Model 1: cardiffnlp/twitter-roberta-base-sentiment
+https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment
+Labels: Pos, Neu, Neg
+
+# Model 2: cardiffnlp/twitter-roberta-base-sentiment-latest
+https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest
+Labels: Pos, Neu, Neg
+
+# Model 3: finiteautomata/bertweet-base-sentiment-analysis
+https://huggingface.co/finiteautomata/bertweet-base-sentiment-analysis
+Labels: Pos, Neu, Neg
+
+# Model 4: sbcBI/sentiment_analysis_model
+https://huggingface.co/sbcBI/sentiment_analysis_model
+Labels: Pos, Neu, Neg
+
+# Model 5: lxyuan/distilbert-base-multilingual-cased-sentiments-student
+https://huggingface.co/lxyuan/distilbert-base-multilingual-cased-sentiments-student
+Labels: Pos, Neu, Neg
+
+# Model 6: siebert/sentiment-roberta-large-english
+https://huggingface.co/j-hartmann/sentiment-roberta-large-english-3-classes
+Labels: Pos, Neg
+
+# Model 7: MICADEE/autonlp-imdb-sentiment-analysis2-7121569
+Labels: Pos, Neu, Neg
+
+# Model 8: j-hartmann/sentiment-roberta-large-english-3-classes
+Labels: Pos, Neu, Neg
