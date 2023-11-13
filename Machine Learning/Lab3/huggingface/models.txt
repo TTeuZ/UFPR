@@ -92,3 +92,115 @@ weighted avg       0.88      0.88      0.88      3000
 - siebert/sentiment-roberta-large-english
 - bhadresh-savani/distilbert-base-uncased-sentiment-sst2
 - cardiffnlp/twitter-roberta-base-sentiment
+
+## resultados na base toda:
+
+Model: siebert/sentiment-roberta-large-english
+[[11820   680]
+ [  603 11897]]
+              precision    recall  f1-score   support
+
+           0       0.95      0.95      0.95     12500
+           1       0.95      0.95      0.95     12500
+
+    accuracy                           0.95     25000
+   macro avg       0.95      0.95      0.95     25000
+weighted avg       0.95      0.95      0.95     25000
+
+Model: bhadresh-savani/distilbert-base-uncased-sentiment-sst2
+[[11387  1113]
+ [ 1953 10547]]
+              precision    recall  f1-score   support
+
+           0       0.85      0.91      0.88     12500
+           1       0.90      0.84      0.87     12500
+
+    accuracy                           0.88     25000
+   macro avg       0.88      0.88      0.88     25000
+weighted avg       0.88      0.88      0.88     25000
+
+Model: cardiffnlp/twitter-roberta-base-sentiment
+[[ 9884  2616]
+ [  913 11587]]
+              precision    recall  f1-score   support
+
+           0       0.92      0.79      0.85     12500
+           1       0.82      0.93      0.87     12500
+
+    accuracy                           0.86     25000
+   macro avg       0.87      0.86      0.86     25000
+weighted avg       0.87      0.86      0.86     25000
+
+## Resultado Combinado:
+
+Usando regra da soma:
+[[11768   732]
+ [  896 11604]]
+              precision    recall  f1-score   support
+
+           0       0.93      0.94      0.94     12500
+           1       0.94      0.93      0.93     12500
+
+    accuracy                           0.93     25000
+   macro avg       0.93      0.93      0.93     25000
+weighted avg       0.93      0.93      0.93     25000
+
+usando regra do protudo:
+[[11835   665]
+ [  650 11850]]
+              precision    recall  f1-score   support
+
+           0       0.95      0.95      0.95     12500
+           1       0.95      0.95      0.95     12500
+
+    accuracy                           0.95     25000
+   macro avg       0.95      0.95      0.95     25000
+weighted avg       0.95      0.95      0.95     25000
+
+Usando a regra da média:
+[[11768   732]
+ [  896 11604]]
+              precision    recall  f1-score   support
+
+           0       0.93      0.94      0.94     12500
+           1       0.94      0.93      0.93     12500
+
+    accuracy                           0.93     25000
+   macro avg       0.93      0.93      0.93     25000
+weighted avg       0.93      0.93      0.93     25000
+
+Usando a regra do minimo:
+[[11842   658]
+ [  636 11864]]
+              precision    recall  f1-score   support
+
+           0       0.95      0.95      0.95     12500
+           1       0.95      0.95      0.95     12500
+
+    accuracy                           0.95     25000
+   macro avg       0.95      0.95      0.95     25000
+weighted avg       0.95      0.95      0.95     25000
+
+Usando a regra do maximo:
+[[11842   658]
+ [  636 11864]]
+              precision    recall  f1-score   support
+
+           0       0.95      0.95      0.95     12500
+           1       0.95      0.95      0.95     12500
+
+    accuracy                           0.95     25000
+   macro avg       0.95      0.95      0.95     25000
+weighted avg       0.95      0.95      0.95     25000
+
+Usando Voto majoritario:
+[[11431  1069]
+ [  801 11699]]
+              precision    recall  f1-score   support
+
+           0       0.93      0.91      0.92     12500
+           1       0.92      0.94      0.93     12500
+
+    accuracy                           0.93     25000
+   macro avg       0.93      0.93      0.93     25000
+weighted avg       0.93      0.93      0.93     25000
