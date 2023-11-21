@@ -9,7 +9,7 @@
 namespace ufpr {
 class Livro {
    public:
-    static std::shared_ptr<const Livro> carregarLivro(const unsigned long ISBN);
+    static std::shared_ptr<const Livro> carregarLivro(const uint64_t ISBN);
 
     virtual ~Livro();
 
@@ -25,11 +25,9 @@ class Livro {
     const std::list<std::string>& getAutores() const;
 
    private:
-    static std::unordered_map<unsigned long, std::weak_ptr<const Livro>>
-        cache;
+    static std::unordered_map<unsigned long, std::weak_ptr<const Livro>> cache;
 
-    Livro(const unsigned long ISBN, const std::string& titulo,
-          const short int ano);
+    Livro(const unsigned long ISBN, const std::string& titulo, const short int ano);
 
     const unsigned long ISBN;  // número de identificação único
     const std::string titulo;
