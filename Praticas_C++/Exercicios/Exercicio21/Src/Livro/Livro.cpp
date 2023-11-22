@@ -4,7 +4,7 @@ namespace ufpr {
 std::unordered_map<uint64_t, std::weak_ptr<const Livro>> Livro::cache;
 
 // Constructor
-Livro::Livro(const uint64_t ISBN, const std::string& titulo, const uint8_t ano)
+Livro::Livro(const uint64_t ISBN, const std::string& titulo, const uint32_t ano)
     : ISBN{ISBN}, titulo{titulo}, ano{ano} {}
 
 // Getters
@@ -12,7 +12,7 @@ const uint64_t Livro::getISBN() const { return this->ISBN; }
 
 const std::string& Livro::getTitulo() const { return this->titulo; }
 
-const uint8_t Livro::getAno() const { return this->ano; }
+const uint32_t Livro::getAno() const { return this->ano; }
 
 const std::string& Livro::getAbstract() const { return this->abstract; }
 

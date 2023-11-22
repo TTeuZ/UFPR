@@ -4,20 +4,25 @@
 
 namespace ufpr {
 // Constructors
-Ementa::Ementa() : livros{std::make_unique<std::list<std::shared_ptr<const Livro>>>()} {}
+Ementa::Ementa() : livros{new std::list<std::shared_ptr<const Livro>>} {}
 
 Ementa::Ementa(const std::string descricao)
-    : descricao{descricao}, livros{std::make_unique<std::list<std::shared_ptr<const Livro>>>()} {}
+    : descricao{descricao}, livros{new std::list<std::shared_ptr<const Livro>>} {}
 
 Ementa::Ementa(const Ementa& ementa)
-    : descricao{ementa.descricao}, livros{new std::list<std::shared_ptr<const Livro>>{*ementa.livros.get()}} {}
+    : descricao{ementa.descricao}, livros{new std::list<std::shared_ptr<const Livro>>{*ementa.livros}} {}
 
-Ementa::Ementa(Ementa&& ementa) : descricao{ementa.descricao}, livros{ementa.livros.release()} {}
+Ementa::Ementa(Ementa&& ementa) : descricao{ementa.descricao}, livros{ementa.livros} { ementa.livros = nullptr; }
+
+// Destructor
+Ementa::~Ementa() {
+    if (this->livros != nullptr) delete this->livros;
+}
 
 // Getters
 const std::string& Ementa::getDescricao() const { return this->descricao; }
 
-const std::list<std::shared_ptr<const Livro>>* Ementa::getLivros() const { return this->livros.get(); }
+const std::list<std::shared_ptr<const Livro>>* Ementa::getLivros() const { return this->livros; }
 
 // Setters
 void Ementa::setDescricao(const std::string& descricao) { this->descricao = descricao; }
@@ -30,20 +35,19 @@ const Ementa& Ementa::operator=(const Ementa& ementa) {
     if (this == &ementa) return *this;
 
     this->descricao = ementa.descricao;
-    // delete this->livros;
-    this->livros = std::make_unique<std::list<std::shared_ptr<const Livro>>>(*ementa.livros);
+    delete this->livros;
+    this->livros = new std::list<std::shared_ptr<const Livro>>{*ementa.livros};
 
     return *this;
 }
 
 Ementa& Ementa::operator=(Ementa&& ementa) {
     if (this == &ementa) return *this;
+
     this->descricao = ementa.descricao;
-
-    std::list<std::shared_ptr<const Livro>>* temp{ementa.livros.release()};
-    this->livros = std::make_unique<std::list<std::shared_ptr<const Livro>>>(temp);
-
-    // ementa.livros = nullptr;
+    delete this->livros;
+    this->livros = ementa.livros;
+    ementa.livros = nullptr;
 
     return *this;
 }

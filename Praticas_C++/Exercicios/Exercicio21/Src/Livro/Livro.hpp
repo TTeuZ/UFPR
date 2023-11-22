@@ -9,7 +9,7 @@
 namespace ufpr {
 class Livro {
    public:
-    static std::shared_ptr<const Livro> carregarLivro(const unsigned long ISBN);
+    static std::shared_ptr<const Livro> carregarLivro(const uint64_t ISBN);
 
     // Destructor
     virtual ~Livro() = default;
@@ -17,7 +17,7 @@ class Livro {
     // Getters
     const uint64_t getISBN() const;
     const std::string& getTitulo() const;
-    const uint8_t getAno() const;
+    const uint32_t getAno() const;
     const std::string& getAbstract() const;
     const std::list<std::string>& getAutores() const;
 
@@ -35,11 +35,11 @@ class Livro {
     static std::unordered_map<uint64_t, std::weak_ptr<const Livro>> cache;
 
     // Constructor
-    Livro(const uint64_t ISBN, const std::string& titulo, const uint8_t ano);
+    Livro(const uint64_t ISBN, const std::string& titulo, const uint32_t ano);
 
     const uint64_t ISBN;
     const std::string titulo;
-    uint8_t ano;
+    uint32_t ano;
     std::string abstract;
     std::list<std::string> autores;
 };

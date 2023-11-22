@@ -19,19 +19,14 @@
 #include "./Src/SalaAula/SalaAula.hpp"
 
 int main() {
-    ufpr::Curso *c = new ufpr::Curso{"Batata", (unsigned char)2023, (unsigned char)3000};
-    ufpr::Disciplina *d1 = new ufpr::Disciplina{*c, "Pão de batata 1", 60, ufpr::enums::EnumTipoDisciplina::MANDATORIA};
-
-    d1->adicionaConteudo("teste1", 60);
-    d1->adicionaConteudo("teste2", 60);
-    d1->adicionaConteudo("teste3", 60);
-
-    ufpr::Disciplina d2{*d1};
-
-    delete d1;
-
-    std::list<ufpr::ConteudoMinistrado *>::const_iterator it{d2.getConteudos().begin()};
-    for (; it != d2.getConteudos().end(); ++it) std::cout << (*it)->getDescricao() << std::endl;
+    ufpr::Ementa* ementa1{new ufpr::Ementa{"Paradigmas de programação"}};
+    ufpr::Ementa* ementa2{new ufpr::Ementa{"Orientação a Objetos"}};
+    ementa1->addLivro(ufpr::Livro::carregarLivro(1234));
+    ementa1->addLivro(ufpr::Livro::carregarLivro(5678));
+    ementa2->addLivro(ufpr::Livro::carregarLivro(1234));
+    delete ementa1;
+    std::cout << "Ementa 1 deletada, deletando ementa 2\n";
+    delete ementa2;
 
     return 0;
 }
