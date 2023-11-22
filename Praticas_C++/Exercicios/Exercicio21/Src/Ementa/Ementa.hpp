@@ -13,11 +13,11 @@ class Ementa {
     // Constructors
     Ementa();
     explicit Ementa(const std::string descricao);
-    explicit Ementa(const Ementa& ementa);  // Copy constructor
-    explicit Ementa(Ementa&& ementa);       // Move constructor
+    Ementa(const Ementa& ementa);  // Copy constructor
+    Ementa(Ementa&& ementa);       // Move constructor
 
     // Destructor
-    virtual ~Ementa();
+    virtual ~Ementa() = default;
 
     // Getters
     const std::string& getDescricao() const;
@@ -35,7 +35,7 @@ class Ementa {
 
    private:
     std::string descricao;
-    std::list<std::shared_ptr<const Livro>>* livros;
+    std::unique_ptr<std::list<std::shared_ptr<const Livro>>> livros;
 };
 }  // namespace ufpr
 #endif

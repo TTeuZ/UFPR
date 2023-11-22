@@ -18,15 +18,28 @@
 #include "./Src/ProfessorEngenheiro/ProfessorEngenheiro.hpp"
 #include "./Src/SalaAula/SalaAula.hpp"
 
+ufpr::Ementa* testEmenta() {
+    ufpr::Ementa* temp{new ufpr::Ementa{"temp"}};
+    temp->addLivro(ufpr::Livro::carregarLivro(1234));
+    temp->addLivro(ufpr::Livro::carregarLivro(5678));
+
+    return temp;
+}
+
 int main() {
     ufpr::Ementa* ementa1{new ufpr::Ementa{"Paradigmas de programação"}};
     ufpr::Ementa* ementa2{new ufpr::Ementa{"Orientação a Objetos"}};
+
     ementa1->addLivro(ufpr::Livro::carregarLivro(1234));
     ementa1->addLivro(ufpr::Livro::carregarLivro(5678));
     ementa2->addLivro(ufpr::Livro::carregarLivro(1234));
+
+    ufpr::Ementa ementa3{*ementa1};
+    ufpr::Ementa* ementa4{testEmenta()};
+
     delete ementa1;
-    std::cout << "Ementa 1 deletada, deletando ementa 2\n";
     delete ementa2;
+    delete ementa4;
 
     return 0;
 }
