@@ -1,0 +1,164 @@
+[
+  {
+    "name": "Salgadinhos Deliciosos",
+    "description": "Salgadinhos deliciosos feitos pela minha mamaezinha",
+    "price": 19.99,
+    "images": [
+      {
+        "url": "https://i0.wp.com/centraldossalgados.com.br/wp-content/uploads/2022/11/13.png?fit=1024%2C1024&ssl=1"
+      },
+      {
+        "url": "https://i0.wp.com/centraldossalgados.com.br/wp-content/uploads/2022/11/13.png?fit=1024%2C1024&ssl=1"
+      }
+    ],
+    "ratings": [
+      {
+        "userId": 2,
+        "rating": 5,
+        "comment": "Os salgadinhos são diferenciados mesmo!"
+      },
+      {
+        "userId": 3,
+        "rating": 4,
+        "comment": "Podia estar mais salgado!"
+      },
+      {
+        "userId": 4,
+        "rating": 0,
+        "comment": "Péssimo!"
+      }
+    ],
+    "paymentMethods": [
+      {
+        "type": "CASH"
+      },
+      {
+        "type": "CREDIT_CARD"
+      },
+      {
+        "type": "DEBIT_CARD"
+      }
+    ],
+    "categoryId": 1,
+    "userId": 1,
+    "state": "NEW",
+    "location": {
+      "street": "Clávio molinari",
+      "neighborhood": "Capão da imbuia",
+      "number": 1408,
+      "city": "Curitiba",
+      "state": "PR"
+    },
+    "generalRating": 3,
+    "donation": false
+  },
+  {
+    "name": "Doces Deliciosos",
+    "description": "Doces deliciosos feitos pela minha mamaezinha",
+    "price": 29.99,
+    "images": [
+      {
+        "url": "https://i0.wp.com/centraldossalgados.com.br/wp-content/uploads/2022/11/13.png?fit=1024%2C1024&ssl=1"
+      },
+      {
+        "url": "https://i0.wp.com/centraldossalgados.com.br/wp-content/uploads/2022/11/13.png?fit=1024%2C1024&ssl=1"
+      }
+    ],
+    "ratings": [
+      {
+        "userId": 5,
+        "rating": 5,
+        "comment": "Os Doces são diferenciados mesmo!"
+      },
+      {
+        "userId": 4,
+        "rating": 4,
+        "comment": "Podia estar mais salgado!"
+      },
+      {
+        "userId": 1,
+        "rating": 0,
+        "comment": "Péssimo!"
+      }
+    ],
+    "paymentMethods": [
+      {
+        "type": "CASH"
+      },
+      {
+        "type": "CREDIT_CARD"
+      },
+      {
+        "type": "DEBIT_CARD"
+      },
+      {
+        "type": "PIX"
+      }
+    ],
+    "categoryId": 2,
+    "userId": 2,
+    "state": "USED",
+    "location": {
+      "street": "Clávio molinari",
+      "neighborhood": "Capão da imbuia",
+      "number": 1408,
+      "city": "Curitiba",
+      "state": "PR"
+    },
+    "generalRating": 3,
+    "donation": false
+  },
+  {
+    "name": "Tortas Deliciosos",
+    "description": "Tortas deliciosos feitos pela minha mamaezinha",
+    "price": 39.99,
+    "images": [
+      {
+        "url": "https://i0.wp.com/centraldossalgados.com.br/wp-content/uploads/2022/11/13.png?fit=1024%2C1024&ssl=1"
+      },
+      {
+        "url": "https://i0.wp.com/centraldossalgados.com.br/wp-content/uploads/2022/11/13.png?fit=1024%2C1024&ssl=1"
+      }
+    ],
+    "ratings": [
+      {
+        "userId": 5,
+        "rating": 5,
+        "comment": "Os Doces são diferenciados mesmo!"
+      },
+      {
+        "userId": 4,
+        "rating": 4,
+        "comment": "Podia estar mais salgado!"
+      },
+      {
+        "userId": 7,
+        "rating": 0,
+        "comment": "Péssimo!"
+      }
+    ],
+    "paymentMethods": [
+      {
+        "type": "CASH"
+      },
+      {
+        "type": "CREDIT_CARD"
+      },
+      {
+        "type": "DEBIT_CARD"
+      }
+    ],
+    "categoryId": 3,
+    "userId": 3,
+    "state": "NEW",
+    "location": {
+      "street": "Clávio molinari",
+      "neighborhood": "Capão da imbuia",
+      "number": 1408,
+      "city": "Curitiba",
+      "state": "PR"
+    },
+    "generalRating": 3,
+    "donation": false
+  }
+]

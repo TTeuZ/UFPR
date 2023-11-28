@@ -1,0 +1,51 @@
+[
+    {
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "john@example.com",
+        "admin": false,
+        "photo": "https://www.hypeness.com.br/1/2017/03/Phillip-Kremer-Trump-720c.jpg"
+    },
+    {
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "email": "jane@example.com",
+        "admin": false,
+        "photo": "https://www.hypeness.com.br/1/2017/03/Phillip-Kremer-Trump-720c.jpg"
+    },
+    {
+        "firstName": "Bob",
+        "lastName": "Marley",
+        "email": "bob@example.com",
+        "admin": true,
+        "photo": "https://www.hypeness.com.br/1/2017/03/Phillip-Kremer-Trump-720c.jpg"
+    },
+    {
+        "firstName": "Luis",
+        "lastName": "Risch",
+        "email": "luis@example.com",
+        "admin": true,
+        "photo": "https://www.hypeness.com.br/1/2017/03/Phillip-Kremer-Trump-720c.jpg"
+    },
+    {
+        "firstName": "Paulão",
+        "lastName": "Luza",
+        "email": "paulao@example.com",
+        "admin": true,
+        "photo": "https://www.hypeness.com.br/1/2017/03/Phillip-Kremer-Trump-720c.jpg"
+    },
+    {
+        "firstName": "Ariel",
+        "lastName": "Smith",
+        "email": "ariel@ariel.com",
+        "admin": true,
+        "photo": "https://www.hypeness.com.br/1/2017/03/Phillip-Kremer-Trump-720c.jpg"
+    },
+    {
+        "firstName": "Rodrigo",
+        "lastName": "Rodrigão",
+        "email": "Rodrigo@Rodrigo.com",
+        "admin": true,
+        "photo": "https://www.hypeness.com.br/1/2017/03/Phillip-Kremer-Trump-720c.jpg"
+    }
+]

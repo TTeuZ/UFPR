@@ -1,0 +1,9 @@
+{
+  "files.associations": {
+    "requisitos": "c"
+  },
+  "files.exclude": {
+    "**/*.pdf": true,
+    "**/*.class": true
+  }
+}
