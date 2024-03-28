@@ -21,5 +21,5 @@
 % N -> Map size
 % Map -> Map structure
 wumpus(N, Map) :-
-    fill_up_kb(0, 0, N, [], KB).
-    % write(KB).
+    fill_up_kb(0, 0, N, [], KB),
+    write(KB).

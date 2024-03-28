@@ -14,32 +14,37 @@ fill_up_kb(I, J, N, Init_KB, End_KB) :-
 fill_up_kb(N, N, N, Init_KB, Init_KB). % Base case.
 
 
+% Calculate the next index in the iteration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+next_indexes(I, J, N, I, Next_J) :-
+    J < N,
+    Next_J is J+1.
+
+next_indexes(I, J, N, Next_I, 0) :-
+    I < N,
+    Next_I is I+1.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 % Calculate the index for the breezes in the KB.
 % The first run is for the breezes index, so in a 2x2 map, for example, the index 0 to 3 are breezes.
 breeze_index(I, J, N, Index) :-
-    Index is I*N+J+1.
+    Index is I*N+J.
 
 
 % Calculate the index for the pits in the KB.
 % The second run is for the breezes index, so in a 2x2 map, for example, the index 4 to 7 are breezes.
 pit_index(I, J, N, Index) :-
-    Index is N*N+I*N+J+1.
-
-
-% Calculate the next index in the iteration
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-next_indexes(I, J, N, I, Next_J) :-
-    J < N-1,
-    Next_J is J+1.
-
-next_indexes(I, J, N, Next_I, 0) :-
-    I < N-1,
-    Next_I is I+1.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    Index is N*N+I*N+J.
 
 
 % Position helpers
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+is_inside_the_matrix(I, J, N) :-
+    I >= 0, I =< N-1,
+    J >= 0, J =< N-1.
+
+
 in_corner(I, J, N, Corner) :-
     Temp is N-1,
     (
@@ -47,7 +52,7 @@ in_corner(I, J, N, Corner) :-
         Corner = 'top_left'
     ;
         I = 0, J = Temp ->
-        Corner = 'top_rigt'
+        Corner = 'top_right'
     ;
         I = Temp, J = 0 ->
         Corner = 'bottom_left'
@@ -78,51 +83,97 @@ in_border(I, J, N, Border) :-
 % Add new rules to the KB
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 add_rules(I, J, N, Init_KB, End_KB) :-
+    breeze_index(I, J, N, Breeze_Index),
     (
         in_corner(I, J, N, Corner) ->
-        write('Corner '), write(Corner),
-        corner_rule(I, J, Corner, Rule),
-        append(Init_KB, [Rule], End_KB), !
+        corner_rule(Breeze_Index, I, J, N, Corner, Rule),
+        append(Init_KB, Rule, End_KB), !
     ;
         in_border(I, J, N, Border) ->
-        write('Border '), write(Border),
-        border_rule(I, J, Border, Rule),
-        append(Init_KB, [Rule], End_KB), !
+        border_rule(Breeze_Index, I, J, N, Border, Rule),
+        append(Init_KB, Rule, End_KB), !
     ;
-        write('center'),
-        center_rule(I, J, Rule),
-        append(Init_KB, [Rule], End_KB), !
-    ),
-    nl().
+        is_inside_the_matrix(I, J, N) ->
+        center_rule(Breeze_Index, I, J, N, Rule),
+        append(Init_KB, Rule, End_KB), !
+    ).
 
-corner_rule(I, J, Corner, Rule) :-
-    
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+add_rules(I, J, N, Init_KB, Init_KB). % Base case.
 
 
-% Add new rules to the KB
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% is_not_border(I, J, N) :-
-%     I > 0,
-%     J > 0,
-%     I < N-1,
-%     J < N-1.
+center_rule(Breeze_Index, I, J, N, Rule) :-
+    I1 is I-1, I2 is I+1, J1 is J-1, J2 is J+1,
+    pit_index(I1, J, N, Pit1_Index),
+    pit_index(I2, J, N, Pit2_Index),
+    pit_index(I, J1, N, Pit3_Index),
+    pit_index(I, J2, N, Pit4_Index),
+    Rule = [[-Breeze_Index, Pit1_Index, Pit2_Index, Pit3_Index, Pit4_Index],
+            [-Pit1_Index, Breeze_Index],[-Pit2_Index, Breeze_Index],
+            [-Pit3_Index, Breeze_Index],[-Pit4_Index, Breeze_Index]].
 
-% add_rules(I, J, N, Init_KB, End_KB) :-
-%     is_not_border(I, J, N),
-%     I1 is I-1,
-%     I2 is I+1,
-%     J1 is J-1,
-%     J2 is J+1,
-%     breeze_index(I, J, N, Breeze_Index),
-%     pit_index(I1, J, N, Pit1_Index),
-%     pit_index(I2, J, N, Pit2_Index),
-%     pit_index(I, J1, N, Pit3_Index),
-%     pit_index(I, J2, N, Pit4_Index),
-%     Cs = [[-Breeze_Index, Pit1_Index, Pit2_Index, Pit3_Index, Pit4_Index],
-%             [-Pit1_Index, Breeze_Index],[-Pit2_Index, Breeze_Index],
-%             [-Pit3_Index, Breeze_Index],[-Pit4_Index, Breeze_Index]],
-%     append(Init_KB, Cs, End_KB).
 
-% add_rules(I, J, N, Init_KB, Init_KB). % Base case.
+corner_rule(Breeze_Index, I, J, N, top_left, Rule) :-
+    J1 is J+1, I1 is I+1,
+    pit_index(I, J1, N, Pit1_Index),
+    pit_index(I1, J, N, Pit2_Index),
+    Rule = [[-Breeze_Index, Pit1_Index, Pit2_Index],
+            [-Pit1_Index, Breeze_Index], [-Pit2_Index, Breeze_Index]].
+
+corner_rule(Breeze_Index, I, J, N, top_right, Rule) :-
+    J1 is J-1, I1 is I+1,
+    pit_index(I, J1, N, Pit1_Index),
+    pit_index(I1, J, N, Pit2_Index),
+    Rule = [[-Breeze_Index, Pit1_Index, Pit2_Index],
+            [-Pit1_Index, Breeze_Index], [-Pit2_Index, Breeze_Index]].
+
+corner_rule(Breeze_Index, I, J, N, bottom_left, Rule) :-
+    J1 is J+1, I1 is I-1,
+    pit_index(I, J1, N, Pit1_Index),
+    pit_index(I1, J, N, Pit2_Index),
+    Rule = [[-Breeze_Index, Pit1_Index, Pit2_Index],
+            [-Pit1_Index, Breeze_Index], [-Pit2_Index, Breeze_Index]].
+
+corner_rule(Breeze_Index, I, J, N, bottom_right, Rule) :-
+    J1 is J-1, I1 is I-1,
+    pit_index(I, J1, N, Pit1_Index),
+    pit_index(I1, J, N, Pit2_Index),
+    Rule = [[-Breeze_Index, Pit1_Index, Pit2_Index],
+            [-Pit1_Index, Breeze_Index], [-Pit2_Index, Breeze_Index]].
+
+
+border_rule(Breeze_Index, I, J, N, top, Rule) :-
+    J1 is J-1, J2 is J+1, I1 is I+1,
+    pit_index(I, J1, N, Pit1_Index),
+    pit_index(I, J2, N, Pit2_Index),
+    pit_index(I1, J, N, Pit3_Index),
+    Rule = [[-Breeze_Index, Pit1_Index, Pit2_Index, Pit3_Index],
+            [-Pit1_Index, Breeze_Index], [-Pit2_Index, Breeze_Index],
+            [-Pit3_Index, Breeze_Index]].
+
+border_rule(Breeze_Index, I, J, N, left, Rule) :-
+    J1 is J+1, I1 is I-1, I2 is I+1,
+    pit_index(I, J1, N, Pit1_Index),
+    pit_index(I1, J, N, Pit2_Index),
+    pit_index(I2, J, N, Pit3_Index),
+    Rule = [[-Breeze_Index, Pit1_Index, Pit2_Index, Pit3_Index],
+            [-Pit1_Index, Breeze_Index], [-Pit2_Index, Breeze_Index],
+            [-Pit3_Index, Breeze_Index]].
+
+border_rule(Breeze_Index, I, J, N, bottom, Rule) :-
+    J1 is J-1, J2 is J+1, I1 is I-1,
+    pit_index(I, J1, N, Pit1_Index),
+    pit_index(I, J2, N, Pit2_Index),
+    pit_index(I1, J, N, Pit3_Index),
+    Rule = [[-Breeze_Index, Pit1_Index, Pit2_Index, Pit3_Index],
+            [-Pit1_Index, Breeze_Index], [-Pit2_Index, Breeze_Index],
+            [-Pit3_Index, Breeze_Index]].
+
+border_rule(Breeze_Index, I, J, N, right, Rule) :-
+    J1 is J-1, I1 is I-1, I2 is I+1,
+    pit_index(I, J1, N, Pit1_Index),
+    pit_index(I1, J, N, Pit2_Index),
+    pit_index(I2, J, N, Pit3_Index),
+    Rule = [[-Breeze_Index, Pit1_Index, Pit2_Index, Pit3_Index],
+            [-Pit1_Index, Breeze_Index], [-Pit2_Index, Breeze_Index],
+            [-Pit3_Index, Breeze_Index]].
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
