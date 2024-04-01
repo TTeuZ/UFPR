@@ -1,4 +1,5 @@
 :- consult('kb.pl').
+:- consult('search.pl').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -21,5 +22,7 @@
 % N -> Map size
 % Map -> Map structure
 wumpus(N, Map) :-
-    fill_up_kb(0, 0, N, [], KB),
-    write(KB).
+    % fill_up_kb(0, 0, N, [], KB),
+    search(0, 0, N, KB, Map, [[0, 0]], Path, Status),
+    write(KB), nl(),
+    write(Path).

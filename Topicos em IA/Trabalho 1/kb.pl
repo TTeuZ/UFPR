@@ -1,42 +1,10 @@
+:- consult('utils.pl').
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Script related to the Knowledge base generation and use.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Fill up the KB with number values.
-% Each value represents an index (either pit or breeze).
-fill_up_kb(I, J, N, Init_KB, End_KB) :-
-    add_rules(I, J, N, Init_KB, Temp_KB),
-    next_indexes(I, J, N, Next_I, Next_J), !,
-    fill_up_kb(Next_I, Next_J, N, Temp_KB, End_KB).
-
-fill_up_kb(N, N, N, Init_KB, Init_KB). % Base case.
-
-
-% Calculate the next index in the iteration
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-next_indexes(I, J, N, I, Next_J) :-
-    J < N,
-    Next_J is J+1.
-
-next_indexes(I, J, N, Next_I, 0) :-
-    I < N,
-    Next_I is I+1.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-% Calculate the index for the breezes in the KB.
-% The first run is for the breezes index, so in a 2x2 map, for example, the index 0 to 3 are breezes.
-breeze_index(I, J, N, Index) :-
-    Index is I*N+J.
-
-
-% Calculate the index for the pits in the KB.
-% The second run is for the breezes index, so in a 2x2 map, for example, the index 4 to 7 are breezes.
-pit_index(I, J, N, Index) :-
-    Index is N*N+I*N+J.
-
 
 % Position helpers
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -82,25 +50,6 @@ in_border(I, J, N, Border) :-
 
 % Add new rules to the KB
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-add_rules(I, J, N, Init_KB, End_KB) :-
-    breeze_index(I, J, N, Breeze_Index),
-    (
-        in_corner(I, J, N, Corner) ->
-        corner_rule(Breeze_Index, I, J, N, Corner, Rule),
-        append(Init_KB, Rule, End_KB), !
-    ;
-        in_border(I, J, N, Border) ->
-        border_rule(Breeze_Index, I, J, N, Border, Rule),
-        append(Init_KB, Rule, End_KB), !
-    ;
-        is_inside_the_matrix(I, J, N) ->
-        center_rule(Breeze_Index, I, J, N, Rule),
-        append(Init_KB, Rule, End_KB), !
-    ).
-
-add_rules(I, J, N, Init_KB, Init_KB). % Base case.
-
-
 center_rule(Breeze_Index, I, J, N, Rule) :-
     I1 is I-1, I2 is I+1, J1 is J-1, J2 is J+1,
     pit_index(I1, J, N, Pit1_Index),
@@ -176,4 +125,37 @@ border_rule(Breeze_Index, I, J, N, right, Rule) :-
     Rule = [[-Breeze_Index, Pit1_Index, Pit2_Index, Pit3_Index],
             [-Pit1_Index, Breeze_Index], [-Pit2_Index, Breeze_Index],
             [-Pit3_Index, Breeze_Index]].
+
+
+add_rules(I, J, N, Init_KB, End_KB) :-
+    breeze_index(I, J, N, Breeze_Index),
+    (
+        in_corner(I, J, N, Corner) ->
+        corner_rule(Breeze_Index, I, J, N, Corner, Rule),
+        append(Init_KB, Rule, End_KB), !
+    ;
+        in_border(I, J, N, Border) ->
+        border_rule(Breeze_Index, I, J, N, Border, Rule),
+        append(Init_KB, Rule, End_KB), !
+    ;
+        is_inside_the_matrix(I, J, N) ->
+        center_rule(Breeze_Index, I, J, N, Rule),
+        append(Init_KB, Rule, End_KB), !
+    ).
+
+add_rules(I, J, N, Init_KB, Init_KB). % Base case.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Fill up the KB with number values.
+% Each value represents an index (either pit or breeze).
+fill_up_kb(I, J, N, Init_KB, End_KB) :-
+    add_rules(I, J, N, Init_KB, Temp_KB),
+    next_indexes(I, J, N, Next_I, Next_J), !,
+    fill_up_kb(Next_I, Next_J, N, Temp_KB, End_KB).
+
+fill_up_kb(N, N, N, Init_KB, Init_KB). % Base case.
+
+% Add a new clause to the KB
+tell(KB, Index, New_KB):-
+    Rule = [Index],
+    append(KB, Rule, New_KB).
