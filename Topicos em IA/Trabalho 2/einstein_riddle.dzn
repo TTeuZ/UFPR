@@ -1,0 +1,7 @@
+Qty = 5;
+
+Nationalities = {British, Swedish, Danish, German, Norwegian};
+Colors = {Red, Green, Yellow, White, Blue};
+Pets = {Dogs, Birds, Cats, Horse, Fish};
+Drinks = {Tea, Coffee, Beer, Milk, Water};
+Hobbies = {Soccer, Baseball, Basketball, Violin, Piano};
