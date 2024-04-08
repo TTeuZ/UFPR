@@ -1,8 +1,9 @@
 include "alldifferent.mzn";
 
-% Possible options to fill
+% Quantity of options
 int: Qty;
 
+% Possible values
 enum Nationalities;
 enum Colors;
 enum Pets;
@@ -96,14 +97,16 @@ constraint forall(i in 1..Qty-1) (
 );
 
 % 14th phrase
-constraint (nationalityVars[1] = Norwegian) <-> (colorVars[2] = Blue);
-constraint (nationalityVars[5] = Norwegian) <-> (colorVars[4] = Blue);
-constraint forall(i in 1..Qty) (
-    if i > 1 /\ i < Qty then
-        ((nationalityVars[i] = Norwegian) <-> (colorVars[i+1] = Blue)) \/
-        ((nationalityVars[i] = Norwegian) <-> (colorVars[i-1] = Blue))
-    endif
-);
+% constraint (nationalityVars[1] = Norwegian) <-> (colorVars[2] = Blue);
+% constraint (nationalityVars[5] = Norwegian) <-> (colorVars[4] = Blue);
+% constraint forall(i in 1..Qty) (
+%     if i > 1 /\ i < Qty then
+%         ((nationalityVars[i] = Norwegian) <-> (colorVars[i+1] = Blue)) \/
+%         ((nationalityVars[i] = Norwegian) <-> (colorVars[i-1] = Blue))
+%     endif
+% );
+% It can be simplified to the sentence bellow because the Norwegian lives in the 1st house
+constraint colorVars[2] = Blue;
 
 % 15th phrase
 constraint (hobbyVars[1] = Basketball) <-> (drinkVars[2] = Water);
