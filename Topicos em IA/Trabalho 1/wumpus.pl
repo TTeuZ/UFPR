@@ -23,6 +23,5 @@
 wumpus(N, Map) :-
     init_kb,
     fill_up_kb(0, 0, N),
-    search(0, 0, N, Map, [[0, 0]], Path, Status),
-    write_kb, nl().
-    write(Path).
+    search(0, 0, N, Map, [], Status),
+    write_path.
