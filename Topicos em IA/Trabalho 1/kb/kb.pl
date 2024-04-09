@@ -7,25 +7,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-kbp(_, [], []).
+bcp(_, [], []).
 
-kbp(L, [C|Cs], Cs1) :-
-    kbpl(L, C, []),!,
-    kbp(L, Cs, Cs1).
+bcp(L, [C|Cs], Cs1) :-
+    bcpl(L, C, []),!,
+    bcp(L, Cs, Cs1).
 
-kbp(L, [C|Cs], [C1|Cs1]) :-
-    kbpl(L, C, C1),
-    kbp(L, Cs, Cs1).
+bcp(L, [C|Cs], [C1|Cs1]) :-
+    bcpl(L, C, C1),
+    bcp(L, Cs, Cs1).
 
-kbpl(L, C, C) :-
+bcpl(L, C, C) :-
     not(member(L, C)),
     L1 is -L,
     not(member(L1, C)).
 
-kbpl(L, C, []) :-
+bcpl(L, C, []) :-
     member(L, C).
 
-kbpl(L, C, C1) :-
+bcpl(L, C, C1) :-
     L1 is -L,
     member(L1, C),
     subtract(C, [L1], C1),
@@ -40,7 +40,7 @@ init_kb :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 tell_kb([[L]]) :- !,
     nb_getval(kb, KB),
-    kbp(L, KB, KB1),
+    bcp(L, KB, KB1),
     nb_setval(kb, KB1).
 
 tell_kb(LC) :-
@@ -54,12 +54,12 @@ tell_kb(LC) :-
 ask_kb(L) :-
     nb_getval(kb, KB),
     L1 is -L,
-    not(kbp(L1, KB, KB1)).
+    not(bcp(L1, KB, KB1)).
     
 ask_kb(L) :-
     nb_getval(kb, KB),
     L1 is -L,
-    kbp(L1, KB, KB1),
+    bcp(L1, KB, KB1),
     not(sat(KB1,[],_)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

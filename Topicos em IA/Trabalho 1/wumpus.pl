@@ -19,9 +19,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Main function
-% N -> Map size
-% Map -> Map structure
+
 wumpus(N, Map) :-
     init_kb,
     fill_up_kb(0, 0, N),
