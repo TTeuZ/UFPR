@@ -122,28 +122,22 @@ search(I, J, N, Map, Path) :-
         breeze_index(I, J, N, Index),
         tell_kb([[Index]]),
         append(Path, [[I, J]], New_Path),
-        next_moves(I, J, N, Map, New_Path), !
+        next_moves(I, J, N, Map, New_Path)
     ;
         Element = 0 ->
         breeze_index(I, J, N, Index),
         N_Index is -Index,
         tell_kb([[N_Index]]),
         append(Path, [[I, J]], New_Path),
-        next_moves(I, J, N, Map, New_Path), !
+        next_moves(I, J, N, Map, New_Path)
     ).
 
 % Base cases
 search(I, J, N, Map, Path) :-
-    nb_getval(status, Status), Status = 'playing',
-    next_moves(I, J, N, Map, New_Path), !.
+    nb_getval(status, Status), Status = won.
 
 search(I, J, N, Map, Path) :-
-    nb_getval(status, Status), Status = won,
-    true.
-
-search(I, J, N, Map, Path) :-
-    nb_getval(status, Status), Status = lose,
-    false.
+    nb_getval(status, Status), Status = lose.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
