@@ -12,12 +12,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 move([H|T], N, Map, Path) :-
     nth0(0, H, Next_I), nth0(1, H, Next_J),
-    pit_index(Next_I, Next_J, N, Index),
+    pit_index(Next_I, Next_J, N, Index), N_Index is -Index,
     (
-        ask_kb(Index) ->
+        ask_kb(N_Index) ->
+        search(Next_I, Next_J, N, Map, Path), !,
         move(T, N, Map, Path)
     ;
-        search(Next_I, Next_J, N, Map, Path), !,
         move(T, N, Map, Path)
     ).
 
