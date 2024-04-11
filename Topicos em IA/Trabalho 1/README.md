@@ -13,11 +13,11 @@ Esta é uma versão simplificada que possui apenas poços
 
 Abaixo temos a preposição logica utilizada para a construção da Base de Conhecimento:
 ```prolog
-P(i, j) <=> B(i-1, j) v B(i+1, J) v B(i, j-1) v B(i, j+1)
+B(i, j) <=> P(i-1, j) v P(i+1, J) v P(i, j-1) v P(i, j+1)
 ```
 Que se entende para:
 
-Existe **poço** em P(i, j) se e somente se existe uma **brisa** nas 4 posições adijacentes (horizontal e vertical) ao poço.
+Existe uma **brisa** em B(i, j) se e somente se existe um **poço** em alguma das 4 posições adjacentes (horizontal e vertical) a brisa.
 
 ## Arquivos
 - wumpus.pl: Arquivo principal para exexutar o agente;
