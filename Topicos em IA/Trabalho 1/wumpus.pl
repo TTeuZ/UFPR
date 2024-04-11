@@ -23,6 +23,17 @@
 % wumpus(7, [[0, 0, 0, 1, 0, 0, 0], [0, 0, 1, 2, 1, 0, 0], [1, 0, 0, 1, 0, 0, 1], [2, 1, 0, 0, 0, 1, 2], [1, 0, 0, 1, 0, 0, 1], [0, 1, 1, 2, 1, 0, 0], [1, 2, 1, 3, 0, 0, 0]]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+write_path_in_detail([H|T]) :-
+    write(' -> '), write(H), 
+    write_path_in_detail(T).
+
+write_path_in_detail([]).
+
+
+write_path :-
+    nb_getval(path, Path),
+    write('Path'),
+    write_path_in_detail(Path).
 
 
 wumpus(N, Map) :-

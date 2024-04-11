@@ -139,8 +139,3 @@ search(I, J, N, Map, Path) :-
 search(I, J, N, Map, Path) :-
     nb_getval(status, Status), Status = lose.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-write_path :-
-    nb_getval(path, Path),
-    write(Path).
