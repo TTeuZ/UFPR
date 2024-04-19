@@ -1,20 +1,14 @@
-from tools.reader import read_problem
+from tools.csp_solver import csp_solver
+from tools.utils import read_problem, write_result
 import argparse
 
 def main(args):
     problem = read_problem(args.path)
 
-    print(problem._variables)
+    solver = csp_solver()
+    result = solver.solve(problem)
 
-    for constraint in problem._constraints:
-        print(constraint._type)
-        print(constraint._scope)
-        print(constraint._tuples)
-
-    # solver = csp_solver()
-    # result = solver(problem)
-
-    # write_result(result)
+    write_result(result)
 
 
 if __name__ == "__main__":

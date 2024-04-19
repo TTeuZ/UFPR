@@ -15,6 +15,7 @@ def read_problem(path):
 
             scope = [int(elem) for elem in file.readline().split(" ")]
             scope_size = scope.pop(0)
+            scope = [elem - 1 for elem in scope]
 
             tuples = [int(elem) for elem in file.readline().split(" ")]
             tuples_size = tuples.pop(0)
@@ -24,3 +25,8 @@ def read_problem(path):
             constraints.append(new_constraint)
 
     return problem(variables, constraints)
+
+
+def write_result(result):
+    for index, value in enumerate(result):
+        print(f"x{index + 1} = {value}")
