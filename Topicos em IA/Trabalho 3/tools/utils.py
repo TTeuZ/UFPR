@@ -1,5 +1,6 @@
 from tools.problem.constraint import constraint
 from tools.problem.problem import problem
+import numpy as np
 
 def read_problem(path):
     with open(path, "r") as file:
@@ -7,7 +8,7 @@ def read_problem(path):
         for _ in range(vars_qty):
             domain = [int(elem) for elem in file.readline().split(" ")]
             domain_size = domain.pop(0)
-            variables.append((domain_size, domain))
+            variables.append((domain_size, np.array(domain)))
 
         constraints_qty, constraints = int(file.readline()), []
         for _ in range(constraints_qty):
@@ -15,7 +16,7 @@ def read_problem(path):
 
             scope = [int(elem) for elem in file.readline().split(" ")]
             scope_size = scope.pop(0)
-            scope = [elem - 1 for elem in scope]
+            scope = np.array([elem - 1 for elem in scope])
 
             tuples = [int(elem) for elem in file.readline().split(" ")]
             tuples_size = tuples.pop(0)
@@ -24,7 +25,7 @@ def read_problem(path):
             new_constraint = constraint(constraint_type, (scope_size, scope), (tuples_size, tuples))
             constraints.append(new_constraint)
 
-    return problem(variables, constraints)
+    return problem(vars_qty, variables, constraints_qty, constraints)
 
 
 def write_result(result):
