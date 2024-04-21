@@ -7,8 +7,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% Do the next move in the maze
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 move([H|T], N, Map, Path) :-
     nth0(0, H, Next_I), nth0(1, H, Next_J),
@@ -24,8 +22,6 @@ move([H|T], N, Map, Path) :-
 move([], N, Map, Path).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% Remove possible moves that are already in the path
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 remove_moves_already_in_path([H|T], Path, Filtered) :-
     member(H, Path), !,
@@ -38,13 +34,10 @@ remove_moves_already_in_path([H|T], Path, [H|Filtered]) :-
 remove_moves_already_in_path([], _, []).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% Possible moves from actual location
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 center_moves(I, J, N, Moves) :-
     I1 is I-1, I2 is I+1, J1 is J-1, J2 is J+1,
     Moves = [[I1, J], [I2, J], [I, J1], [I, J2]].
-
 
 border_moves(I, J, N, top, Moves) :-
     J1 is J-1, J2 is J+1, I1 is I+1,
@@ -62,7 +55,6 @@ border_moves(I, J, N, right, Moves) :-
     J1 is J-1, I1 is I-1, I2 is I+1,
     Moves = [[I, J1], [I1, J], [I2, J]].
 
-
 corner_moves(I, J, N, top_left, Moves) :-
     J1 is J+1, I1 is I+1,
     Moves = [[I, J1], [I1, J]].
@@ -78,7 +70,6 @@ corner_moves(I, J, N, bottom_left, Moves) :-
 corner_moves(I, J, N, bottom_right, Moves) :-
     J1 is J-1, I1 is I-1,
     Moves = [[I, J1], [I1, J]].
-
 
 next_moves(I, J, N, Map, Path) :-
     (
@@ -99,9 +90,6 @@ next_moves(I, J, N, Map, Path) :-
     ).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% Main function for the agent.
-% Do the map search looking for a safe path to gold.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 search(I, J, N, Map, Path) :- 
     nb_getval(status, Status), Status = 'playing',

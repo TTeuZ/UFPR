@@ -7,8 +7,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% Add new rules to the KB
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 center_rule(Breeze_Index, I, J, N, Rule) :-
     I1 is I-1, I2 is I+1, J1 is J-1, J2 is J+1,
@@ -20,7 +18,6 @@ center_rule(Breeze_Index, I, J, N, Rule) :-
     Rule = [[N_Breeze_Index, Pit1_Index, Pit2_Index, Pit3_Index, Pit4_Index],
             [N_Pit1_Index, Breeze_Index],[N_Pit2_Index, Breeze_Index],
             [N_Pit3_Index, Breeze_Index],[N_Pit4_Index, Breeze_Index]].
-
 
 border_rule(Breeze_Index, I, J, N, top, Rule) :-
     J1 is J-1, J2 is J+1, I1 is I+1,
@@ -62,7 +59,6 @@ border_rule(Breeze_Index, I, J, N, right, Rule) :-
             [N_Pit1_Index, Breeze_Index], [N_Pit2_Index, Breeze_Index],
             [N_Pit3_Index, Breeze_Index]].
 
-
 corner_rule(Breeze_Index, I, J, N, top_left, Rule) :-
     J1 is J+1, I1 is I+1,
     N_Breeze_Index is -Breeze_Index,
@@ -95,7 +91,6 @@ corner_rule(Breeze_Index, I, J, N, bottom_right, Rule) :-
     Rule = [[N_Breeze_Index, Pit1_Index, Pit2_Index],
             [N_Pit1_Index, Breeze_Index], [N_Pit2_Index, Breeze_Index]].
 
-
 add_rules(I, J, N) :-
     breeze_index(I, J, N, Breeze_Index),
     (
@@ -112,15 +107,15 @@ add_rules(I, J, N) :-
         tell_kb(Rule), !
     ).
 
-add_rules(I, J, N). % Base case.
+add_rules(I, J, N).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% Fill up the KB with number values.
-% Each value represents an index (either pit or breeze).
+% Fill up the KB with the relation with pit or breeze indexes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fill_up_kb(I, J, N) :-
     add_rules(I, J, N),
     next_indexes(I, J, N, Next_I, Next_J), !,
     fill_up_kb(Next_I, Next_J, N).
 
-fill_up_kb(N, N, N). % Base case.
+fill_up_kb(N, N, N).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
