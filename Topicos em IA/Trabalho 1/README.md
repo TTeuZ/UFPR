@@ -23,22 +23,33 @@ Existe uma **brisa** em B(i, j) se e somente se existe um **poço** em alguma da
 - wumpus.pl: Arquivo principal para exexutar o agente;
 - search.pl: Arquivo que contem o algoritmo para executar a busca;
 - kn.pl: Arquivo que contem a definição da Base de Conhecimento e predicados para seu uso;
-- fill_up_kb.pl: Arquivo que contem os predicados para construção da Base de Conhecimento;
+- fill_up_kb.pl: Arquivo que contem os predicados para o preenchimento da Base de Conhecimento;
 - utils.pl: Arquivo com predicados uteis como verificação de borda, dentre outros;
 - sat.pl: SAT solver.
 
 ## Como executar
 
-Dentro da pasta do projeto execute o comando swipl wumpus.pl
+Dentro da pasta do projeto execute o comando swipl wumpus.pl, ou, execute o swipl e internamente, no terminal dele, consulte o arquivo wumpus.pl (consult(wumpus)).
 
 Ao entrar na interface do swi-prolog execute o predicado wumpus(N, Map), passando o tamanho e o seu mapa de preferencia.
 
+Exemplo:
 ```prolog
 wumpus(4, [[0, 0, 0, 0], [1, 0, 0, 0], [2, 1, 0, 0], [1, 0, 0, 3]]).
 ```
 
 ```!
-Para mapas de tamanho 7 acima esta levando um tempo consideravel para executar.
+Para mapas de tamanho 7 acima o programa leva um tempo consideravel para executar.
+```
+
+### Sobre a formatação do mapa
+
+A maneira escolhida para enviar o mapa para o algoritmo seguiu o padrão ja conhecido
+
+```prolog
+[0 0 0]
+[1 0 0] -> [[0, 0, 0], [1, 0, 0], [2, 1, 3]]
+[2 1 3]
 ```
 
 ## Exemplo de entrada/saida
@@ -48,4 +59,12 @@ Para mapas de tamanho 7 acima esta levando um tempo consideravel para executar.
 You won!
 Path -> [0,0] -> [0,1] -> [0,2] -> [0,3] -> [1,3] -> [1,2] -> [2,2] -> [3,2] -> [3,3]
 true .
+```
+
+### Comandos de exemplo
+
+```prolog
+wumpus(3, [[0, 0, 0], [1, 0, 0], [2, 1, 3]]).
+wumpus(4, [[0, 0, 0, 0], [1, 0, 0, 0], [2, 1, 0, 0], [1, 0, 0, 3]]).
+wumpus(7, [[0, 0, 0, 1, 0, 0, 0], [0, 0, 1, 2, 1, 0, 0], [1, 0, 0, 1, 0, 0, 1], [2, 1, 0, 0, 0, 1, 2], [1, 0, 0, 1, 0, 0, 1], [0, 1, 1, 2, 1, 0, 0], [1, 2, 1, 3, 0, 0, 0]]).
 ```
