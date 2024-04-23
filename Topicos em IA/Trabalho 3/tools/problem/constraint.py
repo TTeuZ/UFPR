@@ -21,11 +21,11 @@ class constraint():
 
         if self.type == "V":
             for value_tuple in self.tuples:
-                if np.array_equal(temp, np.array(value_tuple)):
+                if np.array_equal(temp, value_tuple):
                     return True
             return False
         else:
             for value_tuple in self.tuples:
-                if np.array_equal(temp, np.array(value_tuple)):
+                if np.array_equal(temp, value_tuple):
                     return False
             return True

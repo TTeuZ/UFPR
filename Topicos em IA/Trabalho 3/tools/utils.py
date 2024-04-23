@@ -20,7 +20,7 @@ def read_problem(path):
 
             tuples = [int(elem) for elem in file.readline().split(" ")]
             tuples_size = tuples.pop(0)
-            tuples = [tuple(tuples[i:i+scope_size]) for i in range(0, len(tuples), scope_size)]
+            tuples = [np.array(tuples[i:i+scope_size]) for i in range(0, len(tuples), scope_size)]
 
             new_constraint = constraint(constraint_type, (scope_size, scope), (tuples_size, tuples))
             constraints.append(new_constraint)
