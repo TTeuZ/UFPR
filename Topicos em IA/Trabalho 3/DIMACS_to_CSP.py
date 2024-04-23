@@ -4,16 +4,16 @@ def write_clause(file, clause):
     clause_details = [int(elem) for elem in clause.strip().split()]
     clause_details.pop(-1)
 
-    file.write("V\n")
+    file.write("I\n")
     file.write(f"{len(clause_details)} {' '.join(str(abs(num)) for num in clause_details)}\n")
-    file.write(f"1 {' '.join(str(int(num/(abs(num)))) for num in clause_details)}\n")
+    file.write(f"1 {' '.join(('0' if num >= 0 else '1') for num in clause_details)}\n")
 
 
 def write_domain(file, vars_qty):
     file.write(f"{vars_qty}\n")
 
     for _ in range(vars_qty):
-        file.write("2 1 -1\n")
+        file.write("2 0 1\n")
 
 
 def skip_comments(file):

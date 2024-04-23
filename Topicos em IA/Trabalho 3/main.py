@@ -1,5 +1,5 @@
-from tools.csp_solver import csp_solver
 from tools.utils import read_problem, write_result
+from tools.csp_solver import csp_solver
 import argparse
 
 def main(args):
