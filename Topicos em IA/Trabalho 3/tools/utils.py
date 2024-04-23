@@ -29,5 +29,8 @@ def read_problem(path):
 
 
 def write_result(result):
-    for index, value in enumerate(result):
-        print(f"x{index + 1} = {value}")
+    if -1 in result:
+        print("INVIAVEL")
+    else:
+        for index, value in enumerate(result):
+            print(f"x{index + 1} = {value}")
