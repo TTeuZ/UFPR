@@ -1,6 +1,8 @@
 # Class that represent a CSP Problem
-# _variables: Array of tuples (domain_size, [domain])
-# _constraints: Array of constraints (constraints.class)
+# vars_qty: Quantity of problem variables
+# variables: Array of tuples (domain_size, [domain])
+# constraints_qty: Quantity of problem constraints
+# constraints: Array of constraints (constraints.class)
 
 class problem():
     def __init__(self, vars_qty, variables, constraints_qty, constraints):

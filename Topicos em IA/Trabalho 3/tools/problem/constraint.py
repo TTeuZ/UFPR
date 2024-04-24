@@ -1,9 +1,9 @@
 import numpy as np
 
 # Class that represent a CSP Constraint
-# _type: Constrint type (I or V)
-# _scope: Constraint scope -> (scope_size, [scope])
-# _tuples: Constraint tuples -> (tuples_size, [tuples])
+# type: Constrint type (I or V)
+# scope: Constraint scope -> (scope_size, [scope])
+# tuples: Constraint tuples -> (tuples_size, [tuples])
 
 DEFAULT_VALUE = -1
 

@@ -49,4 +49,3 @@ class csp_solver():
 
         self._backtracking(problem, result, INITIAL_DEPTH)
         return result
-
