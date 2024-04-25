@@ -11,7 +11,7 @@ class csp_solver():
         temp = []
         for constraint in constraints:
             validation = constraint.scope - index
-            if np.all(validation <= 0) and np.any(validation == 0):
+            if np.all(validation <= 0):
                 temp.append(constraint)
         
         return temp

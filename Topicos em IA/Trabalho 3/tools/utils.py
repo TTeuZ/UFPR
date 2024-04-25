@@ -6,7 +6,7 @@ def read_problem(path):
     with open(path, "r") as file:
         vars_qty, variables = int(file.readline()), []
         for _ in range(vars_qty):
-            domain = [int(elem) for elem in file.readline().split(" ")]
+            domain = [int(elem) for elem in file.readline().strip().split()]
             domain_size = domain.pop(0)
             variables.append((domain_size, np.array(domain)))
 
@@ -14,11 +14,11 @@ def read_problem(path):
         for _ in range(constraints_qty):
             constraint_type = file.readline()[0]
 
-            scope = [int(elem) for elem in file.readline().split(" ")]
+            scope = [int(elem) for elem in file.readline().strip().split()]
             scope_size = scope.pop(0)
             scope = np.array([elem - 1 for elem in scope])
 
-            tuples = [int(elem) for elem in file.readline().split(" ")]
+            tuples = [int(elem) for elem in file.readline().strip().split()]
             tuples_size = tuples.pop(0)
             tuples = [np.array(tuples[i:i+scope_size]) for i in range(0, len(tuples), scope_size)]
 

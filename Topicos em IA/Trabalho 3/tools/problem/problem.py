@@ -11,4 +11,5 @@ class problem():
 
         self.variables = variables
         self.constraints = constraints
+        
         self.solved = False
