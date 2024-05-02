@@ -7,11 +7,18 @@ DEFAULT_VALUE = -1
 INITIAL_DEPTH = 0
 
 class csp_solver():
-    def _get_index_related_constraints(self, index, constraints):
+    # def _get_index_related_constraints(self, index, constraints):
+    #     temp = []
+    #     for constraint in constraints:
+    #         validation = constraint.scope - index
+    #         if np.all(validation <= 0):
+    #             temp.append(constraint)
+        
+    #     return temp
+    def _get_step_constraints(self, index, constraints):
         temp = []
         for constraint in constraints:
-            validation = constraint.scope - index
-            if np.all(validation <= 0):
+            if np.all(constraint.scope <= index):
                 temp.append(constraint)
         
         return temp
@@ -20,7 +27,7 @@ class csp_solver():
     def _check_constraints(self, index, result, constraints):
         if index < 1: return True
 
-        related_constraints = self._get_index_related_constraints(index, constraints)
+        related_constraints = self._get_step_constraints(index, constraints)
         for constraint in related_constraints:
             if not constraint.check_feasibility_with_values(result):
                 return False
