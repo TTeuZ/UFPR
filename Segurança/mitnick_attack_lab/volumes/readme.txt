@@ -8,7 +8,7 @@ Primeiramente, para o ataque ser realizado é necessário adicionar o arquivo .r
 
 Para isso, fora do ambiente docker, e dentro da pasta do projeto, execute o comando
 
-sudo docker exec -it x-terminal-10.9.0.5 sh -c 'echo "10.9.0.6" >> /root/.rhosts’
+sudo docker exec -it x-terminal-10.9.0.5 sh -c 'echo "10.9.0.6" >> ~/.rhosts'
 
 Ou, caso prefira, acesse a máquina x-terminal manualmente e adicione o arquivo dentro da pasta /root contendo o IP 10.9.0.6.
 
@@ -27,7 +27,6 @@ rsh 10.9.0.5
 
 Caso queira verificar o funcionamento completo basta testar a conexão antes e depois de rodar o script.
 
-
 # Detalhando o script
 O único script utilizado é o attack.py. Nele você encontrará comentários e prints das fases da execução. Porém, fazendo um breve resumo temos as seguintes etapas
 
@@ -42,8 +41,7 @@ Esta é a etapa final, onde o script realiza a conexão RSH completa personifica
 
 A sequência de conexão e envio de pacotes é a seguinte:
 - 3-way-handshake entre as portas 1023 (seed-attacker) e 514 (x-terminal)
-- Estabelecimento de conexão RSH;
-- 3-way-handshake entre as portas 1022 (seed-attacker) e 1023 (x-terminal). Essa e a conexão na porta stderr para a conexão.
-- Fechamento da conexão RSH;
-- Fechamento da conexão na porta stderr.
-
+- Estabelecimento de conexão RSH
+- 3-way-handshake entre as portas 1022 (seed-attacker) e 1023/1022 (x-terminal). Conexão na porta STDERR
+- Fechamento da conexão RSH
+- Fechamento da conexão na porta STDERR
