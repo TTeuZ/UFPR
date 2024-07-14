@@ -7,10 +7,10 @@ services:
         container_name: seed-attacker
         tty: true
         cap_add:
-                - ALL
+            - ALL
         privileged: true
         volumes:
-                - ./volumes:/volumes
+            - ./volumes:/volumes
         network_mode: host
 
     x-terminal:
@@ -18,22 +18,19 @@ services:
         container_name: x-terminal-10.9.0.5
         tty: true
         cap_add:
-                - ALL
+            - ALL
         networks:
             net-10.9.0.0:
                 ipv4_address: 10.9.0.5
 
-        command: bash -c "
-                      /etc/init.d/openbsd-inetd start  &&
-                      tail -f /dev/null
-                 "
-                  
+        command: bash -c "echo '10.9.0.6' > ~/.rhosts && /etc/init.d/openbsd-inetd start  && tail -f /dev/null"
+
     trusted-server:
         image: seed-image-ubuntu-mitnick
         container_name: trusted-server-10.9.0.6
         tty: true
         cap_add:
-                - ALL
+            - ALL
         networks:
             net-10.9.0.0:
                 ipv4_address: 10.9.0.6
@@ -44,4 +41,3 @@ networks:
         ipam:
             config:
                 - subnet: 10.9.0.0/24
-
