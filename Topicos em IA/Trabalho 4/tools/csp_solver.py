@@ -15,6 +15,19 @@ class csp_solver():
         )
 
 
+    def _get_var_and_values(self, problem, constraint, index_in_constraint, related_tuples):
+        var_and_values = defaultdict(list)
+        for r_tuple in related_tuples:
+            filtered_tuple = [r_tuple[index] for index in range(len(r_tuple)) if index != index_in_constraint]
+            remaining_vars = [problem.variables[constraint.scope[i]] for i in range(constraint.scope_size) if i != index_in_constraint]
+
+            for var, value in zip(remaining_vars, filtered_tuple):
+                var_and_values[var].append(value)
+        var_and_values = [(var, set(values)) for var, values in var_and_values.items()]
+
+        return var_and_values
+    
+
     def _consistency(self, problem, variable):
         constraints = problem.precomputed_constraints[variable.index]
 
@@ -26,31 +39,9 @@ class csp_solver():
             if constraint.type and len(related_tuples) == 0:
                 return False
             
-            var_and_values = defaultdict(list)
-            for r_tuple in related_tuples:
-                filtered_tuple = [r_tuple[index] for index in range(len(r_tuple)) if index != index_in_constraint]
-                remaining_vars = [problem.variables[constraint.scope[i]] for i in range(constraint.scope_size) if i != index_in_constraint]
-
-                for var, value in zip(remaining_vars, filtered_tuple):
-                    var_and_values[var].append(value)
-            var_and_values = [(var, set(values)) for var, values in var_and_values.items()]
-
-            if constraint.type:
-                for var, values in var_and_values:
-                    if var.assigned_value != DEFAULT_VALUE and var.assigned_value not in values:
-                        return False
-                    if len(values.intersection(set(var.domain))) == 0:
-                        return False
-            else:
-                constraint_result = np.full(len(var_and_values), True)
-                for index, (var, values) in enumerate(var_and_values):
-                    if var.assigned_value != DEFAULT_VALUE and var.assigned_value in values:
-                        constraint_result[index] = False
-                    if len(values.intersection(set(var.domain))) >= len(var.domain):
-                        constraint_result[index] = False
-
-                if len(constraint_result) > 0 and True not in constraint_result:
-                    return False
+            var_and_values = self._get_var_and_values(problem, constraint, index_in_constraint, related_tuples)
+            if not constraint.is_satisfied(var_and_values):
+                return False
                 
         return True
     
@@ -83,7 +74,6 @@ class csp_solver():
                 )
         
         return True
-
 
 
     def _backtracking(self, problem, result, depth):
