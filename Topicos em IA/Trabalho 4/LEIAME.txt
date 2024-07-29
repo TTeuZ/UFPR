@@ -1,0 +1,128 @@
+# CSP Solver
+A linguagem Python ainda foi utilizada para a construção desta segunda versão do CSP Solver. 
+
+## Como executar
+Para executar o algoritmo basta rodar o comando
+
+python3 main.py -p <caminho_do_arquivo_de_entrada>
+
+Por se tratar de uma linguagem não compilada, não é necessário nenhum passo de compilação que necessitaria de um makefile por exemplo.
+
+### Execução com arquivos CNF em formato DIMACS
+Para resolver arquivos CNF primeiramente é necessário traduzi-lo para o formato de entrada do CSP Solver. Logo, 2 passos são necessários.
+
+Primeiro rode o comando
+
+python3 DIMACS_to_CSP.py -p <caminho_para_o_arquivo_cnf>
+
+Ao executar este script, um arquivo results.txt será gerado contendo a tradução do CNF para csp. Logo, basta executar o CSP Solver enviando este arquivo como entrada.
+
+python3 main.py -p results.txt
+
+### Executando com o mundo de wumpus
+Para executar este solver no mundo de wumpus é necessário apenas modificar a função ASK do arquivo bc.c
+
+Como o mundo de wumpus constroi arquivos em formato DIMACS a cada passo, é necessário traduzi-los e enviá los para o nosso solver, logo os seguintes passos devem ser seguidos:
+
+- Crie uma pasta chamada csp_solver (ou seu nome de preferência) na raiz do codigo do mundo de wumpus;
+- Copie os scripts main.py, dimacs_to_csp.py e a pasta tools do código deste csp solver para dentro desta pasta;
+- Faça a seguinte alteração na função ASK do arquivo bc.c para que fique como mostrado abaixo.
+
+// devolve 1 se clausula alfa é consequência lógica da BC
+int ASK(Clausula alfa, BaseCon *BC) {
+  // BC |= alfa sse BC => alfa é válida, i.e., ~BC v alfa é válida
+  // Ou ainda, ~(~BC v alfa) não é sat, i.e., BC ^ ~alfa não é sat
+  // (prova por redução ao absurdo)
+
+  // cria arquivo de entrada para o SAT solver
+  FILE *f = fopen(ARQ_IN, "w+");
+  fprintf(f, "p cnf %u %u\n", BC->n_vars, BC->n_claus + 1);
+  for (int i = 0; i < BC->n_claus; ++i) {
+    for (int j = 0; j < BC->clausulas[i].n_lit; ++j) fprintf(f, "%d ", BC->clausulas[i].literais[j]);
+    fprintf(f, "0\n");
+  }
+  // ~(alfa1 v ... v alfak) <=> (~alfa1) ^ ... ^ (~alfak)
+  for (int j = 0; j < alfa.n_lit; ++j) fprintf(f, "%d 0\n", -alfa.literais[j]);
+  fclose(f);
+
+  char conversor[100];
+  sprintf(conversor, "%s -p %s", "python3 csp_solver/dimacs_to_csp.py", "tmp.cnf");
+  if (system(conversor) == -1) {
+    printf("ERRO ao executar SAT Solver com comando %s\n", conversor);
+    exit(-1);
+  }
+
+  char csp_solver[200];
+  sprintf(csp_solver, "%s -p %s > %s", "python3 csp_solver/main.py", "results.txt", "tmp.out");
+  if (system(csp_solver) == -1) {
+    printf("ERRO ao executar SAT Solver com comando %s\n", csp_solver);
+    exit(-1);
+  }
+
+  f = fopen("tmp.out", "r");
+  char res[30];
+  fscanf(f, "%s", res);
+  fclose(f);
+
+  return strcmp(res, "INVIAVEL") == 0 ? 1 : 0;
+}
+
+OBS: Note que no caminho de chamada do tradutor e do solver é indicado a pasta csp_solver. Caso você decida por chamar a pasta de outra maneira, lembre-se de alterar o caminho indicado nesta função.
+
+Com estas alterações será possível utilizar este algoritmo na solução dos problemas do mundo de wumpus!
+
+## Melhorias
+Dentre as melhorias temos:
+- Implementação do algoritmo AC-3 para manter a consistência de arcos;
+- Implementação da heurística MRV para a seleção da próxima variável na iteração do backtracking;
+- Melhoria nas estruturas utilizadas durante a execução do algoritmo, além de remoção de verificações desnecessárias.
+
+## Detalhes de implementação
+### Algoritimo AC-3
+Como o algoritmo AC-3 padrão lida com casos de restrições binárias, foi necessário modificar um pouco sua estrutura para ser possível lidar com problemas com restrições n-arias. 
+
+A modificação realizada para atingir o objetivo foi alterar a pilha utilizada para armazenar as variáveis invés das restrições. 
+
+O pseudocódigo abaixo explica o processo
+
+Dado uma pilha Q de variáveis
+	X <- variável retirada de Q
+	Para cada V presente no dominio de X
+		Verifica a consistência com as restrições
+		Se não for consistente
+			Remove V do dominio de X
+	Se o domínio de X foi alterado
+		Adicione todas as variáveis que compartilhar restrições com X em Q
+
+A checagem de restrições se propõe a verificar se com o valor dado, nenhuma restrição relacionada a X é quebrada, caso apenas uma restrição seja quebrada o retorno da verificação é dado como falso.
+
+### Melhorias das estruturas e verificações
+A versão do CSP Solver do trabalho 3 possuía alguns checks de ‘problem.solved’ desnecessários, os quais foram removidos.
+
+Além disso, foi adicionado um pré processamento das restrições, criando um vetor que armazena, em cada uma de suas posições, uma lista de restrições relacionadas a variável do index da vez. Dessa forma se tornou possível coletar as restrições relacionadas à variável apenas acessando um index desse vetor.
+
+Ademais, as estruturas/funções built-in do python foram amplamente utilizadas na construção do algoritmo, visando usufruir o máximo possível dos ganhos de performance oferecidas por elas.
+
+### Processo de cópia dos vetores
+Visando diminuir as cópias durante a execução do backtracking, apenas o vetor de variáveis é copiado a cada descida do algoritmo, todo o restante permanece “apontando” para a mesma região de memória.
+
+### Processo de checagem de restrições
+Para diminuir as comparações nas etapas de validação das restrições, os escopos de verificação foram diminuídos o máximo possível. O pseudocódigo abaixo resume o processo
+
+Dado uma variável selecionada X com uma valoração V
+Para cada restrição R relacionada a X
+	Selecione as tuplas de valores de R que possuam X valorado como V
+	Com estas tuplas, construa os conjuntos de valores válidos/inválidos das variáveis relacionadas a esta restrição
+	Para cada variável + conjunto de valores presente na restrição
+		Faça a verificação de acordo com o tipo da restrição
+
+Deste modo, podemos resumir a validação em checar se valores estão ou não presente em domínios ou assinalados nas variáveis.
+
+## Limitações 
+Este processo diferente implementado para o AC-3 traz um leve problema que pode ocasionar em perda de performance. Como, caso o domínio de X seja modificado, adicionamos todas as variáveis que possuem restrições relacionadas a X, e como, para cada variável checamos todas as suas restrições, nós acabamos por chegar mais restrições do que seria necessário.
+
+## Resultados dos testes
+- n_queens: 48 rainhas (~5min)
+- dimacs Uniform Random-3-SAT: UF-125 (~4min), UF-150 (+10min)
+- dimacs "Flat" Graph Coloring: flat-125 (~11 segundos), flat-150 (+15min)
+- mundo de wumpus: Até o mundo de tamanho 7 foi possível executar cada passo rapidamente, A partir do mundo 15 o processamento para executar o próximo passo começa a ficar mais lento.

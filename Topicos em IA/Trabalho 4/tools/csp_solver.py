@@ -1,9 +1,6 @@
 import numpy as np
 from collections import defaultdict
 
-# CSP Solver class
-# Use a simple backtracking to find one solution (not optmal)
-
 DEFAULT_VALUE = -1
 INITIAL_DEPTH = 0
 
@@ -15,17 +12,13 @@ class csp_solver():
         )
 
 
-    def _get_var_and_values(self, problem, constraint, index_in_constraint, related_tuples):
-        var_and_values = defaultdict(list)
+    def _get_var_and_values(self, restricted_variables, related_tuples):
+        var_and_values = defaultdict(set)
         for r_tuple in related_tuples:
-            filtered_tuple = [r_tuple[index] for index in range(len(r_tuple)) if index != index_in_constraint]
-            remaining_vars = [problem.variables[constraint.scope[i]] for i in range(constraint.scope_size) if i != index_in_constraint]
-
-            for var, value in zip(remaining_vars, filtered_tuple):
-                var_and_values[var].append(value)
-        var_and_values = [(var, set(values)) for var, values in var_and_values.items()]
-
-        return var_and_values
+            for var, value in zip(restricted_variables, r_tuple):
+                var_and_values[var].add(value)
+        
+        return list(var_and_values.items())
     
 
     def _consistency(self, problem, variable):
@@ -39,7 +32,7 @@ class csp_solver():
             if constraint.type and len(related_tuples) == 0:
                 return False
             
-            var_and_values = self._get_var_and_values(problem, constraint, index_in_constraint, related_tuples)
+            var_and_values = self._get_var_and_values(restricted_variables, related_tuples)
             if not constraint.is_satisfied(var_and_values):
                 return False
                 
