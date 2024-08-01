@@ -1,5 +1,4 @@
 import numpy as np
-from collections import defaultdict
 
 DEFAULT_VALUE = -1
 INITIAL_DEPTH = 0
@@ -10,33 +9,11 @@ class csp_solver():
             (var for var in problem.variables if var.assigned_value == DEFAULT_VALUE), 
             key=lambda var: var.domain_size,
         )
-
-
-    def _get_var_and_values(self, restricted_variables, related_tuples):
-        var_and_values = defaultdict(set)
-        for r_tuple in related_tuples:
-            for var, value in zip(restricted_variables, r_tuple):
-                var_and_values[var].add(value)
-        
-        return list(var_and_values.items())
     
 
     def _consistency(self, problem, variable):
         constraints = problem.precomputed_constraints[variable.index]
-
-        for constraint in constraints:
-            restricted_variables = [problem.variables[index] for index in constraint.scope]
-            index_in_constraint = restricted_variables.index(variable)
-            related_tuples = [r_tuple for r_tuple in constraint.tuples if r_tuple[index_in_constraint] == variable.assigned_value]
-
-            if constraint.type and len(related_tuples) == 0:
-                return False
-            
-            var_and_values = self._get_var_and_values(restricted_variables, related_tuples)
-            if not constraint.is_satisfied(var_and_values):
-                return False
-                
-        return True
+        return all(constraint.is_satisfied(problem, variable) for constraint in constraints)
     
 
     def _arc_consistency(self, problem):

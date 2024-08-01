@@ -1,4 +1,3 @@
-from tools.problem.constraint import constraint
 import copy
 
 class shared_state:
@@ -8,11 +7,8 @@ class shared_state:
 
 class problem():
     def __init__(self, vars_qty, variables, constraints_qty, constraints, precomputed_constraints = None, state = None):
-        self.vars_qty = vars_qty
-        self.constraints_qty = constraints_qty
-
-        self.variables = variables
-        self.constraints = constraints
+        self.vars_qty, self.constraints_qty = vars_qty, constraints_qty
+        self.variables, self.constraints = variables, constraints
 
         self.precomputed_constraints = self._precompute_constraints() if precomputed_constraints == None else precomputed_constraints
         self.shared_state = shared_state() if state == None else state
@@ -29,14 +25,10 @@ class problem():
 
     
     def _precompute_constraints(self):
-        precomputed_constraints = [[] for _ in range(self.vars_qty)]
-
-        for index in range(self.vars_qty):
-            for constraint in self.constraints:
-                if index in constraint.scope:
-                    precomputed_constraints[index].append(constraint)
-
-        return precomputed_constraints
+        return [
+            [constraint for constraint in self.constraints if var_index in constraint.scope]
+            for var_index in range(self.vars_qty)
+        ]
     
 
     def conditional_copy(self):

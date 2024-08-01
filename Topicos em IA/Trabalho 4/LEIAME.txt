@@ -101,10 +101,10 @@ A versão do CSP Solver do trabalho 3 possuía alguns checks de ‘problem.solve
 
 Além disso, foi adicionado um pré processamento das restrições, criando um vetor que armazena, em cada uma de suas posições, uma lista de restrições relacionadas a variável do index da vez. Dessa forma se tornou possível coletar as restrições relacionadas à variável apenas acessando um index desse vetor.
 
-Ademais, as estruturas/funções built-in do python foram amplamente utilizadas na construção do algoritmo, visando usufruir o máximo possível dos ganhos de performance oferecidas por elas.
+Ademais, as estruturas/funções built-in (all, any, min) do python foram amplamente utilizadas na construção do algoritmo, visando usufruir o máximo possível dos ganhos de performance oferecidas por elas.
 
 ### Processo de cópia dos vetores
-Visando diminuir as cópias durante a execução do backtracking, apenas o vetor de variáveis é copiado a cada descida do algoritmo, todo o restante permanece “apontando” para a mesma região de memória.
+Visando diminuir as cópias durante a execução do backtracking, apenas o vetor de variáveis é copiado a cada descida do algoritmo, todo o restante permanece apontando para a mesma região de memória.
 
 ### Processo de checagem de restrições
 Para diminuir as comparações nas etapas de validação das restrições, os escopos de verificação foram diminuídos o máximo possível. O pseudocódigo abaixo resume o processo
@@ -112,9 +112,7 @@ Para diminuir as comparações nas etapas de validação das restrições, os es
 Dado uma variável selecionada X com uma valoração V
 Para cada restrição R relacionada a X
 	Selecione as tuplas de valores de R que possuam X valorado como V
-	Com estas tuplas, construa os conjuntos de valores válidos/inválidos das variáveis relacionadas a esta restrição
-	Para cada variável + conjunto de valores presente na restrição
-		Faça a verificação de acordo com o tipo da restrição
+  para cada tupla faça a checagem de acordo com o tipo de restrição.
 
 Deste modo, podemos resumir a validação em checar se valores estão ou não presente em domínios ou assinalados nas variáveis.
 
@@ -122,7 +120,7 @@ Deste modo, podemos resumir a validação em checar se valores estão ou não pr
 Este processo diferente implementado para o AC-3 traz um leve problema que pode ocasionar em perda de performance. Como, caso o domínio de X seja modificado, adicionamos todas as variáveis que possuem restrições relacionadas a X, e como, para cada variável checamos todas as suas restrições, nós acabamos por chegar mais restrições do que seria necessário.
 
 ## Resultados dos testes
-- n_queens: 48 rainhas (~5min)
-- dimacs Uniform Random-3-SAT: UF-125 (~4min), UF-150 (+10min)
-- dimacs "Flat" Graph Coloring: flat-125 (~11 segundos), flat-150 (+15min)
+- n_queens: 48 rainhas (~6min 30seg)
+- dimacs Uniform Random-3-SAT: UF-125 (~3min), UF-150 (+10min)
+- dimacs "Flat" Graph Coloring: flat-125 (~10 segundos), flat-150 (+15min)
 - mundo de wumpus: Até o mundo de tamanho 7 foi possível executar cada passo rapidamente, A partir do mundo 15 o processamento para executar o próximo passo começa a ficar mais lento.
