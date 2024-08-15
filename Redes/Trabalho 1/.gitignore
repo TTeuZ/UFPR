@@ -1,0 +1,9 @@
+# Videos
+*.mp4
+
+# Objects
+*.o
+
+# Exec files
+Server
+Client
