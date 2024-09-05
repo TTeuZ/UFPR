@@ -1,0 +1,7 @@
+# Compilor temp files
+*.tab.*
+*.output
+*.yy.c
+
+# Object files
+*.o
