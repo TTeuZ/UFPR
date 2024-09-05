@@ -1,4 +1,4 @@
-program exemplo (input, output);
+program example (input, output);
 var m,n :  integer;
 begin    
 end.
