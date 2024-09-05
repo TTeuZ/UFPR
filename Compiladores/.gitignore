@@ -2,6 +2,8 @@
 *.tab.*
 *.output
 *.yy.c
+MEPA
 
 # Object files
 *.o
+compiler
