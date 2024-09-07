@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "compiler.h"
+#include "src/compiler.h"
 #include "compiler.tab.h"
 
 #define PRINT(STR) printf("%s    # %s \n", STR, token);
