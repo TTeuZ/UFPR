@@ -27,7 +27,7 @@ program:
    OPEN_PARENTHESES list_idents CLOSE_PARENTHESES SEMICOLON
    block DOT 
    {
-      generateCode (NULL, "STOP");
+      generateCode (NULL, "PARA");
    }
 ;
 

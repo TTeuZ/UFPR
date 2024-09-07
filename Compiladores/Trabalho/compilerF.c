@@ -23,7 +23,7 @@ void generateCode(char* rot, char* command) {
   }
 }
 
-int imprimeErro(char* error) {
+int printError(char* error) {
   fprintf(stderr, "Erro na linha %d - %s\n", nl, error);
   exit(-1);
 }

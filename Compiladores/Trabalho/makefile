@@ -13,4 +13,4 @@ compiler.o : compiler.h compilerF.c
 	gcc -c compilerF.c -o compiler.o
 
 clean :
-	rm -f compiler.tab.* lex.yy.c compiler.o compiler
+	rm -f compiler.tab.* lex.yy.c compiler.output compiler.o compiler
