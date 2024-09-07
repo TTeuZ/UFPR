@@ -8,27 +8,26 @@
 int numVars;
 %}
 
-%token PROGRAM T_BEGIN T_END
-%token LABEL TYPE ARRAY OF VAR
-%token PROCEDURE FUNCTION
-%token GOTO IF THEN ELSE WHILE DO
-%token PLUS LESS MULT DIV AND OR NOT
-%token ATTRIBUTION IDENT
-%token SEMICOLON COLON COMMA DOT
+%token ATTRIBUTION PLUS LESS MULT DIV AND OR NOT
 %token OPEN_PARENTHESES CLOSE_PARENTHESES
+%token SEMICOLON COLON COMMA DOT IDENT
+%token GOTO IF THEN ELSE WHILE DO
+%token LABEL TYPE ARRAY OF VAR
+%token PROGRAM T_BEGIN T_END
+%token PROCEDURE FUNCTION
 
 %%
 
 program:
-   {
-      generateCode (NULL, "INPP");
-   }
-   PROGRAM IDENT
-   OPEN_PARENTHESES list_idents CLOSE_PARENTHESES SEMICOLON
+   { generateCode (NULL, "INPP"); }
+   PROGRAM IDENT OPEN_PARENTHESES list_idents CLOSE_PARENTHESES SEMICOLON
    block DOT 
-   {
-      generateCode (NULL, "PARA");
-   }
+   { generateCode (NULL, "PARA"); }
+;
+
+list_idents: 
+   list_idents COMMA IDENT
+   | IDENT
 ;
 
 block:
@@ -60,10 +59,6 @@ declare_var:
    SEMICOLON
 ;
 
-type: 
-   IDENT
-;
-
 list_var_id: 
    list_var_id COMMA IDENT
    {}
@@ -71,9 +66,8 @@ list_var_id:
    {}
 ;
 
-list_idents: 
-   list_idents COMMA IDENT
-   | IDENT
+type: 
+   IDENT
 ;
 
 compost_command: 

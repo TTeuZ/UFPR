@@ -44,5 +44,6 @@ extern int nl;
 
 // Global Prototypes
 void generateCode(char *, char *);
+
 int yylex();
 void yyerror(const char *s);

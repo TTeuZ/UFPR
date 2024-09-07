@@ -9,8 +9,8 @@ lex.yy.c: compiler.l compiler.h
 compiler.tab.c: compiler.y compiler.h
 	bison compiler.y -d -v
 
-compiler.o : compiler.h compilerF.c
-	gcc -c compilerF.c -o compiler.o
+compiler.o : compiler.h compilerFunctions.c
+	gcc -c compilerFunctions.c -o compiler.o
 
 clean :
 	rm -f compiler.tab.* lex.yy.c compiler.output compiler.o compiler
