@@ -1,3 +1,6 @@
+#ifndef __COMPILER_H__
+#define __COMPILER_H__
+
 #define TOKEN_SIZE 16
 
 typedef enum symbols {
@@ -44,6 +47,9 @@ extern int nl;
 
 // Global Prototypes
 void generateCode(char *, char *);
+void closeMEPAFile();
 
 int yylex();
 void yyerror(const char *s);
+
+#endif

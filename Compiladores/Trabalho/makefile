@@ -1,5 +1,5 @@
-flags = -ll -ly -lc
 objects = $(patsubst %.c, %.o, $(wildcard src/*.c))
+flags = -ll -ly -lc
 
 .PHONY: compiler clean purge removeMEPA
 

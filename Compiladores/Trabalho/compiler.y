@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "src/compiler.h"
+#include "src/symbolsTable.h"
 
 int numVars;
 %}
@@ -19,10 +20,10 @@ int numVars;
 %%
 
 program:
-   { generateCode (NULL, "INPP"); }
+   { generateCode(NULL, "INPP"); }
    PROGRAM IDENT OPEN_PARENTHESES list_idents CLOSE_PARENTHESES SEMICOLON
    block DOT 
-   { generateCode (NULL, "PARA"); }
+   { generateCode(NULL, "PARA"); }
 ;
 
 list_idents: 
@@ -53,8 +54,7 @@ declare_vars:
 
 declare_var: 
    {}
-   list_var_id COLON
-   type
+   list_var_id COLON type
    {}
    SEMICOLON
 ;
@@ -95,7 +95,12 @@ int main (int argc, char** argv) {
    }
 
    yyin = fp;
+   innitSymbolsTable();
+
    yyparse();
 
+   cleanSymbolsTable();
+   closeMEPAFile();
+   fclose(fp);
    return 0;
 }

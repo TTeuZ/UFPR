@@ -1,8 +1,8 @@
+#include "compiler.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "compiler.h"
 
 // Global Variables
 symbols symbol, relation;
@@ -22,6 +22,8 @@ void generateCode(char* rot, char* command) {
     fflush(fp);
   }
 }
+
+void closeMEPAFile() { fclose(fp); }
 
 int printError(char* error) {
   fprintf(stderr, "Erro na linha %d - %s\n", nl, error);
