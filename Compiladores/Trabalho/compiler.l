@@ -64,6 +64,13 @@ var {
   return VAR;
 }
 
+integer { 
+  symbol = symb_integer;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("integer");
+  return INTEGER;
+}
+
 procedure {
   symbol = symb_procedure;
   strncpy(token, yytext, TOKEN_SIZE);
@@ -230,6 +237,55 @@ not {
   strncpy(token, yytext, TOKEN_SIZE);
   PRINT("close_parentheses");
   return CLOSE_PARENTHESES;
+}
+
+\> { 
+  symbol = symb_greater;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("greater");
+  return GREATER;
+}
+
+\< {
+  symbol = symb_less;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("less");
+  return LESS;
+}
+
+\>= { 
+  symbol = symb_greater_equal;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("greater_equal");
+  return GREATER_EQUAL;
+}
+
+\<= { 
+  symbol = symb_less_equal;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("less_equal");
+  return LESS_EQUAL;
+}
+
+\<> { 
+  symbol = symb_diff;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("diferente");
+  return DIFF;
+}
+
+\= { 
+  symbol = symb_equal;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("equal");
+  return EQUAL;
+}
+
+{number} { 
+  symbol = symb_number;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("number");
+  return NUMBER;
 }
 
 {ident} { 
