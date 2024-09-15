@@ -82,11 +82,74 @@ type:
    INTEGER { setSimpleVariableType(t_integer); }
 ;
 
-compost_command: 
+compost_command:
    T_BEGIN commands T_END
 ;
 
 commands:
+   commands unlabeled_command
+   | unlabeled_command
+;
+
+unlabeled_command:
+   attribution
+;
+
+attribution:
+   variable ATTRIBUTION expression SEMICOLON
+;
+
+expression:
+   simple_expression relation simple_expression
+   | simple_expression
+;
+
+relation:
+   EQUAL
+   | DIFF
+   | GREATER
+   | GREATER_EQUAL
+   | LESS_EQUAL
+   | LESS
+;
+
+simple_expression:
+   simple_expression plus_minus_or term
+   | plus_minus_empty term
+;
+
+plus_minus_empty:
+   PLUS
+   | MINUS
+   |
+;
+
+plus_minus_or:
+   PLUS
+   | MINUS
+   | OR
+;
+
+term:
+   factor mult_div_and factor
+   | factor
+;
+
+mult_div_and:
+   MULT
+   | DIV
+   | AND
+;
+
+factor:
+   variable
+   | NUMBER
+   | OPEN_PARENTHESES expression CLOSE_PARENTHESES
+   | NOT factor
+;
+
+variable:
+   IDENT
 ;
 
 %%
