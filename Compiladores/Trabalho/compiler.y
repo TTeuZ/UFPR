@@ -5,11 +5,16 @@
 #include <string.h>
 #include "src/compiler.h"
 #include "src/symbolsTable.h"
+#include "src/stack.h"
+
+symbolsTable_t symbolsTable;
+stack_t amemStack;
 
 int numVars;
+int amemSize;
 %}
 
-%token ATTRIBUTION PLUS LESS MULT DIV AND OR NOT
+%token ATTRIBUTION PLUS MINUS MULT DIV AND OR NOT
 %token OPEN_PARENTHESES CLOSE_PARENTHESES
 %token GREATER LESS GREATER_EQUAL LESS_EQUAL DIFF EQUAL
 %token SEMICOLON COLON COMMA DOT IDENT NUMBER
@@ -21,7 +26,9 @@ int numVars;
 %%
 
 program:
-   { generateCode(NULL, "INPP"); }
+   { generateCode(NULL, "INPP"); 
+      printf("%d\n", amemStack.sp);
+   }
    PROGRAM IDENT OPEN_PARENTHESES list_idents CLOSE_PARENTHESES SEMICOLON
    block DOT 
    { generateCode(NULL, "PARA"); }
@@ -33,17 +40,19 @@ list_idents:
 ;
 
 block:
-   part_declare_vars
-   {}
+   vars_declaration
+   {
+      if (amemSize > 0) {
+         char amem[AMEM_SIZE];
+         sprintf(amem, "AMEM %d", amemSize);
+         generateCode(NULL, amem);
+      }
+   }
    compost_command
 ;
 
-part_declare_vars:  
-   var
-;
-
-var: 
-   {} 
+vars_declaration:  
+   { numVars = 0; } 
    VAR declare_vars
    |
 ;
@@ -68,7 +77,7 @@ list_var_id:
 ;
 
 type: 
-   IDENT
+   INTEGER
 ;
 
 compost_command: 
@@ -96,7 +105,8 @@ int main (int argc, char** argv) {
    }
 
    yyin = fp;
-   innitSymbolsTable();
+   initSymbolsTable();
+   initStack(&amemStack);
 
    yyparse();
 

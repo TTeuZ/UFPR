@@ -149,10 +149,10 @@ do {
 }
 
 \- {
-  symbol = symb_less;
+  symbol = symb_minus;
   strncpy(token, yytext, TOKEN_SIZE);
-  PRINT("less");
-  return LESS;
+  PRINT("minus");
+  return MINUS;
 }
 
 \* {

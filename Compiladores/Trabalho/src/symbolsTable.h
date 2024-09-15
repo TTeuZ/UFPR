@@ -26,13 +26,13 @@ typedef struct symbolDescriber {
 
 typedef struct symbolsTable {
   symbolDescriber_t *symbols[MAX_SYMBOLS_QTY];
-  size_t sp;
+  int sp;
 } symbolsTable_t;
 
 // Setting the table globally
 extern symbolsTable_t symbolsTable;
 
-void innitSymbolsTable();
+void initSymbolsTable();
 void cleanSymbolsTable();
 
 // Simple variables

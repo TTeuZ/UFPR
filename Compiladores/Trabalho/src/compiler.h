@@ -2,6 +2,7 @@
 #define __COMPILER_H__
 
 #define TOKEN_SIZE 16
+#define AMEM_SIZE 10
 
 typedef enum symbols {
   symb_program,
@@ -22,7 +23,7 @@ typedef enum symbols {
   symb_while,
   symb_do,
   symb_plus,
-  symb_less,
+  symb_minus,
   symb_mult,
   symb_div,
   symb_and,
