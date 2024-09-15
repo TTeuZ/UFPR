@@ -8,7 +8,6 @@
 #include "src/intStack.h"
 
 intStack_t amemStack;
-
 int numVars;
 %}
 

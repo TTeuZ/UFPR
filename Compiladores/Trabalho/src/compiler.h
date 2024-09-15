@@ -54,6 +54,7 @@ extern int nl;
 // Global Prototypes
 void generateCode(char *, char *);
 void closeMEPAFile();
+void printError(char *error);
 
 int yylex();
 void yyerror(const char *s);

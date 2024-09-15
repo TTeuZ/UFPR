@@ -1,17 +1,36 @@
 #include "symbolsTable.h"
 
+#include "compiler.h"
+
 symbolsTable_t symbolsTable;
 int lexicalLevel;
 int displacement;
+
+// ------------------------------------------------ Internal Functions ------------------------------------------------
+
+void verifyBeforeInsert(char *identifier, categories category) {
+  int temp = searchSymbol(identifier);
+
+  if (temp != -1) {
+    symbolDescriber_t *symbol = symbolsTable.symbols[temp];
+    if (symbolsTable.symbols[temp]->category == category && symbolsTable.symbols[temp]->lexicalLevel == lexicalLevel) {
+      printError("Redeclaracao de identificador!");
+      exit(1);
+    }
+  }
+}
+
+// ------------------------------------------------ Internal Functions ------------------------------------------------
 
 void initSymbolsTable() { symbolsTable.sp = -1; }
 
 void cleanSymbolsTable() { removeSymbols(symbolsTable.sp + 1); }
 
 void insertSimpleVar(char *identifier, int lexicalLevel, int displacement) {
+  verifyBeforeInsert(identifier, simple_var);
+
   symbolDescriber_t *symbol = malloc(sizeof(symbolDescriber_t));
   simpleVarAttributes_t *attributes = malloc(sizeof(simpleVarAttributes_t));
-
   if (symbol == NULL || attributes == NULL) {
     fprintf(stderr, "Erro allocating simple var memory\n");
     exit(1);
@@ -55,16 +74,16 @@ void removeSymbols(size_t n) {
 }
 
 void setSimpleVariableType(types type) {
-  int count = symbolsTable.sp;
   simpleVarAttributes_t *attributes;
   symbolDescriber_t *symbol;
 
-  while (count >= 0) {
-    symbol = symbolsTable.symbols[count];
-    attributes = (simpleVarAttributes_t *)symbol->attributes;
+  for (int i = symbolsTable.sp; i >= 0; --i) {
+    symbol = symbolsTable.symbols[i];
 
-    if (attributes->type == t_undefined) attributes->type = type;
-    count--;
+    if (symbol->category == simple_var) {
+      attributes = (simpleVarAttributes_t *)symbolsTable.symbols[i]->attributes;
+      if (attributes->type == t_undefined) attributes->type = type;
+    }
   }
 }
 

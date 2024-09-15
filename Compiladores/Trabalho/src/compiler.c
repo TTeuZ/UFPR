@@ -25,7 +25,7 @@ void generateCode(char* rot, char* command) {
 
 void closeMEPAFile() { fclose(fp); }
 
-int printError(char* error) {
+void printError(char* error) {
   fprintf(stderr, "Erro na linha %d - %s\n", nl, error);
   exit(-1);
 }
