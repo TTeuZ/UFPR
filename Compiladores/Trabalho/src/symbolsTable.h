@@ -9,7 +9,7 @@
 
 #define MAX_SYMBOLS_QTY 1024
 
-typedef enum categories { simple_variable } categories;
+typedef enum categories { simple_var } categories;
 typedef enum types { t_integer, t_undefined } types;
 
 typedef struct simpleVarAttributes {
@@ -31,6 +31,8 @@ typedef struct symbolsTable {
 
 // Setting the table globally
 extern symbolsTable_t symbolsTable;
+extern int lexicalLevel;
+extern int displacement;
 
 void initSymbolsTable();
 void cleanSymbolsTable();
@@ -42,5 +44,9 @@ void removeSimpleVar(symbolDescriber_t *symbol);
 // Routine functions
 int searchSymbol(char *identifier);
 void removeSymbols(size_t n);
+void setSimpleVariableType(types type);
+
+// Debug functions
+void printSymbolsTable();
 
 #endif

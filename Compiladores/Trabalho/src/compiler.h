@@ -2,7 +2,7 @@
 #define __COMPILER_H__
 
 #define TOKEN_SIZE 16
-#define AMEM_SIZE 10
+#define MEPA_COMMAND_SIZE 16
 
 typedef enum symbols {
   symb_program,
@@ -49,8 +49,6 @@ typedef enum symbols {
 // Global variables
 extern symbols symbol, relation;
 extern char token[TOKEN_SIZE];
-extern int lexicalLevel;
-extern int displacement;
 extern int nl;
 
 // Global Prototypes

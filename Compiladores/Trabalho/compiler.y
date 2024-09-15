@@ -5,13 +5,11 @@
 #include <string.h>
 #include "src/compiler.h"
 #include "src/symbolsTable.h"
-#include "src/stack.h"
+#include "src/intStack.h"
 
-symbolsTable_t symbolsTable;
-stack_t amemStack;
+intStack_t amemStack;
 
 int numVars;
-int amemSize;
 %}
 
 %token ATTRIBUTION PLUS MINUS MULT DIV AND OR NOT
@@ -26,34 +24,43 @@ int amemSize;
 %%
 
 program:
-   { generateCode(NULL, "INPP"); 
-      printf("%d\n", amemStack.sp);
-   }
-   PROGRAM IDENT OPEN_PARENTHESES list_idents CLOSE_PARENTHESES SEMICOLON
+   { generateCode(NULL, "INPP"); lexicalLevel = 0; }
+   PROGRAM IDENT OPEN_PARENTHESES idents_list CLOSE_PARENTHESES SEMICOLON
    block DOT 
    { generateCode(NULL, "PARA"); }
 ;
 
-list_idents: 
-   list_idents COMMA IDENT
+idents_list: 
+   idents_list COMMA IDENT
    | IDENT
 ;
 
 block:
+   { numVars = 0; displacement = 0; } 
    vars_declaration
-   {
-      if (amemSize > 0) {
-         char amem[AMEM_SIZE];
-         sprintf(amem, "AMEM %d", amemSize);
+   { // AMEM
+      if (numVars > 0) {
+         char amem[MEPA_COMMAND_SIZE];
+         sprintf(amem, "AMEM %d", numVars);
          generateCode(NULL, amem);
       }
+
+      intStackPush(&amemStack, numVars);
    }
    compost_command
+   { // DMEM
+      int blockNumVars = intStackPop(&amemStack);
+
+      if (blockNumVars > 0) {
+         char dmem[MEPA_COMMAND_SIZE];
+         sprintf(dmem, "DMEM %d", blockNumVars);
+         generateCode(NULL, dmem);
+      }
+   }
 ;
 
 vars_declaration:  
-   { numVars = 0; } 
-   VAR declare_vars
+   vars_declaration VAR declare_vars
    |
 ;
 
@@ -63,21 +70,17 @@ declare_vars:
 ;
 
 declare_var: 
-   {}
    list_var_id COLON type
-   {}
    SEMICOLON
 ;
 
 list_var_id: 
-   list_var_id COMMA IDENT
-   {}
-   | IDENT 
-   {}
+   list_var_id COMMA IDENT { insertSimpleVar(token, lexicalLevel, displacement++); ++numVars; }
+   | IDENT { insertSimpleVar(token, lexicalLevel, displacement++); ++numVars; }
 ;
 
 type: 
-   INTEGER
+   INTEGER { setSimpleVariableType(t_integer); }
 ;
 
 compost_command: 
@@ -106,12 +109,13 @@ int main (int argc, char** argv) {
 
    yyin = fp;
    initSymbolsTable();
-   initStack(&amemStack);
+   initIntStack(&amemStack);
 
    yyparse();
 
    cleanSymbolsTable();
    closeMEPAFile();
    fclose(fp);
+
    return 0;
 }
