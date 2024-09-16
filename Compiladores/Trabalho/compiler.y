@@ -7,6 +7,7 @@
 #include "src/symbolsTable.h"
 #include "src/intStack.h"
 
+char mepaCommand[MEPA_COMMAND_SIZE];
 intStack_t amemStack;
 int numVars;
 %}
@@ -19,6 +20,21 @@ int numVars;
 %token LABEL TYPE ARRAY OF VAR INTEGER
 %token PROGRAM T_BEGIN T_END
 %token PROCEDURE FUNCTION
+
+%union {
+   char *str;
+   int int_val;
+}
+
+%type <str> relation
+%type <str> mult_div_and
+%type <str> plus_minus_or
+%type <str> plus_minus_empty
+%type <int_val> variable
+%type <int_val> expression
+%type <int_val> simple_expression
+%type <int_val> term
+%type <int_val> factor
 
 %%
 
@@ -39,9 +55,8 @@ block:
    vars_declaration
    { // AMEM
       if (numVars > 0) {
-         char amem[MEPA_COMMAND_SIZE];
-         sprintf(amem, "AMEM %d", numVars);
-         generateCode(NULL, amem);
+         sprintf(mepaCommand, "AMEM %d", numVars);
+         generateCode(NULL, mepaCommand);
       }
 
       intStackPush(&amemStack, numVars);
@@ -51,9 +66,8 @@ block:
       int blockNumVars = intStackPop(&amemStack);
 
       if (blockNumVars > 0) {
-         char dmem[MEPA_COMMAND_SIZE];
-         sprintf(dmem, "DMEM %d", blockNumVars);
-         generateCode(NULL, dmem);
+         sprintf(mepaCommand, "DMEM %d", blockNumVars);
+         generateCode(NULL, mepaCommand);
       }
    }
 ;
@@ -89,6 +103,7 @@ compost_command:
 commands:
    commands unlabeled_command
    | unlabeled_command
+   |
 ;
 
 unlabeled_command:
@@ -96,60 +111,141 @@ unlabeled_command:
 ;
 
 attribution:
-   variable ATTRIBUTION expression SEMICOLON
+   variable ATTRIBUTION expression
+   {
+      symbolDescriber_t *symbol = symbolsTable.symbols[$1];
+      simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
+
+      if (attributes->type != $3)
+         printError("Tipos incompatives!");
+
+      sprintf(mepaCommand, "ARMZ %d, %d", symbol->lexicalLevel, attributes->displacement);
+      generateCode(NULL, mepaCommand);
+   }
+   SEMICOLON
 ;
 
 expression:
    simple_expression relation simple_expression
-   | simple_expression
+   {
+      if ($1 != t_integer || $3 != t_integer)
+         printError("Tipos incompatives!");
+
+      sprintf(mepaCommand, "%s", $2);
+      generateCode(NULL, mepaCommand);
+      $$ = t_boolean;
+   }
+   | simple_expression { $$ = $1; }
 ;
 
 relation:
-   EQUAL
-   | DIFF
-   | GREATER
-   | GREATER_EQUAL
-   | LESS_EQUAL
-   | LESS
+   EQUAL { $$ = "CMIG"; }
+   | DIFF { $$ = "CMDG"; }
+   | GREATER { $$ = "CMMA"; }
+   | GREATER_EQUAL { $$ = "CMAG"; }
+   | LESS_EQUAL { $$ = "CMEG"; }
+   | LESS { $$ = "CMME"; }
 ;
 
 simple_expression:
    simple_expression plus_minus_or term
-   | plus_minus_empty term
-;
+   {
+      if (strcmp("DISJ", $2) == 0 && ($1 != t_boolean || $3 != t_boolean))
+         printError("Tipos incompatives!");
+      else if (strcmp("DISJ", $2) != 0 && ($1 != t_integer || $3 != t_integer))
+         printError("Tipos incompatives!");
+      else if ($1 != $3) 
+         printError("Tipos incompatives!");
 
-plus_minus_empty:
-   PLUS
-   | MINUS
-   |
+      sprintf(mepaCommand, "%s", $2);
+      generateCode(NULL, mepaCommand);
+      $$ = strcmp("DISJ", $2) != 0 ? t_integer : t_boolean;
+   }
+   | plus_minus_empty term
+   {
+      if (strcmp("NADA", $1) != 0) {
+         if ($2 != t_integer)
+            printError("Tipos incompatives!");
+         
+         if (strcmp("SUBT", $1) == 0)
+            generateCode(NULL, "INVR");
+      }
+      $$ = $2;
+   }
 ;
 
 plus_minus_or:
-   PLUS
-   | MINUS
-   | OR
+   PLUS { $$ = "SOMA"; }
+   | MINUS { $$ = "SUBT"; }
+   | OR { $$ = "DISJ"; }
+;
+
+plus_minus_empty:
+   PLUS { $$ = "SOMA"; }
+   | MINUS { $$ = "SUBT"; }
+   | { $$ = "NADA"; }
 ;
 
 term:
    factor mult_div_and factor
-   | factor
+   {
+      if (strcmp("CONJ", $2) == 0 && ($1 != t_boolean || $3 != t_boolean))
+         printError("Tipos incompatives!");
+      else if (strcmp("CONJ", $2) != 0 && ($1 != t_integer || $3 != t_integer))
+         printError("Tipos incompatives!");
+      else if ($1 != $3) 
+         printError("Tipos incompatives!");
+
+      sprintf(mepaCommand, "%s", $2);
+      generateCode(NULL, mepaCommand);
+      $$ = strcmp("CONJ", $2) != 0 ? t_integer : t_boolean;
+   }
+   | factor { $$ = $1; }
 ;
 
 mult_div_and:
-   MULT
-   | DIV
-   | AND
+   MULT { $$ = "MULT"; }
+   | DIV { $$ = "DIVI"; }
+   | AND { $$ = "CONJ"; }
 ;
 
 factor:
    variable
+   {
+      symbolDescriber_t *symbol = symbolsTable.symbols[$1];
+      simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
+      sprintf(mepaCommand, "CRVL %d,%d", symbol->lexicalLevel, attributes->displacement);
+      generateCode(NULL, mepaCommand);
+      $$ = attributes->type;
+   }
    | NUMBER
+   {
+      sprintf(mepaCommand, "CRCT %d", atoi(token));
+      generateCode(NULL, mepaCommand);
+      $$ = t_integer;
+   }
    | OPEN_PARENTHESES expression CLOSE_PARENTHESES
+   { 
+      $$ = $2; 
+   }
    | NOT factor
+   { 
+      if ($2 != t_boolean)
+         printError("Tipo incompativel!");
+      
+      generateCode(NULL, "NEGA");
+      $$ = t_boolean;
+   }
 ;
+// TODO: Ta certo o NOT factor e OPEN_PARENTHESES expression CLOSE_PARENTHESES
 
 variable:
    IDENT
+   {
+      int varPos = searchSymbol(token);
+      if (varPos == -1) printError("variavel nao declarada!");
+      $$ = varPos;
+   }
 ;
 
 %%

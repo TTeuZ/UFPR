@@ -10,7 +10,7 @@
 #define MAX_SYMBOLS_QTY 1024
 
 typedef enum categories { simple_var } categories;
-typedef enum types { t_integer, t_undefined } types;
+typedef enum types { t_integer, t_boolean, t_undefined } types;
 
 typedef struct simpleVarAttributes {
   int displacement;
