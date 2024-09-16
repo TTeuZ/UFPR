@@ -270,7 +270,7 @@ not {
 \<> { 
   symbol = symb_diff;
   strncpy(token, yytext, TOKEN_SIZE);
-  PRINT("diferente");
+  PRINT("different");
   return DIFF;
 }
 
@@ -279,6 +279,20 @@ not {
   strncpy(token, yytext, TOKEN_SIZE);
   PRINT("equal");
   return EQUAL;
+}
+
+read { 
+  symbol = symb_read;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("read");
+  return READ;
+}
+
+write { 
+  symbol = symb_write;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("write");
+  return WRITE;
 }
 
 {number} { 

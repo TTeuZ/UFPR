@@ -42,6 +42,8 @@ typedef enum symbols {
   symb_less_equal,
   symb_diff,
   symb_equal,
+  symb_read,
+  symb_write,
   symb_identifier,
   symb_number,
 } symbols;

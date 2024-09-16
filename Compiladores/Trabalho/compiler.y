@@ -20,6 +20,7 @@ int numVars;
 %token LABEL TYPE ARRAY OF VAR INTEGER
 %token PROGRAM T_BEGIN T_END
 %token PROCEDURE FUNCTION
+%token READ WRITE
 
 %union {
    char *str;
@@ -83,8 +84,7 @@ declare_vars:
 ;
 
 declare_var: 
-   list_var_id COLON type
-   SEMICOLON
+   list_var_id COLON type SEMICOLON
 ;
 
 list_var_id: 
@@ -108,6 +108,8 @@ commands:
 
 unlabeled_command:
    attribution
+   | read
+   | write
 ;
 
 attribution:
@@ -119,10 +121,58 @@ attribution:
       if (attributes->type != $3)
          printError("Tipos incompatives!");
 
-      sprintf(mepaCommand, "ARMZ %d, %d", symbol->lexicalLevel, attributes->displacement);
+      sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
       generateCode(NULL, mepaCommand);
    }
    SEMICOLON
+;
+
+read:
+   READ OPEN_PARENTHESES read_items CLOSE_PARENTHESES SEMICOLON
+;
+
+read_items:
+   read_items COMMA read_item 
+   | read_item
+;
+
+read_item:
+   variable
+   {
+      symbolDescriber_t *symbol = symbolsTable.symbols[$1];
+      simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
+
+      generateCode(NULL, "LEIT");
+      sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
+      generateCode(NULL, mepaCommand);
+   }
+;
+
+write:
+   WRITE OPEN_PARENTHESES write_values CLOSE_PARENTHESES SEMICOLON
+;
+
+write_values:
+   write_values COMMA write_value
+   | write_value 
+;
+
+write_value:
+   variable
+   {
+      symbolDescriber_t *symbol = symbolsTable.symbols[$1];
+      simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
+
+      sprintf(mepaCommand, "CRVL %d,%d", symbol->lexicalLevel, attributes->displacement);
+      generateCode(NULL, mepaCommand);
+      generateCode(NULL, "IMPR");
+   }
+   | NUMBER
+   {
+      sprintf(mepaCommand, "CRCT %d", atoi(token));
+      generateCode(NULL, mepaCommand);
+      generateCode(NULL, "IMPR");
+   }
 ;
 
 expression:
@@ -214,6 +264,7 @@ factor:
    {
       symbolDescriber_t *symbol = symbolsTable.symbols[$1];
       simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
+
       sprintf(mepaCommand, "CRVL %d,%d", symbol->lexicalLevel, attributes->displacement);
       generateCode(NULL, mepaCommand);
       $$ = attributes->type;
