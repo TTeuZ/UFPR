@@ -326,7 +326,6 @@ factor:
       $$ = t_boolean;
    }
 ;
-// TODO: Ta certo o NOT factor e OPEN_PARENTHESES expression CLOSE_PARENTHESES
 
 variable:
    IDENT
