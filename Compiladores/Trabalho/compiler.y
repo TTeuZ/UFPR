@@ -101,7 +101,12 @@ type:
 ;
 
 compost_command:
-   T_BEGIN commands T_END semicolon_or_nothing
+   T_BEGIN commands_or_nothing T_END semicolon_or_nothing
+;
+
+commands_or_nothing:
+   commands
+   |
 ;
 
 semicolon_or_nothing:
@@ -112,7 +117,6 @@ semicolon_or_nothing:
 commands:
    commands unlabeled_command
    | unlabeled_command
-   |
 ;
 
 unlabeled_command:
