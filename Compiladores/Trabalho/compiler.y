@@ -8,8 +8,12 @@
 #include "src/intStack.h"
 
 char mepaCommand[MEPA_COMMAND_SIZE];
+char mepaLabel[MEPA_COMMAND_SIZE];
+
 intStack_t amemStack;
-int numVars;
+intStack_t labelStack;
+
+int numVars, labelNumber;
 %}
 
 %token ATTRIBUTION PLUS MINUS MULT DIV AND OR NOT
@@ -40,7 +44,7 @@ int numVars;
 %%
 
 program:
-   { generateCode(NULL, "INPP"); lexicalLevel = 0; }
+   { generateCode(NULL, "INPP"); lexicalLevel = 0; labelNumber = 0; }
    PROGRAM IDENT OPEN_PARENTHESES idents_list CLOSE_PARENTHESES SEMICOLON
    block DOT 
    { generateCode(NULL, "PARA"); }
@@ -97,7 +101,12 @@ type:
 ;
 
 compost_command:
-   T_BEGIN commands T_END
+   T_BEGIN commands T_END semicolon_or_nothing
+;
+
+semicolon_or_nothing:
+   SEMICOLON
+   |
 ;
 
 commands:
@@ -108,6 +117,7 @@ commands:
 
 unlabeled_command:
    attribution
+   | while
    | read
    | write
 ;
@@ -125,6 +135,30 @@ attribution:
       generateCode(NULL, mepaCommand);
    }
    SEMICOLON
+;
+
+while:
+   WHILE 
+   {
+      sprintf(mepaLabel, "R%02d", labelNumber);
+      intStackPush(&labelStack, labelNumber++);
+      generateCode(mepaLabel, "NADA");
+   }
+   expression
+   {
+      sprintf(mepaCommand, "DSVF R%02d", labelNumber);
+      intStackPush(&labelStack, labelNumber++);
+      generateCode(NULL, mepaCommand);
+   }
+   DO compost_command
+   {
+      int exitLabel = intStackPop(&labelStack);
+      sprintf(mepaLabel, "R%02d", exitLabel);
+      sprintf(mepaCommand, "DSVS R%02d", intStackPop(&labelStack));
+
+      generateCode(NULL, mepaCommand);
+      generateCode(mepaLabel, "NADA");
+   }
 ;
 
 read:
@@ -319,6 +353,7 @@ int main (int argc, char** argv) {
    yyin = fp;
    initSymbolsTable();
    initIntStack(&amemStack);
+   initIntStack(&labelStack);
 
    yyparse();
 
