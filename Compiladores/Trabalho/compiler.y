@@ -26,6 +26,9 @@ int numVars, labelNumber;
 %token PROCEDURE FUNCTION
 %token READ WRITE
 
+%nonassoc LOWER_THAN_ELSE
+%nonassoc ELSE
+
 %union {
    char *str;
    int int_val;
@@ -120,8 +123,10 @@ commands:
 ;
 
 unlabeled_command:
-   attribution
-   | while
+   compost_command
+   | attribution
+   | conditional_command
+   | repetitive_command
    | read
    | write
 ;
@@ -141,7 +146,41 @@ attribution:
    SEMICOLON
 ;
 
-while:
+conditional_command:
+   if_then condition_else
+   {
+      int endLabel = intStackPop(&labelStack);
+      sprintf(mepaLabel, "R%02d", endLabel);
+      generateCode(mepaLabel, "NADA");
+   }
+;
+
+if_then:
+   IF expression 
+   {
+      sprintf(mepaCommand, "DSVF R%02d", labelNumber);
+      intStackPush(&labelStack, labelNumber++);
+      generateCode(NULL, mepaCommand);
+   }
+   THEN unlabeled_command
+   {
+      sprintf(mepaCommand, "DSVS R%02d", labelNumber);
+      generateCode(NULL, mepaCommand);
+
+      int elseLabel = intStackPop(&labelStack);
+      sprintf(mepaLabel, "R%02d", elseLabel);
+      generateCode(mepaLabel, "NADA");
+
+      intStackPush(&labelStack, labelNumber++);
+   }
+;
+
+condition_else:
+   ELSE unlabeled_command
+   | %prec LOWER_THAN_ELSE
+;
+
+repetitive_command:
    WHILE 
    {
       sprintf(mepaLabel, "R%02d", labelNumber);
@@ -154,7 +193,7 @@ while:
       intStackPush(&labelStack, labelNumber++);
       generateCode(NULL, mepaCommand);
    }
-   DO compost_command
+   DO unlabeled_command
    {
       int exitLabel = intStackPop(&labelStack);
       sprintf(mepaLabel, "R%02d", exitLabel);
@@ -275,7 +314,7 @@ plus_minus_empty:
 ;
 
 term:
-   factor mult_div_and factor
+   term mult_div_and factor
    {
       if (strcmp("CONJ", $2) == 0 && ($1 != t_boolean || $3 != t_boolean))
          printError("Tipos incompatives!");
