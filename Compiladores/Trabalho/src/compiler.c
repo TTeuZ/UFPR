@@ -15,10 +15,10 @@ void generateCode(char* rot, char* command) {
   }
 
   if (rot == NULL) {
-    fprintf(fp, "     %s\n", command);
+    fprintf(fp, "    %s\n", command);
     fflush(fp);
   } else {
-    fprintf(fp, "%s: %s \n", rot, command);
+    fprintf(fp, "%s:%s\n", rot, command);
     fflush(fp);
   }
 }
