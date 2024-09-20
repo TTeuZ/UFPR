@@ -61,7 +61,7 @@ idents_list:
 block:
    { numVars = 0; displacement = 0; } 
    vars_declaration
-   { // AMEM
+   {
       if (numVars > 0) {
          sprintf(mepaCommand, "AMEM %d", numVars);
          generateCode(NULL, mepaCommand);
@@ -70,7 +70,7 @@ block:
       intStackPush(&amemStack, numVars);
    }
    compost_command
-   { // DMEM
+   {
       int blockNumVars = intStackPop(&amemStack);
 
       if (blockNumVars > 0) {
