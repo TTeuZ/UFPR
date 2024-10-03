@@ -97,6 +97,20 @@ void removeProcedure(symbolDescriber_t *symbol) {
   free(symbol);
 }
 
+void removeProcedures() {
+  int count = symbolsTable.sp;
+  symbolDescriber_t *symbol = symbolsTable.symbols[count];
+
+  while (symbol->category != c_simple_var) {
+    if (symbol->category == c_procedure && symbol->lexicalLevel == lexicalLevel + 1) {
+      removeProcedure(symbol);
+      --symbolsTable.sp;
+    }
+    --count;
+    symbol = symbolsTable.symbols[count];
+  }
+}
+
 // ------------------------------------------------     Procedures     ------------------------------------------------
 
 int searchSymbol(char *identifier) {

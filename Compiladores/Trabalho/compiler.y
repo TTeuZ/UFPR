@@ -74,6 +74,7 @@ block:
    compost_command
    {
       int blockNumVars = intStackPop(&amemStack);
+      removeProcedures();
 
       if (blockNumVars > 0) {
          removeSymbols(blockNumVars);
@@ -111,7 +112,7 @@ subroutines_declaration:
    |
 ;
 
-subroutine_declaration
+subroutine_declaration:
    procedure_declariation
 ;
 
@@ -130,11 +131,16 @@ procedure_declariation:
    }
    formal_parameters_or_empty SEMICOLON block
    {
+      symbolDescriber_t *symbol = symbolsTable.symbols[symbolsTable.sp];
+      procedureAttributes_t * attributes = (procedureAttributes_t *)symbol->attributes;
 
+      sprintf(mepaCommand, "RTPR %d,%d", symbol->lexicalLevel, attributes->parametersQty);
+      generateCode(NULL, mepaCommand);
 
-      // TODO: Remocao das subrotinas com niveLexico k + 2
-      // Retornos de funcao
-      // outros tratamentos
+      sprintf(mepaLabel, "R%02d", intStackPop(&labelStack));
+      generateCode(mepaLabel, "NADA");
+
+      --lexicalLevel;
    }
 ;
 
