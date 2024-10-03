@@ -9,6 +9,7 @@
 
 char mepaCommand[MEPA_COMMAND_SIZE];
 char mepaLabel[MEPA_COMMAND_SIZE];
+char subroutineLabel[LABEL_SIZE];
 
 intStack_t amemStack;
 intStack_t labelStack;
@@ -69,11 +70,13 @@ block:
 
       intStackPush(&amemStack, numVars);
    }
+   subroutines_declaration
    compost_command
    {
       int blockNumVars = intStackPop(&amemStack);
 
       if (blockNumVars > 0) {
+         removeSymbols(blockNumVars);
          sprintf(mepaCommand, "DMEM %d", blockNumVars);
          generateCode(NULL, mepaCommand);
       }
@@ -101,6 +104,42 @@ list_var_id:
 
 type: 
    INTEGER { setSimpleVariableType(t_integer); }
+;
+
+subroutines_declaration:
+   subroutine_declaration
+   |
+;
+
+subroutine_declaration
+   procedure_declariation
+;
+
+procedure_declariation:
+   PROCEDURE IDENT
+   {
+      sprintf(mepaCommand, "DSVF R%02d", labelNumber);
+      intStackPush(&labelStack, labelNumber++);
+      generateCode(NULL, mepaCommand);
+
+      sprintf(subroutineLabel, "R%02d", labelNumber++);
+      insertProcedure(token, ++lexicalLevel, subroutineLabel);
+
+      sprintf(mepaCommand, "ENPR %d", lexicalLevel);
+      generateCode(subroutineLabel, mepaCommand);
+   }
+   formal_parameters_or_empty SEMICOLON block
+   {
+
+
+      // TODO: Remocao das subrotinas com niveLexico k + 2
+      // Retornos de funcao
+      // outros tratamentos
+   }
+;
+
+formal_parameters_or_empty:
+   |
 ;
 
 compost_command:
@@ -149,8 +188,7 @@ attribution:
 conditional_command:
    if_then condition_else
    {
-      int endLabel = intStackPop(&labelStack);
-      sprintf(mepaLabel, "R%02d", endLabel);
+      sprintf(mepaLabel, "R%02d", intStackPop(&labelStack));
       generateCode(mepaLabel, "NADA");
    }
 ;

@@ -8,12 +8,12 @@ int displacement;
 
 // ------------------------------------------------ Internal Functions ------------------------------------------------
 
-void verifyBeforeInsert(char *identifier, categories category) {
+void verifyBeforeInsert(char *identifier) {
   int temp = searchSymbol(identifier);
 
   if (temp != -1) {
     symbolDescriber_t *symbol = symbolsTable.symbols[temp];
-    if (symbolsTable.symbols[temp]->category == category && symbolsTable.symbols[temp]->lexicalLevel == lexicalLevel) {
+    if (symbolsTable.symbols[temp]->lexicalLevel == lexicalLevel) {
       printError("Redeclaracao de identificador!");
       exit(1);
     }
@@ -26,8 +26,10 @@ void initSymbolsTable() { symbolsTable.sp = -1; }
 
 void cleanSymbolsTable() { removeSymbols(symbolsTable.sp + 1); }
 
+// ------------------------------------------------  Simple Variables  ------------------------------------------------
+
 void insertSimpleVar(char *identifier, int lexicalLevel, int displacement) {
-  verifyBeforeInsert(identifier, simple_var);
+  verifyBeforeInsert(identifier);
 
   symbolDescriber_t *symbol = malloc(sizeof(symbolDescriber_t));
   simpleVarAttributes_t *attributes = malloc(sizeof(simpleVarAttributes_t));
@@ -38,7 +40,7 @@ void insertSimpleVar(char *identifier, int lexicalLevel, int displacement) {
 
   strncpy(symbol->identifier, identifier, TOKEN_SIZE);
   symbol->lexicalLevel = lexicalLevel;
-  symbol->category = simple_var;
+  symbol->category = c_simple_var;
 
   attributes->displacement = displacement;
   attributes->type = t_undefined;
@@ -51,6 +53,51 @@ void removeSimpleVar(symbolDescriber_t *symbol) {
   free(symbol->attributes);
   free(symbol);
 }
+
+void setSimpleVariableType(types type) {
+  simpleVarAttributes_t *attributes;
+  symbolDescriber_t *symbol;
+
+  for (int i = symbolsTable.sp; i >= 0; --i) {
+    symbol = symbolsTable.symbols[i];
+
+    if (symbol->category == c_simple_var) {
+      attributes = (simpleVarAttributes_t *)symbolsTable.symbols[i]->attributes;
+      if (attributes->type == t_undefined) attributes->type = type;
+    }
+  }
+}
+
+// ------------------------------------------------  Simple Variables  ------------------------------------------------
+// ------------------------------------------------     Procedures     ------------------------------------------------
+
+void insertProcedure(char *identifier, int lexicalLevel, char *label) {
+  verifyBeforeInsert(identifier);
+
+  symbolDescriber_t *symbol = malloc(sizeof(symbolDescriber_t));
+  procedureAttributes_t *attributes = malloc(sizeof(procedureAttributes_t));
+  if (symbol == NULL || attributes == NULL) {
+    fprintf(stderr, "Erro allocating simple var memory\n");
+    exit(1);
+  }
+
+  strncpy(symbol->identifier, identifier, TOKEN_SIZE);
+  symbol->lexicalLevel = lexicalLevel;
+  symbol->category = c_procedure;
+
+  strncpy(attributes->label, label, LABEL_SIZE);
+  attributes->parametersQty = 0;
+  symbol->attributes = (void *)attributes;
+
+  symbolsTable.symbols[++symbolsTable.sp] = symbol;
+}
+
+void removeProcedure(symbolDescriber_t *symbol) {
+  free(symbol->attributes);
+  free(symbol);
+}
+
+// ------------------------------------------------     Procedures     ------------------------------------------------
 
 int searchSymbol(char *identifier) {
   int count = symbolsTable.sp;
@@ -68,36 +115,25 @@ void removeSymbols(size_t n) {
   for (size_t i = 0; i < n; ++i) {
     symbol = symbolsTable.symbols[symbolsTable.sp];
 
-    if (symbol->category == simple_var) removeSimpleVar(symbol);
+    if (symbol->category == c_simple_var) removeSimpleVar(symbol);
+    if (symbol->category == c_procedure) removeProcedure(symbol);
     --symbolsTable.sp;
   }
 }
 
-void setSimpleVariableType(types type) {
-  simpleVarAttributes_t *attributes;
-  symbolDescriber_t *symbol;
-
-  for (int i = symbolsTable.sp; i >= 0; --i) {
-    symbol = symbolsTable.symbols[i];
-
-    if (symbol->category == simple_var) {
-      attributes = (simpleVarAttributes_t *)symbolsTable.symbols[i]->attributes;
-      if (attributes->type == t_undefined) attributes->type = type;
-    }
-  }
-}
-
 void printSymbolsTable() {
-  simpleVarAttributes_t *attributes;
   symbolDescriber_t *symbol;
 
   for (size_t i = 0; i <= symbolsTable.sp; ++i) {
     symbol = symbolsTable.symbols[i];
     printf("Symbol: %s - Category: %d - LexicalLevel: %d ", symbol->identifier, symbol->category, symbol->lexicalLevel);
 
-    if (symbol->category == simple_var) {
-      attributes = (simpleVarAttributes_t *)symbol->attributes;
+    if (symbol->category == c_simple_var) {
+      simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
       printf("- Displacement: %d - type: %d\n", attributes->displacement, attributes->type);
+    } else if (symbol->category == c_procedure) {
+      procedureAttributes_t *attributes = (procedureAttributes_t *)symbol->attributes;
+      printf("- Label: %c - paramQty: %d\n", attributes->label, attributes->parametersQty);
     }
   }
 }

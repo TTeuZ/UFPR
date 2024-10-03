@@ -8,9 +8,16 @@
 #include "compiler.h"
 
 #define MAX_SYMBOLS_QTY 1024
+#define LABEL_SIZE 3
 
-typedef enum categories { simple_var } categories;
+typedef enum categories { c_simple_var, c_procedure } categories;
 typedef enum types { t_integer, t_boolean, t_undefined } types;
+
+typedef struct procedureAttributes {
+  char label[LABEL_SIZE];
+  int parametersQty;
+  // Mais para frente vai ter o lista de parametros formais
+} procedureAttributes_t;
 
 typedef struct simpleVarAttributes {
   int displacement;
@@ -40,11 +47,15 @@ void cleanSymbolsTable();
 // Simple variables
 void insertSimpleVar(char *identifier, int lexicalLevel, int displacement);
 void removeSimpleVar(symbolDescriber_t *symbol);
+void setSimpleVariableType(types type);
+
+// Procedure
+void insertProcedure(char *identifier, int lexicalLevel, char *label);
+void removeProcedure(symbolDescriber_t *symbol);
 
 // Routine functions
 int searchSymbol(char *identifier);
 void removeSymbols(size_t n);
-void setSimpleVariableType(types type);
 
 // Debug functions
 void printSymbolsTable();
