@@ -109,7 +109,7 @@ type:
 ;
 
 subroutines_declaration:
-   subroutine_declaration
+   subroutines_declaration subroutine_declaration
    |
 ;
 
@@ -120,12 +120,12 @@ subroutine_declaration:
 procedure_declariation:
    PROCEDURE IDENT
    {
-      sprintf(mepaCommand, "DSVF R%02d", labelNumber);
+      sprintf(mepaCommand, "DSVS R%02d", labelNumber);
       intStackPush(&labelStack, labelNumber++);
       generateCode(NULL, mepaCommand);
 
-      sprintf(subroutineLabel, "R%02d", labelNumber++);
-      insertProcedure(token, ++lexicalLevel, subroutineLabel);
+      sprintf(subroutineLabel, "R%02d", labelNumber);
+      insertProcedure(token, ++lexicalLevel, labelNumber++);
 
       sprintf(mepaCommand, "ENPR %d", lexicalLevel);
       generateCode(subroutineLabel, mepaCommand);
@@ -207,14 +207,13 @@ attribution:
 
 procedure_call:
    {
-      printf("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
       int varPos = searchSymbol(leftToken);
-      if (varPos == -1) printError("prcedimento nao declarado!");
+      if (varPos == -1) printError("procedimento nao declarado ou fora de escopo!");
 
       symbolDescriber_t *symbol = symbolsTable.symbols[varPos];
       procedureAttributes_t *attributes = (procedureAttributes_t *)symbol->attributes;
 
-      sprintf(mepaCommand, "CHPR %s,%d", attributes->label, lexicalLevel);
+      sprintf(mepaCommand, "CHPR R%02d,%d", attributes->label, lexicalLevel);
       generateCode(NULL, mepaCommand);
    }
 ;

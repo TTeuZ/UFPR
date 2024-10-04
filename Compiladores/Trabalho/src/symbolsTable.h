@@ -14,26 +14,26 @@ typedef enum categories { c_simple_var, c_procedure } categories;
 typedef enum types { t_integer, t_boolean, t_undefined } types;
 
 typedef struct procedureAttributes {
-    char label[LABEL_SIZE];
-    int parametersQty;
-    // Mais para frente vai ter o lista de parametros formais
+  int label;
+  int parametersQty;
+  // Mais para frente vai ter o lista de parametros formais
 } procedureAttributes_t;
 
 typedef struct simpleVarAttributes {
-    int displacement;
-    types type;
+  int displacement;
+  types type;
 } simpleVarAttributes_t;
 
 typedef struct symbolDescriber {
-    char identifier[TOKEN_SIZE];
-    categories category;
-    int lexicalLevel;
-    void *attributes;
+  char identifier[TOKEN_SIZE];
+  categories category;
+  int lexicalLevel;
+  void *attributes;
 } symbolDescriber_t;
 
 typedef struct symbolsTable {
-    symbolDescriber_t *symbols[MAX_SYMBOLS_QTY];
-    int sp;
+  symbolDescriber_t *symbols[MAX_SYMBOLS_QTY];
+  int sp;
 } symbolsTable_t;
 
 // Setting the table globally
@@ -50,7 +50,7 @@ void removeSimpleVar(symbolDescriber_t *symbol);
 void setSimpleVariableType(types type);
 
 // Procedure
-void insertProcedure(char *identifier, int lexicalLevel, char *label);
+void insertProcedure(char *identifier, int lexicalLevel, int label);
 void removeProcedure(symbolDescriber_t *symbol);
 void removeProcedures();
 

@@ -71,7 +71,7 @@ void setSimpleVariableType(types type) {
 // ------------------------------------------------  Simple Variables  ------------------------------------------------
 // ------------------------------------------------     Procedures     ------------------------------------------------
 
-void insertProcedure(char *identifier, int lexicalLevel, char *label) {
+void insertProcedure(char *identifier, int lexicalLevel, int label) {
   verifyBeforeInsert(identifier);
 
   symbolDescriber_t *symbol = malloc(sizeof(symbolDescriber_t));
@@ -85,7 +85,7 @@ void insertProcedure(char *identifier, int lexicalLevel, char *label) {
   symbol->lexicalLevel = lexicalLevel;
   symbol->category = c_procedure;
 
-  strncpy(attributes->label, label, LABEL_SIZE);
+  attributes->label = label;
   attributes->parametersQty = 0;
   symbol->attributes = (void *)attributes;
 
@@ -147,7 +147,7 @@ void printSymbolsTable() {
       printf("- Displacement: %d - type: %d\n", attributes->displacement, attributes->type);
     } else if (symbol->category == c_procedure) {
       procedureAttributes_t *attributes = (procedureAttributes_t *)symbol->attributes;
-      printf("- Label: %c - paramQty: %d\n", attributes->label, attributes->parametersQty);
+      printf("- Label: R%02d - paramQty: %d\n", attributes->label, attributes->parametersQty);
     }
   }
 }
