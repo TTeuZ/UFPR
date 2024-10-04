@@ -91,20 +91,20 @@ vars_declaration:
 ;
 
 declare_vars: 
-   declare_vars declare_var
-   | declare_var
+   declare_vars declare_var_list
+   | declare_var_list
 ;
 
-declare_var: 
-   list_var_id COLON type SEMICOLON
+declare_var_list: 
+   vars_list COLON var_type SEMICOLON
 ;
 
-list_var_id: 
-   list_var_id COMMA IDENT { insertSimpleVar(token, lexicalLevel, displacement++); ++numVars; }
+vars_list: 
+   vars_list COMMA IDENT { insertSimpleVar(token, lexicalLevel, displacement++); ++numVars; }
    | IDENT { insertSimpleVar(token, lexicalLevel, displacement++); ++numVars; }
 ;
 
-type: 
+var_type: 
    INTEGER { setSimpleVariableType(t_integer); }
 ;
 
@@ -130,7 +130,7 @@ procedure_declariation:
       sprintf(mepaCommand, "ENPR %d", lexicalLevel);
       generateCode(subroutineLabel, mepaCommand);
    }
-   formal_parameters_or_empty SEMICOLON block
+   formal_parameters SEMICOLON block
    {
       symbolDescriber_t *symbol = symbolsTable.symbols[symbolsTable.sp];
       procedureAttributes_t * attributes = (procedureAttributes_t *)symbol->attributes;
@@ -145,8 +145,27 @@ procedure_declariation:
    }
 ;
 
-formal_parameters_or_empty:
+formal_parameters:
+   OPEN_PARENTHESES formal_parameters_section CLOSE_PARENTHESES
    |
+;
+
+formal_parameters_section:
+   formal_parameters_section declare_formal_parameters SEMICOLON
+   | declare_formal_parameters
+;
+
+declare_formal_parameters:
+   params_list COLON param_type
+;
+
+params_list:
+   params_list COMMA IDENT {}
+   | IDENT {}
+;
+
+param_type:
+   INTEGER {}
 ;
 
 compost_command:
