@@ -10,6 +10,7 @@
 char mepaCommand[MEPA_COMMAND_SIZE];
 char mepaLabel[MEPA_COMMAND_SIZE];
 char subroutineLabel[LABEL_SIZE];
+char leftToken[TOKEN_SIZE];
 
 intStack_t amemStack;
 intStack_t labelStack;
@@ -169,26 +170,53 @@ commands:
 
 unlabeled_command:
    compost_command
-   | attribution
+   | first_ident
    | conditional_command
    | repetitive_command
    | read
    | write
 ;
 
+first_ident:
+   IDENT { strncpy(leftToken, token, TOKEN_SIZE); } ident_command
+;
+
+ident_command:
+   ATTRIBUTION attribution
+   | SEMICOLON procedure_call
+   | // Future -> with params
+;
+
 attribution:
-   variable ATTRIBUTION expression
+   expression
    {
-      symbolDescriber_t *symbol = symbolsTable.symbols[$1];
+      int varPos = searchSymbol(leftToken);
+      if (varPos == -1) printError("variavel nao declarada!");
+
+      symbolDescriber_t *symbol = symbolsTable.symbols[varPos];
       simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
 
-      if (attributes->type != $3)
+      if (attributes->type != $1)
          printError("Tipos incompatives!");
 
       sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
       generateCode(NULL, mepaCommand);
    }
    SEMICOLON
+;
+
+procedure_call:
+   {
+      printf("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+      int varPos = searchSymbol(leftToken);
+      if (varPos == -1) printError("prcedimento nao declarado!");
+
+      symbolDescriber_t *symbol = symbolsTable.symbols[varPos];
+      procedureAttributes_t *attributes = (procedureAttributes_t *)symbol->attributes;
+
+      sprintf(mepaCommand, "CHPR %s,%d", attributes->label, lexicalLevel);
+      generateCode(NULL, mepaCommand);
+   }
 ;
 
 conditional_command:
