@@ -34,7 +34,7 @@ void insertSimpleVar(char *identifier, int lexicalLevel, int displacement) {
   symbolDescriber_t *symbol = malloc(sizeof(symbolDescriber_t));
   simpleVarAttributes_t *attributes = malloc(sizeof(simpleVarAttributes_t));
   if (symbol == NULL || attributes == NULL) {
-    fprintf(stderr, "Erro allocating simple var memory\n");
+    fprintf(stderr, "Error allocating simple var memory\n");
     exit(1);
   }
 
@@ -77,7 +77,7 @@ void insertProcedure(char *identifier, int lexicalLevel, int label) {
   symbolDescriber_t *symbol = malloc(sizeof(symbolDescriber_t));
   procedureAttributes_t *attributes = malloc(sizeof(procedureAttributes_t));
   if (symbol == NULL || attributes == NULL) {
-    fprintf(stderr, "Erro allocating simple var memory\n");
+    fprintf(stderr, "Error allocating procedure memory\n");
     exit(1);
   }
 
@@ -98,16 +98,16 @@ void removeProcedure(symbolDescriber_t *symbol) {
 }
 
 void removeProcedures() {
-  int count = symbolsTable.sp;
-  symbolDescriber_t *symbol = symbolsTable.symbols[count];
+  symbolDescriber_t *symbol;
+  for (int i = symbolsTable.sp; i >= 0; --i) {
+    symbol = symbolsTable.symbols[i];
 
-  while (symbol->category != c_simple_var) {
+    if (symbol->category == c_simple_var) break;
+
     if (symbol->category == c_procedure && symbol->lexicalLevel == lexicalLevel + 1) {
       removeProcedure(symbol);
       --symbolsTable.sp;
     }
-    --count;
-    symbol = symbolsTable.symbols[count];
   }
 }
 
@@ -129,8 +129,11 @@ void removeSymbols(size_t n) {
   for (size_t i = 0; i < n; ++i) {
     symbol = symbolsTable.symbols[symbolsTable.sp];
 
-    if (symbol->category == c_simple_var) removeSimpleVar(symbol);
-    if (symbol->category == c_procedure) removeProcedure(symbol);
+    if (symbol->category == c_simple_var)
+      removeSimpleVar(symbol);
+    else if (symbol->category == c_procedure)
+      removeProcedure(symbol);
+
     --symbolsTable.sp;
   }
 }
@@ -138,7 +141,7 @@ void removeSymbols(size_t n) {
 void printSymbolsTable() {
   symbolDescriber_t *symbol;
 
-  for (size_t i = 0; i <= symbolsTable.sp; ++i) {
+  for (int i = 0; i <= symbolsTable.sp; ++i) {
     symbol = symbolsTable.symbols[i];
     printf("Symbol: %s - Category: %d - LexicalLevel: %d ", symbol->identifier, symbol->category, symbol->lexicalLevel);
 
