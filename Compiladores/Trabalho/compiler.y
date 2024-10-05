@@ -14,8 +14,9 @@ char leftToken[TOKEN_SIZE];
 
 intStack_t amemStack;
 intStack_t labelStack;
+intStack_t callParamsStack;
 
-int numVars, labelNumber;
+int numVars, labelNumber, paramsQty;
 %}
 
 %token ATTRIBUTION PLUS MINUS MULT DIV AND OR NOT
@@ -82,6 +83,8 @@ block:
          sprintf(mepaCommand, "DMEM %d", blockNumVars);
          generateCode(NULL, mepaCommand);
       }
+
+      removeFormalParams();
    }
 ;
 
@@ -126,6 +129,8 @@ procedure_declariation:
 
       sprintf(subroutineLabel, "R%02d", labelNumber);
       insertProcedure(token, ++lexicalLevel, labelNumber++);
+      strncpy(leftToken, token, TOKEN_SIZE);
+      paramsQty = 0;
 
       sprintf(mepaCommand, "ENPR %d", lexicalLevel);
       generateCode(subroutineLabel, mepaCommand);
@@ -135,7 +140,7 @@ procedure_declariation:
       symbolDescriber_t *symbol = symbolsTable.symbols[symbolsTable.sp];
       procedureAttributes_t * attributes = (procedureAttributes_t *)symbol->attributes;
 
-      sprintf(mepaCommand, "RTPR %d,%d", symbol->lexicalLevel, attributes->parametersQty);
+      sprintf(mepaCommand, "RTPR %d,%d", symbol->lexicalLevel, attributes->paramsQty);
       generateCode(NULL, mepaCommand);
 
       sprintf(mepaLabel, "R%02d", intStackPop(&labelStack));
@@ -147,11 +152,16 @@ procedure_declariation:
 
 formal_parameters:
    OPEN_PARENTHESES formal_parameters_section CLOSE_PARENTHESES
+   {
+      int procedurePos = searchSymbol(leftToken);
+      symbolDescriber_t *symbol = symbolsTable.symbols[procedurePos];
+      updateProcedure(symbol, paramsQty);
+   }
    |
 ;
 
 formal_parameters_section:
-   formal_parameters_section declare_formal_parameters SEMICOLON
+   formal_parameters_section SEMICOLON declare_formal_parameters
    | declare_formal_parameters
 ;
 
@@ -160,12 +170,12 @@ declare_formal_parameters:
 ;
 
 params_list:
-   params_list COMMA IDENT {}
-   | IDENT {}
+   params_list COMMA IDENT { insertFormalParam(token, lexicalLevel, p_value); ++paramsQty; }
+   | IDENT { insertFormalParam(token, lexicalLevel, p_value); ++paramsQty; }
 ;
 
 param_type:
-   INTEGER {}
+   INTEGER { setFormalParamType(t_integer); }
 ;
 
 compost_command:
@@ -202,8 +212,8 @@ first_ident:
 
 ident_command:
    ATTRIBUTION attribution
-   | SEMICOLON procedure_call
-   | // Future -> with params
+   | SEMICOLON proc_call_no_params
+   | OPEN_PARENTHESES proc_call_with_params CLOSE_PARENTHESES SEMICOLON
 ;
 
 attribution:
@@ -224,13 +234,41 @@ attribution:
    SEMICOLON
 ;
 
-procedure_call:
+proc_call_no_params:
    {
       int varPos = searchSymbol(leftToken);
       if (varPos == -1) printError("procedimento nao declarado ou fora de escopo!");
 
       symbolDescriber_t *symbol = symbolsTable.symbols[varPos];
       procedureAttributes_t *attributes = (procedureAttributes_t *)symbol->attributes;
+
+      if (attributes->paramsQty != 0) printError("Faltando parametros!");
+
+      sprintf(mepaCommand, "CHPR R%02d,%d", attributes->label, lexicalLevel);
+      generateCode(NULL, mepaCommand);
+   }
+;
+
+proc_call_with_params:
+   expression_list
+   {
+      int varPos = searchSymbol(leftToken);
+      if (varPos == -1) printError("procedimento nao declarado ou fora de escopo!");
+
+      symbolDescriber_t *symbol = symbolsTable.symbols[varPos];
+      procedureAttributes_t *attributes = (procedureAttributes_t *)symbol->attributes;
+
+      int paramsToValidate = attributes->paramsQty;
+      int paramType = intStackPop(&callParamsStack);
+      while (paramType != -1) {
+         if (attributes->params[paramsToValidate--].type != paramType)
+            printError("Tipo de parametro invalido!");
+         
+         paramType = intStackPop(&callParamsStack);
+      }
+
+      if (paramsToValidate != 0)
+         printError("Parametros faltantes na chamada da funcao!");
 
       sprintf(mepaCommand, "CHPR R%02d,%d", attributes->label, lexicalLevel);
       generateCode(NULL, mepaCommand);
@@ -307,11 +345,20 @@ read_item:
    variable
    {
       symbolDescriber_t *symbol = symbolsTable.symbols[$1];
-      simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
 
-      generateCode(NULL, "LEIT");
-      sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
-      generateCode(NULL, mepaCommand);
+      if (symbol->category == c_simple_var) {
+         simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
+
+         generateCode(NULL, "LEIT");
+         sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
+         generateCode(NULL, mepaCommand);
+      } else if (symbol->category == c_formal_param) {
+         formalParamAttributes_t *attributes = (formalParamAttributes_t *)symbol->attributes;
+
+         generateCode(NULL, "LEIT");
+         sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
+         generateCode(NULL, mepaCommand);
+      }
    }
 ;
 
@@ -328,11 +375,20 @@ write_value:
    variable
    {
       symbolDescriber_t *symbol = symbolsTable.symbols[$1];
-      simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
 
-      sprintf(mepaCommand, "CRVL %d,%d", symbol->lexicalLevel, attributes->displacement);
-      generateCode(NULL, mepaCommand);
-      generateCode(NULL, "IMPR");
+      if (symbol->category == c_simple_var) {
+         simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
+
+         sprintf(mepaCommand, "CRVL %d,%d", symbol->lexicalLevel, attributes->displacement);
+         generateCode(NULL, mepaCommand);
+         generateCode(NULL, "IMPR");
+      } else if (symbol->category == c_formal_param) {
+         formalParamAttributes_t *attributes = (formalParamAttributes_t *)symbol->attributes;
+
+         sprintf(mepaCommand, "CRVL %d,%d", symbol->lexicalLevel, attributes->displacement);
+         generateCode(NULL, mepaCommand);
+         generateCode(NULL, "IMPR");
+      }
    }
    | NUMBER
    {
@@ -340,6 +396,11 @@ write_value:
       generateCode(NULL, mepaCommand);
       generateCode(NULL, "IMPR");
    }
+;
+
+expression_list:
+   expression_list COMMA expression { intStackPush(&callParamsStack, $3);  }
+   | expression { intStackPush(&callParamsStack, $1);  }
 ;
 
 expression:
@@ -430,11 +491,20 @@ factor:
    variable
    {
       symbolDescriber_t *symbol = symbolsTable.symbols[$1];
-      simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
 
-      sprintf(mepaCommand, "CRVL %d,%d", symbol->lexicalLevel, attributes->displacement);
-      generateCode(NULL, mepaCommand);
-      $$ = attributes->type;
+      if (symbol->category == c_simple_var) {
+         simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
+
+         sprintf(mepaCommand, "CRVL %d,%d", symbol->lexicalLevel, attributes->displacement);
+         generateCode(NULL, mepaCommand);
+         $$ = attributes->type;
+      } else if (symbol->category == c_formal_param) {
+         formalParamAttributes_t *attributes = (formalParamAttributes_t *)symbol->attributes;
+
+         sprintf(mepaCommand, "CRVL %d,%d", symbol->lexicalLevel, attributes->displacement);
+         generateCode(NULL, mepaCommand);
+         $$ = attributes->type;
+      }
    }
    | NUMBER
    {
@@ -460,7 +530,7 @@ variable:
    IDENT
    {
       int varPos = searchSymbol(token);
-      if (varPos == -1) printError("variavel nao declarada!");
+      if (varPos == -1) printError("variavel/parametro nao declarado!");
       $$ = varPos;
    }
 ;
@@ -486,6 +556,7 @@ int main (int argc, char** argv) {
    initSymbolsTable();
    initIntStack(&amemStack);
    initIntStack(&labelStack);
+   initIntStack(&callParamsStack);
 
    yyparse();
 
