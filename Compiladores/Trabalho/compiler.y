@@ -333,10 +333,6 @@ proc_call_with_params:
    }
 ;
 
-function_call:
-
-;
-
 conditional_command:
    if_then condition_else
    {
@@ -568,10 +564,6 @@ factor:
       sprintf(mepaCommand, "CRCT %d", atoi(token));
       generateCode(NULL, mepaCommand);
       $$ = t_integer;
-   }
-   | function_call
-   {
-      $$ = $1;
    }
    | OPEN_PARENTHESES expression CLOSE_PARENTHESES
    { 
