@@ -93,7 +93,7 @@ void updateProcedure(symbolDescriber_t *symbol, int paramsQty) {
 
   int displacement = -4;
   int count = symbolsTable.sp;
-  for (size_t i = 0; i < paramsQty; ++i) {
+  for (int i = (paramsQty - 1); i >= 0; --i) {
     param_attributes = (formalParamAttributes_t *)symbolsTable.symbols[count--]->attributes;
     param_attributes->displacement = displacement--;
 
