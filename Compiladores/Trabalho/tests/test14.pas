@@ -4,9 +4,9 @@ begin
     read(a);
     if (a > 10) then
         if (a < 20) then
-            write(1);
+            write(1)
         else
-            write(2);
+            write(2)
     else 
         write(0);           
 end. 

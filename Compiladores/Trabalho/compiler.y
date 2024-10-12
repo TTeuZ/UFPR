@@ -47,7 +47,6 @@ passTypes passType;
 %type <int_val> term
 %type <int_val> factor
 %type <int_val> expression
-%type <int_val> function_call
 %type <int_val> simple_expression
 
 %%
@@ -97,12 +96,12 @@ vars_declaration:
 ;
 
 declare_vars: 
-   declare_vars declare_var_list
-   | declare_var_list
+   declare_vars declare_var_list SEMICOLON 
+   | declare_var_list SEMICOLON
 ;
 
 declare_var_list: 
-   vars_list COLON var_type SEMICOLON
+   vars_list COLON var_type
 ;
 
 vars_list: 
@@ -120,8 +119,8 @@ subroutines_declaration:
 ;
 
 subroutine_declaration:
-   procedure_declariation
-   | function_declaration
+   procedure_declariation SEMICOLON
+   | function_declaration SEMICOLON
 ;
 
 procedure_declariation:
@@ -229,21 +228,11 @@ param_type:
 ;
 
 compost_command:
-   T_BEGIN commands_or_nothing T_END semicolon_or_nothing
-;
-
-commands_or_nothing:
-   commands
-   |
-;
-
-semicolon_or_nothing:
-   SEMICOLON
-   |
+   T_BEGIN commands T_END
 ;
 
 commands:
-   commands unlabeled_command
+   commands SEMICOLON unlabeled_command
    | unlabeled_command
 ;
 
@@ -254,6 +243,7 @@ unlabeled_command:
    | repetitive_command
    | read
    | write
+   |
 ;
 
 first_ident:
@@ -262,8 +252,8 @@ first_ident:
 
 ident_command:
    ATTRIBUTION attribution
-   | SEMICOLON proc_call_no_params
-   | OPEN_PARENTHESES proc_call_with_params CLOSE_PARENTHESES SEMICOLON
+   | proc_call_no_params
+   | OPEN_PARENTHESES proc_call_with_params CLOSE_PARENTHESES
 ;
 
 attribution:
@@ -293,7 +283,6 @@ attribution:
 
       generateCode(NULL, mepaCommand);
    }
-   SEMICOLON
 ;
 
 proc_call_no_params:
@@ -391,7 +380,7 @@ repetitive_command:
 ;
 
 read:
-   READ OPEN_PARENTHESES read_items CLOSE_PARENTHESES SEMICOLON
+   READ OPEN_PARENTHESES read_items CLOSE_PARENTHESES
 ;
 
 read_items:
@@ -429,7 +418,7 @@ read_item:
 ;
 
 write:
-   WRITE OPEN_PARENTHESES write_values CLOSE_PARENTHESES SEMICOLON
+   WRITE OPEN_PARENTHESES write_values CLOSE_PARENTHESES
 ;
 
 write_values:

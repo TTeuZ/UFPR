@@ -6,7 +6,7 @@ program proc1 (input, output);
        z:=x;                   
        x:=x-1;           
        if (z>1)                   
-         then p; 
+         then p
          else y:=1; 
        y:=y*z;    
      end;

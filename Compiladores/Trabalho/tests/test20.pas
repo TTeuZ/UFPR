@@ -4,7 +4,7 @@ var x, y: integer;
    var z:integer;           
       begin                    
         if (t>1)               
-           then p(t-1);
+           then p(t-1)
            else y:=1;          
         z:= y;                 
         y:=z*t;                
