@@ -44,10 +44,11 @@ passTypes passType;
 %type <str> mult_div_and
 %type <str> plus_minus_or
 %type <str> plus_minus_empty
-%type <int_val> expression
-%type <int_val> simple_expression
 %type <int_val> term
 %type <int_val> factor
+%type <int_val> expression
+%type <int_val> function_call
+%type <int_val> simple_expression
 
 %%
 
@@ -78,7 +79,7 @@ block:
    compost_command
    {
       int blockNumVars = intStackPop(&amemStack);
-      removeProcedures();
+      removeSubroutines();
 
       if (blockNumVars > 0) {
          removeSymbols(blockNumVars);
@@ -120,6 +121,7 @@ subroutines_declaration:
 
 subroutine_declaration:
    procedure_declariation
+   | function_declaration
 ;
 
 procedure_declariation:
@@ -153,12 +155,52 @@ procedure_declariation:
    }
 ;
 
+function_declaration:
+   FUNCTION IDENT
+   {
+      sprintf(mepaCommand, "DSVS R%02d", labelNumber);
+      intStackPush(&labelStack, labelNumber++);
+      generateCode(NULL, mepaCommand);
+
+      sprintf(subroutineLabel, "R%02d", labelNumber);
+      insertFunction(token, ++lexicalLevel, labelNumber++);
+      strncpy(leftToken, token, TOKEN_SIZE);
+      passType = p_value;
+      paramsQty = 0;
+
+      sprintf(mepaCommand, "ENPR %d", lexicalLevel);
+      generateCode(subroutineLabel, mepaCommand);
+   }
+   formal_parameters COLON function_type SEMICOLON block
+   {
+      symbolDescriber_t *symbol = symbolsTable.symbols[symbolsTable.sp];
+      functionAttributes_t * attributes = (functionAttributes_t *)symbol->attributes;
+
+      sprintf(mepaCommand, "RTPR %d,%d", symbol->lexicalLevel, attributes->paramsQty);
+      generateCode(NULL, mepaCommand);
+
+      sprintf(mepaLabel, "R%02d", intStackPop(&labelStack));
+      generateCode(mepaLabel, "NADA");
+
+      --lexicalLevel;
+   }
+;
+
+function_type:
+   INTEGER 
+   { 
+      int funcPos = searchSymbol(leftToken);
+      symbolDescriber_t *symbol = symbolsTable.symbols[funcPos];
+      if (symbol->category == c_function) updateFunction(symbol, paramsQty, t_integer);
+   }
+;
+
 formal_parameters:
    OPEN_PARENTHESES formal_parameters_section CLOSE_PARENTHESES
    {
-      int procedurePos = searchSymbol(leftToken);
-      symbolDescriber_t *symbol = symbolsTable.symbols[procedurePos];
-      updateProcedure(symbol, paramsQty);
+      int procPos = searchSymbol(leftToken);
+      symbolDescriber_t *symbol = symbolsTable.symbols[procPos];
+      if (symbol->category == c_procedure) updateProcedure(symbol, paramsQty);
    }
    |
 ;
@@ -242,6 +284,11 @@ attribution:
             sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
          else 
             sprintf(mepaCommand, "ARMI %d,%d", symbol->lexicalLevel, attributes->displacement);
+      } else if (symbol->category == c_function) {
+         functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
+         if (attributes->type != $1) printError("Tipos incompatives!");
+
+         sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
       }
 
       generateCode(NULL, mepaCommand);
@@ -284,6 +331,10 @@ proc_call_with_params:
       actualParamsList = NULL;
       actualParam = -1;
    }
+;
+
+function_call:
+
 ;
 
 conditional_command:
@@ -370,7 +421,13 @@ read_item:
             sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
          else 
             sprintf(mepaCommand, "ARMI %d,%d", symbol->lexicalLevel, attributes->displacement);
+      } else if (symbol->category == c_function) {
+         functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
+
+         generateCode(NULL, "LEIT");
+         sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
       }
+
       generateCode(NULL, mepaCommand);
    }
 ;
@@ -511,6 +568,10 @@ factor:
       sprintf(mepaCommand, "CRCT %d", atoi(token));
       generateCode(NULL, mepaCommand);
       $$ = t_integer;
+   }
+   | function_call
+   {
+      $$ = $1;
    }
    | OPEN_PARENTHESES expression CLOSE_PARENTHESES
    { 

@@ -102,20 +102,53 @@ void updateProcedure(symbolDescriber_t *symbol, int paramsQty) {
   }
 }
 
-void removeProcedures() {
-  symbolDescriber_t *symbol;
-  for (int i = symbolsTable.sp; i >= 0; --i) {
-    symbol = symbolsTable.symbols[i];
-    if (symbol->category != c_procedure) break;
+// ------------------------------------------------     Procedures     ------------------------------------------------
+// ------------------------------------------------     Functions      ------------------------------------------------
 
-    if (symbol->category == c_procedure && symbol->lexicalLevel == lexicalLevel + 1) {
-      removeSymbol(symbol);
-      --symbolsTable.sp;
-    }
+void insertFunction(char *identifier, int lexicalLevel, int label) {
+  verifyBeforeInsert(identifier);
+
+  symbolDescriber_t *symbol = malloc(sizeof(symbolDescriber_t));
+  functionAttributes_t *attributes = malloc(sizeof(functionAttributes_t));
+  if (symbol == NULL || attributes == NULL) {
+    fprintf(stderr, "Error allocating function memory\n");
+    exit(1);
   }
+
+  strncpy(symbol->identifier, identifier, TOKEN_SIZE);
+  symbol->lexicalLevel = lexicalLevel;
+  symbol->category = c_function;
+
+  attributes->label = label;
+  attributes->paramsQty = 0;
+  attributes->displacement = 0;
+  attributes->type = t_undefined;
+  memset(attributes->params, 0, sizeof(paramItem_t) * MAX_PARAMS_QTY);
+  symbol->attributes = (void *)attributes;
+
+  symbolsTable.symbols[++symbolsTable.sp] = symbol;
 }
 
-// ------------------------------------------------     Procedures     ------------------------------------------------
+void updateFunction(symbolDescriber_t *symbol, int paramsQty, types type) {
+  functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
+  formalParamAttributes_t *param_attributes;
+
+  attributes->paramsQty = paramsQty;
+  attributes->type = type;
+
+  int displacement = -4;
+  int count = symbolsTable.sp;
+  for (int i = (paramsQty - 1); i >= 0; --i) {
+    param_attributes = (formalParamAttributes_t *)symbolsTable.symbols[count--]->attributes;
+    param_attributes->displacement = displacement--;
+
+    attributes->params[i].passType = param_attributes->passType;
+    attributes->params[i].type = param_attributes->type;
+  }
+  attributes->displacement = displacement;
+}
+
+// ------------------------------------------------     Functions      ------------------------------------------------
 // ------------------------------------------------   Formal Params    ------------------------------------------------
 
 void insertFormalParam(char *identifier, int lexicalLevel, passTypes passType) {
@@ -189,6 +222,19 @@ void removeSymbol(symbolDescriber_t *symbol) {
   free(symbol);
 }
 
+void removeSubroutines() {
+  symbolDescriber_t *symbol;
+  for (int i = symbolsTable.sp; i >= 0; --i) {
+    symbol = symbolsTable.symbols[i];
+    if (symbol->category != c_procedure && symbol->category != c_function) break;
+
+    if (symbol->lexicalLevel == lexicalLevel + 1) {
+      removeSymbol(symbol);
+      --symbolsTable.sp;
+    }
+  }
+}
+
 void printSymbolsTable() {
   symbolDescriber_t *symbol;
 
@@ -205,6 +251,10 @@ void printSymbolsTable() {
     } else if (symbol->category == c_formal_param) {
       formalParamAttributes_t *attributes = (formalParamAttributes_t *)symbol->attributes;
       printf("- Type: %d - Displacement: %d - PassType: %d\n", attributes->type, attributes->displacement, attributes->passType);
+    } else if (symbol->category == c_function) {
+      functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
+      printf("- Label: R%02d - ParamQty: %d - Type: %d - Displacement: %d\n", attributes->label, attributes->paramsQty, attributes->type,
+             attributes->displacement);
     }
   }
 }
