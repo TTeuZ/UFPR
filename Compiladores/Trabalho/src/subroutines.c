@@ -12,6 +12,9 @@ symbolDescriber_t *checkSymbol(char *identifier, operations operation) {
     case o_procedure:
       if (symbol->category != c_procedure) printError("Mal uso de identificador!");
       break;
+    case o_function:
+      if (symbol->category != c_function) printError("Mal uso de identificador!");
+      break;
     case o_read:
       if (symbol->category == c_procedure) printError("Mal uso de identificador!");
       break;

@@ -12,6 +12,8 @@
 char mepaCommand[MEPA_COMMAND_SIZE];
 char mepaLabel[MEPA_COMMAND_SIZE];
 char subroutineLabel[LABEL_SIZE];
+char functionToken[TOKEN_SIZE];
+char factorToken[TOKEN_SIZE];
 char leftToken[TOKEN_SIZE];
 
 intStack_t labelStack;
@@ -47,7 +49,11 @@ passTypes passType;
 %type <int_val> term
 %type <int_val> factor
 %type <int_val> expression
+%type <int_val> factor_ident
+%type <int_val> commun_factor
 %type <int_val> simple_expression
+%type <int_val> factor_ident_command
+%type <int_val> func_call_with_params
 
 %%
 
@@ -528,22 +534,9 @@ mult_div_and:
 ;
 
 factor:
-   IDENT
+   factor_ident
    {
-      symbolDescriber_t *symbol = checkSymbol(token, o_read);
-
-      if (symbol->category == c_simple_var) {
-         simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
-
-         sprintf(mepaCommand, "%s %d,%d", getLoadCommand(p_value, actualParam, actualParamsList), symbol->lexicalLevel, attributes->displacement);
-         $$ = attributes->type;
-      }  else if (symbol->category == c_formal_param) {
-         formalParamAttributes_t *attributes = (formalParamAttributes_t *)symbol->attributes;
-
-         sprintf(mepaCommand, "%s %d,%d", getLoadCommand(attributes->passType, actualParam, actualParamsList), symbol->lexicalLevel, attributes->displacement);
-         $$ = attributes->type;
-      }
-      generateCode(NULL, mepaCommand);
+      $$ = $1;
    }
    | NUMBER
    {
@@ -567,6 +560,67 @@ factor:
       $$ = t_boolean;
    }
 ;
+
+factor_ident:
+   IDENT { strncpy(factorToken, token, TOKEN_SIZE); } factor_ident_command { $$ = $3; }
+;
+
+factor_ident_command:
+   OPEN_PARENTHESES func_call_with_params CLOSE_PARENTHESES { $$ = $2; }
+   | commun_factor { $$ = $1; }
+;
+
+commun_factor:
+   {
+      symbolDescriber_t *symbol = checkSymbol(factorToken, o_read);
+
+      if (symbol->category == c_simple_var) {
+         simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
+
+         sprintf(mepaCommand, "%s %d,%d", getLoadCommand(p_value, actualParam, actualParamsList), symbol->lexicalLevel, attributes->displacement);
+         $$ = attributes->type;
+      }  else if (symbol->category == c_formal_param) {
+         formalParamAttributes_t *attributes = (formalParamAttributes_t *)symbol->attributes;
+
+         sprintf(mepaCommand, "%s %d,%d", getLoadCommand(attributes->passType, actualParam, actualParamsList), symbol->lexicalLevel, attributes->displacement);
+         $$ = attributes->type;
+      } else if (symbol->category == c_function) {
+         functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
+         generateCode(NULL, "AMEM 1");
+
+         sprintf(mepaCommand, "CHPR R%02d,%d", attributes->label, lexicalLevel);
+         $$ = attributes->type;
+      }
+      generateCode(NULL, mepaCommand);
+   }
+;
+
+func_call_with_params:
+   {
+      symbolDescriber_t *symbol = checkSymbol(factorToken, o_function);
+      functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
+      strncpy(functionToken, factorToken, TOKEN_SIZE);
+      
+      generateCode(NULL, "AMEM 1");
+      actualParamsList = attributes->params;
+      actualParam = 0;
+   }
+   expression_list
+   {
+      int funcPos = searchSymbol(functionToken);
+      symbolDescriber_t *symbol = symbolsTable.symbols[funcPos];
+      functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
+
+      if (actualParam < (attributes->paramsQty - 1))
+         printError("Parametros faltantes na chamada da procedimento!");
+      
+      sprintf(mepaCommand, "CHPR R%02d,%d", attributes->label, lexicalLevel);
+      generateCode(NULL, mepaCommand);
+      $$ = attributes->type;
+
+      actualParamsList = NULL;
+      actualParam = -1;
+   }
 
 %%
 

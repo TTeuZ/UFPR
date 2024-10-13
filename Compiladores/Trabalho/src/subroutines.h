@@ -3,7 +3,7 @@
 
 #include "symbolsTable.h"
 
-typedef enum operations { o_attribution, o_procedure, o_read, o_factor } operations;
+typedef enum operations { o_attribution, o_procedure, o_function, o_read, o_factor } operations;
 
 symbolDescriber_t *checkSymbol(char *identifier, operations operation);
 
