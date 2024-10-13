@@ -3,12 +3,10 @@
 #include "compiler.h"
 
 symbolsTable_t symbolsTable;
-int lexicalLevel;
-int displacement;
 
 // ------------------------------------------------ Internal Functions ------------------------------------------------
 
-void verifyBeforeInsert(char *identifier) {
+void verifyBeforeInsert(char *identifier, int lexicalLevel) {
   int temp = searchSymbol(identifier);
 
   if (temp != -1) {
@@ -28,7 +26,7 @@ void cleanSymbolsTable() { removeSymbols(symbolsTable.sp + 1); }
 // ------------------------------------------------  Simple Variables  ------------------------------------------------
 
 void insertSimpleVar(char *identifier, int lexicalLevel, int displacement) {
-  verifyBeforeInsert(identifier);
+  verifyBeforeInsert(identifier, lexicalLevel);
 
   symbolDescriber_t *symbol = malloc(sizeof(symbolDescriber_t));
   simpleVarAttributes_t *attributes = malloc(sizeof(simpleVarAttributes_t));
@@ -64,7 +62,7 @@ void setSimpleVariableType(types type) {
 // ------------------------------------------------     Procedures     ------------------------------------------------
 
 void insertProcedure(char *identifier, int lexicalLevel, int label) {
-  verifyBeforeInsert(identifier);
+  verifyBeforeInsert(identifier, lexicalLevel);
 
   symbolDescriber_t *symbol = malloc(sizeof(symbolDescriber_t));
   procedureAttributes_t *attributes = malloc(sizeof(procedureAttributes_t));
@@ -106,7 +104,7 @@ void updateProcedure(symbolDescriber_t *symbol, int paramsQty) {
 // ------------------------------------------------     Functions      ------------------------------------------------
 
 void insertFunction(char *identifier, int lexicalLevel, int label) {
-  verifyBeforeInsert(identifier);
+  verifyBeforeInsert(identifier, lexicalLevel);
 
   symbolDescriber_t *symbol = malloc(sizeof(symbolDescriber_t));
   functionAttributes_t *attributes = malloc(sizeof(functionAttributes_t));
@@ -152,7 +150,7 @@ void updateFunction(symbolDescriber_t *symbol, int paramsQty, types type) {
 // ------------------------------------------------   Formal Params    ------------------------------------------------
 
 void insertFormalParam(char *identifier, int lexicalLevel, passTypes passType) {
-  verifyBeforeInsert(identifier);
+  verifyBeforeInsert(identifier, lexicalLevel);
 
   symbolDescriber_t *symbol = malloc(sizeof(symbolDescriber_t));
   formalParamAttributes_t *attributes = malloc(sizeof(formalParamAttributes_t));
@@ -222,7 +220,7 @@ void removeSymbol(symbolDescriber_t *symbol) {
   free(symbol);
 }
 
-void removeSubroutines() {
+void removeSubroutines(int lexicalLevel) {
   symbolDescriber_t *symbol;
   for (int i = symbolsTable.sp; i >= 0; --i) {
     symbol = symbolsTable.symbols[i];

@@ -22,7 +22,7 @@ intStack_t actualParamsStack;
 intStack_t labelStack;
 intStack_t amemStack;
 
-int numVars, labelNumber, paramsQty, actualParam;
+int lexicalLevel, displacement, numVars, labelNumber, paramsQty, actualParam;
 symbolDescriber_t* actualSubroutine;
 passTypes passType;
 %}
@@ -87,7 +87,7 @@ block:
    compost_command
    {
       int blockNumVars = intStackPop(&amemStack);
-      removeSubroutines();
+      removeSubroutines(lexicalLevel);
 
       if (blockNumVars > 0) {
          removeSymbols(blockNumVars);

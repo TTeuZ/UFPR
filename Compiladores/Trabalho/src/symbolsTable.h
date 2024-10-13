@@ -58,8 +58,6 @@ typedef struct symbolsTable {
 
 // Setting the table globally
 extern symbolsTable_t symbolsTable;
-extern int lexicalLevel;
-extern int displacement;
 
 void initSymbolsTable();
 void cleanSymbolsTable();
@@ -85,7 +83,7 @@ void removeFormalParams();
 int searchSymbol(char *identifier);
 void removeSymbols(size_t n);
 void removeSymbol(symbolDescriber_t *symbol);
-void removeSubroutines();
+void removeSubroutines(int lexicalLevel);
 
 // Debug functions
 void printSymbolsTable();
