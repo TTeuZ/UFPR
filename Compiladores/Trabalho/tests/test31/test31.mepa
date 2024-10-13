@@ -1,0 +1,29 @@
+    INPP
+    AMEM 2
+    DSVS R00
+R01:ENPR 1
+    CRVL 1,-5
+    CRVL 1,-4
+    SOMA
+    ARMZ 1,-6
+    RTPR 1,2
+R00:NADA
+    DSVS R02
+R03:ENPR 1
+    CRCT 2
+    CRVL 1,-4
+    MULT
+    ARMZ 1,-5
+    RTPR 1,1
+R02:NADA
+    CRCT 10
+    ARMZ 0,1
+    AMEM 1
+    AMEM 1
+    AMEM 1
+    CRCT 2
+    CHPR R03,0
+    CHPR R03,0
+    CRCT 10
+    CRCT 0
+    CMMA

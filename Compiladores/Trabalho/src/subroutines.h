@@ -7,6 +7,8 @@ typedef enum operations { o_attribution, o_procedure, o_function, o_read, o_fact
 
 symbolDescriber_t *checkSymbol(char *identifier, operations operation);
 
-char *getLoadCommand(passTypes passType, int actualParam, paramItem_t *actualParamsList);
+char *getLoadCommand(passTypes passType, int actualParam, symbolDescriber_t *symbol);
+
+void checkParamType(int type, int param, symbolDescriber_t *symbol);
 
 #endif

@@ -5,22 +5,25 @@
 #include <ctype.h>
 
 #include "src/symbolsTable.h"
+#include "src/symbolsStack.h"
 #include "src/subroutines.h"
 #include "src/compiler.h"
 #include "src/intStack.h"
 
 char mepaCommand[MEPA_COMMAND_SIZE];
 char mepaLabel[MEPA_COMMAND_SIZE];
-char subroutineLabel[LABEL_SIZE];
-char functionToken[TOKEN_SIZE];
+
+char subroutineToken[TOKEN_SIZE];
 char factorToken[TOKEN_SIZE];
 char leftToken[TOKEN_SIZE];
 
+symbolsStack_t subroutineStack;
+intStack_t actualParamsStack;
 intStack_t labelStack;
 intStack_t amemStack;
 
 int numVars, labelNumber, paramsQty, actualParam;
-paramItem_t* actualParamsList;
+symbolDescriber_t* actualSubroutine;
 passTypes passType;
 %}
 
@@ -136,14 +139,15 @@ procedure_declariation:
       intStackPush(&labelStack, labelNumber++);
       generateCode(NULL, mepaCommand);
 
-      sprintf(subroutineLabel, "R%02d", labelNumber);
+      sprintf(mepaLabel, "R%02d", labelNumber);
       insertProcedure(token, ++lexicalLevel, labelNumber++);
-      strncpy(leftToken, token, TOKEN_SIZE);
-      passType = p_value;
-      paramsQty = 0;
 
       sprintf(mepaCommand, "ENPR %d", lexicalLevel);
-      generateCode(subroutineLabel, mepaCommand);
+      generateCode(mepaLabel, mepaCommand);
+
+      strncpy(subroutineToken, token, TOKEN_SIZE);
+      passType = p_value;
+      paramsQty = 0;
    }
    formal_parameters SEMICOLON block
    {
@@ -167,14 +171,15 @@ function_declaration:
       intStackPush(&labelStack, labelNumber++);
       generateCode(NULL, mepaCommand);
 
-      sprintf(subroutineLabel, "R%02d", labelNumber);
+      sprintf(mepaLabel, "R%02d", labelNumber);
       insertFunction(token, ++lexicalLevel, labelNumber++);
-      strncpy(leftToken, token, TOKEN_SIZE);
-      passType = p_value;
-      paramsQty = 0;
 
       sprintf(mepaCommand, "ENPR %d", lexicalLevel);
-      generateCode(subroutineLabel, mepaCommand);
+      generateCode(mepaLabel, mepaCommand);
+
+      strncpy(subroutineToken, token, TOKEN_SIZE);
+      passType = p_value;
+      paramsQty = 0;
    }
    formal_parameters COLON function_type SEMICOLON block
    {
@@ -194,7 +199,7 @@ function_declaration:
 function_type:
    INTEGER 
    { 
-      int funcPos = searchSymbol(leftToken);
+      int funcPos = searchSymbol(subroutineToken);
       symbolDescriber_t *symbol = symbolsTable.symbols[funcPos];
       if (symbol->category == c_function) updateFunction(symbol, paramsQty, t_integer);
    }
@@ -203,7 +208,7 @@ function_type:
 formal_parameters:
    OPEN_PARENTHESES formal_parameters_section CLOSE_PARENTHESES
    {
-      int procPos = searchSymbol(leftToken);
+      int procPos = searchSymbol(subroutineToken);
       symbolDescriber_t *symbol = symbolsTable.symbols[procPos];
       if (symbol->category == c_procedure) updateProcedure(symbol, paramsQty);
    }
@@ -282,6 +287,8 @@ attribution:
             sprintf(mepaCommand, "ARMI %d,%d", symbol->lexicalLevel, attributes->displacement);
       } else if (symbol->category == c_function) {
          functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
+
+         if (strcmp(subroutineToken, leftToken) != 0) printError("Assinalando retorno para funcao incorreta!");
          if (attributes->type != $1) printError("Tipos incompatives!");
 
          sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
@@ -308,23 +315,26 @@ proc_call_with_params:
       symbolDescriber_t *symbol = checkSymbol(leftToken, o_procedure);
       procedureAttributes_t *attributes = (procedureAttributes_t *)symbol->attributes;
       
-      actualParamsList = attributes->params;
+      if (actualSubroutine != NULL) {
+         symbolsStackPush(&subroutineStack, actualSubroutine);
+         intStackPush(&actualParamsStack, actualParam);
+      }
+
+      actualSubroutine = symbol;
       actualParam = 0;
    }
    expression_list
    {
-      int procPos = searchSymbol(leftToken);
-      symbolDescriber_t *symbol = symbolsTable.symbols[procPos];
-      procedureAttributes_t *attributes = (procedureAttributes_t *)symbol->attributes;
+      procedureAttributes_t *attributes = (procedureAttributes_t *)actualSubroutine->attributes;
 
       if (actualParam < (attributes->paramsQty - 1))
-         printError("Parametros faltantes na chamada da procedimento!");
+         printError("Quantidade invalida de parametros!");
       
       sprintf(mepaCommand, "CHPR R%02d,%d", attributes->label, lexicalLevel);
       generateCode(NULL, mepaCommand);
 
-      actualParamsList = NULL;
-      actualParam = -1;
+      actualSubroutine = symbolsStackPop(&subroutineStack);
+      actualParam = intStackPop(&actualParamsStack);
    }
 ;
 
@@ -413,6 +423,7 @@ read_item:
          else 
             sprintf(mepaCommand, "ARMI %d,%d", symbol->lexicalLevel, attributes->displacement);
       } else if (symbol->category == c_function) {
+         if (strcmp(subroutineToken, token) != 0) printError("Assinalando retorno para funcao incorreta!");
          functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
 
          generateCode(NULL, "LEIT");
@@ -437,16 +448,8 @@ write_value:
 ;
 
 expression_list:
-   expression_list COMMA expression 
-   {
-      if (actualParamsList[actualParam++].type != $3)
-         printError("Parametro de tipo incompativel!");
-   }
-   | expression
-   {
-      if (actualParamsList[actualParam++].type != $1)
-         printError("Parametro de tipo incompativel!");
-   }
+   expression_list COMMA expression { checkParamType($3, actualParam++, actualSubroutine); }
+   | expression { checkParamType($1, actualParam++, actualSubroutine); }
 ;
 
 expression:
@@ -540,8 +543,13 @@ factor:
    }
    | NUMBER
    {
-      if (actualParam != -1 && actualParamsList[actualParam].passType == p_reference)
-          printError("Parametro precisa ser uma variavel!");
+      if (actualSubroutine != NULL && actualSubroutine->category == c_procedure) {
+         procedureAttributes_t *attributes = (procedureAttributes_t *)actualSubroutine->attributes;
+         if (attributes->params[actualParam].passType == p_reference) printError("Parametro precisa ser uma variavel!");
+      } else if (actualSubroutine != NULL && actualSubroutine->category == c_function) {
+         functionAttributes_t *attributes = (functionAttributes_t *)actualSubroutine->attributes;
+         if (attributes->params[actualParam].passType == p_reference) printError("Parametro precisa ser uma variavel!");
+      }
 
       sprintf(mepaCommand, "CRCT %d", atoi(token));
       generateCode(NULL, mepaCommand);
@@ -577,12 +585,12 @@ commun_factor:
       if (symbol->category == c_simple_var) {
          simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
 
-         sprintf(mepaCommand, "%s %d,%d", getLoadCommand(p_value, actualParam, actualParamsList), symbol->lexicalLevel, attributes->displacement);
+         sprintf(mepaCommand, "%s %d,%d", getLoadCommand(p_value, actualParam, actualSubroutine), symbol->lexicalLevel, attributes->displacement);
          $$ = attributes->type;
       }  else if (symbol->category == c_formal_param) {
          formalParamAttributes_t *attributes = (formalParamAttributes_t *)symbol->attributes;
 
-         sprintf(mepaCommand, "%s %d,%d", getLoadCommand(attributes->passType, actualParam, actualParamsList), symbol->lexicalLevel, attributes->displacement);
+         sprintf(mepaCommand, "%s %d,%d", getLoadCommand(attributes->passType, actualParam, actualSubroutine), symbol->lexicalLevel, attributes->displacement);
          $$ = attributes->type;
       } else if (symbol->category == c_function) {
          functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
@@ -599,27 +607,29 @@ func_call_with_params:
    {
       symbolDescriber_t *symbol = checkSymbol(factorToken, o_function);
       functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
-      strncpy(functionToken, factorToken, TOKEN_SIZE);
       
+      if (actualSubroutine != NULL) {
+         symbolsStackPush(&subroutineStack, actualSubroutine);
+         intStackPush(&actualParamsStack, actualParam);
+      }
+
       generateCode(NULL, "AMEM 1");
-      actualParamsList = attributes->params;
+      actualSubroutine = symbol;
       actualParam = 0;
    }
    expression_list
    {
-      int funcPos = searchSymbol(functionToken);
-      symbolDescriber_t *symbol = symbolsTable.symbols[funcPos];
-      functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
+      functionAttributes_t *attributes = (functionAttributes_t *)actualSubroutine->attributes;
 
       if (actualParam < (attributes->paramsQty - 1))
-         printError("Parametros faltantes na chamada da procedimento!");
+         printError("Quantidade invalida de parametros!");
       
       sprintf(mepaCommand, "CHPR R%02d,%d", attributes->label, lexicalLevel);
       generateCode(NULL, mepaCommand);
       $$ = attributes->type;
 
-      actualParamsList = NULL;
-      actualParam = -1;
+      actualSubroutine = symbolsStackPop(&subroutineStack);
+      actualParam = intStackPop(&actualParamsStack);
    }
 
 %%
@@ -643,6 +653,8 @@ int main (int argc, char** argv) {
    initSymbolsTable();
    initIntStack(&amemStack);
    initIntStack(&labelStack);
+   initIntStack(&actualParamsStack);
+   initSymbolsStack(&subroutineStack);
 
    yyparse();
 

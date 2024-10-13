@@ -9,7 +9,6 @@
 
 #define MAX_SYMBOLS_QTY 1024
 #define MAX_PARAMS_QTY 10
-#define LABEL_SIZE 4
 
 typedef enum categories { c_simple_var, c_procedure, c_function, c_formal_param } categories;
 typedef enum types { t_integer, t_boolean, t_undefined } types;

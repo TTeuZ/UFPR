@@ -10,6 +10,7 @@ tests = [
     (f"{root_path}/test17", False), (f"{root_path}/test18", False), (f"{root_path}/test19", True), (f"{root_path}/test20", True),
     (f"{root_path}/test21", False), (f"{root_path}/test22", True), (f"{root_path}/test23", False), (f"{root_path}/test24", True),
     (f"{root_path}/test25", True), (f"{root_path}/test26", True), (f"{root_path}/test27", True), (f"{root_path}/test28", True),
+    (f"{root_path}/test29", True), (f"{root_path}/test30", False), (f"{root_path}/test31", False)
 ]
 
 failed_tests = []
