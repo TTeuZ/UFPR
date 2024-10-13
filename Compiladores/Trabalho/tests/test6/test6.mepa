@@ -1,0 +1,15 @@
+    INPP
+    AMEM 3
+    CRCT 10
+    ARMZ 0,0
+    CRCT 5
+    ARMZ 0,1
+    CRCT 5
+    ARMZ 0,2
+    CRVL 0,0
+    CRVL 0,1
+    CMMA
+    CRVL 0,1
+    CRVL 0,2
+    CMIG
+    CONJ

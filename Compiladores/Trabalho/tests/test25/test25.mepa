@@ -1,0 +1,12 @@
+    INPP
+    AMEM 1
+    DSVS R00
+R01:ENPR 1
+    RTPR 1,2
+R00:NADA
+    DSVS R02
+R03:ENPR 1
+    RTPR 1,2
+R02:NADA
+    DMEM 1
+    PARA

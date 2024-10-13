@@ -1,0 +1,20 @@
+    INPP
+    AMEM 3
+    LEIT
+    ARMZ 0,1
+    CRCT 10
+    ARMZ 0,2
+    CRVL 0,1
+    CRVL 0,2
+    MULT
+    CRCT 2
+    DIVI
+    ARMZ 0,0
+    CRVL 0,0
+    IMPR
+    CRVL 0,1
+    IMPR
+    CRVL 0,2
+    IMPR
+    DMEM 3
+    PARA

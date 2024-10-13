@@ -1,0 +1,10 @@
+    INPP
+    AMEM 2
+    CRCT 0
+    ARMZ 0,0
+    CRVL 0,0
+    CRCT 10
+    SOMA
+    ARMZ 0,1
+    DMEM 2
+    PARA
