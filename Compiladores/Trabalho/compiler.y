@@ -288,7 +288,6 @@ attribution:
       } else if (symbol->category == c_function) {
          functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
 
-         if (strcmp(subroutineToken, leftToken) != 0) printError("Assinalando retorno para funcao incorreta!");
          if (attributes->type != $1) printError("Tipos incompatives!");
 
          sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
