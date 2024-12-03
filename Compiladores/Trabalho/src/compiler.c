@@ -18,7 +18,7 @@ void generateCode(char* rot, char* command) {
     fprintf(fp, "    %s\n", command);
     fflush(fp);
   } else {
-    fprintf(fp, "%s:%s\n", rot, command);
+    fprintf(fp, " %s:%s\n", rot, command);
     fflush(fp);
   }
 }

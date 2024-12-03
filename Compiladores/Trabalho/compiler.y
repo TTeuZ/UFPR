@@ -22,7 +22,7 @@ intStack_t actualParamsStack;
 intStack_t labelStack;
 intStack_t amemStack;
 
-int lexicalLevel, displacement, numVars, labelNumber, paramsQty, actualParam;
+int lexicalLevel, displacement, numVars, labelNumber, paramsQty, actualParam, alreadyDeclared, itsFoward;
 symbolDescriber_t* actualSubroutine;
 passTypes passType;
 %}
@@ -36,6 +36,7 @@ passTypes passType;
 %token PROGRAM T_BEGIN T_END
 %token PROCEDURE FUNCTION
 %token READ WRITE
+%token FORWARD
 
 %nonassoc LOWER_THAN_ELSE
 %nonassoc ELSE
@@ -73,7 +74,7 @@ idents_list:
 ;
 
 block:
-   { numVars = 0; displacement = 0; } 
+   { numVars = 0; displacement = 0;  alreadyDeclared = 0; } 
    vars_declaration
    {
       if (numVars > 0) {
@@ -133,91 +134,132 @@ subroutine_declaration:
 ;
 
 procedure_declariation:
+   procedure_forward
+   | procedure_definition
+;
+
+procedure_initiation:
    PROCEDURE IDENT
    {
-      sprintf(mepaCommand, "DSVS R%02d", labelNumber);
-      intStackPush(&labelStack, labelNumber++);
-      generateCode(NULL, mepaCommand);
+      alreadyDeclared = searchSymbol(token) != -1;
 
-      sprintf(mepaLabel, "R%02d", labelNumber);
-      insertProcedure(token, ++lexicalLevel, labelNumber++);
+      ++lexicalLevel;
+      if (!alreadyDeclared) {
+         sprintf(mepaCommand, "DSVS R%02d", labelNumber);
+         intStackPush(&labelStack, labelNumber++);
+         generateCode(NULL, mepaCommand);
 
-      sprintf(mepaCommand, "ENPR %d", lexicalLevel);
-      generateCode(mepaLabel, mepaCommand);
+         sprintf(mepaLabel, "R%02d", labelNumber);
+         insertProcedure(token, lexicalLevel, labelNumber++);
 
-      strncpy(subroutineToken, token, TOKEN_SIZE);
-      passType = p_value;
-      paramsQty = 0;
+         sprintf(mepaCommand, "ENPR %d", lexicalLevel);
+         generateCode(mepaLabel, mepaCommand);
+
+         strncpy(subroutineToken, token, TOKEN_SIZE);
+         passType = p_value;
+         paramsQty = 0;
+      }
    }
-   formal_parameters SEMICOLON block
+   formal_parameters SEMICOLON
+;
+
+procedure_forward:
+   procedure_initiation FORWARD { --lexicalLevel; }
+;
+
+procedure_definition:
+   procedure_initiation 
+   block
    {
       symbolDescriber_t *symbol = symbolsTable.symbols[symbolsTable.sp];
       procedureAttributes_t * attributes = (procedureAttributes_t *)symbol->attributes;
 
-      sprintf(mepaCommand, "RTPR %d,%d", symbol->lexicalLevel, attributes->paramsQty);
+      sprintf(mepaCommand, "RTPR %d, %d", symbol->lexicalLevel, attributes->paramsQty);
       generateCode(NULL, mepaCommand);
 
       sprintf(mepaLabel, "R%02d", intStackPop(&labelStack));
       generateCode(mepaLabel, "NADA");
-
       --lexicalLevel;
    }
 ;
 
 function_declaration:
+   function_forward
+   | function_definition
+;
+
+function_initiation:
    FUNCTION IDENT
    {
-      sprintf(mepaCommand, "DSVS R%02d", labelNumber);
-      intStackPush(&labelStack, labelNumber++);
-      generateCode(NULL, mepaCommand);
+      alreadyDeclared = searchSymbol(token) != -1;
 
-      sprintf(mepaLabel, "R%02d", labelNumber);
-      insertFunction(token, ++lexicalLevel, labelNumber++);
+      ++lexicalLevel;
+      if (!alreadyDeclared) {
+         sprintf(mepaCommand, "DSVS R%02d", labelNumber);
+         intStackPush(&labelStack, labelNumber++);
+         generateCode(NULL, mepaCommand);
 
-      sprintf(mepaCommand, "ENPR %d", lexicalLevel);
-      generateCode(mepaLabel, mepaCommand);
+         sprintf(mepaLabel, "R%02d", labelNumber);
+         insertFunction(token, lexicalLevel, labelNumber++);
 
-      strncpy(subroutineToken, token, TOKEN_SIZE);
-      passType = p_value;
-      paramsQty = 0;
+         sprintf(mepaCommand, "ENPR %d", lexicalLevel);
+         generateCode(mepaLabel, mepaCommand);
+
+         strncpy(subroutineToken, token, TOKEN_SIZE);
+         passType = p_value;
+         paramsQty = 0;
+      }
    }
-   formal_parameters COLON function_type SEMICOLON block
-   {
-      symbolDescriber_t *symbol = symbolsTable.symbols[symbolsTable.sp];
-      functionAttributes_t * attributes = (functionAttributes_t *)symbol->attributes;
-
-      sprintf(mepaCommand, "RTPR %d,%d", symbol->lexicalLevel, attributes->paramsQty);
-      generateCode(NULL, mepaCommand);
-
-      sprintf(mepaLabel, "R%02d", intStackPop(&labelStack));
-      generateCode(mepaLabel, "NADA");
-
-      --lexicalLevel;
-   }
+   formal_parameters COLON function_type SEMICOLON
 ;
 
 function_type:
    INTEGER 
    { 
-      int funcPos = searchSymbol(subroutineToken);
-      symbolDescriber_t *symbol = symbolsTable.symbols[funcPos];
-      if (symbol->category == c_function) updateFunction(symbol, paramsQty, t_integer);
+      if (!alreadyDeclared) {
+         int funcPos = searchSymbol(subroutineToken);
+         symbolDescriber_t *symbol = symbolsTable.symbols[funcPos];
+         if (symbol->category == c_function) updateFunction(symbol, paramsQty, t_integer);
+      }
+   }
+;
+
+function_forward:
+   function_initiation FORWARD { --lexicalLevel; }
+;
+
+function_definition:
+   function_initiation 
+   block
+   {
+      symbolDescriber_t *symbol = symbolsTable.symbols[symbolsTable.sp];
+      functionAttributes_t * attributes = (functionAttributes_t *)symbol->attributes;
+
+      sprintf(mepaCommand, "RTPR %d, %d", symbol->lexicalLevel, attributes->paramsQty);
+      generateCode(NULL, mepaCommand);
+
+      sprintf(mepaLabel, "R%02d", intStackPop(&labelStack));
+      generateCode(mepaLabel, "NADA");
+      --lexicalLevel;
    }
 ;
 
 formal_parameters:
    OPEN_PARENTHESES formal_parameters_section CLOSE_PARENTHESES
    {
-      int procPos = searchSymbol(subroutineToken);
-      symbolDescriber_t *symbol = symbolsTable.symbols[procPos];
-      if (symbol->category == c_procedure) updateProcedure(symbol, paramsQty);
+      if (!alreadyDeclared) {
+         int procPos = searchSymbol(subroutineToken);
+         symbolDescriber_t *symbol = symbolsTable.symbols[procPos];
+         if (symbol->category == c_procedure) updateProcedure(symbol, paramsQty);
+      }
    }
-   |
+   | 
 ;
 
 formal_parameters_section:
    formal_parameters_section SEMICOLON declare_formal_parameters
    | declare_formal_parameters
+   | 
 ;
 
 declare_formal_parameters:
@@ -230,8 +272,20 @@ var_or_nothing:
 ;
 
 params_list:
-   params_list COMMA IDENT { insertFormalParam(token, lexicalLevel, passType); ++paramsQty; }
-   | IDENT { insertFormalParam(token, lexicalLevel, passType); ++paramsQty; }
+   params_list COMMA IDENT 
+   { 
+      if (!alreadyDeclared) {
+         insertFormalParam(token, lexicalLevel, passType); 
+         ++paramsQty; 
+      }
+   }
+   | IDENT 
+   { 
+      if (!alreadyDeclared) {
+         insertFormalParam(token, lexicalLevel, passType); 
+         ++paramsQty; 
+      }
+   }
 ;
 
 param_type:
@@ -276,21 +330,21 @@ attribution:
          simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
          if (attributes->type != $1) printError("Tipos incompatives!");
 
-         sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
+         sprintf(mepaCommand, "ARMZ %d, %d", symbol->lexicalLevel, attributes->displacement);
       } else if (symbol->category == c_formal_param) {
          formalParamAttributes_t *attributes = (formalParamAttributes_t *)symbol->attributes;
          if (attributes->type != $1) printError("Tipos incompatives!");
 
          if (attributes->passType == p_value)
-            sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
+            sprintf(mepaCommand, "ARMZ %d, %d", symbol->lexicalLevel, attributes->displacement);
          else 
-            sprintf(mepaCommand, "ARMI %d,%d", symbol->lexicalLevel, attributes->displacement);
+            sprintf(mepaCommand, "ARMI %d, %d", symbol->lexicalLevel, attributes->displacement);
       } else if (symbol->category == c_function) {
          functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
 
          if (attributes->type != $1) printError("Tipos incompatives!");
 
-         sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
+         sprintf(mepaCommand, "ARMZ %d, %d", symbol->lexicalLevel, attributes->displacement);
       }
 
       generateCode(NULL, mepaCommand);
@@ -304,7 +358,7 @@ proc_call_no_params:
 
       if (attributes->paramsQty != 0) printError("Faltando parametros!");
 
-      sprintf(mepaCommand, "CHPR R%02d,%d", attributes->label, lexicalLevel);
+      sprintf(mepaCommand, "CHPR R%02d, %d", attributes->label, lexicalLevel);
       generateCode(NULL, mepaCommand);
    }
 ;
@@ -329,7 +383,7 @@ proc_call_with_params:
       if (actualParam < (attributes->paramsQty - 1))
          printError("Quantidade invalida de parametros!");
       
-      sprintf(mepaCommand, "CHPR R%02d,%d", attributes->label, lexicalLevel);
+      sprintf(mepaCommand, "CHPR R%02d, %d", attributes->label, lexicalLevel);
       generateCode(NULL, mepaCommand);
 
       actualSubroutine = symbolsStackPop(&subroutineStack);
@@ -348,6 +402,9 @@ conditional_command:
 if_then:
    IF expression 
    {
+      if ($2 == t_integer)
+         printError("Tipos incompatives!");
+
       sprintf(mepaCommand, "DSVF R%02d", labelNumber);
       intStackPush(&labelStack, labelNumber++);
       generateCode(NULL, mepaCommand);
@@ -412,21 +469,21 @@ read_item:
          simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
 
          generateCode(NULL, "LEIT");
-         sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
+         sprintf(mepaCommand, "ARMZ %d, %d", symbol->lexicalLevel, attributes->displacement);
       } else if (symbol->category == c_formal_param) {
          formalParamAttributes_t *attributes = (formalParamAttributes_t *)symbol->attributes;
 
          generateCode(NULL, "LEIT");
          if (attributes->passType == p_value)
-            sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
+            sprintf(mepaCommand, "ARMZ %d, %d", symbol->lexicalLevel, attributes->displacement);
          else 
-            sprintf(mepaCommand, "ARMI %d,%d", symbol->lexicalLevel, attributes->displacement);
+            sprintf(mepaCommand, "ARMI %d, %d", symbol->lexicalLevel, attributes->displacement);
       } else if (symbol->category == c_function) {
          if (strcmp(subroutineToken, token) != 0) printError("Assinalando retorno para funcao incorreta!");
          functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
 
          generateCode(NULL, "LEIT");
-         sprintf(mepaCommand, "ARMZ %d,%d", symbol->lexicalLevel, attributes->displacement);
+         sprintf(mepaCommand, "ARMZ %d, %d", symbol->lexicalLevel, attributes->displacement);
       }
 
       generateCode(NULL, mepaCommand);
@@ -449,6 +506,7 @@ write_value:
 expression_list:
    expression_list COMMA expression { checkParamType($3, actualParam++, actualSubroutine); }
    | expression { checkParamType($1, actualParam++, actualSubroutine); }
+   |
 ;
 
 expression:
@@ -584,18 +642,18 @@ commun_factor:
       if (symbol->category == c_simple_var) {
          simpleVarAttributes_t *attributes = (simpleVarAttributes_t *)symbol->attributes;
 
-         sprintf(mepaCommand, "%s %d,%d", getLoadCommand(p_value, actualParam, actualSubroutine), symbol->lexicalLevel, attributes->displacement);
+         sprintf(mepaCommand, "%s %d, %d", getLoadCommand(p_value, actualParam, actualSubroutine), symbol->lexicalLevel, attributes->displacement);
          $$ = attributes->type;
       }  else if (symbol->category == c_formal_param) {
          formalParamAttributes_t *attributes = (formalParamAttributes_t *)symbol->attributes;
 
-         sprintf(mepaCommand, "%s %d,%d", getLoadCommand(attributes->passType, actualParam, actualSubroutine), symbol->lexicalLevel, attributes->displacement);
+         sprintf(mepaCommand, "%s %d, %d", getLoadCommand(attributes->passType, actualParam, actualSubroutine), symbol->lexicalLevel, attributes->displacement);
          $$ = attributes->type;
       } else if (symbol->category == c_function) {
          functionAttributes_t *attributes = (functionAttributes_t *)symbol->attributes;
          generateCode(NULL, "AMEM 1");
 
-         sprintf(mepaCommand, "CHPR R%02d,%d", attributes->label, lexicalLevel);
+         sprintf(mepaCommand, "CHPR R%02d, %d", attributes->label, lexicalLevel);
          $$ = attributes->type;
       }
       generateCode(NULL, mepaCommand);
@@ -623,7 +681,7 @@ func_call_with_params:
       if (actualParam < (attributes->paramsQty - 1))
          printError("Quantidade invalida de parametros!");
       
-      sprintf(mepaCommand, "CHPR R%02d,%d", attributes->label, lexicalLevel);
+      sprintf(mepaCommand, "CHPR R%02d, %d", attributes->label, lexicalLevel);
       generateCode(NULL, mepaCommand);
       $$ = attributes->type;
 

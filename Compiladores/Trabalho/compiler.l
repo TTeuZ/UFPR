@@ -12,7 +12,7 @@ int nl = 1;
 
 newLine [\n]
 discard [\t ]+
-ident [a-zA-Z][a-zA-Z0-9]*
+ident [a-zA-Z_][a-zA-Z0-9_]*
 number [0-9]+
 comment "(*".*"*)"
 
@@ -23,6 +23,13 @@ comment "(*".*"*)"
 {comment}
 
 program { 
+  symbol = symb_program;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("program");
+  return PROGRAM;
+}
+
+Program { 
   symbol = symb_program;
   strncpy(token, yytext, TOKEN_SIZE);
   PRINT("program");
@@ -293,6 +300,20 @@ write {
   strncpy(token, yytext, TOKEN_SIZE);
   PRINT("write");
   return WRITE;
+}
+
+writeln { 
+  symbol = symb_write;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("write");
+  return WRITE;
+}
+
+forward { 
+  symbol = symb_forward;
+  strncpy(token, yytext, TOKEN_SIZE);
+  PRINT("forward");
+  return FORWARD;
 }
 
 {number} { 

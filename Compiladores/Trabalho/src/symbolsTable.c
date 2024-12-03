@@ -150,7 +150,7 @@ void updateFunction(symbolDescriber_t *symbol, int paramsQty, types type) {
 // ------------------------------------------------   Formal Params    ------------------------------------------------
 
 void insertFormalParam(char *identifier, int lexicalLevel, passTypes passType) {
-  verifyBeforeInsert(identifier, lexicalLevel);
+  // verifyBeforeInsert(identifier, lexicalLevel);
 
   symbolDescriber_t *symbol = malloc(sizeof(symbolDescriber_t));
   formalParamAttributes_t *attributes = malloc(sizeof(formalParamAttributes_t));
