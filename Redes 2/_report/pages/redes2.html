@@ -1,0 +1,392 @@
+<!-- Responsividade nao aplicada no momento -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/verticalNav.css">
+    <link rel="stylesheet" href="../styles/project.css">
+    <link rel="stylesheet" href="../styles/canvas.css">
+    <link rel="stylesheet" href="../styles/visualizator.css">
+
+    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/8493a85789.js" crossorigin="anonymous"></script>
+
+    <title>Paulo Mateus Luza Alves</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <!-- Vertical navbar -->
+            <nav class="col-3 col-xl-2 col-lg-3 navbar__wrapper bg-dark d-flex flex-column h-auto">
+                <div class="d-flex align-items-center flex-column">
+                    <img class="navbar__photo mt-5" src="../assets/profile.jpg" alt="Foto de perfil">
+                    <span class="mt-3 fs-4 text-center"> Paulo Mateus Luza Alves </span>
+                </div>
+
+                <ul class="nav nav-pills flex-column mt-3">
+                    <li class="nav-item">
+                        <a class="nav-link fs-6" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-6" href="./projects.html">Projetos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-6" href="./canvas.html">Canvas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-6" href="./visualizeitor.html">Visualizador</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-6" href="./redes2.html">Relatório - Redes 2</a>
+                    </li>
+                </ul>
+
+                <div class="navbar_links__wrapper d-flex align-items-center flex-column">
+                    <span class="fs-5"> Links e Redes sociais </span>
+                    <a class="d-flex flex-row align-items-center mt-2 nav-link" target="_blank"
+                        href="https://www.facebook.com/paulomateus.luzaalves">
+                        <i class="fa-brands fa-square-facebook navbar__icons"></i>
+                        <span class="fs-5 ms-2"> Facebook </span>
+                    </a>
+                    <a class="d-flex flex-row align-items-center mt-2 nav-link" target="_blank"
+                        href="https://www.instagram.com/paulo_mla/">
+                        <i class="fa-brands fa-square-instagram navbar__icons"></i>
+                        <span class="fs-5 ms-2"> Instagram </span>
+                    </a>
+                    <a class="d-flex flex-row align-items-center mt-2 nav-link" target="_blank"
+                        href="https://www.linkedin.com/in/paulo-mateus-luza-alves-69a73a162/">
+                        <i class="fa-brands fa-linkedin navbar__icons"></i>
+                        <span class="fs-5 ms-2"> LinkedIn </span>
+                    </a>
+                    <a class="d-flex flex-row align-items-center mt-2 nav-link" target="_blank"
+                        href="https://github.com/TTeuZ">
+                        <i class="fa-brands fa-square-github navbar__icons"></i>
+                        <span class="fs-5 ms-2"> GitHub </span>
+                    </a>
+                </div>
+            </nav>
+            <!-- Vertical navbar -->
+            <main class="col-9 col-xl-10 col-lg-9">
+                <article class="mt-5">
+                    <h2 class="text-center"> Relatório do Trabalho de Redes 2</h2>
+                    <p class="text-center"> Comparações entre TCP e UDP </p>
+                    <div class="divider ms-5 me-5 w-auto"></div>
+
+                    <div class="col-12 col-xl-9 col-lg-9">
+                        <section class="ms-5 mt-4">
+                            <span class="fw-bold">Desenvolvido por: </span>
+                            <span class="ms-3"> Paulo Mateus Luza Alves (GRR20203945)</span>
+                            <span class="ms-3"> e </span>
+                            <span class="ms-3"> Lucas Correia de Araujo (GRR20206150)</span>
+                        </section>
+
+                        <section class="ms-5 mt-4">
+                            <h5 class="fw-bold">Código Fonte</h5>
+                            <div class="d-flex flex-row">
+                                <a href="../assets/code/servers" target="_blank">Servidores (TCP e UDP)</a>
+                                <a class="ms-5" href="../assets/code/clients" target="_blank">Clientes (TCP e UDP)</a>
+                                <a class="ms-5" href="../assets/code" target="_blank">Código completo (Servidores,
+                                    Clientes, Utilitários)</a>
+                            </div>
+                        </section>
+
+                        <section class="ms-5 mt-4">
+                            <h3 class="fw-bold">1. Introdução</h3>
+                            <p>
+                                Este relatório descreve os experimentos e resultados obtidos na comparação de desempenho
+                                entre os protocolos de transporte TCP e UDP, visando responder a pergunta:
+                                <b>na prática, quanto o TCP é melhor que o UDP?</b> Portanto, a seguir serão
+                                apresentados os testes realizados utilizando a linguagem Python, e os resultados obtidos
+                                para comparação entre os protocolos. Por fim, apresentamos nossas conclusões a partir
+                                dos resultados obtidos.
+                            </p>
+                        </section>
+
+                        <section class="ms-5 mt-4">
+                            <h3 class="fw-bold">2. Experimentos</h3>
+                            <p>
+                                Nesta seção, apresentaremos os experimentos realizados na comparação entre os protocolos
+                                TCP e UDP, detalhando sua execução, objetivos e resultados.
+                            </p>
+                            <p>
+                                Todos os experimentos foram baseados em envio de pacotes com dados em memória, ou seja,
+                                grandes strings geradas em código, evitando a leitura de arquivos, o que poderia
+                                mascarar os resultados. Além disso, todos eles foram executados no LAB 3 do Dinf.
+                            </p>
+
+                            <p class="fw-bold">OBS: Os valores de “Tempo Total” dos experimentos podem ser levemente
+                                diferentes caso calculados com os valores de “Tempo por Pacote” por conta dos pequenos
+                                overheads de execução da linguagem python.</p>
+
+                            <div id="exp-1">
+                                <h4 class="fw-bold">2.1. Experimento 1: Envio de pacotes de 65kb</h4>
+
+                                <div class="d-flex flex-row mb-2">
+                                    <a href="../assets/code/_logs/experiment1/tcp/" target="_blank">Logs TCP</a>
+                                    <a class="ms-5" href="../assets/code/_logs/experiment1/udp/" target="_blank">
+                                        Logs UDP
+                                    </a>
+                                </div>
+
+                                <p>
+                                    Este primeiro experimento teve como intuito enviar um grande conjunto de pacotes,
+                                    cada um contendo uma quantidade de bytes próxima a máxima possível. Dessa forma, o
+                                    objetivo deste teste foi verificar como seria o comportamento do TCP e UDP em
+                                    cenários com grande fragmentação de pacotes IP.
+                                </p>
+                                <p> As configurações deste experimento foram as seguintes: </p>
+                                <ul>
+                                    <li>Envio de 10.000 pacotes;</li>
+                                    <li>Pacotes com 65.500 bytes.</li>
+                                </ul>
+                                <p>
+                                    Desta forma, foram enviados aproximadamente 0,6GB de dados neste cenário. As
+                                    métricas coletadas foram tempo total, tempo por pacote, e perda de pacotes (no caso
+                                    do UDP). Os resultados obtidos são apresentados na Tabela 1, sendo eles médias de 5
+                                    execuções.
+                                </p>
+                                <p class="fw-bold">
+                                    OBS: Os números de pacotes deste experimento foram definidos por conta da velocidade
+                                    de transmissão da rede do LAB 3, que se mostrou mais lenta que os demais
+                                    laboratórios.
+                                </p>
+
+                                <div class="d-flex flex-column">
+                                    <table class="table mb-0">
+                                        <tr>
+                                            <th>Protocolo</th>
+                                            <th>Tempo total (s)</th>
+                                            <th>Tempo por pacote (s)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>TCP</td>
+                                            <td>55,97 ± 0,04</td>
+                                            <td>0,0055</td>
+                                        </tr>
+                                        <tr>
+                                            <td>UDP</td>
+                                            <td>54,80 ± 0,04</td>
+                                            <td>0,0054</td>
+                                        </tr>
+                                    </table>
+                                    <p>
+                                        <b>Tabela 1.</b> Resultados de tempo para o UDP e TCP com pacotes de 65KB.
+                                        Valores em Tempo ± desvio
+                                        padrão. Os resultados de desvio padrão do tempo por pacote foi omitido pois
+                                        foram bem próximos de 0.
+                                    </p>
+                                </div>
+
+                                <p>
+                                    A Tabela 1 demonstra que, em média, o UDP foi 1 segundo mais rápido que o TCP no
+                                    tempo total, e 0,0001 segundo no tempo por pacote, demonstrando um leve ganho de
+                                    velocidade do UDP neste cenário hipotético. Interessantemente, a quantidade de
+                                    pacotes perdidos pelo UDP nesta configuração foram relativamente baixos, sendo em
+                                    média 1 pacote dos 10.000 enviados.
+                                </p>
+                                <p>
+                                    Logo, considerando a rede do LAB 3 do Dinf, e pacotes com uma quantidade próxima ao
+                                    máximo possível para o IP, o UDP se mostrou levemente mais rápido, ao passo de não
+                                    perder tantos pacotes como o que seria esperado.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h4 class="fw-bold">
+                                    2.2. Experimento 2: Envio de pacotes de 1KB (menor que 1 MTU média)
+                                </h4>
+
+                                <div class="d-flex flex-row mb-2">
+                                    <a href="../assets/code/_logs/experiment2/tcp/" target="_blank">Logs TCP</a>
+                                    <a class="ms-5" href="../assets/code/_logs/experiment2/udp/" target="_blank">
+                                        Logs UDP
+                                    </a>
+                                </div>
+
+                                <p>
+                                    Neste segundo experimento, o processo de envio foi idêntico ao teste anterior,
+                                    porém, neste cenário foram enviados pacotes de apenas 1KB, ou seja, menores que uma
+                                    MTU, não causando fragmentação do IP. Dessa forma, o intuito deste experimento foi
+                                    verificar como seria o comportamento do TCP e UDP em casos de não fragmentação.
+                                </p>
+                                <p> As configurações deste experimento foram as seguintes: </p>
+                                <ul>
+                                    <li>Envio de 655.000 pacotes;</li>
+                                    <li>Pacotes com 1.000 bytes.</li>
+                                </ul>
+                                <p>
+                                    A quantidade de pacotes foi definida para garantir que o volume de bytes transmitido
+                                    neste experimento fosse equivalente ao anterior, buscando gerar um cenário com mesma
+                                    carga de transmissão. As métricas coletadas e a quantidade de execuções são as
+                                    mesmas que do experimento anterior. A Tabela 2 apresenta um resumo dos resultados
+                                    obtidos.
+                                </p>
+
+                                <div class="d-flex flex-column">
+                                    <table class="table mb-0">
+                                        <tr>
+                                            <th>Protocolo</th>
+                                            <th>Tempo total (s)</th>
+                                            <th>Tempo por pacote (s)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>TCP</td>
+                                            <td>59,31 ± 0,78</td>
+                                            <td>0,000079 ± 0,0000013</td>
+                                        </tr>
+                                        <tr>
+                                            <td>UDP</td>
+                                            <td>59,52 ± 0,92</td>
+                                            <td>0,000074 ± 0,0000017</td>
+                                        </tr>
+                                    </table>
+                                    <p>
+                                        <b>Tabela 2.</b> Resultados de tempo para o UDP e TCP com pacotes de 1KB.
+                                        Valores
+                                        em Tempo ± desvio padrão.
+                                    </p>
+                                </div>
+
+                                <p>
+                                    Neste experimento, os "overheads" causados pela linguagem python podem induzir que o
+                                    UDP foi virtualmente equivalente ao TCP quando analisado o resultado de tempo total.
+                                    Entretanto, caso o cálculo de "tempo total" fosse feito a partir dos tempos por
+                                    pacote, teríamos 51,75 segundo para o TCP e 48,47 segundos para o UDP, evidenciando
+                                    uma grande diferença de tempos entre os protocolos.
+                                </p>
+                                <p>
+                                    Porém, neste cenário de teste o UDP perdeu, em média, 807 pacotes, sendo necessário
+                                    a retransmissão e também organização deles no cliente. Desta forma, caso essas
+                                    funcionalidades fossem implementadas na aplicação, os tempos de transmissão de ambos
+                                    os protocolos podem acabar se aproximando, ao ponto de se tornarem relativamente
+                                    equivalentes.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h4 class="fw-bold">
+                                    2.3. Experimento 3: Aumento gradativo de quantidade de pacotes de 65KB enviados
+                                </h4>
+
+                                <div class="row w-75 mb-2">
+                                    <a class="col-3" href="../assets/code/_logs/experiment3/1000_pack/" target="_blank">
+                                        Logs 1000 pacotes
+                                    </a>
+                                    <a class="col-3" href="../assets/code/_logs/experiment3/5000_pack/" target="_blank">
+                                        Logs 5000 pacotes
+                                    </a>
+                                    <a class="col-3" href="../assets/code/_logs/experiment3/10000_pack/"
+                                        target="_blank">
+                                        Logs 10000 pacotes
+                                    </a>
+                                    <a class="col-3" href="../assets/code/_logs/experiment3/15000_pack/"
+                                        target="_blank">
+                                        Logs 15000 pacotes
+                                    </a>
+                                    <a class="col-3" href="../assets/code/_logs/experiment3/20000_pack/"
+                                        target="_blank">
+                                        Logs 20000 pacotes
+                                    </a>
+                                    <a class="col-3" href="../assets/code/_logs/experiment3/25000_pack/"
+                                        target="_blank">
+                                        Logs 25000 pacotes
+                                    </a>
+                                    <a class="col-3" href="../assets/code/_logs/experiment3/50000_pack/"
+                                        target="_blank">
+                                        Logs 50000 pacotes
+                                    </a>
+                                </div>
+
+                                <p>
+                                    Este último experimento teve como intuito responder a seguinte questão: <b>Quantos
+                                        bytes enviados são necessários para evidenciarmos a diferença de velocidade
+                                        entre TCP e UDP?</b> Desta forma, buscando responder essa pergunta, o seguinte
+                                    experimento foi construído:
+                                </p>
+                                <ul>
+                                    <li>Envio de 1.000, 5.000, 10.000, 15.000, 20.000, 25.000 e 50.000 pacotes;</li>
+                                    <li>Pacotes com 65.500 bytes.</li>
+                                </ul>
+                                <p>
+                                    A ideia geral foi incrementar gradativamente a quantidade de pacotes enviados,
+                                    visando encontrar o ponto onde a diferença de tempo entre o TCP e o UDP se torna
+                                    mais evidente. Os resultados obtidos, sumarizados na Figura 1, são médias de 3
+                                    execuções para cada quantidade de pacotes enviados.
+                                </p>
+
+                                <div class="d-flex flex-column align-items-center">
+                                    <img class="w-50" src="../assets/time_comp.jpeg" />
+                                    <p>
+                                        <b>Figura 1.</b> Comparação do tempo necessário para enviar pacotes com TCP e
+                                        UDP.
+                                    </p>
+                                </div>
+
+                                <p>
+                                    Como demonstrado na Figura 1, em todos os cenários o UDP se mostrou mais rápido que
+                                    o TCP, porém, apenas com 10.000 pacotes de 65kb que pode-se notar uma diferença
+                                    maior que 1 segundo, e apenas com 50.000 pacotes observa-se uma distância de 5
+                                    segundos entre os protocolos. Em suma, quanto maior a quantidade de pacotes e,
+                                    consequentemente, maior quantidade de bytes, o UDP tende a se apresentar cada vez
+                                    mais rápido que o TCP.
+                                </p>
+                                <p>
+                                    Além disso, de forma semelhante ao experimento 1, a quantidade de pacotes perdidos
+                                    do UDP se manteve baixa em média (1 a 4 pacotes, sendo 4 evidenciado apenas em uma
+                                    transmissão no cenário de 50.000 pacotes). Porém, vale ressaltar que esta situação é
+                                    de certa forma atípica, sendo, possivelmente, ocasionada pela rede do LAB 3 do Dinf.
+                                </p>
+                            </div>
+                        </section>
+
+                        <section class="ms-5 mt-4">
+                            <h3 class="fw-bold">3. Conclusões</h3>
+
+                            <p>
+                                Neste trabalho foram apresentados alguns experimentos para comparação entre os
+                                protocolos TCP e UDP, visando responder a pergunta: <b>na prática, quanto o TCP é melhor
+                                    que o UDP?</b> Os resultados obtidos apontaram que, em média, o UDP tende a ser mais
+                                rápido
+                                que o TCP, porém ao passo de não fornecer nenhuma garantia de entrega ao cliente.
+                            </p>
+                            <p>
+                                Entretanto, mesmo no cenário com a maior quantidade de bytes transmitidos (experimento 3
+                                - envio de 50.000 pacotes de 65KB) o UDP foi apenas aproximadamente 5 segundos mais
+                                eficiente que o TCP para transmitir o total de aproximadamente 3GB de dados, sendo esta
+                                diferença possivelmente não relevante para a maioria das aplicações, e ainda perdendo
+                                alguns dos pacotes enviados.
+                            </p>
+                            <p>
+                                Além disso, a necessidade de desenvolver manualmente todos os mecanismos de garantia de
+                                entrega na aplicação, visando manter a confiabilidade da transmissão, pode levar o UDP a
+                                se aproximar do desempenho do TCP, caso estes mecanismos não sejam desenvolvidos
+                                apropriadamente (por exemplo, desenvolvido sem otimizações, ou com linguagens que
+                                possuem muitos overheads como python).
+                            </p>
+                            <p>
+                                Desta forma, o TCP se apresenta como uma opção mais segura, ao passo de possuir um
+                                desempenho surpreendente, levando em consideração todos os controles executados por ele,
+                                limitando o uso do UDP para situações onde é impossível utilizar o TCP.
+                            </p>
+                            <p>
+                                Por fim, vale ressaltar que os resultados apresentados podem ter omitido informações
+                                relevantes para a comparação entre os protocolos, visando que todos os experimentos
+                                foram executados em apenas um laboratório do Dinf. Portanto, para comparações mais
+                                efetivas e reais, pesquisas e testes extensos podem ser aplicados em trabalhos futuros,
+                                visando cobrir a grande maioria dos cenários de uso, obtendo resultados mais concisos.
+                            </p>
+                        </section>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>
